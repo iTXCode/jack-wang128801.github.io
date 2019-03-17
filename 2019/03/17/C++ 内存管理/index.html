@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<meta name="author" content="jack-wang128801">
+
+
+
+<meta name="description" content="1 . 例题++12345678910111213141516 int globalVar = 1;  static int staticGlobalVar = 1;  void Test() &amp;#123;  static int staticVar = 1;  int localVar = 1;  int num1[10] = &amp;#123;1, 2, 3, 4&amp;#125;;  char char">
+<meta name="keywords" content="c++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++内存管理">
+<meta property="og:url" content="https://jack-wang128801.github.io/2019/03/17/C++ 内存管理/index.html">
+<meta property="og:site_name" content="Kano.cn">
+<meta property="og:description" content="1 . 例题++12345678910111213141516 int globalVar = 1;  static int staticGlobalVar = 1;  void Test() &amp;#123;  static int staticVar = 1;  int localVar = 1;  int num1[10] = &amp;#123;1, 2, 3, 4&amp;#125;;  char char">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190317144450564.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY2tfd2FuZzEyODgwMQ==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190317144533379.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY2tfd2FuZzEyODgwMQ==,size_16,color_FFFFFF,t_70">
+<meta property="og:updated_time" content="2019-03-17T06:48:40.288Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++内存管理">
+<meta name="twitter:description" content="1 . 例题++12345678910111213141516 int globalVar = 1;  static int staticGlobalVar = 1;  void Test() &amp;#123;  static int staticVar = 1;  int localVar = 1;  int num1[10] = &amp;#123;1, 2, 3, 4&amp;#125;;  char char">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20190317144450564.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY2tfd2FuZzEyODgwMQ==,size_16,color_FFFFFF,t_70">
+
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="Kano.cn" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>C++内存管理 | Kano.cn</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: false,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: 
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head></html>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">jack-wang128801</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">Fly to the distance</p>
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:123@123.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">-C++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">-数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c++</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">专注于前端</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">jack-wang128801</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">jack-wang128801</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">Fly to the distance</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:123@123.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我">
+</nav>
+      <div class="body-wrap"><article id="post-C++ 内存管理" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2019/03/17/C++ 内存管理/" class="article-date">
+      <time datetime="2019-03-17T02:01:47.000Z" itemprop="datePublished">2019-03-17</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      C++内存管理
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/内存管理/">内存管理</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c++</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h3 id="1-例题"><a href="#1-例题" class="headerlink" title="1 . 例题"></a>1 . 例题</h3><figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">int</span> globalVar = <span class="number">1</span>;</span><br><span class="line"> </span><br><span class="line"> <span class="keyword">static</span> <span class="keyword">int</span> staticGlobalVar = <span class="number">1</span>;</span><br><span class="line"> </span><br><span class="line"> <span class="function"><span class="keyword">void</span> <span class="title">Test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">static</span> <span class="keyword">int</span> staticVar = <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">int</span> localVar = <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">int</span> num1[<span class="number">10</span>] = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>&#125;;</span><br><span class="line">  <span class="keyword">char</span> char2[] = <span class="string">"abcd"</span>;</span><br><span class="line">  <span class="keyword">char</span>* pChar3 = <span class="string">"abcd"</span>;</span><br><span class="line">  <span class="keyword">int</span>* ptr1 = (<span class="keyword">int</span>)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span> (<span class="keyword">int</span>)<span class="number">4</span>);</span><br><span class="line">  <span class="keyword">int</span>* ptr2 = (<span class="keyword">int</span>*)<span class="built_in">calloc</span>(<span class="number">4</span>, <span class="keyword">sizeof</span>(<span class="keyword">int</span>));</span><br><span class="line">  <span class="keyword">int</span>* ptr3 = (<span class="keyword">int</span>)<span class="built_in">realloc</span>(ptr2, <span class="keyword">sizeof</span>(<span class="keyword">int</span>)<span class="number">4</span>);</span><br><span class="line">  <span class="built_in">free</span> (ptr1);</span><br><span class="line">  <span class="built_in">free</span> (ptr3);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="1-选择题：选项-A-栈-B-堆-C-数据段-D-代码段"><a href="#1-选择题：选项-A-栈-B-堆-C-数据段-D-代码段" class="headerlink" title="1.选择题：选项: A.栈 B.堆 C.数据段 D.代码段"></a>1.选择题：选项: A.栈 B.堆 C.数据段 D.代码段</h6><blockquote>
+<p>globalVar在哪里？_C_ staticGlobalVar在哪里？C__<br>staticVar在哪里？_C_ localVar在哪里？A__<br>num1 在哪里？_A___<br>char2在哪里？A_ <em>char2在哪里？A<br> pChar3在哪里？_A _ </em>pChar3在哪里？D<br>  ptr1在哪里？_A *ptr1在哪里？B</p>
+</blockquote>
+<p>​         </p>
+<h6 id="2-填空题："><a href="#2-填空题：" class="headerlink" title="2. 填空题："></a>2. 填空题：</h6><blockquote>
+<p>sizeof(num1) =40 ;</p>
+<p>sizeof(char2) = 5; strlen(char2) =4 ;</p>
+<p>sizeof(pChar3) = _4 或者 8;  strlen(pChar3) = _4;<br>sizeof(ptr1) = _4 或者 8__;</p>
+</blockquote>
+<blockquote>
+<p>sizeof:类型大小</p>
+<p>strlen: 有效字符长度</p>
+</blockquote>
+<h6 id="3-总结"><a href="#3-总结" class="headerlink" title="3.总结"></a>3.总结</h6><blockquote>
+<ul>
+<li>定义的局部变量(不管类型)都在栈空间上。</li>
+<li>动态加载的都在堆上。</li>
+<li>解引用的空间在堆上，本身的空间在栈上。</li>
+</ul>
+</blockquote>
+<blockquote>
+<p><img src="https://img-blog.csdnimg.cn/20190317144450564.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY2tfd2FuZzEyODgwMQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20190317144533379.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY2tfd2FuZzEyODgwMQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+</blockquote>
+<h6 id="3-【说明】"><a href="#3-【说明】" class="headerlink" title="3.【说明】"></a>3.【说明】</h6><blockquote>
+<ul>
+<li>1.栈又叫堆栈，非静态局部变量/函数参数/返回值等等，栈是向下增长的。</li>
+<li>2.内存映射段是高效的I/O映射方式，用于装载一个共享的动态内存库。用户可使用系统接口创建共享共享内存，做进程间通信。（Linux课程如果没学到这块，现在只需要了解一下）</li>
+<li>3.堆用于程序运行时动态内存分配，堆是可以上增长的。</li>
+<li>4.数据段–存储全局数据和静态数据。</li>
+<li>5.代码段–可执行的代码/只读常量。</li>
+</ul>
+</blockquote>
+<h3 id="2-c-语言中动态内存管理方式"><a href="#2-c-语言中动态内存管理方式" class="headerlink" title="2. c 语言中动态内存管理方式"></a>2. c 语言中动态内存管理方式</h3><h4 id="2-1-malloc-calloc-realloc和free"><a href="#2-1-malloc-calloc-realloc和free" class="headerlink" title="2.1  malloc/calloc/realloc和free"></a>2.1  malloc/calloc/realloc和free</h4><figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Test</span> <span class="params">()</span></span></span><br><span class="line"><span class="function">  </span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">  </span><br><span class="line">   <span class="keyword">int</span>* p1 = (<span class="keyword">int</span>*) <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">int</span>));</span><br><span class="line">  </span><br><span class="line">   <span class="built_in">free</span>(p1);</span><br><span class="line">  </span><br><span class="line">   <span class="comment">// 1.malloc/calloc/realloc的区别是什么？</span></span><br><span class="line">  </span><br><span class="line">   <span class="keyword">int</span>* p2 = (<span class="keyword">int</span>*)<span class="built_in">calloc</span>(<span class="number">4</span>, <span class="keyword">sizeof</span> (<span class="keyword">int</span>));</span><br><span class="line">  </span><br><span class="line">   <span class="keyword">int</span>* p3 = (<span class="keyword">int</span>)<span class="built_in">realloc</span>(p2, <span class="keyword">sizeof</span>(<span class="keyword">int</span>)<span class="number">10</span>);</span><br><span class="line">  </span><br><span class="line">   <span class="comment">// 这里需要free(p2)吗？</span></span><br><span class="line">  </span><br><span class="line">   <span class="built_in">free</span>(p3 );</span><br><span class="line">  </span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<h5 id="2-1-1-malloc"><a href="#2-1-1-malloc" class="headerlink" title="2.1.1 malloc"></a>2.1.1 malloc</h5><ul>
+<li style="list-style: none"><input type="checkbox"> 动态申请内存</li>
+</ul>
+<h5 id="2-1-2-calloc"><a href="#2-1-2-calloc" class="headerlink" title="2.1.2   calloc"></a>2.1.2   calloc</h5><blockquote>
+<ul>
+<li>不光申请空间，还对这个空间进行初始化</li>
+<li>初始化的空间用户不能指定，它自己规定为 0</li>
+</ul>
+</blockquote>
+<h5 id="2-1-3-realloc"><a href="#2-1-3-realloc" class="headerlink" title="2.1.3 realloc"></a>2.1.3 realloc</h5><blockquote>
+<ul>
+<li>调整空间</li>
+<li>空间已经存在，只需要做调整空间大小</li>
+</ul>
+</blockquote>
+<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">realloc</span><span class="params">(<span class="keyword">int</span> *ptr,<span class="keyword">int</span> size)</span></span></span><br><span class="line"><span class="function">        <span class="comment">//ptr 指向需要调整的空间，而size 表示需要的空间大小</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">    <span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span></span><br><span class="line"><span class="function">    <span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> *pi=(<span class="keyword">int</span> *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">int</span> )*<span class="number">20</span>);</span><br><span class="line">        <span class="comment">//申请动态内存</span></span><br><span class="line">        <span class="built_in">free</span>(pi);</span><br><span class="line">        <span class="comment">//将申请的内存释放掉</span></span><br><span class="line">        <span class="keyword">char</span> *pc=(<span class="keyword">char</span> *)<span class="built_in">malloc</span>(<span class="number">20</span>);</span><br><span class="line">        <span class="keyword">char</span> *ppc=(<span class="keyword">char</span> *)<span class="built_in">realloc</span>(pc,<span class="number">40</span>);</span><br><span class="line">        <span class="comment">//free(pc); 释放pc 不保险</span></span><br><span class="line">        <span class="built_in">free</span>(ppc);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h4 id="3-C-的内存管理方式"><a href="#3-C-的内存管理方式" class="headerlink" title="3.C++ 的内存管理方式"></a>3.C++ 的内存管理方式</h4><ul>
+<li style="list-style: none"><input type="checkbox"> C语言内存管理方式在C++中可以继续使用，但有些地方就无能为力而且使用起来比较麻烦，因此C++又提出了自己的内存管理方式：通过new和delete操作符进行动态内存管理。</li>
+</ul>
+<h4 id="3-1-new-delete操作内置类型"><a href="#3-1-new-delete操作内置类型" class="headerlink" title="3.1 new/delete操作内置类型"></a>3.1 new/delete操作内置类型</h4><figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line">   <span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line">   <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">   	<span class="keyword">int</span> *pa = <span class="keyword">new</span> <span class="keyword">int</span>;</span><br><span class="line">   	<span class="comment">//new 为关键字， 而int 为需要申请的空间类型 </span></span><br><span class="line">   	<span class="keyword">int</span> *pb = <span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">1</span>);</span><br><span class="line">       <span class="comment">//申请一块空间，并且初始值赋为 1</span></span><br><span class="line">   	<span class="keyword">delete</span> pb;</span><br><span class="line">   	<span class="comment">//c++释放单个空间的方式</span></span><br><span class="line">   	<span class="keyword">int</span> *pc = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">10</span>];</span><br><span class="line">   	<span class="comment">//申请一块连续的空间，空间为10个int类型的空间大小为 40 字节</span></span><br><span class="line">   	<span class="keyword">delete</span>[]pc;</span><br><span class="line">   	<span class="comment">//c++释放连续空间的方式</span></span><br><span class="line">   	<span class="comment">//new/delete     new[]/delete []</span></span><br><span class="line">   	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<ul>
+<li>注意：申请和释放单个元素的空间，使用new和delete操作符，申请和释放连续的空间，使用new[]和delete[]</li>
+</ul>
+</blockquote>
+<h5 id="3-2-new和delete操作自定义类型"><a href="#3-2-new和delete操作自定义类型" class="headerlink" title="3.2 new和delete操作自定义类型"></a>3.2 new和delete操作自定义类型</h5><figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line">   <span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line">   <span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line">   </span><br><span class="line">   <span class="class"><span class="keyword">class</span> <span class="title">A</span>&#123;</span></span><br><span class="line">   <span class="keyword">private</span>:</span><br><span class="line">   	<span class="keyword">int</span> _a;</span><br><span class="line">   	<span class="keyword">int</span> _b;</span><br><span class="line">   &#125;;</span><br><span class="line">   <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">   	A* pa = (A *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(A));</span><br><span class="line">   	<span class="built_in">free</span>(pa);</span><br><span class="line">   	A *pb = <span class="keyword">new</span> A;</span><br><span class="line">   	<span class="keyword">delete</span> pb;</span><br><span class="line">   	A *pc = <span class="keyword">new</span> A[<span class="number">10</span>];</span><br><span class="line">   	<span class="keyword">delete</span>[]pc;</span><br><span class="line">   	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line">   <span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line">   <span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;windows.h&gt;</span></span></span><br><span class="line">   <span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line">   </span><br><span class="line">   <span class="class"><span class="keyword">class</span> <span class="title">A</span>&#123;</span></span><br><span class="line">   <span class="keyword">public</span>:</span><br><span class="line">   	A()&#123;</span><br><span class="line">   		<span class="built_in">cout</span> &lt;&lt; <span class="string">"A"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">   	&#125;</span><br><span class="line">   </span><br><span class="line">   	~A()&#123;</span><br><span class="line">   		<span class="comment">//释放空间</span></span><br><span class="line">   		<span class="comment">//if(_pi)&#123;</span></span><br><span class="line">   		<span class="comment">//free(_pi);</span></span><br><span class="line">   		<span class="comment">//_pi=nullptr;</span></span><br><span class="line">   		<span class="built_in">cout</span> &lt;&lt; <span class="string">"~A"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">   	&#125;</span><br><span class="line">   <span class="keyword">private</span>:</span><br><span class="line">   	<span class="keyword">int</span> _a;</span><br><span class="line">   	<span class="keyword">int</span> _b;</span><br><span class="line">   	<span class="keyword">int</span> *_pi;</span><br><span class="line">   	<span class="comment">//加入申请了空间</span></span><br><span class="line">   &#125;;</span><br><span class="line">   <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">   	<span class="comment">/*A* pa = (A *)malloc(sizeof(A));</span></span><br><span class="line"><span class="comment">   	free(pa);*/</span></span><br><span class="line">   	A *pb = <span class="keyword">new</span> A;</span><br><span class="line">   	<span class="comment">//new 调用自定义类型的构造函数，malloc不会</span></span><br><span class="line">   	<span class="keyword">delete</span> pb;</span><br><span class="line">   	<span class="comment">//delete 调用自定义类型的析构函数，free不会 </span></span><br><span class="line">   	<span class="comment">/*A *pc = new A[10];</span></span><br><span class="line"><span class="comment">   	delete[] pc;*/</span></span><br><span class="line">   	system(<span class="string">"pause"</span>);</span><br><span class="line">   	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="comment">//总结：new-&gt;operator new -&gt;构造</span></span><br><span class="line">   <span class="comment">//     delete --&gt;析构 ---&gt;opeator delete</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li style="list-style: none"><input type="checkbox"> 课件例题</li>
+</ul>
+<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span></span></span><br><span class="line"><span class="class">    &#123;</span></span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">     Test()</span><br><span class="line">     : _data(<span class="number">0</span>)</span><br><span class="line">     &#123;</span><br><span class="line">     <span class="built_in">cout</span>&lt;&lt;<span class="string">"Test():"</span>&lt;&lt;<span class="keyword">this</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">     &#125;</span><br><span class="line">     ~Test()</span><br><span class="line">     &#123;</span><br><span class="line">     <span class="built_in">cout</span>&lt;&lt;<span class="string">"~Test():"</span>&lt;&lt;<span class="keyword">this</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">     &#125;</span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">     <span class="keyword">int</span> _data;</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Test2</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">     <span class="comment">// 申请单个Test类型的空间</span></span><br><span class="line">     Test* p1 = (Test*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Test));</span><br><span class="line">     <span class="built_in">free</span>(p1);</span><br><span class="line">     </span><br><span class="line">     <span class="comment">// 申请10个Test类型的空间</span></span><br><span class="line">     Test* p2 = (Test*)<span class="built_in">malloc</span>(sizoef(Test) * <span class="number">10</span>);</span><br><span class="line">     <span class="built_in">free</span>(p2);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Test2</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">     <span class="comment">// 申请单个Test类型的对象</span></span><br><span class="line">     Test* p1 = <span class="keyword">new</span> Test;</span><br><span class="line">     <span class="keyword">delete</span> p1;</span><br><span class="line">     <span class="comment">// 申请10个Test类型的对象</span></span><br><span class="line">     Test* p2 = <span class="keyword">new</span> Test[<span class="number">10</span>];</span><br><span class="line">     <span class="keyword">delete</span>[] p2;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<ul>
+<li>注意：在申请自定义类型的空间时，new会调用构造函数，delete会调用析构函数，而malloc与free不会</li>
+</ul>
+</blockquote>
+<h4 id="4-operator-new与operator-delete函数"><a href="#4-operator-new与operator-delete函数" class="headerlink" title="4. operator new与operator delete函数"></a>4. operator new与operator delete函数</h4><blockquote>
+<p>new和delete是用户进行动态内存申请和释放的操作符，operator new 和operator delete是系统提供的全局函数，new在底层调用operator new全局函数来申请空间，delete在底层通过operator delete全局函数来释放空间。</p>
+</blockquote>
+<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">   operator new：该函数实际通过malloc来申请空间，当malloc申请空间成功时直接返回；申请空间失败，尝试</span></span><br><span class="line"><span class="comment">   执行空 间不足应对措施，如果改应对措施用户设置了，则继续申请，否则抛异常。</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">   <span class="keyword">void</span> *__<span class="function">CRTDECL <span class="keyword">operator</span> <span class="title">new</span><span class="params">(<span class="keyword">size_t</span> size)</span> _<span class="title">THROW1</span><span class="params">(_STD bad_alloc)</span></span></span><br><span class="line"><span class="function">   </span>&#123;</span><br><span class="line">    <span class="comment">// try to allocate size bytes</span></span><br><span class="line">    <span class="keyword">void</span> *p;</span><br><span class="line">    <span class="keyword">while</span> ((p = <span class="built_in">malloc</span>(size)) == <span class="number">0</span>)</span><br><span class="line">    <span class="keyword">if</span> (_callnewh(size) == <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">    <span class="comment">// report no memory</span></span><br><span class="line">    <span class="comment">// 如果申请内存失败了，这里会抛出bad_alloc 类型异常</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">const</span> <span class="built_in">std</span>::bad_alloc nomem;</span><br><span class="line">    _RAISE(nomem);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> (p);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<ul>
+<li>申请空间异常的情况</li>
+</ul>
+</blockquote>
+<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;windows.h&gt;</span></span></span><br><span class="line"> <span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line">   </span><br><span class="line">   <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">   	<span class="comment">//两种处理异常的方式</span></span><br><span class="line">   	<span class="built_in">cout</span> &lt;&lt; <span class="string">"malloc:"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">   	<span class="keyword">char</span> *p = (<span class="keyword">char</span>*)<span class="built_in">malloc</span>(<span class="number">0x7ffffffff</span>);</span><br><span class="line">   	<span class="built_in">cout</span> &lt;&lt; (<span class="keyword">void</span>*)p &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">       <span class="built_in">free</span>(p);</span><br><span class="line">   	<span class="built_in">cout</span> &lt;&lt; <span class="string">"new:"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">   	<span class="keyword">try</span>&#123;</span><br><span class="line">   		<span class="keyword">char</span> *p = <span class="keyword">new</span> <span class="keyword">char</span>[<span class="number">0X7fffffff</span>];</span><br><span class="line">   		<span class="built_in">cout</span> &lt;&lt; (<span class="keyword">void</span>*)p &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">   	&#125;</span><br><span class="line">   	<span class="keyword">catch</span> (exception&amp; e)&#123;</span><br><span class="line">   		<span class="built_in">cout</span> &lt;&lt; e.what() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">   		<span class="comment">//特殊接口：e.what()</span></span><br><span class="line">   	&#125;</span><br><span class="line">       <span class="comment">//operator new:malloc + 异常</span></span><br><span class="line">       <span class="comment">//operator delete&lt;==&gt;free(相当于)</span></span><br><span class="line">   	system(<span class="string">"pause"</span>);</span><br><span class="line">   	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<h5 id="4-1双向链表中的应用"><a href="#4-1双向链表中的应用" class="headerlink" title="4.1双向链表中的应用"></a>4.1双向链表中的应用</h5><figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span>&#123;</span></span><br><span class="line">       ListNode *_prev;</span><br><span class="line">       LisrNode *_next;</span><br><span class="line">       <span class="keyword">int</span> _date;</span><br><span class="line">       </span><br><span class="line">       <span class="function"><span class="keyword">void</span> *<span class="keyword">operator</span> <span class="title">new</span><span class="params">(<span class="keyword">size_t</span> n)</span></span>&#123;</span><br><span class="line">           <span class="keyword">void</span> *p=allocator&lt;ListNode&gt;().allocate(<span class="number">1</span>);</span><br><span class="line">           <span class="built_in">cout</span>&lt;&lt;<span class="string">"mem pool allocate"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">           <span class="keyword">return</span> p;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="function"><span class="keyword">void</span> <span class="keyword">operator</span> <span class="title">delete</span> <span class="params">(<span class="keyword">void</span> *p)</span></span>&#123;</span><br><span class="line">           allocator&lt;ListNode&gt;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;;</span><br><span class="line">    </span><br><span class="line">   <span class="function"><span class="keyword">int</span> <span class="title">mian</span><span class="params">()</span></span>&#123;</span><br><span class="line">       List *p1=<span class="keyword">new</span> List[<span class="number">10</span>];</span><br><span class="line">       <span class="comment">// free(p1); //用new 申请的空间必须要delete 来释放</span></span><br><span class="line">       <span class="keyword">delete</span>[] p1;   <span class="comment">//</span></span><br><span class="line">       <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<h6 id="new-delete-总结"><a href="#new-delete-总结" class="headerlink" title="new\delete\总结"></a>new\delete\总结</h6><ul>
+<li style="list-style: none"><input type="checkbox"> 自定义类型：new malloc delete free</li>
+<li style="list-style: none"><input type="checkbox"> new: opeator new —-&gt;malloc  +  构造</li>
+<li style="list-style: none"><input type="checkbox"> malloc: malloc</li>
+<li style="list-style: none"><input type="checkbox"> new[N] : operator new [N]—&gt;opertor new —&gt;malloc + N次构造</li>
+<li style="list-style: none"><input type="checkbox"> delete :析构 + opeator delete —&gt;free</li>
+<li style="list-style: none"><input type="checkbox"> free:  free</li>
+<li style="list-style: none"><input type="checkbox"> delete[]: N(析构 + operator delete –&gt; free) </li>
+</ul>
+<blockquote>
+<ul>
+<li>new 申请的空间，系统不会自己释放，需要自己手动释放(delete)</li>
+<li>内置类型：</li>
+<li>new : malloc + 异常</li>
+<li>malloc :malloc</li>
+<li>delete: 封装free</li>
+<li>free: free</li>
+</ul>
+</blockquote>
+<h4 id="5-new和delete的实现原理"><a href="#5-new和delete的实现原理" class="headerlink" title="5.new和delete的实现原理"></a>5.new和delete的实现原理</h4><h5 id="5-1-内置类型"><a href="#5-1-内置类型" class="headerlink" title="5.1 内置类型"></a>5.1 内置类型</h5><blockquote>
+<ul>
+<li>如果申请的是内置类型的空间，new和malloc，delete和free基</li>
+<li>本类似，不同的地方是：new/delete申请和释放的是单个元素的</li>
+<li>空间，new[]和delete[]申请的是连续空间，而且new在申请空间</li>
+<li>失败时会抛异常，malloc会返回NULL。</li>
+</ul>
+</blockquote>
+<h5 id="5-2-自定义类型"><a href="#5-2-自定义类型" class="headerlink" title="5.2 自定义类型"></a>5.2 自定义类型</h5><ul>
+<li style="list-style: none"><input type="checkbox"> new的原理 : 调用operator new函数申请空间<blockquote>
+<ul>
+<li>在申请的空间上执行构造函数，完成对象的构造</li>
+</ul>
+</blockquote>
+</li>
+<li style="list-style: none"><input type="checkbox"> delete的原理<blockquote>
+<ul>
+<li>在空间上执行析构函数，完成对象中资源的清理工作</li>
+</ul>
+</blockquote>
+</li>
+<li style="list-style: none"><input type="checkbox"> new T[N]的原理<blockquote>
+<ul>
+<li>1.调用operator new[]函数，在operator new[]中实际调用</li>
+<li>operator new函数完成N个对象空间的申请</li>
+<li>2.在申请的空间上执行N次构造函数</li>
+</ul>
+</blockquote>
+</li>
+<li style="list-style: none"><input type="checkbox"> delete[]的原理<blockquote>
+<ul>
+<li>1.在释放的对象空间上执行N次析构函数，完成N个对象中资源</li>
+<li>的清理</li>
+<li>2.调用operator delete[]释放空间，实际在operator delete[]中</li>
+<li>调用operator delete来释放空间</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+<h4 id="6-定位new表达式-placement-new"><a href="#6-定位new表达式-placement-new" class="headerlink" title="6.定位new表达式(placement-new)"></a>6.定位new表达式(placement-new)</h4><blockquote>
+<ul>
+<li>定位new表达式是在已分配的原始内存空间中调用构造函数初始化一个对象。</li>
+</ul>
+</blockquote>
+<ul>
+<li style="list-style: none"><input type="checkbox"> 使用格式：<blockquote>
+<ul>
+<li>1.new (place_address) type或者new (place_address) type(initializer-list)</li>
+<li>2.place_address必须是一个指针，initializer-list是类型的初始化列表</li>
+</ul>
+</blockquote>
+</li>
+<li style="list-style: none"><input type="checkbox"> 使用场景：<blockquote>
+<ul>
+<li>定位new表达式在实际中一般是配合内存池使用。因为内存池分配出的内存没有初始化，所以如果是自定义类型的对象，需要使用new的定义表达式进行显示调构造函数进行初始化</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span></span></span><br><span class="line"><span class="class">   &#123;</span></span><br><span class="line">   <span class="keyword">public</span>:</span><br><span class="line">    Test()</span><br><span class="line">    : _data(<span class="number">0</span>)       <span class="comment">//初始化表达式</span></span><br><span class="line">    &#123;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"Test():"</span>&lt;&lt;<span class="keyword">this</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    ~Test()</span><br><span class="line">    &#123;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"~Test():"</span>&lt;&lt;<span class="keyword">this</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">   <span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">int</span> _data;</span><br><span class="line">   &#125;;</span><br><span class="line">   <span class="function"><span class="keyword">void</span> <span class="title">Test</span><span class="params">()</span></span></span><br><span class="line"><span class="function">   </span>&#123;</span><br><span class="line">    <span class="comment">// pt现在指向的只不过是与Test对象相同大小的一段空间，还不能算是一个对象，因为构造函数没有执行</span></span><br><span class="line">    Test* pt = (Test*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Test));</span><br><span class="line">    <span class="keyword">new</span>(pt) Test; <span class="comment">// 注意：如果Test类的构造函数有参数时，此处需要传参</span></span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">//初始化表达式使用的例子</span></span><br><span class="line">   <span class="class"><span class="keyword">class</span> <span class="title">Date</span>&#123;</span></span><br><span class="line">       <span class="keyword">public</span>:</span><br><span class="line">       Date(<span class="keyword">int</span> year=<span class="number">1900</span>,<span class="keyword">int</span> month=<span class="number">1</span>,<span class="keyword">int</span> day=<span class="number">1</span>)            </span><br><span class="line">           :_year(year)     </span><br><span class="line">            ,_month(month)<span class="comment">//初始化表达式使用的例子</span></span><br><span class="line">               ,_day(day)</span><br><span class="line">           &#123;&#125;</span><br><span class="line">       <span class="keyword">private</span>:</span><br><span class="line">       <span class="keyword">int</span> _year;</span><br><span class="line">       <span class="keyword">int</span> _month;</span><br><span class="line">       <span class="keyword">int</span> _day;</span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line">   <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">       Date* pd=(Date*) <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Date));</span><br><span class="line">       Date* pd2=(Date*) <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Date));</span><br><span class="line">       <span class="comment">//pd2的值是随机的</span></span><br><span class="line">       <span class="keyword">new</span>(pd)Date;             <span class="comment">//不带参</span></span><br><span class="line">       <span class="keyword">new</span>(pd2)Date（<span class="number">1939</span>，<span class="number">2</span>，<span class="number">3</span>）; <span class="comment">//带参</span></span><br><span class="line">       <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>&#123;</span></span><br><span class="line">       <span class="keyword">int</span> a;</span><br><span class="line">   &#125;;</span><br><span class="line">   </span><br><span class="line">   <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">       A* pa =<span class="keyword">new</span> A;</span><br><span class="line">       <span class="keyword">delete</span> pa;<span class="comment">//delete释放指针指向的那一快堆上的空间</span></span><br><span class="line">       <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<h4 id="7-常见的面试题"><a href="#7-常见的面试题" class="headerlink" title="7.常见的面试题"></a>7.常见的面试题</h4><h5 id="7-1-malloc-free和new-delete的区别"><a href="#7-1-malloc-free和new-delete的区别" class="headerlink" title="7.1 malloc/free和new/delete的区别"></a>7.1 malloc/free和new/delete的区别</h5><blockquote>
+<ul>
+<li>malloc/free和new/delete的共同点是：都是从堆上申请空间，并且需要用户手动释放。不同的地方是：</li>
+</ul>
+</blockquote>
+<ul>
+<li style="list-style: none"><input type="checkbox"> 1. malloc和free是函数，new和delete是操作符</li>
+<li style="list-style: none"><input type="checkbox"> 2. malloc申请的空间不会初始化，new可以初始化</li>
+<li style="list-style: none"><input type="checkbox"> 3.malloc申请空间时，需要手动计算空间大小并传递，new只需在其后跟上空间的类型即可</li>
+<li style="list-style: none"><input type="checkbox"> 4.malloc的返回值为void*, 在使用时必须强转，new不需要，因为new后跟的是空间的类型</li>
+<li style="list-style: none"><input type="checkbox"> 5 .malloc申请空间失败时，返回的是NULL，因此使用时必须判空，new不需要，但是new需要</li>
+<li style="list-style: none"><input type="checkbox"> 捕获异常</li>
+<li style="list-style: none"><input type="checkbox"> 6 .申请自定义类型对象时，malloc/free只会开辟空间，不会调用构造函数与析构函数，而new在</li>
+<li style="list-style: none"><input type="checkbox"> 申请空间后会调用构造函数完成对象的初始化，delete在释放空间前会调用析构函数完成空间中</li>
+<li style="list-style: none"><input type="checkbox"> 资源的清理</li>
+<li style="list-style: none"><input type="checkbox"> 7. new/delete比malloc和free的效率稍微低点，因为new/delete的底层封装了malloc/free668</li>
+</ul>
+<h5 id="7-2-请设计一个类，该类只能在堆上创建对象"><a href="#7-2-请设计一个类，该类只能在堆上创建对象" class="headerlink" title="7.2  请设计一个类，该类只能在堆上创建对象"></a>7.2  请设计一个类，该类只能在堆上创建对象</h5><ul>
+<li style="list-style: none"><input type="checkbox"> 方法一：构造函数私有化<blockquote>
+<ul>
+<li>将类的构造函数私有，拷贝构造声明成私有。防止别人调用拷贝</li>
+<li>在栈上生成对象</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HeapOnly</span> </span></span><br><span class="line"><span class="class">    &#123;</span> </span><br><span class="line">    <span class="keyword">public</span>: </span><br><span class="line">     <span class="function"><span class="keyword">static</span> HeapOnly* <span class="title">CreateObject</span><span class="params">()</span> </span></span><br><span class="line"><span class="function">     </span>&#123; </span><br><span class="line">     <span class="keyword">return</span> <span class="keyword">new</span> HeapOnly; </span><br><span class="line">     &#125;</span><br><span class="line">    <span class="keyword">private</span>: </span><br><span class="line">     HeapOnly() &#123;&#125;</span><br><span class="line">     <span class="comment">// C++98</span></span><br><span class="line">     <span class="comment">// 1.只声明,不实现。因为实现可能会很麻烦，而你本身不需要</span></span><br><span class="line">     <span class="comment">// 2.声明成私有</span></span><br><span class="line">     HeapOnly(<span class="keyword">const</span> HeapOnly&amp;)；</span><br><span class="line">     <span class="comment">// or</span></span><br><span class="line">     <span class="comment">// C++11 </span></span><br><span class="line">     HeapOnly(<span class="keyword">const</span> HeapOnly&amp;) = <span class="keyword">delete</span>;</span><br><span class="line">    &#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//上课例题代码</span></span><br><span class="line">   <span class="comment">//指针访问 -&gt;</span></span><br><span class="line">   <span class="comment">//对象 .</span></span><br><span class="line">   </span><br><span class="line">   <span class="comment">//1.构造函数私有化</span></span><br><span class="line">   <span class="comment">//2.提供公共接口：在堆上创建对象</span></span><br><span class="line">   <span class="comment">//3.在类外面无法创建对象，函数用类名调用，公共接口必须为static接口</span></span><br><span class="line">   <span class="comment">//4.防止拷贝:</span></span><br><span class="line">   <span class="comment">//&lt;1&gt;:拷贝构造私有化，只声明不实现</span></span><br><span class="line">   <span class="comment">//&lt;2&gt;：拷贝构造声明成delete函数(C++11的特性)</span></span><br><span class="line">   <span class="class"><span class="keyword">class</span> <span class="title">Heap</span></span></span><br><span class="line"><span class="class">   &#123;</span></span><br><span class="line">   	<span class="function"><span class="keyword">friend</span> <span class="keyword">void</span> <span class="title">fun1</span><span class="params">()</span></span>;</span><br><span class="line">   <span class="keyword">public</span>:</span><br><span class="line">   	<span class="function"><span class="keyword">static</span> Heap* <span class="title">getHeap</span><span class="params">()</span></span></span><br><span class="line"><span class="function">   	</span>&#123;</span><br><span class="line">   		<span class="keyword">return</span> <span class="keyword">new</span> Heap;</span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line">   	Heap(<span class="keyword">const</span> Heap&amp; hp) = <span class="keyword">delete</span>;</span><br><span class="line">   <span class="keyword">private</span>:</span><br><span class="line">   Heap()&#123;&#125;</span><br><span class="line">   &#125;;</span><br><span class="line">   </span><br><span class="line">   Heap::Heap(<span class="keyword">const</span> Heap&amp; hp)&#123;&#125;</span><br><span class="line">   </span><br><span class="line">   <span class="function"><span class="keyword">void</span> <span class="title">fun1</span><span class="params">()</span></span></span><br><span class="line"><span class="function">   </span>&#123;</span><br><span class="line">   	Heap* hp = Heap::getHeap();</span><br><span class="line">   	<span class="function">Heap <span class="title">hp2</span><span class="params">(*hp)</span></span>;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function">   </span>&#123;</span><br><span class="line">   	<span class="comment">/*Heap* hp = new Heap;</span></span><br><span class="line"><span class="comment">   	Heap hhp;</span></span><br><span class="line"><span class="comment">   	hp-&gt;getHeap();</span></span><br><span class="line"><span class="comment">   	hhp.getHeap();*/</span></span><br><span class="line">       Heap* hp = Heap::getHeap();</span><br><span class="line">   	<span class="function">Heap <span class="title">hp2</span><span class="params">(*hp)</span></span>;</span><br><span class="line">   	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<h5 id="7-3-请设计一个类，该类只能在栈上创建对象-类似上面"><a href="#7-3-请设计一个类，该类只能在栈上创建对象-类似上面" class="headerlink" title="7.3 请设计一个类，该类只能在栈上创建对象(类似上面)"></a>7.3 请设计一个类，该类只能在栈上创建对象(类似上面)</h5><ul>
+<li style="list-style: none"><input type="checkbox"> new 关键字是如何执行的</li>
+<li style="list-style: none"><input type="checkbox"> 不能在堆上建造空间</li>
+</ul>
+<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Stack</span>&#123;</span></span><br><span class="line">      <span class="keyword">public</span>:</span><br><span class="line">      <span class="function"><span class="keyword">static</span>  Stack <span class="title">getStack</span><span class="params">()</span></span>&#123;</span><br><span class="line">            <span class="keyword">return</span> Stack();<span class="comment">//不能返回指针(也不能返回引用)</span></span><br><span class="line">            <span class="comment">//当前函数的返回值，在栈上</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">private</span>:</span><br><span class="line">        <span class="built_in">stack</span>()&#123;  </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">statck2</span>&#123;</span></span><br><span class="line">      <span class="comment">///new --&gt; opeator new;</span></span><br><span class="line">        <span class="function"><span class="keyword">void</span> *<span class="keyword">operator</span> <span class="title">new</span><span class="params">(<span class="keyword">size_t</span> n)</span></span>=<span class="keyword">delete</span>;</span><br><span class="line">        <span class="comment">//放在公共的申明下，依旧不可调动</span></span><br><span class="line">        <span class="comment">//无法使用，被删除的函数</span></span><br><span class="line">        <span class="keyword">private</span>:</span><br><span class="line">        <span class="function"><span class="keyword">void</span> *<span class="keyword">operator</span> <span class="title">new</span><span class="params">(<span class="keyword">size_t</span> n)</span></span>;</span><br><span class="line">    &#125;;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="comment">//Stack *ps=new Stack;</span></span><br><span class="line">        Stack s=Stack :: getStack():</span><br><span class="line">        Stack cp(s);  <span class="comment">//  cp在栈上</span></span><br><span class="line">        stack2 ps =<span class="keyword">new</span> stack2;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>; </span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li style="list-style: none"><input type="checkbox"> 只能在栈上创建对象的类</li>
+<li style="list-style: none"><input type="checkbox"> new —&gt;operator new –&gt;构造<h6 id="方法一："><a href="#方法一：" class="headerlink" title="方法一："></a>方法一：</h6><blockquote>
+<ul>
+<li><ol>
+<li>构造函数私有化，间接阻止new 关键字的执行逻辑</li>
+</ol>
+</li>
+<li><ol>
+<li>构造公共接口：在栈上创建对象</li>
+</ol>
+</li>
+<li><ol>
+<li>在类外面无法创建对象，函数用类名调用，公共接口必须为static接口</li>
+</ol>
+</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+<h6 id="方法二："><a href="#方法二：" class="headerlink" title="方法二："></a>方法二：</h6><blockquote>
+<ul>
+<li>1.重载operator new 函数，申明成私有的，并且不实现</li>
+<li>2.构造函数公有</li>
+</ul>
+</blockquote>
+<h6 id="单例模式-全局唯一一份"><a href="#单例模式-全局唯一一份" class="headerlink" title="单例模式:全局唯一一份"></a>单例模式:全局唯一一份</h6><ul>
+<li><p>[ ] 1.饿汉</p>
+<blockquote>
+<p>缺点： 1.启动比较慢      </p>
+<pre><code>2.没有办法控制多个单例模式之间的启动顺序
+</code></pre><figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//饿汉模式</span></span><br><span class="line"><span class="comment">//优点：简单</span></span><br><span class="line"><span class="comment">// 缺点：可能会导致进程启动慢，且如果有多个单例类对象实例启动顺序不确定。</span></span><br><span class="line">      <span class="class"><span class="keyword">class</span> <span class="title">singleton</span>&#123;</span></span><br><span class="line">          <span class="keyword">public</span>:</span><br><span class="line">          <span class="function"><span class="keyword">static</span> singlleton* <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">              <span class="keyword">return</span> &amp; _sin;</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="keyword">private</span>:</span><br><span class="line">          singleton()&#123; &#125;</span><br><span class="line">          <span class="comment">//防拷贝</span></span><br><span class="line">          <span class="comment">//singleton (const singlenton &amp;s);//或写成删除函数都可以</span></span><br><span class="line">          singleton (<span class="keyword">const</span> singlenton &amp;s)=<span class="keyword">delete</span>;</span><br><span class="line">          <span class="comment">//singlrton &amp;operator=(const singleton &amp;s);</span></span><br><span class="line">            <span class="keyword">static</span>  singleton _sin;  <span class="comment">//c程序启动前，已经定义好了</span></span><br><span class="line">          <span class="comment">//singleton _sin;//不能如此定义，其会自己调自己。</span></span><br><span class="line">      &#125;;</span><br><span class="line">      </span><br><span class="line">      singleton singleton::_sin;</span><br><span class="line">      </span><br><span class="line">      <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">          singleton *ps=singleton :: getInstance;</span><br><span class="line">          <span class="function">singleton <span class="title">s</span><span class="params">(*ps)</span></span>;</span><br><span class="line">          <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure>
+</blockquote>
+</li>
+<li><p>[ ] 饿汉模式</p>
+<blockquote>
+<p>如果单例对象构造十分耗时或者占用很多资源，比如加载插件啊， 初始化网络连接啊，读取文件啊等等，而有可能该对象程序运行时不会用到，那么也要在程序一开始就进行初始化，就会导致程序启动时非常的缓慢。 所以这种情况使用懒汉模式（延迟加载）更好.</p>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">singleton</span>&#123;</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">public</span>:</span><br><span class="line">        <span class="function">singleton *<span class="title">getIntance</span><span class="params">()</span></span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(_ps==<span class="literal">nullptr</span>)&#123;</span><br><span class="line">               _ps = <span class="keyword">new</span> singleton; </span><br><span class="line">                <span class="comment">//第一次还没有，现场做</span></span><br><span class="line">            &#125; </span><br><span class="line">            <span class="keyword">return</span> _ps;</span><br><span class="line">            <span class="comment">//第二次以后已经做好了，直接拿去用</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">private</span>:</span><br><span class="line">        singleton()&#123;&#125;</span><br><span class="line">        singleton(<span class="keyword">const</span> singleton&amp; s);<span class="comment">//只声明不是</span></span><br><span class="line">        <span class="keyword">static</span> singleton* _ps;<span class="comment">//全局唯一</span></span><br><span class="line">    &#125;;</span><br><span class="line">    </span><br><span class="line">    singleton *singleton ::_ps=<span class="literal">nullptr</span>;</span><br><span class="line">    <span class="comment">//先置空，啥时候需要再给你</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">        singleton* ps = singleton :: getIntance();</span><br><span class="line">        singleton *ps2 =singleton :: getIntance();</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">    <span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt; </span></span></span><br><span class="line">    <span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;mutex&gt;</span></span></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span></span></span><br><span class="line"><span class="class">    &#123;</span></span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    	<span class="function"><span class="keyword">static</span> Singleton* <span class="title">getInstance</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    	</span>&#123;</span><br><span class="line">    		<span class="comment">// double check</span></span><br><span class="line">    		<span class="keyword">if</span> (_ps == <span class="literal">nullptr</span>)</span><br><span class="line">    		&#123;</span><br><span class="line">    			_mtx.lock();</span><br><span class="line">    			<span class="keyword">if</span> (_ps == <span class="literal">nullptr</span>)</span><br><span class="line">    			&#123;</span><br><span class="line">    				_ps = <span class="keyword">new</span> Singleton;</span><br><span class="line">    			&#125;</span><br><span class="line">    			_mtx.unlock();</span><br><span class="line">    		&#125;</span><br><span class="line">    </span><br><span class="line">    		<span class="keyword">return</span> _ps;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">     <span class="function"><span class="keyword">void</span> <span class="title">testSing</span><span class="params">()</span><span class="comment">//多线程</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">    	<span class="built_in">cout</span> &lt;&lt; Singleton::getInstance() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">    	<span class="comment">/*Singleton* ps = Singleton::getInstance();</span></span><br><span class="line"><span class="comment">    	Singleton* ps2 = Singleton::getInstance();</span></span><br><span class="line"><span class="comment">    	int i = 0;</span></span><br><span class="line"><span class="comment">    	i++;*/</span>den</span><br><span class="line">    	<span class="comment">/*fun();           //串行</span></span><br><span class="line"><span class="comment">    	fun();*/</span></span><br><span class="line">    	<span class="comment">/*thread t1(fun);  //并行，同时执行</span></span><br><span class="line"><span class="comment">        thread t2(fun);*/</span></span><br><span class="line">    	<span class="comment">/*testSing();</span></span><br><span class="line"><span class="comment">    	testSing();*/</span></span><br><span class="line">    </span><br><span class="line">    	<span class="function">thread <span class="title">t1</span><span class="params">(testSing)</span></span>;</span><br><span class="line">        <span class="function">thread <span class="title">t2</span><span class="params">(testSing)</span></span>;</span><br><span class="line">    </span><br><span class="line">    	t1.join();   <span class="comment">// 等待</span></span><br><span class="line">    	t2.join();</span><br><span class="line">    	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">//造成无限递归</span></span><br><span class="line">    ~Singleton()&#123;</span><br><span class="line">        <span class="keyword">if</span>(_ps)&#123;</span><br><span class="line">            <span class="keyword">delete</span> _ps; <span class="comment">//无限递归</span></span><br><span class="line">            _ps=nullpte</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//能做到释放空间</span></span><br><span class="line">    ~Singleton()</span><br><span class="line">    	&#123;</span><br><span class="line">    		<span class="built_in">cout</span> &lt;&lt; <span class="string">"~Singleton()"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    	&#125;</span><br><span class="line">    </span><br><span class="line">    	<span class="class"><span class="keyword">class</span> <span class="title">GC</span></span></span><br><span class="line"><span class="class">    	&#123;</span></span><br><span class="line">    	<span class="keyword">public</span>:</span><br><span class="line">    		~GC()</span><br><span class="line">    		&#123;</span><br><span class="line">    			<span class="keyword">if</span> (_ps)</span><br><span class="line">    			&#123;</span><br><span class="line">    				<span class="keyword">delete</span> _ps;</span><br><span class="line">    				_ps = <span class="literal">nullptr</span>;</span><br><span class="line">    			&#125;</span><br><span class="line">    		&#125;</span><br><span class="line">    	&#125;;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">    	Singleton* ps = Singleton::getInstance();</span><br><span class="line">    	<span class="comment">//delete ps;//不能这样去释放堆上的空间，造成无限递归</span></span><br><span class="line">        <span class="comment">//调用析构函数，造成栈溢出</span></span><br><span class="line">    	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>//多线程：多个人做一份工作</p>
+<p>//单线程：一个人做一份工作</p>
+<p>//多个线程加把锁</p>
+<p>include<mutex></mutex></p>
+<p>_mtx.clock();  // 加锁</p>
+<p>。。。。。<br>_mtx.unlock();   //解锁<br>//加锁的代价 —&gt;<br>//多个进程同时进行时，锁只影响第一批进程。<br>static mutex </p>
+</blockquote>
+<h5 id="7-5-内存泄漏"><a href="#7-5-内存泄漏" class="headerlink" title="7.5 内存泄漏"></a>7.5 内存泄漏</h5><h6 id="7-5-1-什么是内存泄漏"><a href="#7-5-1-什么是内存泄漏" class="headerlink" title="7.5.1 什么是内存泄漏"></a>7.5.1 什么是内存泄漏</h6><blockquote>
+<ul>
+<li>内存泄漏指因为疏忽或错误造成程序未能释放已经不再使用的内</li>
+<li>存的情况。内存泄漏并不是指内存在物理上的消失，而是应用程</li>
+<li>序分配某段内存后，因为设计错误，失去了对该段内存的控制，</li>
+<li>因而造成了内存的浪费</li>
+</ul>
+</blockquote>
+<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//当使用delet时，调用析构函数，导致无限递归</span></span><br><span class="line">    ~singleton()&#123;</span><br><span class="line">        <span class="keyword">if</span>(_ps)&#123;</span><br><span class="line">            <span class="comment">//无限递归，导致栈溢出</span></span><br><span class="line">            <span class="keyword">delete</span> _ps;</span><br><span class="line">            _ps = nulllpter;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">MemoryLeaks</span><span class="params">()</span></span></span><br><span class="line"><span class="function">     </span>&#123;</span><br><span class="line">     <span class="comment">// 1.内存申请了忘记释放</span></span><br><span class="line">     <span class="keyword">int</span>* p1 = (<span class="keyword">int</span>*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">int</span>));</span><br><span class="line">     <span class="keyword">int</span>* p2 = <span class="keyword">new</span> <span class="keyword">int</span>;</span><br><span class="line">     <span class="comment">// 2.异常安全问题</span></span><br><span class="line">     <span class="keyword">int</span>* p3 = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">10</span>];</span><br><span class="line">     Func(); <span class="comment">// 这里Func函数抛异常导致 delete[] p3未执行，p3没被放.</span></span><br><span class="line">        <span class="keyword">delete</span> []p3;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h6 id="7-5-2-如何检测内存泄漏"><a href="#7-5-2-如何检测内存泄漏" class="headerlink" title="7.5.2 如何检测内存泄漏"></a>7.5.2 如何检测内存泄漏</h6><ul>
+<li style="list-style: none"><input type="checkbox"> 在linux下内存泄漏检测：linux下几款内存泄漏检测工具</li>
+<li style="list-style: none"><input type="checkbox"> 在windows下使用第三方工具：VLD工具说明</li>
+<li style="list-style: none"><input type="checkbox"> 其他工具：内存泄漏工具比较</li>
+</ul>
+<h6 id="7-5-3如何避免内存泄漏"><a href="#7-5-3如何避免内存泄漏" class="headerlink" title="7.5.3如何避免内存泄漏"></a>7.5.3如何避免内存泄漏</h6><blockquote>
+<ul>
+<li>工程前期良好的设计规范，养成良好的编码规范，申请的内存空间记着匹配的去释放。ps：这个理想状</li>
+<li>态。但是如果碰上异常时，就算注意释放了，还是可能会出问题。需要下一条智能指针来管理才有保证。</li>
+</ul>
+</blockquote>
+<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//1. 采用RAII思想或者智能指针来管理资源。</span></span><br><span class="line">      <span class="function"><span class="keyword">void</span> <span class="title">MemoryLeaks</span><span class="params">()</span></span></span><br><span class="line"><span class="function">       </span>&#123;</span><br><span class="line">       <span class="comment">// 1.内存申请了忘记释放</span></span><br><span class="line">       <span class="keyword">int</span>* p1 = (<span class="keyword">int</span>*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">int</span>));</span><br><span class="line">       <span class="keyword">int</span>* p2 = <span class="keyword">new</span> <span class="keyword">int</span>;</span><br><span class="line">   </span><br><span class="line">    <span class="comment">// 2.异常安全问题</span></span><br><span class="line">   </span><br><span class="line">    <span class="keyword">int</span>* p3 = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">10</span>];</span><br><span class="line">   </span><br><span class="line">    Func(); <span class="comment">// 这里Func函数抛异常导致 delete[] p3未执行，p3没被释放.</span></span><br><span class="line">   </span><br><span class="line">    <span class="keyword">delete</span>[] p3;</span><br><span class="line">   </span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<ul>
+<li>有些公司内部规范使用内部实现的私有内存管理库。这套库自带内存泄漏检测的功能选项。</li>
+<li>出问题了使用内存泄漏工具检测。ps：不过很多工具都不够靠谱，或者收费昂贵。</li>
+</ul>
+</blockquote>
+<ul>
+<li style="list-style: none"><input type="checkbox"> 总结一下:<blockquote>
+<ul>
+<li>内存泄漏非常常见，解决方案分为两种：</li>
+<li>1、事前预防型。如智能指针等。</li>
+<li>2、事后查错型。如泄漏检测工具。</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+<p>7.6 如何一次在堆上申请4G的内存</p>
+<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 将程序编译成x64的进程，运行下面的程序试试？</span></span><br><span class="line">  <span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line">  <span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line">  <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">   <span class="keyword">void</span>* p = <span class="keyword">new</span> <span class="keyword">char</span>[<span class="number">0xffffffff</span>ul];</span><br><span class="line">   <span class="built_in">cout</span> &lt;&lt; <span class="string">"new:"</span> &lt;&lt; p &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">   <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2019/03/17/C++ 内存管理/">C++内存管理</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">jack-wang128801</a></p>
+        <p><span>发布时间:</span>2019-03-17, 10:01:47</p>
+        <p><span>最后更新:</span>2019-03-17, 14:48:40</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2019/03/17/C++ 内存管理/" title="C++内存管理">https://jack-wang128801.github.io/2019/03/17/C++ 内存管理/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://jack-wang128801.github.io/2019/03/17/C++ 内存管理/　　作者: jack-wang128801" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target="_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2019/03/14/C++ 类与对象/">
+                    C ++ 类与对象
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-例题"><span class="toc-number">1.</span> <span class="toc-text">1 . 例题</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#1-选择题：选项-A-栈-B-堆-C-数据段-D-代码段"><span class="toc-number">1.0.0.1.</span> <span class="toc-text">1.选择题：选项: A.栈 B.堆 C.数据段 D.代码段</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#2-填空题："><span class="toc-number">1.0.0.2.</span> <span class="toc-text">2. 填空题：</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#3-总结"><span class="toc-number">1.0.0.3.</span> <span class="toc-text">3.总结</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#3-【说明】"><span class="toc-number">1.0.0.4.</span> <span class="toc-text">3.【说明】</span></a></li></ol></li></ol><li class="toc-item toc-level-3"><a class="toc-link" href="#2-c-语言中动态内存管理方式"><span class="toc-number">2.</span> <span class="toc-text">2. c 语言中动态内存管理方式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-malloc-calloc-realloc和free"><span class="toc-number">2.1.</span> <span class="toc-text">2.1  malloc/calloc/realloc和free</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#2-1-1-malloc"><span class="toc-number">2.1.1.</span> <span class="toc-text">2.1.1 malloc</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-1-2-calloc"><span class="toc-number">2.1.2.</span> <span class="toc-text">2.1.2   calloc</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-1-3-realloc"><span class="toc-number">2.1.3.</span> <span class="toc-text">2.1.3 realloc</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-C-的内存管理方式"><span class="toc-number">2.2.</span> <span class="toc-text">3.C++ 的内存管理方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-new-delete操作内置类型"><span class="toc-number">2.3.</span> <span class="toc-text">3.1 new/delete操作内置类型</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#3-2-new和delete操作自定义类型"><span class="toc-number">2.3.1.</span> <span class="toc-text">3.2 new和delete操作自定义类型</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-operator-new与operator-delete函数"><span class="toc-number">2.4.</span> <span class="toc-text">4. operator new与operator delete函数</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#4-1双向链表中的应用"><span class="toc-number">2.4.1.</span> <span class="toc-text">4.1双向链表中的应用</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#new-delete-总结"><span class="toc-number">2.4.1.1.</span> <span class="toc-text">new\delete\总结</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-new和delete的实现原理"><span class="toc-number">2.5.</span> <span class="toc-text">5.new和delete的实现原理</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#5-1-内置类型"><span class="toc-number">2.5.1.</span> <span class="toc-text">5.1 内置类型</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#5-2-自定义类型"><span class="toc-number">2.5.2.</span> <span class="toc-text">5.2 自定义类型</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-定位new表达式-placement-new"><span class="toc-number">2.6.</span> <span class="toc-text">6.定位new表达式(placement-new)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-常见的面试题"><span class="toc-number">2.7.</span> <span class="toc-text">7.常见的面试题</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#7-1-malloc-free和new-delete的区别"><span class="toc-number">2.7.1.</span> <span class="toc-text">7.1 malloc/free和new/delete的区别</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#7-2-请设计一个类，该类只能在堆上创建对象"><span class="toc-number">2.7.2.</span> <span class="toc-text">7.2  请设计一个类，该类只能在堆上创建对象</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#7-3-请设计一个类，该类只能在栈上创建对象-类似上面"><span class="toc-number">2.7.3.</span> <span class="toc-text">7.3 请设计一个类，该类只能在栈上创建对象(类似上面)</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#方法一："><span class="toc-number">2.7.3.1.</span> <span class="toc-text">方法一：</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#方法二："><span class="toc-number">2.7.3.2.</span> <span class="toc-text">方法二：</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#单例模式-全局唯一一份"><span class="toc-number">2.7.3.3.</span> <span class="toc-text">单例模式:全局唯一一份</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#7-5-内存泄漏"><span class="toc-number">2.7.4.</span> <span class="toc-text">7.5 内存泄漏</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#7-5-1-什么是内存泄漏"><span class="toc-number">2.7.4.1.</span> <span class="toc-text">7.5.1 什么是内存泄漏</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#7-5-2-如何检测内存泄漏"><span class="toc-number">2.7.4.2.</span> <span class="toc-text">7.5.2 如何检测内存泄漏</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#7-5-3如何避免内存泄漏"><span class="toc-number">2.7.4.3.</span> <span class="toc-text">7.5.3如何避免内存泄漏</span></a></li></ol></li></ol></li></ol></li>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录" title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"C++内存管理　| Kano.cn　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2019/03/14/C++ 类与对象/" title="下一篇: C ++ 类与对象">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/03/17/C++ 内存管理/">C++内存管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/14/C++ 类与对象/">C ++ 类与对象</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/14/hello-world/">Hello World</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/14/c 语言版-数据结构(顺序表)/">数据结构</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2019 jack-wang128801
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style="display:none">
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style="display:none">
+                        <span id="page-visit" title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 8;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

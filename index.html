@@ -265,10 +265,10 @@
 </nav>
       <div class="body-wrap">
   
-    <article id="post-C-内存管理" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-C++ 内存管理" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2019/03/17/C-内存管理/" class="article-date">
+      <a href="/2019/03/17/C++ 内存管理/" class="article-date">
       <time datetime="2019-03-17T02:01:47.000Z" itemprop="datePublished">2019-03-17</time>
 </a>
 
@@ -282,7 +282,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/03/17/C-内存管理/">C++内存管理</a>
+      <a class="article-title" href="/2019/03/17/C++ 内存管理/">C++内存管理</a>
     </h1>
   
 
@@ -607,10 +607,10 @@
 
 
   
-    <article id="post-类与对象" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-C++ 类与对象" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2019/03/14/类与对象/" class="article-date">
+      <a href="/2019/03/14/C++ 类与对象/" class="article-date">
       <time datetime="2019-03-14T15:18:39.000Z" itemprop="datePublished">2019-03-14</time>
 </a>
 
@@ -624,7 +624,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/03/14/类与对象/">类与对象</a>
+      <a class="article-title" href="/2019/03/14/C++ 类与对象/">C ++ 类与对象</a>
     </h1>
   
 
@@ -634,14 +634,15 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h4 id="1-类的引入"><a href="#1-类的引入" class="headerlink" title="1.类的引入"></a>1.类的引入</h4><h5 id="1-1-c语言中对结构体的引用"><a href="#1-1-c语言中对结构体的引用" class="headerlink" title="1.1 c语言中对结构体的引用"></a>1.1 c语言中对结构体的引用</h5><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span></span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> data;</span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span>* <span class="title">next</span>;</span></span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span>* <span class="title">prev</span>;</span></span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//类型：struct ListNode</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//c++兼容c语言</span></span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> <span class="title">node</span>;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <h4 id="1-类的引入"><a href="#1-类的引入" class="headerlink" title="1.类的引入"></a>1.类的引入</h4><h5 id="1-1-c语言中对结构体的引用"><a href="#1-1-c语言中对结构体的引用" class="headerlink" title="1.1 c语言中对结构体的引用"></a>1.1 c语言中对结构体的引用</h5><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> data;</span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span>* <span class="title">next</span>;</span></span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span>* <span class="title">prev</span>;</span></span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//类型：struct ListNode</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//c++兼容c语言</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> <span class="title">node</span>;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h5 id="1-2-c-中也可以编过"><a href="#1-2-c-中也可以编过" class="headerlink" title="1.2 c++中也可以编过"></a>1.2 c++中也可以编过</h5><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;windows.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span></span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">int</span> data;</span><br><span class="line"></span><br><span class="line">   ListNode* next;</span><br><span class="line"></span><br><span class="line">   ListNode* prev;</span><br><span class="line"></span><br><span class="line">     <span class="comment">//两个程序中的不同引用方式</span></span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//类型：struct ListNode</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//c++兼容c语言</span></span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> <span class="title">node</span>;</span></span><br><span class="line"></span><br><span class="line">  system(<span class="string">"pause"</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h5 id="1-3-struct的双重身份"><a href="#1-3-struct的双重身份" class="headerlink" title="1.3 struct的双重身份"></a>1.3 struct的双重身份</h5><blockquote>
-<p>1.3.1 c语言中表示结构体。                 类型：struct ListNode   1.3.2 C++中升级成了类。类型：ListNode ，   struct 类里面既可以定义变量，也可以定义函数</p>
+<p>1.3.1 c语言中表示结构体。                 类型：struct ListNode  </p>
+<p> 1.3.2 C++中升级成了类。类型：ListNode ，   struct 类里面既可以定义变量，也可以定义函数</p>
 <p>struct 是公有的，class 是私有的</p>
 </blockquote>
 <h4 id="2-类的定义"><a href="#2-类的定义" class="headerlink" title="2.类的定义"></a>2.类的定义</h4><h5 id="2-1-类的定义方式："><a href="#2-1-类的定义方式：" class="headerlink" title="2.1 类的定义方式："></a>2.1 类的定义方式：</h5><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"> <span class="class"><span class="keyword">class</span> <span class="title">classname</span>&#123;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//类体由成员变量和成员函数组成</span></span><br><span class="line"></span><br><span class="line">    &#125;;  <span class="comment">//一定要注意后面的分号</span></span><br><span class="line"><span class="comment">//class  为关键字，classname 为类的名字 ，&#123;&#125;中的类为主体，注意类定义结束时后面的分号。</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//类中的元素称为类的成员：类的数据称为类的属性或者成员变量；类中的函数称为类的方法或者成员函数</span></span><br></pre></td></tr></table></figure>
-<h5 id="2-2-类的两种定义方式"><a href="#2-2-类的两种定义方式" class="headerlink" title="2.2 类的两种定义方式"></a>2.2 类的两种定义方式</h5><h6 id="2-2-1-声明和定义全都放到类体中"><a href="#2-2-1-声明和定义全都放到类体中" class="headerlink" title="2.2.1 :  声明和定义全都放到类体中"></a>2.2.1 :  声明和定义全都放到类体中</h6><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>&#123;</span></span><br><span class="line"></span><br><span class="line">	       <span class="comment">//成员函数</span></span><br><span class="line">	        <span class="function"><span class="keyword">void</span> <span class="title">fun</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">	    &#125;</span><br><span class="line">	       <span class="comment">//成员变量</span></span><br><span class="line">	      <span class="keyword">int</span> a;</span><br><span class="line">	      <span class="keyword">int</span> b;</span><br><span class="line">	      <span class="keyword">int</span>  c;</span><br><span class="line">       &#125;;</span><br></pre></td></tr></table></figure>
+<h5 id="2-2-类的两种定义方式"><a href="#2-2-类的两种定义方式" class="headerlink" title="2.2 类的两种定义方式"></a>2.2 类的两种定义方式</h5><h6 id="2-2-1-声明和定义全都放到类体中"><a href="#2-2-1-声明和定义全都放到类体中" class="headerlink" title="2.2.1 :  声明和定义全都放到类体中"></a>2.2.1 :  声明和定义全都放到类体中</h6><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>&#123;</span></span><br><span class="line">	       <span class="comment">//成员函数</span></span><br><span class="line">	        <span class="function"><span class="keyword">void</span> <span class="title">fun</span><span class="params">()</span></span>&#123;</span><br><span class="line">	    &#125;</span><br><span class="line">	       <span class="comment">//成员变量</span></span><br><span class="line">	      <span class="keyword">int</span> a;</span><br><span class="line">	      <span class="keyword">int</span> b;</span><br><span class="line">	      <span class="keyword">int</span>  c;</span><br><span class="line">       &#125;;</span><br></pre></td></tr></table></figure>
 <blockquote>
 <ul>
 <li>需要注意的是：成员函数如果在类中定义，编译器可能会将</li>
@@ -859,10 +860,10 @@
 
 
   
-    <article id="post-数据结构" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-c 语言版-数据结构(顺序表)" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2019/03/14/数据结构/" class="article-date">
+      <a href="/2019/03/14/c 语言版-数据结构(顺序表)/" class="article-date">
       <time datetime="2019-03-14T00:18:51.000Z" itemprop="datePublished">2019-03-14</time>
 </a>
 
@@ -876,7 +877,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/03/14/数据结构/">数据结构</a>
+      <a class="article-title" href="/2019/03/14/c 语言版-数据结构(顺序表)/">数据结构</a>
     </h1>
   
 
@@ -920,12 +921,8 @@
 <ul>
 <li style="list-style: none"><input type="checkbox"> 辅助理解<blockquote>
 <ul>
-<li>在销毁时只需要将指向定义数组的指针设置为空(而非将顺序表中的元素一个一个的往掉删除)，并且将记录顺序表中元素数量的 size 置为 0 。<blockquote>
-<ul>
+<li>在销毁时只需要将指向定义数组的指针设置为空(而非将顺序表中的元素一个一个的往掉删除)，并且将记录顺序表中元素数量的 size 置为 </li>
 <li>将申请的空间释放。(必须释放，不然会造成内存泄漏)</li>
-</ul>
-</blockquote>
-</li>
 </ul>
 </blockquote>
 <h5 id="C：增-往顺序表中添加元素"><a href="#C：增-往顺序表中添加元素" class="headerlink" title="C：增(往顺序表中添加元素)"></a>C：增(往顺序表中添加元素)</h5><h6 id="a-头插"><a href="#a-头插" class="headerlink" title="a:头插"></a>a:头插</h6></li>
@@ -935,12 +932,15 @@
 <ul>
 <li style="list-style: none"><input type="checkbox"> 辅助理解<blockquote>
 <ul>
-<li>在进行头插运算时，需要考虑将原来顺序表中的元素从最后一位开始往后挪动一位，防止数据的丢失。<br>(若从第一位开始挪动，则会造成数的丢失。当打印时打印出来的顺序表元素全都是一个数字)</li>
+<li>在进行头插运算时，需要考虑将原来顺序表中的元素从最后一位开始往后挪动一位，防止数据的丢失。</li>
+<li>(若从第一位开始挪动，则会造成数的丢失。当打印时打印出来的顺序表元素全都是一个数字)</li>
 </ul>
 </blockquote>
 </li>
 </ul>
-<p>如下例中将value插入数组首地址时，应按顺序将数组中的元素往后移，然后再家将value的值插入。</p>
+<ul>
+<li style="list-style: none"><input type="checkbox"> 如下例中将value插入数组首地址时，应按顺序将数组中的元素往后移，然后再家将value的值插入。</li>
+</ul>
 <p><img src="https://img-blog.csdnimg.cn/20190314142318278.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY2tfd2FuZzEyODgwMQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
 <h6 id="b-尾插"><a href="#b-尾插" class="headerlink" title="b:尾插"></a>b:尾插</h6><ul>
 <li style="list-style: none"><input type="checkbox"> 代码</li>
@@ -1063,13 +1063,17 @@
                 $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
             }
             else {
-                var backgroundnum = 5;
+                var backgroundnum = 8;
                 var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
                 $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
             }
         })
     </script>
 
+
+    
+
+     
 
 
 
