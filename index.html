@@ -186,7 +186,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">-C++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">-数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a></li></ul>
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">-C++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">-数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a></li></ul>
                     </div>
                 </section>
                 
@@ -264,6 +264,387 @@
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我">
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-C-入门" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2019/03/18/C-入门/" class="article-date">
+      <time datetime="2019-03-18T09:25:52.000Z" itemprop="datePublished">2019-03-18</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/03/18/C-入门/">C++入门</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>c++入门笔记</p>
+<h4 id="4-1基础的C-程序编写"><a href="#4-1基础的C-程序编写" class="headerlink" title="4.1基础的C++程序编写"></a>4.1基础的C++程序编写</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;windows.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="comment">//不写这句会出现cin与cout 未定义的错误</span></span><br><span class="line"> <span class="keyword">namespace</span> N1&#123;</span><br><span class="line">    <span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line">    <span class="keyword">int</span> b = <span class="number">20</span>;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">Add</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span></span>&#123;</span><br><span class="line"><span class="comment">//命名空间中可以有函数的存在</span></span><br><span class="line">        <span class="keyword">return</span> a + b;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">namespace</span> N2&#123;</span><br><span class="line"></span><br><span class="line"><span class="comment">//命名空间中可以出现嵌套式的命名空间</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//引用时只需要注意调用方式即可</span></span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">int</span> <span class="title">Swap</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> x*y;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> a,b;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; a;</span><br><span class="line"></span><br><span class="line"><span class="comment">//c++语言的输入格式</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; b;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"a="</span> &lt;&lt; a &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line"> <span class="comment">//C++语言的输出格式，其中""中间的部分为输出的格式，而后面紧跟的</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//则为输出的内容，“&lt;&lt;endl”表示的是“\n”-&gt;换行符</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt;<span class="string">"b="</span> &lt;&lt;b  &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"a="</span>&lt;&lt;N1::a &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"b="</span> &lt;&lt; N1::b &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"a+b="</span>&lt;&lt;N1::Add(a,b) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"a*b="</span> &lt;&lt; N1::N2::Swap(a, b) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    system(<span class="string">"pause"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>5.函数重载</p>
+<p>​    5.1 概念：c++允许在同一作用域中声明几个功能相似的几个同名函数，这些函数的形参列表（参数的个数或类型或顺序）必须不同，</p>
+<p>​                  常用来处理实现功能类似数据类型不同的问题</p>
+<p>//函数重载实例</p>
+<p>#include<iostream></iostream></p>
+<p>#include&lt;windows.h&gt;</p>
+<p>using namespace std;</p>
+<p>int Add(int a,int b){</p>
+<p>​    return a + b;</p>
+<p>}</p>
+<p>double Add(double a, double b){</p>
+<p>​    //相较第一个而言形参的类型不同</p>
+<p>​    return a + b;</p>
+<p>}</p>
+<p>double Add(double a, int b, float c){</p>
+<p>​    //相较第一个而言形参的类型不同既个数不同</p>
+<p>​    return a + b + c;</p>
+<p>}</p>
+<p>int main(){</p>
+<p>​    int a = 10;</p>
+<p>​    int b = 20;</p>
+<p>​    double c = 2.0;</p>
+<p>​    double d = 3.0;</p>
+<p>​    float f = 3;</p>
+<p>​    cout&lt;&lt;Add(a,b)&lt;&lt;endl;</p>
+<p>​    cout &lt;&lt; Add(c, d) &lt;&lt; endl;</p>
+<p>​    cout &lt;&lt; Add(d, a, f) &lt;&lt; endl;</p>
+<p>​    system(“pause”);</p>
+<p>​    return 0;</p>
+<p>}</p>
+<p>   5.2名字修饰</p>
+<p>​        在c/c++中，一个程序要跑起来需要经历：预处理、编辑、汇编、链接等步骤</p>
+<p>​    5.2.1   预处理：去注释，宏替换，头文件展开</p>
+<p>​    5.2.2   汇编：语法检查，转换成汇编代码</p>
+<p>​    5.2.3   编译：汇编代码————&gt;机器码</p>
+<p>​    5.2.4   链接：生成可执行文件</p>
+<p>​    5.2.5    在Linux下的修饰</p>
+<p>void F1(int a);</p>
+<p>  //——Z2F1I</p>
+<p>​         其中—Z为前缀，2代表函数名有两个字符，F1为函数名，而i(int)为参数的类型的首字母</p>
+<p>void F1(char b);</p>
+<p>//_Z2F1C</p>
+<p>void F1(int a,char b);</p>
+<p>//——Z2F1IC</p>
+<p>​     5.2.6    C语言的名字修饰规则非常简单，只是在函数名字前面加一个下划线(_函数名)，</p>
+<p>​         而在C++文件(xx.cpp)中在函数名字前面加一个  extern “c”既是告诉编辑器该函数按照c语言规则来编译</p>
+<p>extern “c” int Add(int a,int b)</p>
+<p>//一个函数的形式</p>
+<p>​       若需要全部都用C语言的风格来编辑，形式如下</p>
+<p>extern “c”{</p>
+<p>​    C语言代码很多行;</p>
+<p>}</p>
+<p>函数重载总结</p>
+<p>  1   C语言不支持，C++支持</p>
+<p>  2   特点：函数名相同，参数不同(1.类型不同。2.顺序不同 3.参数个数不同)</p>
+<p>  3   C++语言支持重载：函数名修饰规则　name mangling</p>
+<p>  4   C语言中底层函数名：”_” + 函数名</p>
+<p>  5   C++底层函数名： 前缀+函数名+参数类型首字母</p>
+<p>6：引用</p>
+<p>​     6.1 引用概念：引用不是重新定义了一个变量，而是给已经存在的变量取个别名，编译器不会为</p>
+<p>​         引用变量开辟内存空间。它和它引用的变量公用同一块内存空间</p>
+<p>示例代码如下：</p>
+<p>引用格式：类型名&amp; 引用变量名(对象名) = 引用对象</p>
+<p>#include<iostream></iostream></p>
+<p>#include&lt;windows.h&gt;</p>
+<p>using namespace std;</p>
+<p>void Testfun(){</p>
+<p>​    int a = 10;</p>
+<p>​    int &amp;ra = a;</p>
+<p>​    cout &lt;&lt; ra  &lt;&lt; endl;</p>
+<p>​    //结果出现一个10</p>
+<p>​    cout &lt;&lt; ra &lt;&lt;endl&lt;&lt; a&lt;&lt;endl;</p>
+<p>​    //结果出现两个10</p>
+<p>}</p>
+<p>int main(){</p>
+<p>​    Testfun();</p>
+<p>​    system(“pause”);</p>
+<p>​    return 0;</p>
+<p>}</p>
+<p>监视结果：&amp;ra=&amp;a,ra=a=10;</p>
+<p>注意点： 引用类型和引用实体必须是相同类型的</p>
+<p>​        上例中如果出现  double &amp;ra=a;  则会报错</p>
+<p>​    6.2 引用特性</p>
+<p>​        1.引用在定义时必须初始化</p>
+<p>​        错误示例： int &ra;</p>
+<p>​        2.一个变量可以有多个引用</p>
+<p>​        正确示例：</p>
+<p>​        int a=10;</p>
+<p>​        int &amp;ra=a;</p>
+<p>​        int &amp;rra=a;</p>
+<p>​        int &amp;rrra=a;</p>
+<p>​        3.引用一旦引用一个实体则不能在引用其他实体</p>
+<p>​    6.3 常引用</p>
+<p>​    void TestContRef(){</p>
+<p>​        const int a=10;</p>
+<p>​        //int &amp; ra=1;   //该语句编译时出错，a为常量</p>
+<p>​        const int &amp;ra=a;</p>
+<p>​        //int&amp; b=10;    //该语句编译时出错，b为常量</p>
+<p>​        const int&amp; b=10;</p>
+<p>​        double d=12.34;</p>
+<p>​        const int&amp; rd==d;</p>
+<p>​        //隐式类型转换—&gt;临时变量具有常性</p>
+<p>​        int c=d;</p>
+<p>​        //int&amp; rd=d;     //该语句编译时出错，类型不同</p>
+<p>​        const int&amp; rd=d;</p>
+<p>​        </p>
+<p>​    }</p>
+<p>​    6.4   使用场景</p>
+<p>​    1. 做参数</p>
+<p>​            传指针和传引用效果一样；</p>
+<p>​        示例代码：</p>
+<p>#include<iostream></iostream></p>
+<p>#include&lt;windows.h&gt;</p>
+<p>using namespace std;</p>
+<p>void Swap(int <em>pa,int </em>pb){</p>
+<p>​    int tmp = *pa;</p>
+<p>​    <em>pa = </em>pb;</p>
+<p>​    *pb = tmp;</p>
+<p>}</p>
+<p>void Swap(int &amp;ra,int &amp;rb){</p>
+<p>​    int tmp = ra;</p>
+<p>​    ra = rb;</p>
+<p>​    rb = tmp;</p>
+<p>}</p>
+<p>int main(){</p>
+<p>​    int a = 10;</p>
+<p>​    int b = 20;</p>
+<p>​    Swap(a, b);</p>
+<p>​    Swap(&amp;a, &amp;b);</p>
+<p>​    system(“pause”);</p>
+<p>​    return 0;</p>
+<p>}</p>
+<p>​        </p>
+<p>​        2.做返回值</p>
+<p>​        #include<iostream></iostream></p>
+<p>​        #include&lt;windows.h&gt;</p>
+<p>​        using namespace std;</p>
+<p>​        int&amp; Testfuc(int &amp;a){</p>
+<p>​            a+=10;</p>
+<p>​            return 0;</p>
+<p>​        }</p>
+<p>​        </p>
+<p>​          int main(){</p>
+<p>​          int a = 10;</p>
+<p>​          int &amp;ra=Testfuc(a);</p>
+<p>​          system(“pause”);</p>
+<p>​          return 0;</p>
+<p>​         }</p>
+<p>​         注意：如果函数返时，离开函数作用域后，其栈上空间已经还给了系统，因此不能用栈上的</p>
+<p>​         空间做为引用类型的返回，如果函数类型返回，返回值的生命周期必须不受函数的限制(既函数周期比较长)</p>
+<p>#include<iostream></iostream></p>
+<p>#include&lt;windows.h&gt;</p>
+<p>#include&lt;time.h&gt;</p>
+<p>using namespace std;</p>
+<p>int main(){</p>
+<p>​    size_t beginl = clock();</p>
+<p>​    for (int i = 0; i &lt; 10000; i++){</p>
+<p>​        cout &lt;&lt; “i=” &lt;&lt; i &lt;&lt; endl;</p>
+<p>​    }</p>
+<p>​    size_t endl = clock();</p>
+<p>​    cout &lt;&lt; (endl- beginl) /CLOCKS_PER_SEC&lt;&lt; endl;</p>
+<p>​        system(“pause”);</p>
+<p>​    return 0;</p>
+<p>}</p>
+<p>//以毫秒的形式输出循环的执行时间</p>
+<p>​           引用传值的效率高于值拷贝的形式；</p>
+<p>6.6 指针与引用的区别</p>
+<p>引用语法层面：和指针指向同一块内存空间，引用没有开辟新的空间</p>
+<p>引用底层实现：引用开辟新的空间，和指针的的实现相同</p>
+<p>int a=10;                               inta=10;</p>
+<p>mov  dword ptr [a], OAh                  mov      dword ptr [a], 0Ah</p>
+<p>int&amp; ra = a;                             int* pa = &a;</p>
+<p>lea       eax, [a]                       lea  еах,[a]</p>
+<p> mov      dword ptr [ra], eax            mov  dword ptr [pa], eax</p>
+<p>ra = 20;                                 *pa = 20；</p>
+<p>mov       eax, dword ptr [ra]             mov    eax, dword ptr[ра]</p>
+<p>mov       dword ptr [eax], 14h            mov    dword ptr [eax], 14h </p>
+<p>引用和指针的不同点:</p>
+<p>6.6.1. 引用在定义时必须初始化，指针没有要求</p>
+<p>6.6.2. 引用在初始化时引用一个实体后，就不能再引用其他实体，而指针可以在任何时候指向任何一个同类型实</p>
+<p>体</p>
+<p>6.6.3. 没有NULL引用，但有NULL指针</p>
+<p>6.6.4. 在sizeof中含义不同：引用结果为引用类型的大小，但指针始终是地址空间所占字节个数(32位平台下占4</p>
+<p>个字节)</p>
+<p>cout &lt;&lt; sizeof(*a)&lt;&lt;endl;   //结果为4</p>
+<p>6.6.5. 引用自加即引用的实体增加1，指针自加即指针向后偏移一个类型的大小</p>
+<p>6.6.6. 有多级指针，但是没有多级引用</p>
+<p>6.6.7. 访问实体方式不同，指针需要显式解引用，引用编译器自己处理</p>
+<p>6.6.8. 引用比指针使用起来相对更安全</p>
+<p>7.内联函数</p>
+<p>7.1 概念：以inline修饰的函数叫做内联函数，编译时C++编译器会在调用内联函数的地方展开，没有函数压栈的开销，</p>
+<p>内联函数提升程序运行的效率。</p>
+<p>inline Add(int a,int b){</p>
+<p>​    return a+b;</p>
+<p>}</p>
+<p>int main(){</p>
+<p>​    int ret=Add(1,3) ——-&gt;</p>
+<p>​    return 0;</p>
+<p>}</p>
+<p>面试题：</p>
+<p>【面试题】宏的优缺点？</p>
+<p>优点：</p>
+<p>1.增强代码的复用性。</p>
+<p>2.提高性能。</p>
+<p>缺点：</p>
+<p>1.不方便调试宏。（因为预编译阶段进行了替换2.导致代码可读性差，可维护性差，容易误用。</p>
+<p>3.没有类型安全的检查 。</p>
+<p>C++有哪些技术替代宏</p>
+<p>\1. 常量定义 换用const</p>
+<p>\2. 函数定义 换用内联函数</p>
+<p>8.关键字auto</p>
+<p>特点：使用auto定义变量时必须对其进行初始化，在编译阶段编译器需要根据初始化表达式来推导auto的实际类</p>
+<p>型。因此auto并非是一种“类型”的声明，而是一个类型声明时的“占位符”，编译器在编译期会将auto替换为变</p>
+<p>量实际的类型。</p>
+<p>#include<iostream></iostream></p>
+<p>#include&lt;windows.h&gt;</p>
+<p>using namespace std;</p>
+<p>int main(){</p>
+<p>​    int a = 10;</p>
+<p>​    auto b = a;</p>
+<p>​    double c = 20.3;</p>
+<p>​    auto d = c;</p>
+<p>​    cout &lt;&lt; typeid(a).name() &lt;&lt; endl;</p>
+<p>​    cout &lt;&lt; typeid(b).name() &lt;&lt; endl;</p>
+<p>​    cout &lt;&lt; typeid(c).name() &lt;&lt; endl;</p>
+<p>​    cout &lt;&lt; typeid(d).name() &lt;&lt; endl;</p>
+<p>​    system(“pause”);</p>
+<p>​    return 0;</p>
+<p>}</p>
+<p>//显示出了类型的名称</p>
+<p>8.2 使用规则</p>
+<p>8.2.1. auto与指针和引用结合起来使用</p>
+<p>用auto声明指针类型时，用auto和auto*没有任何区别，但用auto声明引用类型时则必须加&amp;</p>
+<p>int main()</p>
+<p>{</p>
+<p>​    int x = 10;</p>
+<p>​    auto a = &x;</p>
+<p>​    auto* b = &x;</p>
+<p>​    auto&amp; c = x;</p>
+<p>​    cout &lt;&lt; typeid(a).name() &lt;&lt; endl;</p>
+<p>​    cout &lt;&lt; typeid(b).name() &lt;&lt; endl;</p>
+<p>​    cout &lt;&lt; typeid(c).name() &lt;&lt; endl;</p>
+<p>​    *a = 20;</p>
+<p>​    *b = 30;</p>
+<p>​     c = 40;</p>
+<p>​    return 0;</p>
+<p>}</p>
+<p>8.2.2 在同一行定义多个变量</p>
+<p>当在同一行声明多个变量时，这些变量必须是相同的类型，否则编译器将会报错，因为编译器实际只对第一个</p>
+<p>类型进行推导，然后用推导出来的类型定义其他变量。</p>
+<p>void TestAuto()</p>
+<p>{</p>
+<p>​    auto a = 1, b = 2; </p>
+<p>​    auto c = 3, d = 4.0;  // 该行代码会编译失败，因为c和d的初始化表达式类型不同</p>
+<p>}</p>
+<p>若同一个程序中同时定义了多个 auto ，其会根据第一个变量表达式去推导类型。</p>
+<p>8.3 auto不能推导的场景。</p>
+<p>8.3.1   auto不能做函数的参数</p>
+<p>// 此处代码编译失败，auto不能作为形参类型，因为编译器无法对a的实际类型进行推导</p>
+<p>void TestAuto(auto a)</p>
+<p>{}</p>
+<p>8.3.2  auto不能直接用来声明</p>
+<p>void TestAuto()</p>
+<p>{</p>
+<p>​    int a[] = {1,2,3};</p>
+<p>​    auto b[] = {4，5，6};</p>
+<p>}</p>
+<p>\9. 基于范围的for循环(C++11)</p>
+<p>9.1  </p>
+<p>for循环后的括号由冒号“ ：”分为两部分：第一部分是范围内用于迭代的变量，第二</p>
+<p>部分则表示被迭代的范围。</p>
+<p>#include<iostream></iostream></p>
+<p>#include&lt;windows.h&gt;</p>
+<p>using namespace std;</p>
+<p>int main(){</p>
+<p>​    int arr[] = {1,2,3,4,5,6,7,8,9};</p>
+<p>​    int size = sizeof(arr) / sizeof(arr[0]);</p>
+<p>​    int i = 0;</p>
+<p>​    for (; i &lt; size; i++){</p>
+<p>​        cout &lt;&lt; “arr1[i]=” &lt;&lt; arr[i] &lt;&lt; endl;</p>
+<p>​    }</p>
+<p>​    cout &lt;&lt; endl;</p>
+<p>​    for (int e : arr){</p>
+<p>​        cout &lt;&lt; “arr2[i]=” &lt;&lt; e &lt;&lt; endl;</p>
+<p>​    }</p>
+<p>​    cout &lt;&lt; endl;</p>
+<p>​    for (auto&amp; e : arr){</p>
+<p>​        cout &lt;&lt; “arr3[i]=” &lt;&lt;e &lt;&lt; endl;</p>
+<p>​    }</p>
+<p>​    system(“pause”);</p>
+<p>​    return 0;</p>
+<p>}</p>
+<p>注意：与普通循环类似，可以用continue来结束本次循环，也可以用break来跳出整个循环</p>
+<p>9.2 范围for的使用条件</p>
+<p>\1. for循环迭代的范围必须是确定的</p>
+<p>对于数组而言，就是数组中第一个元素和最后一个元素的范围；对于类而言，应该提供begin和end的方法，</p>
+<p>begin和end就是for循环迭代的范围。</p>
+<p>注意：以下代码就有问题，因为for的范围不确定</p>
+<p>void TestFor(int array[]) </p>
+<p>{ </p>
+<p> for(auto&amp; e : array) </p>
+<p> cout&lt;&lt; e &lt;&lt;endl; </p>
+<p>}</p>
+<p>10.指针空值nullptr(C++11)</p>
+<p>#include<iostream></iostream></p>
+<p>#include&lt;windows.h&gt;</p>
+<p>using namespace std;</p>
+<p>int main(){</p>
+<p>​    int *p = NULL;</p>
+<p>​    int *pp = nullptr;</p>
+<p>​    cout &lt;&lt; typeid(pp).name() &lt;&lt; endl;</p>
+<p>​    cout &lt;&lt; typeid(nullptr).name() &lt;&lt; endl;</p>
+<p>​    system(“pause”);</p>
+<p>​    return 0;</p>
+<p>}</p>
+<p>结果如下： </p>
+<p>//int *</p>
+<p>//std::nullptr_t</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/c-入门/">c++ 入门</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-链表" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -406,7 +787,7 @@
 </ul>
 </blockquote>
 <figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">realloc</span><span class="params">(<span class="keyword">int</span> *ptr,<span class="keyword">int</span> size)</span></span></span><br><span class="line"><span class="function">        <span class="comment">//ptr 指向需要调整的空间，而size 表示需要的空间大小</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">    <span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span></span><br><span class="line"><span class="function">    <span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> *pi=(<span class="keyword">int</span> *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">int</span> )*<span class="number">20</span>);</span><br><span class="line">        <span class="comment">//申请动态内存</span></span><br><span class="line">        <span class="built_in">free</span>(pi);</span><br><span class="line">        <span class="comment">//将申请的内存释放掉</span></span><br><span class="line">        <span class="keyword">char</span> *pc=(<span class="keyword">char</span> *)<span class="built_in">malloc</span>(<span class="number">20</span>);</span><br><span class="line">        <span class="keyword">char</span> *ppc=(<span class="keyword">char</span> *)<span class="built_in">realloc</span>(pc,<span class="number">40</span>);</span><br><span class="line">        <span class="comment">//free(pc); 释放pc 不保险</span></span><br><span class="line">        <span class="built_in">free</span>(ppc);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<h4 id="3-C-的内存管理方式"><a href="#3-C-的内存管理方式" class="headerlink" title="3.C++ 的内存管理方式"></a>3.C++ 的内存管理方式</h4><ul>
+<h3 id="3-C-的内存管理方式"><a href="#3-C-的内存管理方式" class="headerlink" title="3.C++ 的内存管理方式"></a>3.C++ 的内存管理方式</h3><ul>
 <li style="list-style: none"><input type="checkbox"> C语言内存管理方式在C++中可以继续使用，但有些地方就无能为力而且使用起来比较麻烦，因此C++又提出了自己的内存管理方式：通过new和delete操作符进行动态内存管理。</li>
 </ul>
 <h4 id="3-1-new-delete操作内置类型"><a href="#3-1-new-delete操作内置类型" class="headerlink" title="3.1 new/delete操作内置类型"></a>3.1 new/delete操作内置类型</h4><figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line">   <span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line">   <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">   	<span class="keyword">int</span> *pa = <span class="keyword">new</span> <span class="keyword">int</span>;</span><br><span class="line">   	<span class="comment">//new 为关键字， 而int 为需要申请的空间类型 </span></span><br><span class="line">   	<span class="keyword">int</span> *pb = <span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">1</span>);</span><br><span class="line">       <span class="comment">//申请一块空间，并且初始值赋为 1</span></span><br><span class="line">   	<span class="keyword">delete</span> pb;</span><br><span class="line">   	<span class="comment">//c++释放单个空间的方式</span></span><br><span class="line">   	<span class="keyword">int</span> *pc = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">10</span>];</span><br><span class="line">   	<span class="comment">//申请一块连续的空间，空间为10个int类型的空间大小为 40 字节</span></span><br><span class="line">   	<span class="keyword">delete</span>[]pc;</span><br><span class="line">   	<span class="comment">//c++释放连续空间的方式</span></span><br><span class="line">   	<span class="comment">//new/delete     new[]/delete []</span></span><br><span class="line">   	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
@@ -425,7 +806,7 @@
 <li>注意：在申请自定义类型的空间时，new会调用构造函数，delete会调用析构函数，而malloc与free不会</li>
 </ul>
 </blockquote>
-<h4 id="4-operator-new与operator-delete函数"><a href="#4-operator-new与operator-delete函数" class="headerlink" title="4. operator new与operator delete函数"></a>4. operator new与operator delete函数</h4><blockquote>
+<h3 id="4-operator-new与operator-delete函数"><a href="#4-operator-new与operator-delete函数" class="headerlink" title="4. operator new与operator delete函数"></a>4. operator new与operator delete函数</h3><blockquote>
 <p>new和delete是用户进行动态内存申请和释放的操作符，operator new 和operator delete是系统提供的全局函数，new在底层调用operator new全局函数来申请空间，delete在底层通过operator delete全局函数来释放空间。</p>
 </blockquote>
 <figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">   operator new：该函数实际通过malloc来申请空间，当malloc申请空间成功时直接返回；申请空间失败，尝试</span></span><br><span class="line"><span class="comment">   执行空 间不足应对措施，如果改应对措施用户设置了，则继续申请，否则抛异常。</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">   <span class="keyword">void</span> *__<span class="function">CRTDECL <span class="keyword">operator</span> <span class="title">new</span><span class="params">(<span class="keyword">size_t</span> size)</span> _<span class="title">THROW1</span><span class="params">(_STD bad_alloc)</span></span></span><br><span class="line"><span class="function">   </span>&#123;</span><br><span class="line">    <span class="comment">// try to allocate size bytes</span></span><br><span class="line">    <span class="keyword">void</span> *p;</span><br><span class="line">    <span class="keyword">while</span> ((p = <span class="built_in">malloc</span>(size)) == <span class="number">0</span>)</span><br><span class="line">    <span class="keyword">if</span> (_callnewh(size) == <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">    <span class="comment">// report no memory</span></span><br><span class="line">    <span class="comment">// 如果申请内存失败了，这里会抛出bad_alloc 类型异常</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">const</span> <span class="built_in">std</span>::bad_alloc nomem;</span><br><span class="line">    _RAISE(nomem);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> (p);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
@@ -455,7 +836,7 @@
 <li>free: free</li>
 </ul>
 </blockquote>
-<h4 id="5-new和delete的实现原理"><a href="#5-new和delete的实现原理" class="headerlink" title="5.new和delete的实现原理"></a>5.new和delete的实现原理</h4><h5 id="5-1-内置类型"><a href="#5-1-内置类型" class="headerlink" title="5.1 内置类型"></a>5.1 内置类型</h5><blockquote>
+<h3 id="5-new和delete的实现原理"><a href="#5-new和delete的实现原理" class="headerlink" title="5.new和delete的实现原理"></a>5.new和delete的实现原理</h3><h5 id="5-1-内置类型"><a href="#5-1-内置类型" class="headerlink" title="5.1 内置类型"></a>5.1 内置类型</h5><blockquote>
 <ul>
 <li>如果申请的是内置类型的空间，new和malloc，delete和free基</li>
 <li>本类似，不同的地方是：new/delete申请和释放的是单个元素的</li>
@@ -494,7 +875,7 @@
 </blockquote>
 </li>
 </ul>
-<h4 id="6-定位new表达式-placement-new"><a href="#6-定位new表达式-placement-new" class="headerlink" title="6.定位new表达式(placement-new)"></a>6.定位new表达式(placement-new)</h4><blockquote>
+<h3 id="6-定位new表达式-placement-new"><a href="#6-定位new表达式-placement-new" class="headerlink" title="6.定位new表达式(placement-new)"></a>6.定位new表达式(placement-new)</h3><blockquote>
 <ul>
 <li>定位new表达式是在已分配的原始内存空间中调用构造函数初始化一个对象。</li>
 </ul>
@@ -516,7 +897,7 @@
 </ul>
 <figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span></span></span><br><span class="line"><span class="class">   &#123;</span></span><br><span class="line">   <span class="keyword">public</span>:</span><br><span class="line">    Test()</span><br><span class="line">    : _data(<span class="number">0</span>)       <span class="comment">//初始化表达式</span></span><br><span class="line">    &#123;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"Test():"</span>&lt;&lt;<span class="keyword">this</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    ~Test()</span><br><span class="line">    &#123;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"~Test():"</span>&lt;&lt;<span class="keyword">this</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">   <span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">int</span> _data;</span><br><span class="line">   &#125;;</span><br><span class="line">   <span class="function"><span class="keyword">void</span> <span class="title">Test</span><span class="params">()</span></span></span><br><span class="line"><span class="function">   </span>&#123;</span><br><span class="line">    <span class="comment">// pt现在指向的只不过是与Test对象相同大小的一段空间，还不能算是一个对象，因为构造函数没有执行</span></span><br><span class="line">    Test* pt = (Test*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Test));</span><br><span class="line">    <span class="keyword">new</span>(pt) Test; <span class="comment">// 注意：如果Test类的构造函数有参数时，此处需要传参</span></span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">//初始化表达式使用的例子</span></span><br><span class="line">   <span class="class"><span class="keyword">class</span> <span class="title">Date</span>&#123;</span></span><br><span class="line">       <span class="keyword">public</span>:</span><br><span class="line">       Date(<span class="keyword">int</span> year=<span class="number">1900</span>,<span class="keyword">int</span> month=<span class="number">1</span>,<span class="keyword">int</span> day=<span class="number">1</span>)            </span><br><span class="line">           :_year(year)     </span><br><span class="line">            ,_month(month)<span class="comment">//初始化表达式使用的例子</span></span><br><span class="line">               ,_day(day)</span><br><span class="line">           &#123;&#125;</span><br><span class="line">       <span class="keyword">private</span>:</span><br><span class="line">       <span class="keyword">int</span> _year;</span><br><span class="line">       <span class="keyword">int</span> _month;</span><br><span class="line">       <span class="keyword">int</span> _day;</span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line">   <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">       Date* pd=(Date*) <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Date));</span><br><span class="line">       Date* pd2=(Date*) <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Date));</span><br><span class="line">       <span class="comment">//pd2的值是随机的</span></span><br><span class="line">       <span class="keyword">new</span>(pd)Date;             <span class="comment">//不带参</span></span><br><span class="line">       <span class="keyword">new</span>(pd2)Date（<span class="number">1939</span>，<span class="number">2</span>，<span class="number">3</span>）; <span class="comment">//带参</span></span><br><span class="line">       <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>&#123;</span></span><br><span class="line">       <span class="keyword">int</span> a;</span><br><span class="line">   &#125;;</span><br><span class="line">   </span><br><span class="line">   <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">       A* pa =<span class="keyword">new</span> A;</span><br><span class="line">       <span class="keyword">delete</span> pa;<span class="comment">//delete释放指针指向的那一快堆上的空间</span></span><br><span class="line">       <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-<h4 id="7-常见的面试题"><a href="#7-常见的面试题" class="headerlink" title="7.常见的面试题"></a>7.常见的面试题</h4><h5 id="7-1-malloc-free和new-delete的区别"><a href="#7-1-malloc-free和new-delete的区别" class="headerlink" title="7.1 malloc/free和new/delete的区别"></a>7.1 malloc/free和new/delete的区别</h5><blockquote>
+<h3 id="7-常见的面试题"><a href="#7-常见的面试题" class="headerlink" title="7.常见的面试题"></a>7.常见的面试题</h3><h5 id="7-1-malloc-free和new-delete的区别"><a href="#7-1-malloc-free和new-delete的区别" class="headerlink" title="7.1 malloc/free和new/delete的区别"></a>7.1 malloc/free和new/delete的区别</h5><blockquote>
 <ul>
 <li>malloc/free和new/delete的共同点是：都是从堆上申请空间，并且需要用户手动释放。不同的地方是：</li>
 </ul>
