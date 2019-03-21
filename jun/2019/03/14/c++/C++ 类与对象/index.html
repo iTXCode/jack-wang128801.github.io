@@ -1,0 +1,319 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>C ++ 类与对象 | Hexo</title>
+  <meta name="author" content="John Doe">
+  
+  <meta name="description" content="1.类的引入1.1 c语言中对结构体的引用12345678910111213141516171819202122struct ListNode&amp;#123;    int data;    struct ListNode* next;    struct ListNode* prev;&amp;#125;;/">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="C ++ 类与对象">
+  <meta property="og:site_name" content="Hexo">
+
+  
+    <meta property="og:image" content>
+  
+
+  
+    <link rel="alternative" href="/jun/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link href="/jun/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/jun/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/responsive.css" media="screen" type="text/css">  
+  <link rel="stylesheet" href="/jun/css/sidenav.css" media="screen" type="text/css">  
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/jun/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+</head>
+</html>
+<body id="body" data-spy="scroll" data-target=".toc">
+  <div class="container" id="container">
+	<div class="content">
+	  <div class="page-header">		
+  <h1><a class="brand" href="/jun/">Hexo</a><span class="split"></span><span class="title">C ++ 类与对象</span><span class="date" id="title-date"><i class="fa fa-clock-o"></i> 2019-03-14</span></h1>
+</div>		
+
+<div class="row page">
+  <!-- cols -->	
+  
+  
+
+  
+	<div class="col-md-12">
+	  
+
+	  <!-- content -->
+	  <h4 id="1-类的引入"><a href="#1-类的引入" class="headerlink" title="1.类的引入"></a>1.类的引入</h4><h5 id="1-1-c语言中对结构体的引用"><a href="#1-1-c语言中对结构体的引用" class="headerlink" title="1.1 c语言中对结构体的引用"></a>1.1 c语言中对结构体的引用</h5><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> data;</span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span>* <span class="title">next</span>;</span></span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span>* <span class="title">prev</span>;</span></span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//类型：struct ListNode</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//c++兼容c语言</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> <span class="title">node</span>;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="1-2-c-中也可以编过"><a href="#1-2-c-中也可以编过" class="headerlink" title="1.2 c++中也可以编过"></a>1.2 c++中也可以编过</h5><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;windows.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span></span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">int</span> data;</span><br><span class="line"></span><br><span class="line">   ListNode* next;</span><br><span class="line"></span><br><span class="line">   ListNode* prev;</span><br><span class="line"></span><br><span class="line">     <span class="comment">//两个程序中的不同引用方式</span></span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//类型：struct ListNode</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//c++兼容c语言</span></span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> <span class="title">node</span>;</span></span><br><span class="line"></span><br><span class="line">  system(<span class="string">"pause"</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="1-3-struct的双重身份"><a href="#1-3-struct的双重身份" class="headerlink" title="1.3 struct的双重身份"></a>1.3 struct的双重身份</h5><ul>
+<li style="list-style: none"><input type="checkbox"> 1.3.1 c语言中表示结构体。                 类型：struct ListNode  </li>
+</ul>
+<ul>
+<li style="list-style: none"><input type="checkbox"> 1.3.2 C++中升级成了类。类型：ListNode ，   struct 为关键字，而</li>
+<li style="list-style: none"><input type="checkbox"> LIstnode为类名,就可以当作类型</li>
+<li><p>[ ] struct 类里面既可以定义变量，也可以定义函数.</p>
+</li>
+<li><p>[ ] struct 与 class的区别是啥？</p>
+</li>
+<li style="list-style: none"><input type="checkbox"> struct 在c语言阶段就是一个结构体，而在c++中做为类存在。</li>
+<li style="list-style: none"><input type="checkbox"> class在c++中就是一个类，</li>
+<li style="list-style: none"><input type="checkbox"> 两者做为类在c++中的区别是什么？</li>
+<li style="list-style: none"><input type="checkbox"> struct 是公有的，class 是私有的</li>
+</ul>
+<h4 id="2-类的定义"><a href="#2-类的定义" class="headerlink" title="2.类的定义"></a>2.类的定义</h4><h5 id="2-1-类的定义方式："><a href="#2-1-类的定义方式：" class="headerlink" title="2.1 类的定义方式："></a>2.1 类的定义方式：</h5><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"> <span class="class"><span class="keyword">class</span> <span class="title">classname</span>&#123;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//类体由成员变量和成员函数组成</span></span><br><span class="line"></span><br><span class="line">    &#125;;  <span class="comment">//一定要注意后面的分号</span></span><br><span class="line"><span class="comment">//class  为关键字，classname 为类的名字 ，&#123;&#125;中的类为主体，注意类定义结束时后面的分号。</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//类中的元素称为类的成员：类的数据称为类的属性或者成员变量；类中的函数称为类的方法或者成员函数</span></span><br></pre></td></tr></table></figure>
+<h5 id="2-2-类的两种定义方式"><a href="#2-2-类的两种定义方式" class="headerlink" title="2.2 类的两种定义方式"></a>2.2 类的两种定义方式</h5><h6 id="2-2-1-声明和定义全都放到类体中"><a href="#2-2-1-声明和定义全都放到类体中" class="headerlink" title="2.2.1 :  声明和定义全都放到类体中"></a>2.2.1 :  声明和定义全都放到类体中</h6><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>&#123;</span></span><br><span class="line">	       <span class="comment">//成员函数</span></span><br><span class="line">	        <span class="function"><span class="keyword">void</span> <span class="title">fun</span><span class="params">()</span></span>&#123;</span><br><span class="line">	    &#125;</span><br><span class="line">	       <span class="comment">//成员变量</span></span><br><span class="line">	      <span class="keyword">int</span> a;</span><br><span class="line">	      <span class="keyword">int</span> b;</span><br><span class="line">	      <span class="keyword">int</span>  c;</span><br><span class="line">       &#125;;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<ul>
+<li>需要注意的是：成员函数如果在类中定义，编译器可能会将</li>
+<li>其当成内联函数处理</li>
+</ul>
+</blockquote>
+<p><img src="https://wx3.sinaimg.cn/mw690/0071OE7sly1g19gea3dvaj30iv0dgta0.jpg" alt></p>
+<h6 id="2-2-1-1-；声明和定义全都放到类体中"><a href="#2-2-1-1-；声明和定义全都放到类体中" class="headerlink" title="2.2.1.1 ；声明和定义全都放到类体中"></a>2.2.1.1 ；声明和定义全都放到类体中</h6><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>&#123;</span></span><br><span class="line">         <span class="comment">//成员函数</span></span><br><span class="line">          <span class="function"><span class="keyword">void</span> <span class="title">fun</span><span class="params">()</span></span>&#123;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">         <span class="comment">//成员变量</span></span><br><span class="line">        <span class="keyword">int</span> a;</span><br><span class="line">        <span class="keyword">int</span> b;</span><br><span class="line">        <span class="keyword">int</span>  c;</span><br><span class="line">  &#125;;</span><br></pre></td></tr></table></figure>
+<h6 id="2-2-1-2-在类里面声明在外定义"><a href="#2-2-1-2-在类里面声明在外定义" class="headerlink" title="2.2.1.2 :在类里面声明在外定义"></a>2.2.1.2 :在类里面声明在外定义</h6><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span>&#123;</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">fun</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    &#125;;</span><br><span class="line">     <span class="keyword">void</span> B::fun()&#123;</span><br><span class="line">       <span class="comment">//::作用域限定符</span></span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure>
+<h6 id="2-2-2-声明在-h中，类的定义在-cpp中"><a href="#2-2-2-声明在-h中，类的定义在-cpp中" class="headerlink" title="2.2.2:声明在.h中，类的定义在.cpp中"></a>2.2.2:声明在.h中，类的定义在.cpp中</h6><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//b.h</span></span><br><span class="line"> <span class="class"><span class="keyword">class</span> <span class="title">B</span>&#123;</span></span><br><span class="line">     <span class="function"><span class="keyword">void</span> <span class="title">fun</span><span class="params">()</span> </span>;</span><br><span class="line"> &#125;;</span><br><span class="line"> <span class="comment">//b.cpp  #include "p.h"</span></span><br><span class="line"> <span class="keyword">void</span> B::fun()&#123;</span><br><span class="line"> <span class="comment">//::作用域解析符</span></span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://wx1.sinaimg.cn/mw690/0071OE7sly1g19gmh105tj30ku08rmza.jpg" alt></p>
+<h4 id="3-类的访问限定符及封装"><a href="#3-类的访问限定符及封装" class="headerlink" title="3.类的访问限定符及封装"></a>3.类的访问限定符及封装</h4><h5 id="3-1-访问限定符"><a href="#3-1-访问限定符" class="headerlink" title="3.1 访问限定符"></a>3.1 访问限定符</h5><blockquote>
+<ul>
+<li>C++实现封装的方式：用类将对象的属性与方法结合在一</li>
+<li>块，让对象更加完善，通过访问权限选择性的将其</li>
+<li>接口提供给外部的用户使用。</li>
+</ul>
+</blockquote>
+<ul>
+<li style="list-style: none"><input type="checkbox"> <strong><em>访问限定符； 1.public(公有)   2.protected(保护)  3.private (私有)</em></strong></li>
+</ul>
+<p>​  </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>&#123;</span></span><br><span class="line">     <span class="keyword">public</span>:</span><br><span class="line">        <span class="comment">//公有成员函数</span></span><br><span class="line">         <span class="function"><span class="keyword">void</span> <span class="title">fun</span><span class="params">()</span></span>&#123;</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">private</span>:</span><br><span class="line">        <span class="comment">//私有成员变量</span></span><br><span class="line">       <span class="keyword">int</span> a;</span><br><span class="line">       <span class="keyword">int</span> b;</span><br><span class="line">       <span class="keyword">int</span>  c;</span><br><span class="line">      &#125;;</span><br><span class="line">      <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">     A x;</span><br><span class="line">     x.fun(); <span class="comment">//可以访问到</span></span><br><span class="line">     x.b;<span class="comment">//访问不到b</span></span><br><span class="line">     <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">     &#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<ul>
+<li>被访问限定符修饰的变量或函数在类里面是通用的，在类外</li>
+<li>面private 修饰的变量或者函数在类外面不可以访问。</li>
+<li>私有限定的是你不能类外面修改类内部的东西，而在类内部可修改</li>
+</ul>
+</blockquote>
+<p><img src="https://wx2.sinaimg.cn/mw690/0071OE7sly1g19h5fmlc8j30jk08l3z5.jpg" alt></p>
+<h6 id="【访问限定符说明】"><a href="#【访问限定符说明】" class="headerlink" title="【访问限定符说明】"></a>【访问限定符说明】</h6><hr>
+<ol>
+<li>public 修饰的成员在类外可以直接被访问</li>
+</ol>
+<p>​   2. protected 和 private 修饰的成员在类外不能直接被访问(此处                protected 和 private 是类似的)</p>
+<ol start="3">
+<li>访问权限作用域从该访问限定符出现的位置开始直到下一个访问限定符出现时为止</li>
+<li>​ class的默认访问权限为 private ， struct 为 public(因为struct要兼容C)</li>
+</ol>
+<hr>
+<blockquote>
+<ul>
+<li><p>注意：访问限定符只在编译时有用，当数据映射到内存后，</p>
+</li>
+<li><p>没有任何访问限定符上的区别</p>
+</li>
+<li><p>而 struct 定义的变量还是函数都是公有的，但  class 类中</p>
+</li>
+<li><p>由公有的也有私有的</p>
+</li>
+</ul>
+</blockquote>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SeqList</span>&#123;</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">PopBack</span><span class="params">()</span></span>;<span class="comment">//默认是私有的</span></span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">PushBack</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">        ++size;   <span class="comment">//操作可以正确运行，</span></span><br><span class="line">        <span class="comment">//原因是访问限定符限制的类的外面，不限制类的里面</span></span><br><span class="line">    &#125; <span class="comment">//将x 插到SeqList这个类中去</span></span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">int</span> *a;</span><br><span class="line">    <span class="keyword">size_t</span> size;</span><br><span class="line">    <span class="keyword">szie_t</span> capacity;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    SeqList s; <span class="comment">//s叫做对象</span></span><br><span class="line">    s.PushBack(<span class="number">1</span>);<span class="comment">//把一插入到SeqList这个顺序表中</span></span><br><span class="line">    <span class="comment">//s.size++;//语句错误，size 为私有成员</span></span><br><span class="line">   <span class="comment">//S.PopBack() //私有成员不可以访问</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="【面试题】"><a href="#【面试题】" class="headerlink" title="【面试题】"></a>【面试题】</h6><ul>
+<li style="list-style: none"><input type="checkbox"> 问题：C++中struct和class的区别是什么？</li>
+</ul>
+<blockquote>
+<p> 解答：C++需要兼容C语言，所以C++中struct可以当成结构体去使用。另外C++中struct还可以用来定义类。和class是定义类是一样的，区别是struct的成员默认访问方式是public，class是struct的成员默认访问方式是private。</p>
+</blockquote>
+<h5 id="3-2-封装"><a href="#3-2-封装" class="headerlink" title="3.2 封装"></a>3.2 封装</h5><h6 id="3-2-1-【面试题】-面向对象的三大特性：封装、继承、多态。"><a href="#3-2-1-【面试题】-面向对象的三大特性：封装、继承、多态。" class="headerlink" title="3.2.1 【面试题】 面向对象的三大特性：封装、继承、多态。"></a>3.2.1 【面试题】 面向对象的三大特性：封装、继承、多态。</h6><blockquote>
+<p>分装就是为了管理</p>
+</blockquote>
+<ul>
+<li><p>[ ]  ​在类和对象阶段，我们只研究类的封装特性，那什么是封装呢？</p>
+<blockquote>
+<p>封装：将数据和操作数据的方法进行有机结合，隐藏对象的属性和实现细节，仅对外公开接口来和对象进行交互。</p>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//封装</span></span><br><span class="line"><span class="comment">//C语言的结构体</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">SeqList</span>&#123;</span></span><br><span class="line">    <span class="keyword">int</span> *a;</span><br><span class="line">    <span class="keyword">size_t</span> size;</span><br><span class="line">    ....</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">PushBack</span><span class="params">(struct SeqList *ptr,<span class="keyword">int</span> x)</span><span class="comment">//将插到struct SeqList中</span></span></span><br><span class="line"><span class="function"><span class="comment">//c++中</span></span></span><br><span class="line"><span class="function">class SeqList</span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">PushBack</span><span class="params">(<span class="keyword">int</span> x)</span></span>;   <span class="comment">//将x 插到SeqList这个类中去</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> *a;</span><br><span class="line">    <span class="keyword">size_t</span> size;</span><br><span class="line">    <span class="keyword">szie_t</span> capacity;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h6 id="3-2-2-封装本质上是一种管理"><a href="#3-2-2-封装本质上是一种管理" class="headerlink" title="3.2.2 封装本质上是一种管理."></a>3.2.2 封装本质上是一种管理.</h6><h4 id="4-类的作用域"><a href="#4-类的作用域" class="headerlink" title="4.类的作用域"></a>4.类的作用域</h4><h5 id="4-1-类定义了一个新的作用域，类的所有成员都在类的作用域中。"><a href="#4-1-类定义了一个新的作用域，类的所有成员都在类的作用域中。" class="headerlink" title="4.1:类定义了一个新的作用域，类的所有成员都在类的作用域中。"></a>4.1:类定义了一个新的作用域，类的所有成员都在类的作用域中。</h5><blockquote>
+<ul>
+<li>在类体外定义成员，需要使用 :: 作用域解析符指明成员属于哪个类域。</li>
+</ul>
+</blockquote>
+ <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"> <span class="function"><span class="keyword">void</span> <span class="title">PrintPersonInfo</span><span class="params">()</span></span>;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line"><span class="keyword">char</span> _name[<span class="number">20</span>];</span><br><span class="line"><span class="keyword">char</span> _gender[<span class="number">3</span>];</span><br><span class="line"><span class="keyword">int</span> _age;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 这里需要指定PrintPersonInfo是属于Person这个类域</span></span><br><span class="line"><span class="keyword">void</span> Person::PrintPersonInfo()&#123;</span><br><span class="line"> <span class="built_in">cout</span>&lt;&lt;name&lt;&lt;<span class="string">" "</span>gender&lt;&lt;<span class="string">" "</span>&lt;&lt;_age&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="5-类的实例化"><a href="#5-类的实例化" class="headerlink" title="5.类的实例化"></a>5.类的实例化</h4><ul>
+<li style="list-style: none"><input type="checkbox"> 用类类型创建对象的过程，称为类的实例化</li>
+</ul>
+<ol>
+<li>类只是一个模型一样的东西，限定了类有哪些成员，定义出一个类并没有分配实际的内存空间来存储它</li>
+<li>一个类可以实例化出多个对象，实例化出的对象 占用实际的物理空间，存储类成员变量</li>
+<li>做个比方。类实例化出对象就像现实中使用建筑设计图建造出房子，类就像是设计图，只设计出需要什么东西，但是并没有实体的建筑存在，同样类也只是一个设计，实例化出的对象才能实际存储数据，占用物理空间类在计算机当中不占内存，只有来定义的对象才占内存</li>
+</ol>
+<blockquote>
+<p> int a;   int—&gt;变量类型        a—-&gt;int 类型的变量</p>
+</blockquote>
+<blockquote>
+<p>class A( 楼房的设计图纸 )</p>
+</blockquote>
+<blockquote>
+<p>A    ra   A —&gt;类型    ra—&gt;  A类型的变量  —&gt;类的对象(按照图纸建造的房子)</p>
+</blockquote>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SeqList</span>&#123;</span></span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">PushBack</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;<span class="comment">//类内部的申明</span></span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">int</span> *_a;        <span class="comment">//声明</span></span><br><span class="line">    <span class="keyword">size_t</span> size;</span><br><span class="line">    <span class="keyword">size_t</span> capacity;</span><br><span class="line">&#125;</span><br><span class="line"> <span class="keyword">void</span> SeqList::PushBack(<span class="keyword">int</span> x)<span class="comment">//定义</span></span><br><span class="line">     </span><br><span class="line">  <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">     SeqList s;<span class="comment">//现在才被定义出来</span></span><br><span class="line">     <span class="built_in">cout</span>&lt;&lt;<span class="keyword">sizeof</span>(SeqList)&lt;&lt;<span class="built_in">endl</span>;<span class="comment">//结果为12</span></span><br><span class="line">     <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//声明只是告诉说明它的类型与名称</span></span><br><span class="line"><span class="comment">//定义是将声明的东西创建出来</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://wx4.sinaimg.cn/mw690/0071OE7sly1g19i8zf8fjj30i70azq4k.jpg" alt></p>
+<blockquote>
+<p>拿着Person这个类定义man 这个对象</p>
+</blockquote>
+<h4 id="6-类对象模型"><a href="#6-类对象模型" class="headerlink" title="6.类对象模型"></a>6.类对象模型</h4><blockquote>
+<ul>
+<li>结论：一个类的大小，实际就是该类中”成员变量”之和，当</li>
+<li>然也要进行内存对齐，注意空类的大小，空类比较特殊，编</li>
+<li>译器给了空类一个字节来唯一标识这个类。</li>
+</ul>
+</blockquote>
+<h4 id="7-结构体内存对齐的规则"><a href="#7-结构体内存对齐的规则" class="headerlink" title="7.结构体内存对齐的规则"></a>7.结构体内存对齐的规则</h4><h4 id="7-1如何计算类对象的大小"><a href="#7-1如何计算类对象的大小" class="headerlink" title="7.1如何计算类对象的大小"></a>7.1如何计算类对象的大小</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"> <span class="keyword">void</span> PrintA</span><br><span class="line"> &#123;</span><br><span class="line"> <span class="built_in">cout</span>&lt;&lt;_a&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line"> &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line"> <span class="keyword">char</span> _a;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>问题：类中既可以有成员变量，又可以有成员函数，那么一个类的对象中包含了什么？如何计算一个类的大小</p>
+</blockquote>
+<h4 id="7-2-类对象的存储方式猜测"><a href="#7-2-类对象的存储方式猜测" class="headerlink" title="7.2 类对象的存储方式猜测"></a>7.2 类对象的存储方式猜测</h4><h5 id="7-2-1对象中包含类的各个成员"><a href="#7-2-1对象中包含类的各个成员" class="headerlink" title="7.2.1对象中包含类的各个成员"></a>7.2.1对象中包含类的各个成员</h5><p><img src="https://wx4.sinaimg.cn/mw690/0071OE7sly1g19in9n1dzj30qb0fvtbs.jpg" alt></p>
+<h5 id="7-2-2-只保存成员变量，成员函数存放在公共的代码段"><a href="#7-2-2-只保存成员变量，成员函数存放在公共的代码段" class="headerlink" title="7.2.2:只保存成员变量，成员函数存放在公共的代码段"></a>7.2.2:只保存成员变量，成员函数存放在公共的代码段</h5><p><img src="https://wx1.sinaimg.cn/mw690/0071OE7sly1g19iondqi9j30lw0is41f.jpg" alt></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 类中既有成员变量，又有成员函数</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A1</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"> <span class="function"><span class="keyword">void</span> <span class="title">f1</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line"> <span class="keyword">int</span> _a;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 类中仅有成员函数</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A2</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"> <span class="function"><span class="keyword">void</span> <span class="title">f2</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">&#125;;<span class="comment">//大小为1，不存储数据，占位，表示对象存在过</span></span><br><span class="line"><span class="comment">// 类中什么都没有---空类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A3</span></span></span><br><span class="line"><span class="class">&#123;</span>&#125;;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>sizeof(A1) : <strong>_4_</strong> sizeof(A2) : <strong>_1_</strong> sizeof(A3) : <strong>_1_</strong><br>结论：一个类的大小，实际就是该类中”成员变量”之和，当然也要进行内存对齐，注意空类的大小，空类比较特殊，编译器给了空类一个字节来唯一标识这个类。</p>
+</blockquote>
+<h4 id="7-3-内存对齐"><a href="#7-3-内存对齐" class="headerlink" title="7.3 内存对齐"></a>7.3 内存对齐</h4><h6 id="7-3-1-第一个成员在与结构体偏移量为0的地址处。"><a href="#7-3-1-第一个成员在与结构体偏移量为0的地址处。" class="headerlink" title="7.3.1. 第一个成员在与结构体偏移量为0的地址处。"></a>7.3.1. 第一个成员在与结构体偏移量为0的地址处。</h6><h6 id="7-3-2-其他成员变量要对齐到某个数字（对齐数）的整数倍的地址处。"><a href="#7-3-2-其他成员变量要对齐到某个数字（对齐数）的整数倍的地址处。" class="headerlink" title="7.3.2. 其他成员变量要对齐到某个数字（对齐数）的整数倍的地址处。"></a>7.3.2. 其他成员变量要对齐到某个数字（对齐数）的整数倍的地址处。</h6><ul>
+<li style="list-style: none"><input type="checkbox"> 注意：对齐数 = 编译器默认的一个对齐数 与 该成员大小的较小值。VS中默认的对齐数为8，gcc中的对齐数为4</li>
+</ul>
+<h6 id="7-3-3-结构体总大小为：最大对齐数（所有变量类型最大者与默认对齐参数取最小）的整数倍。"><a href="#7-3-3-结构体总大小为：最大对齐数（所有变量类型最大者与默认对齐参数取最小）的整数倍。" class="headerlink" title="7.3.3. 结构体总大小为：最大对齐数（所有变量类型最大者与默认对齐参数取最小）的整数倍。"></a>7.3.3. 结构体总大小为：最大对齐数（所有变量类型最大者与默认对齐参数取最小）的整数倍。</h6><h6 id="7-3-4-如果嵌套了结构体的情况，嵌套的结构体对齐到自己的最大对齐数的整数倍处，"><a href="#7-3-4-如果嵌套了结构体的情况，嵌套的结构体对齐到自己的最大对齐数的整数倍处，" class="headerlink" title="7.3.4. 如果嵌套了结构体的情况，嵌套的结构体对齐到自己的最大对齐数的整数倍处，"></a>7.3.4. 如果嵌套了结构体的情况，嵌套的结构体对齐到自己的最大对齐数的整数倍处，</h6><blockquote>
+<ul>
+<li>结构体的整体大小就是所有最大对齐数（含嵌套结构体的对齐数）的整数倍。</li>
+</ul>
+</blockquote>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;windows.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A1</span>&#123;</span></span><br><span class="line">	<span class="keyword">char</span> _ch;</span><br><span class="line">	<span class="keyword">double</span> _d;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A2</span>&#123;</span></span><br><span class="line">	<span class="keyword">double</span> _d;</span><br><span class="line">	<span class="keyword">char</span> _ch;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"A1的大小="</span>&lt;&lt;<span class="keyword">sizeof</span>(A1) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"A2的大小="</span> &lt;&lt; <span class="keyword">sizeof</span>(A2) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	system(<span class="string">"pause"</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://wx1.sinaimg.cn/mw690/0071OE7sly1g19j8w3dv0j30kb0bfdg2.jpg" alt></p>
+<h4 id="8-this指针"><a href="#8-this指针" class="headerlink" title="8.this指针"></a>8.this指针</h4><h5 id="8-1-this指针的引出"><a href="#8-1-this指针的引出" class="headerlink" title="8.1 this指针的引出"></a>8.1 this指针的引出</h5><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;windows.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Date</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">Print</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; _year &lt;&lt; <span class="string">"-"</span> &lt;&lt; _month &lt;&lt; <span class="string">"-"</span> &lt;&lt; _day &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">SetDate</span><span class="params">(<span class="keyword">int</span> year, <span class="keyword">int</span> month, <span class="keyword">int</span> day)</span></span>&#123;</span><br><span class="line">    <span class="comment">//构造的函数类似于买门票才能看到兵马用内部的东西</span></span><br><span class="line">      <span class="comment">//公有函数提供了访问内部成员的机会</span></span><br><span class="line">    _year = year;   <span class="comment">// 加上"_"可以避免冲突</span></span><br><span class="line">    _month = month;</span><br><span class="line">    _day = day;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line"><span class="comment">//类似与兵马俑里面的展品。</span></span><br><span class="line">  <span class="keyword">int</span> _year;</span><br><span class="line">  <span class="keyword">int</span> _month;</span><br><span class="line">  <span class="keyword">int</span> _day;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  Date d1;</span><br><span class="line">  Date d2;</span><br><span class="line">    </span><br><span class="line">  d1.SetDate(<span class="number">2019</span>, <span class="number">3</span>, <span class="number">9</span>); </span><br><span class="line">  d2.SetDate(<span class="number">2018</span>,<span class="number">3</span>,<span class="number">9</span>);</span><br><span class="line">    </span><br><span class="line">  d1.Print();<span class="comment">//如何识别打印那个对象对应的日期--&gt;引出this指针</span></span><br><span class="line">  d2.Print();<span class="comment">//如何识别打印那个对象对应的日期</span></span><br><span class="line">    <span class="comment">//this指针隐含在形参的首位，把d2的地址传给对应函数Print</span></span><br><span class="line">  system(<span class="string">"pause"</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="8-2-解释"><a href="#8-2-解释" class="headerlink" title="8.2 解释"></a>8.2 解释</h5><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//经过改造编译器后</span></span><br><span class="line">     d1.Print(); ===&gt;d1.Print(&amp;d1);</span><br><span class="line">     d2.Print();====&gt;d2.Print(&amp;d2);</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Print</span><span class="params">()</span></span>&#123;  \\ 改造后() 中间加入了 Date* <span class="keyword">this</span></span><br><span class="line">             <span class="built_in">cout</span> &lt;&lt; _year &lt;&lt; <span class="string">"-"</span> &lt;&lt; _month &lt;&lt; <span class="string">"-"</span> &lt;&lt; _day &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="comment">//这一句中语句变成了  </span></span><br><span class="line">                year ==&gt;<span class="keyword">this</span>-&gt;year </span><br><span class="line">                month ==&gt;<span class="keyword">this</span>-&gt;month</span><br><span class="line">                day ===&gt; <span class="keyword">this</span> -&gt;day        </span><br><span class="line">  &#125;</span><br><span class="line"><span class="comment">//此时d1.Print(&amp;d1) 或者 d2.Print(&amp;d2); 谁调用 Print 函数 this  指针就指向谁；</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li style="list-style: none"><input type="checkbox"> this 指针类似于形参，谁调用就指向谁。</li>
+<li style="list-style: none"><input type="checkbox"> 所以其存储在栈上,且其可以为空。</li>
+</ul>
+<p><img src="https://wx3.sinaimg.cn/mw690/0071OE7sly1g19jxmknqhj30kq07qt9p.jpg" alt></p>
+<ul>
+<li style="list-style: none"><input type="checkbox"> 是否可以为空，面试题</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;windows.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Date</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">Func</span><span class="params">()</span></span>&#123;<span class="comment">//此处this传过来的地址为空时不影响该函数的输出</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Date::Func()"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">Print</span><span class="params">()</span></span>&#123;  <span class="comment">//此处this传过来的地址为空时this-&gt;_year出错</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; _year &lt;&lt; <span class="string">"-"</span> &lt;&lt; _month &lt;&lt; <span class="string">"-"</span> &lt;&lt; _day &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="comment">// cout &lt;&lt;this-&gt; _year &lt;&lt; "-" &lt;&lt; _month &lt;&lt; "-" &lt;&lt; _day &lt;&lt; endl;</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">  <span class="comment">//类似与兵马俑里面的展品。</span></span><br><span class="line">  <span class="keyword">int</span> _year;</span><br><span class="line">  <span class="keyword">int</span> _month;</span><br><span class="line">  <span class="keyword">int</span> _day;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  Date* p1 = <span class="literal">NULL</span>;<span class="comment">//此处为空，this解引用没有访问，可以运行</span></span><br><span class="line">  p1-&gt;Func(); <span class="comment">//this指针隐含在形参的首位，把p1的地址传给对应函数</span></span><br><span class="line">  Date* p2 = <span class="literal">NULL</span>;<span class="comment">//此处为空，解引用this 时，</span></span><br><span class="line">    <span class="comment">//this为空不能被访问，程序奔溃</span></span><br><span class="line">  p2-&gt;Print();</span><br><span class="line">  system(<span class="string">"pause"</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//内存访问是按最大对齐数整数倍访问的</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>即：C++编译器给每个“成员函数“增加了一个隐藏的指针参数，让该指针指向当前对象(函数运行时调用该函数的对象)，在函数体中所有成员变量的操作，都是通过该指针去访问。只不过所有的操作对用户是透明的，即用户不需要来传递，编译器自动完成。</p>
+</blockquote>
+<h5 id="8-3-this指针的特性"><a href="#8-3-this指针的特性" class="headerlink" title="8.3 this指针的特性"></a>8.3 this指针的特性</h5><ul>
+<li style="list-style: none"><input type="checkbox"> 8.3.1. this指针的类型：类型* const</li>
+<li style="list-style: none"><input type="checkbox"> 8.3.2. 只能在“成员函数”的内部使用</li>
+<li style="list-style: none"><input type="checkbox"> 8.3.3. this指针本质上其实是一个成员函数的形参，是对象调用成员函数时，</li>
+<li style="list-style: none"><input type="checkbox"> 将对象地址作为实参传递给this形参。所以对象中不存储this指针。</li>
+<li style="list-style: none"><input type="checkbox"> 8.3.4. this指针是成员函数第一个隐含的指针形参，一般情况由编译器通过</li>
+<li style="list-style: none"><input type="checkbox"> ecx寄存器自动传递，不需要用户传递</li>
+<li style="list-style: none"><input type="checkbox"> this 指针可以为空</li>
+</ul>
+	  
+
+	  <div>
+  		<center>
+		  <div class="pagination">
+<ul class="pagination">
+	
+	
+	
+	
+	
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+			
+		
+	
+		
+	
+	
+	
+		<li class="prev"><a href="/jun/2019/03/17/c++/C++ 内存管理/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>prev</a></li>
+	
+	<li><a href="/jun/"><i class="fa fa-archive"></i>Home</a></li>
+	
+		<li class="next disabled"><a>next<i class="fa fa-arrow-circle-o-right"></i></a></li>
+	
+</ul>
+</div>
+
+		</center>
+	  </div>
+	  
+	</div> <!-- col-md-9/col-md-12 -->
+	
+  </div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+	<footer> <p>
+  &copy; 2019 John Doe
+  
+      with help from <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-wixo/">Wixo</a>.    
+</p> </footer>
+  </div> <!-- container-narrow -->
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/jun/js/jquery.imagesloaded.min.js"></script>
+<script src="/jun/js/gallery.js"></script>
+<script src="/jun/js/bootstrap.min.js"></script>
+<script src="/jun/js/jquery.tableofcontents.min.js"></script>
+<script src="/jun/js/tocgenerator.min.js"></script>
+<script src="/jun/js/main.js"></script>
+<script src="/jun/js/search.js"></script> 
+
+
+
+
+<link rel="stylesheet" href="/jun/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/jun/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+</body>
+</html>
