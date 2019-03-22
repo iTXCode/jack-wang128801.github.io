@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<meta name="author" content="jack-wang128801">
+
+
+
+<meta name="description" content="一：数据在内存中的存储数据类型介绍1.基本的内存类型：类型的意义1.使用这个类型开辟内存空间的大小（大小决定了使用范围）。2.如何看待内存空间的视角。  char                                       //字符数据类型占1个字节shot                                       //短整形占2个字节int">
+<meta name="keywords" content="数据的存储">
+<meta property="og:type" content="article">
+<meta property="og:title" content="c语言内存管理">
+<meta property="og:url" content="https://jack-wang128801.github.io/2019/03/22/c语言内存管理/index.html">
+<meta property="og:site_name" content="Kano.cn">
+<meta property="og:description" content="一：数据在内存中的存储数据类型介绍1.基本的内存类型：类型的意义1.使用这个类型开辟内存空间的大小（大小决定了使用范围）。2.如何看待内存空间的视角。  char                                       //字符数据类型占1个字节shot                                       //短整形占2个字节int">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20181111173806517.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY2tfd2FuZzEyODgwMQ==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20181111181051852.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY2tfd2FuZzEyODgwMQ==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20181111201327776.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20181111201421334.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20181111201443182.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20181111202558334.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20181112201821147.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY2tfd2FuZzEyODgwMQ==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20181112194255960.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20181112193912253.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20181114121614420.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY2tfd2FuZzEyODgwMQ==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20181114000437198.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY2tfd2FuZzEyODgwMQ==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20181114000845339.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20181114001811311.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY2tfd2FuZzEyODgwMQ==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20181114000644552.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20181111205729985.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20181111205210232.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY2tfd2FuZzEyODgwMQ==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20181111215516798.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY2tfd2FuZzEyODgwMQ==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20181111215919722.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY2tfd2FuZzEyODgwMQ==,size_16,color_FFFFFF,t_70">
+<meta property="og:updated_time" content="2019-03-22T09:07:28.283Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="c语言内存管理">
+<meta name="twitter:description" content="一：数据在内存中的存储数据类型介绍1.基本的内存类型：类型的意义1.使用这个类型开辟内存空间的大小（大小决定了使用范围）。2.如何看待内存空间的视角。  char                                       //字符数据类型占1个字节shot                                       //短整形占2个字节int">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20181111173806517.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY2tfd2FuZzEyODgwMQ==,size_16,color_FFFFFF,t_70">
+
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="Kano.cn" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>c语言内存管理 | Kano.cn</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: false,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: 
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head></html>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">jack-wang128801</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">Fly to the distance</p>
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/jun/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:123@123.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据的存储/">数据的存储</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">专注于前端</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">jack-wang128801</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">jack-wang128801</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">Fly to the distance</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/jun/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:123@123.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我">
+</nav>
+      <div class="body-wrap"><article id="post-c语言内存管理" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2019/03/22/c语言内存管理/" class="article-date">
+      <time datetime="2019-03-22T08:57:25.000Z" itemprop="datePublished">2019-03-22</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      c语言内存管理
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/C/">C</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据的存储/">数据的存储</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h1 id="一：数据在内存中的存储"><a href="#一：数据在内存中的存储" class="headerlink" title="一：数据在内存中的存储"></a>一：数据在内存中的存储</h1><h3 id="数据类型介绍"><a href="#数据类型介绍" class="headerlink" title="数据类型介绍"></a>数据类型介绍</h3><h4 id="1-基本的内存类型："><a href="#1-基本的内存类型：" class="headerlink" title="1.基本的内存类型："></a>1.基本的内存类型：</h4><p>类型的意义<br>1.使用这个类型开辟内存空间的大小（大小决定了使用范围）。<br>2.如何看待内存空间的视角。</p>
+<blockquote>
+<p>char                                       //字符数据类型占1个字节<br>shot                                       //短整形占2个字节<br>int                                          //整形占4个字节<br>long                                       // 长整形占4个字节<br>long long                               //更长的整形占8个字节<br>float                                        //单精度浮点数占4个字节<br>double                                     // 双精度浮点数占8个字节</p>
+</blockquote>
+<h5 id="验证这些类型长度"><a href="#验证这些类型长度" class="headerlink" title="验证这些类型长度"></a>验证这些类型长度</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	printf(&quot;%d\n&quot;,sizeof(char));</span><br><span class="line">	printf(&quot;%d\n&quot;,sizeof(short));</span><br><span class="line">	printf(&quot;%d\n&quot;,sizeof(int ));</span><br><span class="line">	printf(&quot;%d\n&quot;,sizeof(long));</span><br><span class="line">	printf(&quot;%d\n&quot;,sizeof(long long));</span><br><span class="line">	printf(&quot;%d\n&quot;,sizeof(float));</span><br><span class="line">	printf(&quot;%d\n&quot;,sizeof(double));</span><br><span class="line"></span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/20181111173806517.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY2tfd2FuZzEyODgwMQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h4 id="2-整形家族："><a href="#2-整形家族：" class="headerlink" title="2.整形家族："></a>2.整形家族：</h4><blockquote>
+<p>1.char<br>————————&gt;                              unsigned char                      //无符号字符形<br>———————— &gt;                              signed char                          //有符号字符形<br>2.short<br>———————— &gt;                             unsigned  short[int ]           //无符号短整形<br>———————— &gt;                              signed short [int]               //有符号短整形<br>3.int<br>———————— &gt;                             unsigned int                        //无符号整形<br>————————&gt;                               signed  int                          //有符号整形<br>4.long<br>————————&gt;                              unsigned long [int]             //无符号长整形<br> ————————&gt;                               signed  long [int]              //有符号长整形</p>
+</blockquote>
+<h4 id="3-浮点数家族-："><a href="#3-浮点数家族-：" class="headerlink" title="3.浮点数家族 ："></a>3.浮点数家族 ：</h4><blockquote>
+<p>float<br>double</p>
+</blockquote>
+<h4 id="4-构造类型："><a href="#4-构造类型：" class="headerlink" title="4.构造类型："></a>4.构造类型：</h4><blockquote>
+<p>数组类型<br>结构体类型  ————————&gt;        struct<br>枚举类型—————————–&gt;       enum<br>联合类型   —————————&gt;       union</p>
+</blockquote>
+<h4 id="5-指针类型————空类型："><a href="#5-指针类型————空类型：" class="headerlink" title="5.指针类型————空类型："></a>5.指针类型————空类型：</h4><blockquote>
+<p>void不能定义变量【空类型、大小为0】（32位平台下大小为0字节 ，64位平台下为1字节–&gt;但也不能定义变量）<br> 通常用于函数的返回类型、函数的参数、指针类型。<br>void <em>可以定义变量，可以接受任意类型，与其他类型指针一样占四个字节 。（在32位平台下任何类型指针大小都为4个字节）<br>void </em> 不能被截引用</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	printf(&quot;%d\n&quot;,sizeof(void));</span><br><span class="line">	printf(&quot;%d\n&quot;,sizeof(void*));</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>32位平台下void 与void *的大小如图<br><img src="https://img-blog.csdnimg.cn/20181111181051852.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY2tfd2FuZzEyODgwMQ==,size_16,color_FFFFFF,t_70" alt="这里是引用"></p>
+<h1 id="二：整形在内存中的存储"><a href="#二：整形在内存中的存储" class="headerlink" title="二：整形在内存中的存储"></a>二：整形在内存中的存储</h1><h4 id="1-一个变量的创建是要在内存中开辟空间的，空间的大小是根据不同的类型决定的。"><a href="#1-一个变量的创建是要在内存中开辟空间的，空间的大小是根据不同的类型决定的。" class="headerlink" title="1.一个变量的创建是要在内存中开辟空间的，空间的大小是根据不同的类型决定的。"></a><strong><em>1.一个变量的创建是要在内存中开辟空间的，空间的大小是根据不同的类型决定的。</em></strong></h4><blockquote>
+<p>计算机中符号数有三种表示方法，既原码、补码、反码。三种表示方法均有符号位和数值位两部分</p>
+</blockquote>
+<ol>
+<li>符号位都是用0表示“正”，用1表示“负”。</li>
+<li>而数值位有三种表示方法</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>原码</th>
+<th>直接将二进制按照正负数的形式翻译成二进制</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>反码</td>
+<td>将原码的符号位不变，其他位依次按位取反</td>
+</tr>
+<tr>
+<td>补码</td>
+<td>反码+1就得到补码（负数）。 <strong>正数的原、反、补码都相同</strong></td>
+</tr>
+</tbody>
+</table>
+<h4 id="无符号数原、反、补码都相同-amp-正数的原、反、补码都相同。"><a href="#无符号数原、反、补码都相同-amp-正数的原、反、补码都相同。" class="headerlink" title="~~~~  无符号数原、反、补码都相同 &amp; 正数的原、反、补码都相同。"></a>~~~~  无符号数原、反、补码都相同 &amp; 正数的原、反、补码都相同。</h4><h4 id="对于整数来说：数据存放在内存中时，其实存放的是数据的补码。只是正数的原、反、补码都相同。"><a href="#对于整数来说：数据存放在内存中时，其实存放的是数据的补码。只是正数的原、反、补码都相同。" class="headerlink" title="~~~~ 对于整数来说：数据存放在内存中时，其实存放的是数据的补码。只是正数的原、反、补码都相同。"></a>~~~~ 对于整数来说：数据存放在内存中时，其实存放的是数据的补码。只是正数的原、反、补码都相同。</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	int a=-20;</span><br><span class="line">	signed int b=-20;</span><br><span class="line">	unsigned int c=-20;</span><br><span class="line">	printf(&quot;a=%d,b=%d,c=%u\n&quot;,a,b,c);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><img src="https://img-blog.csdnimg.cn/20181111201327776.png" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20181111201421334.png" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20181111201443182.png" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20181111202558334.png" alt="在这里插入图片描述"><br>那么为什么-20会被储存成ec ff ff ff 呢？(大小端有介绍)</p>
+</blockquote>
+<h4 id="2-数据存储和读取的差别"><a href="#2-数据存储和读取的差别" class="headerlink" title="2.数据存储和读取的差别"></a>2.数据存储和读取的差别</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;                  </span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	int a=-20;</span><br><span class="line">	unsigned int b=10;</span><br><span class="line">	printf(&quot;%d\n&quot;,a+b);</span><br><span class="line">	printf(&quot;%u\n&quot;,a+b);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>运算过程<br><img src="https://img-blog.csdnimg.cn/20181112201821147.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY2tfd2FuZzEyODgwMQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+</blockquote>
+<blockquote>
+<p>存储数据时存到内存中的数据<br><img src="https://img-blog.csdnimg.cn/20181112194255960.png" alt="在这里插入图片描述"></p>
+</blockquote>
+<blockquote>
+<p>程序运行结果<br><img src="https://img-blog.csdnimg.cn/20181112193912253.png" alt="在这里插入图片描述"></p>
+<h5 id="由上面的程序和内存中储存的数值来看，不管定义的变量是什么类型的其往计算机中储存数据时存入的都是数据本身的反码，只是在取出的时候改变了它们的类型。"><a href="#由上面的程序和内存中储存的数值来看，不管定义的变量是什么类型的其往计算机中储存数据时存入的都是数据本身的反码，只是在取出的时候改变了它们的类型。" class="headerlink" title="由上面的程序和内存中储存的数值来看，不管定义的变量是什么类型的其往计算机中储存数据时存入的都是数据本身的反码，只是在取出的时候改变了它们的类型。"></a>由上面的程序和内存中储存的数值来看，不管定义的变量是什么类型的其往计算机中储存数据时存入的都是数据本身的反码，只是在取出的时候改变了它们的类型。</h5></blockquote>
+<h4 id="3-在计算机中读取整形数据时的规则"><a href="#3-在计算机中读取整形数据时的规则" class="headerlink" title="3.在计算机中读取整形数据时的规则"></a>3.在计算机中读取整形数据时的规则</h4><blockquote>
+<p><img src="https://img-blog.csdnimg.cn/20181114121614420.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY2tfd2FuZzEyODgwMQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+</blockquote>
+<h4 id="4-整形的提升"><a href="#4-整形的提升" class="headerlink" title="4.整形的提升"></a>4.整形的提升</h4><blockquote>
+<p><img src="https://img-blog.csdnimg.cn/20181114000437198.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY2tfd2FuZzEyODgwMQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+</blockquote>
+<h3 id="下面拿char-类型转成-int形的提升来看"><a href="#下面拿char-类型转成-int形的提升来看" class="headerlink" title="下面拿char 类型转成 int形的提升来看"></a>下面拿char 类型转成 int形的提升来看</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	char a=-3;</span><br><span class="line">	unsigned char b=-3;</span><br><span class="line">	unsigned int c=a;</span><br><span class="line">    unsigned int d=b;</span><br><span class="line">	printf(&quot;%d\n&quot;,c);</span><br><span class="line">	printf(&quot;%u\n&quot;,c);</span><br><span class="line">	printf(&quot;%u\n&quot;,d);</span><br><span class="line">	printf(&quot;%d\n&quot;,d);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="监视结果"><a href="#监视结果" class="headerlink" title="监视结果"></a>监视结果</h5><blockquote>
+<p><img src="https://img-blog.csdnimg.cn/20181114000845339.png" alt="在这里插入图片描述"><br>将 a 赋给 c 时，y由于涉及到提升比特位的缘故。所以将char形 -3 的反码1111 1101提升成了int 类型的1111 1111 1111 1111 1111 1111 1111 1101（十进制的4294967293）因为原数据类型为有符号数所以按符号位补充；<br><img src="https://img-blog.csdnimg.cn/20181114001811311.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY2tfd2FuZzEyODgwMQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>将 b 赋给 d 时，由于涉及到提升比特位的缘故。所以将unsigned char形 -3 的反码1111 1101提升成了int 类型的0000 0000 0000 0000 0000 0000  1111 1101（十进制的253）因为原数据类型为无符号整数所以拿“0”补充；</p>
+</blockquote>
+<h5 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h5><blockquote>
+<p><img src="https://img-blog.csdnimg.cn/20181114000644552.png" alt="在这里插入图片描述"></p>
+</blockquote>
+<ul>
+<li><h1 id="三：大端、小端"><a href="#三：大端、小端" class="headerlink" title="三：大端、小端"></a>三：大端、小端</h1><ul>
+<li>地址有高低地址之分</li>
+<li>数据有高低权位之别</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<ul>
+<li>1.大端（存储）模式，是指数据的低位保存在内存的高地址中，而数据的高位，保存在内存的低地址中；<ul>
+<li>2.小端（存储）模式，是指数据的低位保存在内存的低地址中，而数据的高位,，保存在内存的高地址中。</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h4 id="那么为什么会有大端、小端的储存方式呢？"><a href="#那么为什么会有大端、小端的储存方式呢？" class="headerlink" title="那么为什么会有大端、小端的储存方式呢？"></a>那么为什么会有大端、小端的储存方式呢？</h4><blockquote>
+<p>这是因为在计算机系统中，我们是以字节为单位的，每个地址单元都对应着一个字节，一个字节为8bit。但是在C语言中除了8bit的char之外，还有16bit的short型，32bit的long型（要看具体的编译器），另外，对于位数大于8位的处理器，例如16位或者32位的处理器，由于寄存器宽度大于一个字节，那么必然存在着一个如果将多个字节安排的问题。因此就导致了大端存储模式和小端存储模式。</p>
+<p>例如：一个16bit的short型x，在内存中的地址为0x0010，x的值为0x1122，那么0x11为高字节，0x22为低字节。式，就将0x11放在低地址中，即0x0010中，0x22放在高地址中，即0x0011中。小端模式，刚好相反。我们常的X86结构是小端模式，而KEIL C51则为大端模式。很多的ARM，DSP都为小端模式。</p>
+</blockquote>
+<h2 id="在32位平台下"><a href="#在32位平台下" class="headerlink" title="在32位平台下"></a>在32位平台下</h2>   <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a=<span class="number">20</span>;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"a=%d\n"</span>,a);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;`</span><br></pre></td></tr></table></figure>
+<p>   如下图：</p>
+<blockquote>
+<p><img src="https://img-blog.csdnimg.cn/20181111205729985.png" alt="在这里插入图片描述"></p>
+</blockquote>
+<p>   <strong>20按16进制储存时应该为00 00 00 14，但是电脑却储存成14 00 00 00。原因就是32位平台采用的是小端的储存方式。</strong></p>
+<h2 id="既数值权位小的数据储存在低位置端为小端储存方式"><a href="#既数值权位小的数据储存在低位置端为小端储存方式" class="headerlink" title="既数值权位小的数据储存在低位置端为小端储存方式"></a>既数值权位小的数据储存在低位置端为小端储存方式</h2><h1 id="四：浮点数在内存中的储存"><a href="#四：浮点数在内存中的储存" class="headerlink" title="四：浮点数在内存中的储存"></a>四：浮点数在内存中的储存</h1><p>   <img src="https://img-blog.csdnimg.cn/20181111205210232.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY2tfd2FuZzEyODgwMQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<blockquote>
+<p>例如：十进制的6.0，写成二进制是 110.0 ，相当于 1.10×2^2 。 那么，按照上面V的格式，可以得出s=0，M=1.10，E=2。<br>而十进制的-6.0，写成二进制是 -110.0 ，相当于 -1.10×2^2 。 那么，按照上面V的格式，可以得出s=1，M=1.10，E=2。</p>
+</blockquote>
+<h3 id="2-对于32位浮点数，最高的1位是符号位s-接着的8位是指数E，剩下的23位为有效数字M。"><a href="#2-对于32位浮点数，最高的1位是符号位s-接着的8位是指数E，剩下的23位为有效数字M。" class="headerlink" title="2.对于32位浮点数，最高的1位是符号位s,接着的8位是指数E，剩下的23位为有效数字M。"></a>2.对于32位浮点数，最高的1位是符号位s,接着的8位是指数E，剩下的23位为有效数字M。</h3><p>   <img src="https://img-blog.csdnimg.cn/20181111215516798.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY2tfd2FuZzEyODgwMQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h3 id="3-对于64位浮点数，最高的1位是符号位s-接着的11位是指数E，剩下的52位为有效数字M"><a href="#3-对于64位浮点数，最高的1位是符号位s-接着的11位是指数E，剩下的52位为有效数字M" class="headerlink" title="3.对于64位浮点数，最高的1位是符号位s,接着的11位是指数E，剩下的52位为有效数字M."></a>3.对于64位浮点数，最高的1位是符号位s,接着的11位是指数E，剩下的52位为有效数字M.</h3><p>   <img src="https://img-blog.csdnimg.cn/20181111215919722.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY2tfd2FuZzEyODgwMQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<blockquote>
+<p><strong>有效数字M和指数E，还有一些特别规定。 前面说过， 1≤M&lt;2 ，也就是说，M可以写成 1.xxxxxx的形式，其中xxxxxx表示小数部分.在计算机内部保存M时，默认这个数的第一位总是1，因此可以被舍去，只保存后面的xxxxxx部分。比如保存1.01的时候，只保存01，等到读取的时候，再把第一位的1加上去。这样做的目的，是节省1位有效数字。以32位浮点数为例，留给M只有23位，将第一位的1舍去以后，等于可以保存24位有效数字。</strong></p>
+</blockquote>
+<h3 id="至于指数E"><a href="#至于指数E" class="headerlink" title="至于指数E"></a>至于指数E</h3><pre><code>首先，E为一个无符号整数（unsigned int） 这意味着，如果E为8位，它的取值范围为0~255；如果E为11位， 它的取值范围为0~2047。但是，我们知道，科学计数法 中的E是可以出现负数的，存入内存 时E的真实值必须再加上一个中间数，对于8位的E， 这个中间数是127；对于11位的E，这个中间数是1023。比如：2^10的E是10，所以保存成32位浮点数时，必须 保存成10+127=137，即10001001。
+#### 如表例题：
+</code></pre><table>
+<thead>
+<tr>
+<th>存-7时</th>
+<th>存入120（-7+127=120） ，取时取出-7（120-127=-7）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>存入0时</td>
+<td>存入127(0+127=127)，取时取出0（127-127=0）</td>
+</tr>
+<tr>
+<td>总结</td>
+<td>存时浮点数+127,取时浮点数-127</td>
+</tr>
+</tbody>
+</table>
+<pre><code>### 指数E还可以再分成三种情况：
+</code></pre><h3 id="1-E不全为0或不全为1"><a href="#1-E不全为0或不全为1" class="headerlink" title="1.E不全为0或不全为1"></a>1.E不全为0或不全为1</h3><blockquote>
+<p>这时，浮点数就采用下面的规则表示，即指数E的计算值减去127（或1023），得到真实值，再将有效数字M加上第一位的1。 比如： 0.5（1/2）的二进制形式为0.1，由于规定正数部分必须为1，即将小数点右移1位，则1.0*2^(-1)，其阶码为-1+127=126，表示为01111110，而尾数1.0去掉整数部分为0，补齐0到2300000000000000000000000，则其二进制表示形式为:</p>
+</blockquote>
+<h3 id="2-E全为0（浮点数的0值，不能直接与0比较）"><a href="#2-E全为0（浮点数的0值，不能直接与0比较）" class="headerlink" title="2.E全为0（浮点数的0值，不能直接与0比较）"></a>2.E全为0（浮点数的0值，不能直接与0比较）</h3><blockquote>
+<p>这时，浮点数的指数E等于1-127（或者1-1023）即为真实值， 有效数字M不再加上第一位的1，而是还原0.xxxxxx的小数。这样做是为了表示±0，以及接近于0的很小的数字。</p>
+</blockquote>
+<h3 id="3-E全为1（S为0，E全为1，则为float表示的最大正数）"><a href="#3-E全为1（S为0，E全为1，则为float表示的最大正数）" class="headerlink" title="3.E全为1（S为0，E全为1，则为float表示的最大正数）"></a>3.E全为1（S为0，E全为1，则为float表示的最大正数）</h3><blockquote>
+<p>这时，如果有效数字M全为0，表示±无穷大（正负取决于符号位s）；</p>
+</blockquote>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2019/03/22/c语言内存管理/">c语言内存管理</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">jack-wang128801</a></p>
+        <p><span>发布时间:</span>2019-03-22, 16:57:25</p>
+        <p><span>最后更新:</span>2019-03-22, 17:07:28</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2019/03/22/c语言内存管理/" title="c语言内存管理">https://jack-wang128801.github.io/2019/03/22/c语言内存管理/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://jack-wang128801.github.io/2019/03/22/c语言内存管理/　　作者: jack-wang128801" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target="_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2019/03/20/c++类与对象-中/">
+                    c++ 类与对象(中)
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一：数据在内存中的存储"><span class="toc-number">1.</span> <span class="toc-text">一：数据在内存中的存储</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#数据类型介绍"><span class="toc-number">1.0.1.</span> <span class="toc-text">数据类型介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-基本的内存类型："><span class="toc-number">1.0.1.1.</span> <span class="toc-text">1.基本的内存类型：</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#验证这些类型长度"><span class="toc-number">1.0.1.1.1.</span> <span class="toc-text">验证这些类型长度</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-整形家族："><span class="toc-number">1.0.1.2.</span> <span class="toc-text">2.整形家族：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-浮点数家族-："><span class="toc-number">1.0.1.3.</span> <span class="toc-text">3.浮点数家族 ：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-构造类型："><span class="toc-number">1.0.1.4.</span> <span class="toc-text">4.构造类型：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-指针类型————空类型："><span class="toc-number">1.0.1.5.</span> <span class="toc-text">5.指针类型————空类型：</span></a></li></ol></li></ol></li></ol><li class="toc-item toc-level-1"><a class="toc-link" href="#二：整形在内存中的存储"><span class="toc-number">2.</span> <span class="toc-text">二：整形在内存中的存储</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-一个变量的创建是要在内存中开辟空间的，空间的大小是根据不同的类型决定的。"><span class="toc-number">2.0.0.1.</span> <span class="toc-text">1.一个变量的创建是要在内存中开辟空间的，空间的大小是根据不同的类型决定的。</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#无符号数原、反、补码都相同-amp-正数的原、反、补码都相同。"><span class="toc-number">2.0.0.2.</span> <span class="toc-text">~~~~  无符号数原、反、补码都相同 &amp; 正数的原、反、补码都相同。</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#对于整数来说：数据存放在内存中时，其实存放的是数据的补码。只是正数的原、反、补码都相同。"><span class="toc-number">2.0.0.3.</span> <span class="toc-text">~~~~ 对于整数来说：数据存放在内存中时，其实存放的是数据的补码。只是正数的原、反、补码都相同。</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-数据存储和读取的差别"><span class="toc-number">2.0.0.4.</span> <span class="toc-text">2.数据存储和读取的差别</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#由上面的程序和内存中储存的数值来看，不管定义的变量是什么类型的其往计算机中储存数据时存入的都是数据本身的反码，只是在取出的时候改变了它们的类型。"><span class="toc-number">2.0.0.4.1.</span> <span class="toc-text">由上面的程序和内存中储存的数值来看，不管定义的变量是什么类型的其往计算机中储存数据时存入的都是数据本身的反码，只是在取出的时候改变了它们的类型。</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-在计算机中读取整形数据时的规则"><span class="toc-number">2.0.0.5.</span> <span class="toc-text">3.在计算机中读取整形数据时的规则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-整形的提升"><span class="toc-number">2.0.0.6.</span> <span class="toc-text">4.整形的提升</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#下面拿char-类型转成-int形的提升来看"><span class="toc-number">2.0.1.</span> <span class="toc-text">下面拿char 类型转成 int形的提升来看</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#监视结果"><span class="toc-number">2.0.1.0.1.</span> <span class="toc-text">监视结果</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#运行结果"><span class="toc-number">2.0.1.0.2.</span> <span class="toc-text">运行结果</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三：大端、小端"><span class="toc-number">3.</span> <span class="toc-text">三：大端、小端</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#那么为什么会有大端、小端的储存方式呢？"><span class="toc-number">3.0.0.1.</span> <span class="toc-text">那么为什么会有大端、小端的储存方式呢？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#在32位平台下"><span class="toc-number">3.1.</span> <span class="toc-text">在32位平台下</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#既数值权位小的数据储存在低位置端为小端储存方式"><span class="toc-number">3.2.</span> <span class="toc-text">既数值权位小的数据储存在低位置端为小端储存方式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#四：浮点数在内存中的储存"><span class="toc-number">4.</span> <span class="toc-text">四：浮点数在内存中的储存</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-对于32位浮点数，最高的1位是符号位s-接着的8位是指数E，剩下的23位为有效数字M。"><span class="toc-number">4.0.1.</span> <span class="toc-text">2.对于32位浮点数，最高的1位是符号位s,接着的8位是指数E，剩下的23位为有效数字M。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-对于64位浮点数，最高的1位是符号位s-接着的11位是指数E，剩下的52位为有效数字M"><span class="toc-number">4.0.2.</span> <span class="toc-text">3.对于64位浮点数，最高的1位是符号位s,接着的11位是指数E，剩下的52位为有效数字M.</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#至于指数E"><span class="toc-number">4.0.3.</span> <span class="toc-text">至于指数E</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-E不全为0或不全为1"><span class="toc-number">4.0.4.</span> <span class="toc-text">1.E不全为0或不全为1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-E全为0（浮点数的0值，不能直接与0比较）"><span class="toc-number">4.0.5.</span> <span class="toc-text">2.E全为0（浮点数的0值，不能直接与0比较）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-E全为1（S为0，E全为1，则为float表示的最大正数）"><span class="toc-number">4.0.6.</span> <span class="toc-text">3.E全为1（S为0，E全为1，则为float表示的最大正数）</span></a></li></ol></li>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录" title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"c语言内存管理　| Kano.cn　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2019/03/20/c++类与对象-中/" title="下一篇: c++ 类与对象(中)">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/03/22/c语言内存管理/">c语言内存管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/20/c++类与对象-中/">c++ 类与对象(中)</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/19/数据结构-双向链表/">数据结构--双向链表</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/18/C ++入门/">C++入门</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/17/数据结构 - 链表/">数据结构->链表</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/17/C++ 内存管理/">C++内存管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/14/C++ 类与对象/">C ++ 类与对象</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/14/hello-world/">Hello World</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/14/c 语言版-数据结构(顺序表)/">数据结构</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2019 jack-wang128801
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style="display:none">
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style="display:none">
+                        <span id="page-visit" title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 1;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
