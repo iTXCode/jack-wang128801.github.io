@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<meta name="author" content="jack-wang128801">
+
+
+
+<meta name="description" content="类与对象1.类的6个默认成员函数 1.1 构造函数 1.2 拷贝函数构造 1.3 析构函数    1.4 赋值操作符重载 1.5 取地址操作符重载  1.6 const修饰的取地址操作符重载                    2. 构造函数   2.1 概念：不是创建，某种意义上来说是初始化  对于以下的日期类：   ++1234567891011121314151617181920212">
+<meta name="keywords" content="类与对象(中)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="c++ 类与对象(中)">
+<meta property="og:url" content="https://jack-wang128801.github.io/2019/03/20/C ++类与对象-中/index.html">
+<meta property="og:site_name" content="Kano.cn">
+<meta property="og:description" content="类与对象1.类的6个默认成员函数 1.1 构造函数 1.2 拷贝函数构造 1.3 析构函数    1.4 赋值操作符重载 1.5 取地址操作符重载  1.6 const修饰的取地址操作符重载                    2. 构造函数   2.1 概念：不是创建，某种意义上来说是初始化  对于以下的日期类：   ++1234567891011121314151617181920212">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190320211328591.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY2tfd2FuZzEyODgwMQ==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190322192703218.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY2tfd2FuZzEyODgwMQ==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190322203217720.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY2tfd2FuZzEyODgwMQ==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190322203402120.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY2tfd2FuZzEyODgwMQ==,size_16,color_FFFFFF,t_70">
+<meta property="og:updated_time" content="2019-03-22T13:12:34.755Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="c++ 类与对象(中)">
+<meta name="twitter:description" content="类与对象1.类的6个默认成员函数 1.1 构造函数 1.2 拷贝函数构造 1.3 析构函数    1.4 赋值操作符重载 1.5 取地址操作符重载  1.6 const修饰的取地址操作符重载                    2. 构造函数   2.1 概念：不是创建，某种意义上来说是初始化  对于以下的日期类：   ++1234567891011121314151617181920212">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20190320211328591.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY2tfd2FuZzEyODgwMQ==,size_16,color_FFFFFF,t_70">
+
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="Kano.cn" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>c++ 类与对象(中) | Kano.cn</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: false,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: 
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head></html>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">jack-wang128801</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">Fly to the distance</p>
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/jun/">分类存储</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:123@123.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据的存储/">数据的存储</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/类与对象-中/">类与对象(中)</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">专注于前端</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">jack-wang128801</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">jack-wang128801</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">Fly to the distance</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/jun/">分类存储</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:123@123.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我">
+</nav>
+      <div class="body-wrap"><article id="post-C ++类与对象-中" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2019/03/20/C ++类与对象-中/" class="article-date">
+      <time datetime="2019-03-20T13:06:58.000Z" itemprop="datePublished">2019-03-20</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      c++ 类与对象(中)
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Cpp/">Cpp</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/类与对象-中/">类与对象(中)</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <blockquote>
+<ul>
+<li><h3 id="类与对象"><a href="#类与对象" class="headerlink" title="类与对象"></a>类与对象</h3><h4 id="1-类的6个默认成员函数"><a href="#1-类的6个默认成员函数" class="headerlink" title="1.类的6个默认成员函数"></a>1.类的6个默认成员函数</h4><blockquote>
+<p>1.1 构造函数</p>
+<p>1.2 拷贝函数构造</p>
+<p>1.3 析构函数   </p>
+<p>1.4 赋值操作符重载</p>
+<p>1.5 取地址操作符重载 </p>
+<p>1.6 const修饰的取地址操作符重载                  </p>
+</blockquote>
+<h4 id="2-构造函数"><a href="#2-构造函数" class="headerlink" title="2. 构造函数"></a>2. 构造函数</h4><blockquote>
+<p><img src="https://img-blog.csdnimg.cn/20190320211328591.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY2tfd2FuZzEyODgwMQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+</blockquote>
+<h5 id="2-1-概念：不是创建，某种意义上来说是初始化"><a href="#2-1-概念：不是创建，某种意义上来说是初始化" class="headerlink" title="2.1 概念：不是创建，某种意义上来说是初始化"></a>2.1 概念：不是创建，某种意义上来说是初始化</h5><blockquote>
+<ul>
+<li>对于以下的日期类：</li>
+</ul>
+</blockquote>
+<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&gt;   <span class="class"><span class="keyword">class</span> <span class="title">Date</span> &#123;</span>&#125;;</span><br><span class="line">&gt;   &#123; </span><br><span class="line">&gt;   <span class="keyword">public</span>:</span><br><span class="line">&gt;    <span class="function"><span class="keyword">void</span> <span class="title">SetDate</span><span class="params">(<span class="keyword">int</span> year, <span class="keyword">int</span> month, <span class="keyword">int</span> day)</span></span></span><br><span class="line">&gt;    &#123;</span><br><span class="line">&gt;    _year = year;</span><br><span class="line">&gt;    _month = month;</span><br><span class="line">&gt;    _day = day;</span><br><span class="line">&gt;    &#125;</span><br><span class="line">&gt;    </span><br><span class="line">&gt;    <span class="function"><span class="keyword">void</span> <span class="title">Display</span><span class="params">()</span></span></span><br><span class="line">&gt;    &#123;</span><br><span class="line">&gt;    <span class="built_in">cout</span> &lt;&lt;_year&lt;&lt; <span class="string">"-"</span> &lt;&lt;_month &lt;&lt; <span class="string">"-"</span>&lt;&lt; _day &lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">&gt;    &#125;</span><br><span class="line">&gt;   <span class="keyword">private</span>:</span><br><span class="line">&gt;    <span class="keyword">int</span> _year;</span><br><span class="line">&gt;    <span class="keyword">int</span> _month;</span><br><span class="line">&gt;    <span class="keyword">int</span> _day;</span><br><span class="line">&gt;   &#125;;</span><br><span class="line">&gt;   <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line">&gt;   &#123;</span><br><span class="line">&gt;    Date d1,d2;</span><br><span class="line">&gt;    d1.SetDate(<span class="number">2018</span>,<span class="number">5</span>,<span class="number">1</span>);</span><br><span class="line">&gt;    d1.Display();</span><br><span class="line">&gt;    </span><br><span class="line">&gt;    Date d2;</span><br><span class="line">&gt;    d2.SetDate(<span class="number">2018</span>,<span class="number">7</span>,<span class="number">1</span>);</span><br><span class="line">&gt;    d2.Display();</span><br><span class="line">&gt;    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&gt;   &#125;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>对于Date类，可以通过SetDate公有的方法给对象设置内容，但是如果每次创建对象都调用该方法设置信息，未免有点麻烦，那能否在对象创建时，就将信息设置进去呢？<br>构造函数是一个特殊的成员函数，名字与类名相同,创建类类型对象时由编译器自动调用，保证每个数据成员都有 一个合适的初始值，并且在对象的生命周期内只调用一次构造函数是一个特殊的成员函数，名字与类名相同,创建类类型对象时由编译器自动调用，保证每个数据成员都有 一个合适的初始值，并且在对象的生命周期内只调用一次</p>
+</blockquote>
+<h5 id="2-2-特征"><a href="#2-2-特征" class="headerlink" title="2.2. 特征"></a>2.2. 特征</h5><blockquote>
+<p>构造函数是特殊的成员函数，需要注意的是，构造函数的虽然名称叫构造，但是需要注意的是构造函数的主要任务并不是开空间创建对象，而是初始化对象。</p>
+</blockquote>
+<blockquote>
+<ul>
+<li>其特征如下：<ul>
+<li style="list-style: none"><input type="checkbox"> 2.2.1. 函数名与类名相同。</li>
+<li style="list-style: none"><input type="checkbox"> 2.2.2. 无返回值。</li>
+<li style="list-style: none"><input type="checkbox"> 2.2.3. 对象实例化时编译器自动调用对应的构造函数。</li>
+<li style="list-style: none"><input type="checkbox"> 2.2.4. 构造函数可以重载。</li>
+<li style="list-style: none"><input type="checkbox"> 2.2.5. 构造函数可以在类中定义，也可以在类外定义</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+  <figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">&gt;   <span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line">&gt;   <span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;windows.h&gt;</span></span></span><br><span class="line">&gt;   <span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line">&gt;   <span class="class"><span class="keyword">class</span>  <span class="title">Date</span>&#123;</span></span><br><span class="line">&gt;   <span class="keyword">public</span>:</span><br><span class="line">&gt;   	Date()&#123; <span class="comment">//构造函数，初始化了被它定义的对象</span></span><br><span class="line">&gt;   		_year = <span class="number">2019</span>;</span><br><span class="line">&gt;   		_month = <span class="number">3</span>;</span><br><span class="line">&gt;   		_day = <span class="number">10</span>;</span><br><span class="line">&gt;   	&#125;</span><br><span class="line">&gt;   	Date1()&#123;&#125;<span class="comment">//类里面声明，在类外面定义</span></span><br><span class="line">&gt;   	Date(<span class="keyword">int</span> year, <span class="keyword">int</span> month, <span class="keyword">int</span> day)&#123;</span><br><span class="line">&gt;   		<span class="comment">//函数重载,函数名相同,参数不同</span></span><br><span class="line">&gt;   		_year = year;</span><br><span class="line">&gt;   		_month = month;</span><br><span class="line">&gt;   		_day = day;</span><br><span class="line">&gt;   	&#125;</span><br><span class="line">&gt;   	<span class="function"><span class="keyword">void</span> <span class="title">Print</span><span class="params">()</span></span>&#123;</span><br><span class="line">&gt;   		<span class="built_in">cout</span> &lt;&lt; _year &lt;&lt; <span class="string">"-"</span> &lt;&lt; _month &lt;&lt; <span class="string">"-"</span> &lt;&lt; _day &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&gt;   	&#125;</span><br><span class="line">&gt;   <span class="keyword">private</span>:</span><br><span class="line">&gt;   	<span class="keyword">int</span> _year;</span><br><span class="line">&gt;   	<span class="keyword">int</span> _month;</span><br><span class="line">&gt;   	<span class="keyword">int</span> _day;</span><br><span class="line">&gt;   &#125;;</span><br><span class="line">&gt;   Date :: Date1()&#123;  <span class="comment">//构造函数可以在类外面定义</span></span><br><span class="line">&gt;       _year = <span class="number">2019</span>;</span><br><span class="line">&gt;   	_month = <span class="number">3</span>;</span><br><span class="line">&gt;   	_day = <span class="number">10</span>;</span><br><span class="line">&gt;   &#125;</span><br><span class="line">&gt;   </span><br><span class="line">&gt;   <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">&gt;   	Date d1;<span class="comment">//期望d1一出来就被初始化</span></span><br><span class="line">&gt;   	d1.Print();</span><br><span class="line">&gt;   </span><br><span class="line">&gt;   	<span class="function">Date <span class="title">d2</span><span class="params">(<span class="number">2019</span>,<span class="number">3</span>,<span class="number">20</span>)</span></span>;   <span class="comment">//函数的重载</span></span><br><span class="line">&gt;   	d2.Print();</span><br><span class="line">&gt;   </span><br><span class="line">&gt;   	system(<span class="string">"pause"</span>);</span><br><span class="line">&gt;   	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&gt;   &#125;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+  <figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">&gt;   <span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line">&gt;   <span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;windows.h&gt;</span></span></span><br><span class="line">&gt;   <span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line">&gt;   <span class="class"><span class="keyword">class</span>  <span class="title">Date</span>&#123;</span></span><br><span class="line">&gt;   <span class="keyword">public</span>:</span><br><span class="line">&gt;   	Date();<span class="comment">//类里面声明，在类外面定义</span></span><br><span class="line">&gt;   	Date(<span class="keyword">int</span> year, <span class="keyword">int</span> month, <span class="keyword">int</span> day)&#123;</span><br><span class="line">&gt;   		<span class="comment">//函数重载,函数名相同,参数不同</span></span><br><span class="line">&gt;   		_year = year;</span><br><span class="line">&gt;   		_month = month;</span><br><span class="line">&gt;   		_day = day;</span><br><span class="line">&gt;   	&#125;</span><br><span class="line">&gt;   	<span class="function"><span class="keyword">void</span> <span class="title">Print</span><span class="params">()</span></span>&#123;</span><br><span class="line">&gt;   		<span class="built_in">cout</span> &lt;&lt; _year &lt;&lt; <span class="string">"-"</span> &lt;&lt; _month &lt;&lt; <span class="string">"-"</span> &lt;&lt; _day &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&gt;   	&#125;</span><br><span class="line">&gt;   <span class="keyword">private</span>:</span><br><span class="line">&gt;   	<span class="keyword">int</span> _year;</span><br><span class="line">&gt;   	<span class="keyword">int</span> _month;</span><br><span class="line">&gt;   	<span class="keyword">int</span> _day;</span><br><span class="line">&gt;   &#125;;</span><br><span class="line">&gt;   Date :: Date()&#123;  <span class="comment">//构造函数可以在类外面定义</span></span><br><span class="line">&gt;       _year = <span class="number">2019</span>;</span><br><span class="line">&gt;   	_month = <span class="number">3</span>;</span><br><span class="line">&gt;   	_day = <span class="number">10</span>;</span><br><span class="line">&gt;   &#125;</span><br><span class="line">&gt;   </span><br><span class="line">&gt;   <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">&gt;   	</span><br><span class="line">&gt;   	<span class="function">Date <span class="title">d2</span><span class="params">(<span class="number">2019</span>,<span class="number">3</span>,<span class="number">20</span>)</span></span>;</span><br><span class="line">&gt;   	d2.Print();</span><br><span class="line">&gt;   	</span><br><span class="line">&gt;       Date d3; <span class="comment">//构造函数可以在类中定义，也可以在类外定义</span></span><br><span class="line">&gt;       d3.Print();</span><br><span class="line">&gt;   	system(<span class="string">"pause"</span>);</span><br><span class="line">&gt;   	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&gt;   &#125;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<ul>
+<li><p>[ ] 2.2.6 如果类中没有显式定义构造函数，则C++编译器会自动生成一个无参的默认构造函数，一旦用户显式定义编译器将不再生成</p>
+<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&gt;   <span class="class"><span class="keyword">class</span> <span class="title">Date</span></span></span><br><span class="line"><span class="class">&gt;   &#123;</span></span><br><span class="line">&gt;   <span class="keyword">public</span>:</span><br><span class="line">&gt;    <span class="comment">/*</span></span><br><span class="line"><span class="comment">&gt;    // 如果用户显式定义了构造函数，编译器将不再生成</span></span><br><span class="line"><span class="comment">&gt;    Date (int year, int month, int day)</span></span><br><span class="line"><span class="comment">&gt;    &#123;</span></span><br><span class="line"><span class="comment">&gt;    _year = year;</span></span><br><span class="line"><span class="comment">&gt;    _month = month;</span></span><br><span class="line"><span class="comment">&gt;    _day = day;</span></span><br><span class="line"><span class="comment">&gt;    &#125;</span></span><br><span class="line"><span class="comment">&gt;    */</span></span><br><span class="line">&gt;   <span class="keyword">private</span>:</span><br><span class="line">&gt;    <span class="keyword">int</span> _year;</span><br><span class="line">&gt;    <span class="keyword">int</span> _month;</span><br><span class="line">&gt;    <span class="keyword">int</span> _day;</span><br><span class="line">&gt;   &#125;;</span><br><span class="line">&gt;   <span class="function"><span class="keyword">void</span> <span class="title">Test</span><span class="params">()</span></span></span><br><span class="line">&gt;   &#123;</span><br><span class="line">&gt;    <span class="comment">// 没有定义构造函数，对象也可以创建成功，因此此处调用的是编译器生成的默认构造函数</span></span><br><span class="line">&gt;    Date d;</span><br><span class="line">&gt;   &#125;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li style="list-style: none"><input type="checkbox"> 2.2.7.无参的构造函数和全缺省的构造函数都称为默认构造函数，并且默认构造函数只能有一</li>
+<li style="list-style: none"><input type="checkbox"> 个。注意：无参构造函数、全缺省构造函数、我们没写编译器默认生成的构造函数，都可以认为</li>
+<li style="list-style: none"><input type="checkbox"> 是默认成员函数。<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&gt;   <span class="comment">// 默认构造函数</span></span><br><span class="line">&gt;   <span class="class"><span class="keyword">class</span> <span class="title">Date</span></span></span><br><span class="line"><span class="class">&gt;   &#123;</span> </span><br><span class="line">&gt;   <span class="keyword">public</span>:</span><br><span class="line">&gt;    Date()&#123;</span><br><span class="line">&gt;    _year = <span class="number">1900</span> ;</span><br><span class="line">&gt;    _month = <span class="number">1</span> ;</span><br><span class="line">&gt;    _day = <span class="number">1</span>;</span><br><span class="line">&gt;    &#125;</span><br><span class="line">&gt;    </span><br><span class="line">&gt;    Date (<span class="keyword">int</span> year = <span class="number">1900</span>, <span class="keyword">int</span> month = <span class="number">1</span>, <span class="keyword">int</span> day = <span class="number">1</span>)&#123;</span><br><span class="line">&gt;    _year = year;</span><br><span class="line">&gt;    _month = month;</span><br><span class="line">&gt;    _day = day;</span><br><span class="line">&gt;    &#125;</span><br><span class="line">&gt;   <span class="keyword">private</span> :</span><br><span class="line">&gt;    <span class="keyword">int</span> _year ;</span><br><span class="line">&gt;    <span class="keyword">int</span> _month ;</span><br><span class="line">&gt;    <span class="keyword">int</span> _day ;</span><br><span class="line">&gt;   &#125;;</span><br><span class="line">&gt;   <span class="comment">// 以下测试函数能通过编译吗？</span></span><br><span class="line">&gt;   <span class="function"><span class="keyword">void</span> <span class="title">Test</span><span class="params">()</span></span>&#123;</span><br><span class="line">&gt;    Date d1;</span><br><span class="line">&gt;   &#125;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li style="list-style: none"><input type="checkbox"> 2.2.8 关于编译器生成的默认成员函数，很多童鞋会有疑惑：在我们不实现构造函数的情况下，</li>
+<li style="list-style: none"><input type="checkbox"> 编译器会生成</li>
+</ul>
+  <figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">&gt;   <span class="class"><span class="keyword">class</span> <span class="title">Time</span></span></span><br><span class="line"><span class="class">&gt;   &#123;</span></span><br><span class="line">&gt;   <span class="keyword">public</span>:</span><br><span class="line">&gt;    Time()</span><br><span class="line">&gt;    &#123;</span><br><span class="line">&gt;    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Time()"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&gt;    _hour = <span class="number">0</span>;</span><br><span class="line">&gt;    _minute = <span class="number">0</span>;</span><br><span class="line">&gt;    _second = <span class="number">0</span>;</span><br><span class="line">&gt;    &#125;</span><br><span class="line">&gt;   <span class="keyword">private</span>:</span><br><span class="line">&gt;    <span class="keyword">int</span> _hour;</span><br><span class="line">&gt;    <span class="keyword">int</span> _minute;</span><br><span class="line">&gt;    <span class="keyword">int</span> _second;</span><br><span class="line">&gt;   &#125;;</span><br><span class="line">&gt;   <span class="class"><span class="keyword">class</span> <span class="title">Date</span></span></span><br><span class="line"><span class="class">&gt;   &#123;</span></span><br><span class="line">&gt;   <span class="keyword">private</span>:</span><br><span class="line">&gt;    <span class="comment">// 基本类型(内置类型)</span></span><br><span class="line">&gt;    <span class="keyword">int</span> _year;</span><br><span class="line">&gt;    <span class="keyword">int</span> _month;</span><br><span class="line">&gt;    <span class="keyword">int</span> _day;</span><br><span class="line">&gt;    <span class="comment">// 自定义类型</span></span><br><span class="line">&gt;    Time <span class="keyword">_t</span>;</span><br><span class="line">&gt;    <span class="comment">//默认生成的构造函数对于 1 不做处理，对于 2 默认调用无参构造初始化</span></span><br><span class="line">&gt;    <span class="comment">//1.基本类型：int 、char ....</span></span><br><span class="line">&gt;    <span class="comment">//2.自定义类型：class/struct定义的类型。。。</span></span><br><span class="line">&gt;   &#125;;</span><br><span class="line">&gt;   <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line">&gt;   &#123;</span><br><span class="line">&gt;    Date d;</span><br><span class="line">&gt;    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&gt;    &#125;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<blockquote>
+<ul>
+<li>默认的构造函数。但是看起来默认构造函数又没什么用？d对象调用了编译器生成的默认构造函数，但是d对象year/month/_day，依旧是随机值。也就说在这里编译器生成的默认构造函数并没有什么卵用？</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>解答：C++把类型分成内置类型(基本类型)和自定义类型。内置类型就是语法已经定义好的类型：如int/char…，自定义类型就是我们使用class/struct/union自己定义的类型，看看下面的程序，就会发现编译器生成默认的构造函数会对自定类型成员_t调用的它的默认成员函数</li>
+</ul>
+</blockquote>
+<h4 id="3-析构函数"><a href="#3-析构函数" class="headerlink" title="3.析构函数"></a>3.析构函数</h4><h5 id="3-1-概念："><a href="#3-1-概念：" class="headerlink" title="3.1 概念："></a>3.1 概念：</h5><blockquote>
+<ul>
+<li>析构函数：与构造函数功能相反，析构函数不是完成对象的销毁，局部对象销毁工作是由编译器完成的。而对象在销毁时会自动调用析构函数，完成类的一些资源清理工作</li>
+</ul>
+</blockquote>
+<h5 id="3-2-特性"><a href="#3-2-特性" class="headerlink" title="3.2. 特性"></a>3.2. 特性</h5><ul>
+<li style="list-style: none"><input type="checkbox"> 析构函数是特殊的成员函数。</li>
+<li><p>[ ] 其特征如下</p>
+<h6 id="3-2-1-析构函数名是在类名前加上字符-。"><a href="#3-2-1-析构函数名是在类名前加上字符-。" class="headerlink" title="3.2.1. 析构函数名是在类名前加上字符  ~ 。"></a>3.2.1. 析构函数名是在类名前加上字符  ~ 。</h6><h6 id="3-2-2-无参数无返回值。"><a href="#3-2-2-无参数无返回值。" class="headerlink" title="3.2.2. 无参数无返回值。"></a>3.2.2. 无参数无返回值。</h6><h6 id="3-2-3-一个类有且只有一个析构函数。若未显式定义，系统会自动生成默认的析构函数。"><a href="#3-2-3-一个类有且只有一个析构函数。若未显式定义，系统会自动生成默认的析构函数。" class="headerlink" title="3.2.3. 一个类有且只有一个析构函数。若未显式定义，系统会自动生成默认的析构函数。"></a>3.2.3. 一个类有且只有一个析构函数。若未显式定义，系统会自动生成默认的析构函数。</h6><h6 id="3-2-4-对象生命周期结束时，C-编译系统系统自动调用析构函数"><a href="#3-2-4-对象生命周期结束时，C-编译系统系统自动调用析构函数" class="headerlink" title="3.2.4. 对象生命周期结束时，C++编译系统系统自动调用析构函数."></a>3.2.4. 对象生命周期结束时，C++编译系统系统自动调用析构函数.</h6><blockquote>
+<p>析构函数建造时按定义的相反顺序建造函数对于内置类型来说没有定义析构函数的话，编译器默认去掉用析构函数</p>
+</blockquote>
+<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&gt;   <span class="keyword">typedef</span> <span class="keyword">int</span> DataType;</span><br><span class="line">&gt;   <span class="class"><span class="keyword">class</span> <span class="title">SeqList</span></span></span><br><span class="line"><span class="class">&gt;   &#123;</span> </span><br><span class="line">&gt;   <span class="keyword">public</span> :</span><br><span class="line">&gt;    SeqList (<span class="keyword">int</span> capacity = <span class="number">10</span>)</span><br><span class="line">&gt;    &#123;</span><br><span class="line">&gt;    _pData = (DataType*)<span class="built_in">malloc</span>(capacity * <span class="keyword">sizeof</span>(DataType));</span><br><span class="line">&gt;    assert(_pData);</span><br><span class="line">&gt;    </span><br><span class="line">&gt;    _size = <span class="number">0</span>;</span><br><span class="line">&gt;    _capacity = capacity;</span><br><span class="line">&gt;    &#125;</span><br><span class="line">&gt;    ~SeqList()</span><br><span class="line">&gt;    &#123;</span><br><span class="line">&gt;    <span class="keyword">if</span> (_pData)</span><br><span class="line">&gt;    &#123;</span><br><span class="line">&gt;    <span class="built_in">free</span>(_pData ); <span class="comment">// 释放堆上的空间</span></span><br><span class="line">&gt;    _pData = <span class="literal">NULL</span>; <span class="comment">// 将指针置为空</span></span><br><span class="line">&gt;    _capacity = <span class="number">0</span>;</span><br><span class="line">&gt;    _size = <span class="number">0</span>;</span><br><span class="line">&gt;    &#125;</span><br><span class="line">&gt;    &#125;</span><br><span class="line">&gt;    </span><br><span class="line">&gt;   <span class="keyword">private</span> :</span><br><span class="line">&gt;    <span class="keyword">int</span>* _pData ;</span><br><span class="line">&gt;    <span class="keyword">size_t</span> _size;</span><br><span class="line">&gt;    <span class="keyword">size_t</span> _capacity;</span><br><span class="line">&gt;   &#125;;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<h4 id="4-1-概念"><a href="#4-1-概念" class="headerlink" title="4.1   概念"></a>4.1   概念</h4><ul>
+<li style="list-style: none"><input type="checkbox"> 构造函数：只是单个形参，该形参是对本类类型对象的引用(一般常用const 修饰)，在已存在的</li>
+<li style="list-style: none"><input type="checkbox"> 类类型对象创建新对象时由编译器自动调用</li>
+</ul>
+  <figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">&gt;   <span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line">&gt;   <span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;windows.h&gt;</span></span></span><br><span class="line">&gt;   <span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line">&gt;   <span class="class"><span class="keyword">class</span> <span class="title">Date</span></span></span><br><span class="line"><span class="class">&gt;   &#123;</span></span><br><span class="line">&gt;   <span class="keyword">public</span>:</span><br><span class="line">&gt;   	Date(<span class="keyword">int</span> year = <span class="number">1900</span>, <span class="keyword">int</span> month = <span class="number">1</span>, <span class="keyword">int</span> day = <span class="number">1</span>)&#123;</span><br><span class="line">&gt;   		_year = year;</span><br><span class="line">&gt;   		_month = month;</span><br><span class="line">&gt;   		_day = day;</span><br><span class="line">&gt;   	&#125;</span><br><span class="line">&gt;   	<span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">()</span></span>&#123;</span><br><span class="line">&gt;   		<span class="built_in">cout</span> &lt;&lt; _year &lt;&lt; <span class="string">"-"</span> &lt;&lt; _month &lt;&lt; <span class="string">"-"</span> &lt;&lt; _day &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&gt;   	&#125;</span><br><span class="line">&gt;   	~Date()&#123;</span><br><span class="line">&gt;   		<span class="built_in">cout</span> &lt;&lt; <span class="string">"~Date"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&gt;   	&#125;</span><br><span class="line">&gt;   <span class="keyword">private</span>:</span><br><span class="line">&gt;   	<span class="keyword">int</span> _year;</span><br><span class="line">&gt;   	<span class="keyword">int</span> _month;</span><br><span class="line">&gt;   	<span class="keyword">int</span> _day;</span><br><span class="line">&gt;   &#125;;</span><br><span class="line">&gt;   <span class="comment">// 以下测试函数能通过编译吗？</span></span><br><span class="line">&gt;   <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">&gt;   	Date d1;</span><br><span class="line">&gt;   	d1.print();</span><br><span class="line">&gt;   </span><br><span class="line">&gt;   	<span class="function">Date  <span class="title">d2</span><span class="params">(d1)</span></span>;   <span class="comment">//拷贝构造</span></span><br><span class="line">&gt;   	d2.print();</span><br><span class="line">&gt;   </span><br><span class="line">&gt;   	system(<span class="string">"pause"</span>);</span><br><span class="line">&gt;   	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&gt;   &#125;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<h5 id="4-2-特征"><a href="#4-2-特征" class="headerlink" title="4.2 特征"></a>4.2 特征</h5><h6 id="4-2-1-拷贝构造函数是构造函数的一个重载形式"><a href="#4-2-1-拷贝构造函数是构造函数的一个重载形式" class="headerlink" title="4.2.1 拷贝构造函数是构造函数的一个重载形式"></a>4.2.1 拷贝构造函数是构造函数的一个重载形式</h6><h6 id="4-2-2-拷贝构造函数的参数只有一个且必须使用引用传参，使用传参方式会引发无穷递归调用"><a href="#4-2-2-拷贝构造函数的参数只有一个且必须使用引用传参，使用传参方式会引发无穷递归调用" class="headerlink" title="4.2.2 拷贝构造函数的参数只有一个且必须使用引用传参，使用传参方式会引发无穷递归调用"></a>4.2.2 拷贝构造函数的参数只有一个且必须使用引用传参，使用传参方式会引发无穷递归调用</h6><blockquote>
+<p><img src="https://img-blog.csdnimg.cn/20190322192703218.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY2tfd2FuZzEyODgwMQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h6 id="4-2-3-若未显示定义，系统生成默认的拷贝构造函数。-默认的拷贝构造函数对象按内存存储按字节序完成拷贝，这种拷贝我们叫做浅拷贝，或者值拷贝"><a href="#4-2-3-若未显示定义，系统生成默认的拷贝构造函数。-默认的拷贝构造函数对象按内存存储按字节序完成拷贝，这种拷贝我们叫做浅拷贝，或者值拷贝" class="headerlink" title="4.2.3 若未显示定义，系统生成默认的拷贝构造函数。 默认的拷贝构造函数对象按内存存储按字节序完成拷贝，这种拷贝我们叫做浅拷贝，或者值拷贝"></a>4.2.3 若未显示定义，系统生成默认的拷贝构造函数。 默认的拷贝构造函数对象按内存存储按字节序完成拷贝，这种拷贝我们叫做浅拷贝，或者值拷贝</h6><h6 id="4-2-4-那么编译器生成的默认拷贝构造函数已经可以完成字节序的值拷贝了，我们还需要自己实现吗？当然像日期类这样的类是没必要的。"><a href="#4-2-4-那么编译器生成的默认拷贝构造函数已经可以完成字节序的值拷贝了，我们还需要自己实现吗？当然像日期类这样的类是没必要的。" class="headerlink" title="4.2.4  那么编译器生成的默认拷贝构造函数已经可以完成字节序的值拷贝了，我们还需要自己实现吗？当然像日期类这样的类是没必要的。"></a>4.2.4  那么编译器生成的默认拷贝构造函数已经可以完成字节序的值拷贝了，我们还需要自己实现吗？当然像日期类这样的类是没必要的。</h6></blockquote>
+<ul>
+<li style="list-style: none"><input type="checkbox"> 代码示例<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">&gt;   <span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line">&gt;   <span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;windows.h&gt;</span></span></span><br><span class="line">&gt;   <span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line">&gt;   </span><br><span class="line">&gt;   <span class="class"><span class="keyword">class</span>  <span class="title">Date</span>&#123;</span></span><br><span class="line">&gt;   <span class="keyword">public</span>:</span><br><span class="line">&gt;   	</span><br><span class="line">&gt;   	Date(<span class="keyword">int</span> year = <span class="number">2019</span>, <span class="keyword">int</span> month = <span class="number">3</span>, <span class="keyword">int</span> day = <span class="number">10</span>)&#123;</span><br><span class="line">&gt;   		_year = year;</span><br><span class="line">&gt;   		_month = month;</span><br><span class="line">&gt;   		_day = day;</span><br><span class="line">&gt;   	&#125;</span><br><span class="line">&gt;   	<span class="function"><span class="keyword">void</span> <span class="title">Print</span><span class="params">()</span></span>&#123;</span><br><span class="line">&gt;   		<span class="built_in">cout</span> &lt;&lt; _year &lt;&lt; <span class="string">"-"</span> &lt;&lt; _month &lt;&lt; <span class="string">"-"</span> &lt;&lt; _day &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&gt;   	&#125;</span><br><span class="line">&gt;   	Date ( Date&amp; d)&#123;   <span class="comment">//拷贝构造出现问题</span></span><br><span class="line">&gt;   		_year = d._year;</span><br><span class="line">&gt;   		_month = d._month;</span><br><span class="line">&gt;   		_day = d._day;</span><br><span class="line">&gt;   	&#125;</span><br><span class="line">&gt;   	</span><br><span class="line">&gt;   <span class="keyword">private</span>:</span><br><span class="line">&gt;   	<span class="keyword">int</span> _year;</span><br><span class="line">&gt;   	<span class="keyword">int</span> _month;</span><br><span class="line">&gt;   	<span class="keyword">int</span> _day;</span><br><span class="line">&gt;   &#125;;</span><br><span class="line">&gt;   </span><br><span class="line">&gt;   <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">&gt;   	Date d1;</span><br><span class="line">&gt;   	d1.Print();</span><br><span class="line">&gt;   </span><br><span class="line">&gt;   	<span class="function">Date <span class="title">d2</span><span class="params">(<span class="number">2018</span>, <span class="number">6</span>, <span class="number">30</span>)</span></span>;<span class="comment">// 特征2</span></span><br><span class="line">&gt;   	d2.Print();</span><br><span class="line">&gt;   	</span><br><span class="line">&gt;   </span><br><span class="line">&gt;   	<span class="function">Date <span class="title">d3</span><span class="params">(<span class="number">2019</span>)</span></span>;</span><br><span class="line">&gt;   	d3.Print();</span><br><span class="line">&gt;   </span><br><span class="line">&gt;   	<span class="function">Date <span class="title">d4</span><span class="params">(d2)</span></span>;    <span class="comment">//拷贝构造--&gt;浅拷贝(按字节进行拷贝)</span></span><br><span class="line">&gt;   	d4.Print();</span><br><span class="line">&gt;   </span><br><span class="line">&gt;   	system(<span class="string">"pause"</span>);</span><br><span class="line">&gt;   	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&gt;   &#125;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+  <figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&gt;   <span class="comment">// 这里会发现下面的程序会崩溃掉？这里就需要我们以后讲的深拷贝去解决。</span></span><br><span class="line">&gt;   <span class="class"><span class="keyword">class</span> <span class="title">String</span></span></span><br><span class="line"><span class="class">&gt;   &#123;</span></span><br><span class="line">&gt;   <span class="keyword">public</span>:</span><br><span class="line">&gt;    String(<span class="keyword">const</span> <span class="keyword">char</span>* str = <span class="string">"jack"</span>)</span><br><span class="line">&gt;    &#123;</span><br><span class="line">&gt;    _str = (<span class="keyword">char</span>*)<span class="built_in">malloc</span>(<span class="built_in">strlen</span>(str) + <span class="number">1</span>);</span><br><span class="line">&gt;    <span class="built_in">strcpy</span>(_str, str);</span><br><span class="line">&gt;    &#125;</span><br><span class="line">&gt;    ~String()</span><br><span class="line">&gt;    &#123;</span><br><span class="line">&gt;    <span class="built_in">cout</span> &lt;&lt; <span class="string">"~String()"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&gt;    <span class="built_in">free</span>(_str);</span><br><span class="line">&gt;    &#125;</span><br><span class="line">&gt;   <span class="keyword">private</span>:</span><br><span class="line">&gt;    <span class="keyword">char</span>* _str;</span><br><span class="line">&gt;   &#125;;</span><br><span class="line">&gt;   <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line">&gt;   &#123;</span><br><span class="line">&gt;    <span class="function">String <span class="title">s1</span><span class="params">(<span class="string">"hello"</span>)</span></span>;</span><br><span class="line">&gt;    <span class="function">String <span class="title">s2</span><span class="params">(s1)</span></span>;</span><br><span class="line">&gt;   &#125;</span><br><span class="line">&gt;   <span class="comment">//程序奔溃的原因是在进行浅拷贝时，将s1和s2的指针指向了同一片空间，在释放时空间</span></span><br><span class="line">&gt;   <span class="comment">//已经倍s2释放了，所以s1再去释放这块空间就会出错</span></span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<h4 id="5-赋值运算符重载"><a href="#5-赋值运算符重载" class="headerlink" title="5.赋值运算符重载"></a>5.赋值运算符重载</h4><h5 id="5-1-运算符重载"><a href="#5-1-运算符重载" class="headerlink" title="5.1 运算符重载"></a>5.1 运算符重载</h5><blockquote>
+<p>C++为了增强代码的可读性引入了运算符重载，运算符重载是具有特殊函数名的函数，也具有其返回值类型，函数名字以及参数列表，其返回值类型与参数列表与普通的函数类似。</p>
+<p>函数名字为：关键字operator后面接需要重载的运算符符号。函数原型：返回值类型 operator操作符(参数列表)</p>
+</blockquote>
+  <figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">&gt;   <span class="comment">// 全局的operator==</span></span><br><span class="line">&gt;   <span class="class"><span class="keyword">class</span> <span class="title">Date</span></span></span><br><span class="line"><span class="class">&gt;   &#123;</span> </span><br><span class="line">&gt;   <span class="keyword">public</span>:</span><br><span class="line">&gt;    Date(<span class="keyword">int</span> year = <span class="number">1900</span>, <span class="keyword">int</span> month = <span class="number">1</span>, <span class="keyword">int</span> day = <span class="number">1</span>)</span><br><span class="line">&gt;    &#123;</span><br><span class="line">&gt;    _year = year;</span><br><span class="line">&gt;    _month = month;</span><br><span class="line">&gt;    _day = day;</span><br><span class="line">&gt;    &#125; </span><br><span class="line">&gt;   <span class="comment">//private:</span></span><br><span class="line">&gt;    <span class="keyword">int</span> _year;</span><br><span class="line">&gt;    <span class="keyword">int</span> _month;</span><br><span class="line">&gt;    <span class="keyword">int</span> _day;</span><br><span class="line">&gt;   &#125;;</span><br><span class="line">&gt;   <span class="comment">// 这里会发现运算符重载成全局的就需要成员变量是共有的，那么问题来了，封装性如何保证？</span></span><br><span class="line">&gt;   <span class="comment">// 这里其实可以用我们后面学习的友元解决，或者干脆重载成成员函数。</span></span><br><span class="line">&gt;   <span class="keyword">bool</span> <span class="keyword">operator</span>==(<span class="keyword">const</span> Date&amp; d1, <span class="keyword">const</span> Date&amp; d2)</span><br><span class="line">&gt;   &#123;</span><br><span class="line">&gt;    <span class="keyword">return</span> d1._year == d2._year;</span><br><span class="line">&gt;    &amp;&amp; d1._month == d2._month</span><br><span class="line">&gt;    &amp;&amp; d1._day == d2._day;</span><br><span class="line">&gt;   &#125;</span><br><span class="line">&gt;   <span class="function"><span class="keyword">void</span> <span class="title">Test</span> <span class="params">()</span></span></span><br><span class="line">&gt;   &#123;</span><br><span class="line">&gt;    <span class="function">Date <span class="title">d1</span><span class="params">(<span class="number">2018</span>, <span class="number">9</span>, <span class="number">26</span>)</span></span>;</span><br><span class="line">&gt;    <span class="function">Date <span class="title">d2</span><span class="params">(<span class="number">2018</span>, <span class="number">9</span>, <span class="number">27</span>)</span></span>;</span><br><span class="line">&gt;    <span class="built_in">cout</span>&lt;&lt;(d1 == d2)&lt;&lt;<span class="built_in">endl</span>;<span class="comment">//可读性</span></span><br><span class="line">&gt;   &#125;</span><br><span class="line">&gt;   </span><br><span class="line">&gt;   <span class="comment">//////////////////</span></span><br><span class="line">&gt;   <span class="class"><span class="keyword">class</span> <span class="title">Date</span></span></span><br><span class="line"><span class="class">&gt;   &#123;</span> </span><br><span class="line">&gt;   <span class="keyword">public</span>:</span><br><span class="line">&gt;    Date(<span class="keyword">int</span> year = <span class="number">1900</span>, <span class="keyword">int</span> month = <span class="number">1</span>, <span class="keyword">int</span> day = <span class="number">1</span>)</span><br><span class="line">&gt;    &#123;</span><br><span class="line">&gt;    _year = year;</span><br><span class="line">&gt;    _month = month;</span><br><span class="line">&gt;    _day = day;</span><br><span class="line">&gt;    &#125;</span><br><span class="line">&gt;    </span><br><span class="line">&gt;    <span class="comment">// bool operator==(Date* this, const Date&amp; d2) //增加可读性</span></span><br><span class="line">&gt;    <span class="comment">// 这里需要注意的是，左操作数是this指向的调用函数的对象</span></span><br><span class="line">&gt;    <span class="keyword">bool</span> <span class="keyword">operator</span>==(<span class="keyword">const</span> Date&amp; d2)</span><br><span class="line">&gt;    &#123;</span><br><span class="line">&gt;    <span class="keyword">return</span> _year == d2._year</span><br><span class="line">&gt;    &amp;&amp; _month == d2._month</span><br><span class="line">&gt;    &amp;&amp; _day == d2._day;</span><br><span class="line">&gt;    &#125;</span><br><span class="line">&gt;   <span class="keyword">private</span>:</span><br><span class="line">&gt;    <span class="keyword">int</span> _year;</span><br><span class="line">&gt;    <span class="keyword">int</span> _month;</span><br><span class="line">&gt;    <span class="keyword">int</span> _day;</span><br><span class="line">&gt;   &#125;;</span><br><span class="line">&gt;   <span class="function"><span class="keyword">void</span> <span class="title">Test</span> <span class="params">()</span></span></span><br><span class="line">&gt;   &#123;</span><br><span class="line">&gt;    <span class="function">Date <span class="title">d1</span><span class="params">(<span class="number">2018</span>, <span class="number">9</span>, <span class="number">26</span>)</span></span>;</span><br><span class="line">&gt;    <span class="function">Date <span class="title">d2</span><span class="params">(<span class="number">2018</span>, <span class="number">9</span>, <span class="number">27</span>)</span></span>;</span><br><span class="line">&gt;    <span class="built_in">cout</span>&lt;&lt;(d1 == d2)&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">&gt;    <span class="built_in">cout</span>&lt;&lt;<span class="keyword">operator</span>==(d1,d2)&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">&gt;   &#125;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>  注意：</p>
+<h6 id="5-1-1-不能通过连接其他符号来创建新的操作符：比如operator"><a href="#5-1-1-不能通过连接其他符号来创建新的操作符：比如operator" class="headerlink" title="5.1.1 不能通过连接其他符号来创建新的操作符：比如operator@"></a>5.1.1 不能通过连接其他符号来创建新的操作符：比如operator@</h6><h6 id="5-1-2-重载操作符必须有一个类类型或者枚举类型的操作数"><a href="#5-1-2-重载操作符必须有一个类类型或者枚举类型的操作数" class="headerlink" title="5.1.2 重载操作符必须有一个类类型或者枚举类型的操作数"></a>5.1.2 重载操作符必须有一个类类型或者枚举类型的操作数</h6><h6 id="5-1-3-用于内置类型的操作符，其含义不能改变，例如：内置的整型-，不能改变其含义"><a href="#5-1-3-用于内置类型的操作符，其含义不能改变，例如：内置的整型-，不能改变其含义" class="headerlink" title="5.1.3 用于内置类型的操作符，其含义不能改变，例如：内置的整型+，不能改变其含义"></a>5.1.3 用于内置类型的操作符，其含义不能改变，例如：内置的整型+，不能改变其含义</h6><h6 id="5-1-4-作为类成员的重载函数时，其形参看起来比操作数数目少1成员函数的操作符有一个默认的形参this，限定为第一个形参"><a href="#5-1-4-作为类成员的重载函数时，其形参看起来比操作数数目少1成员函数的操作符有一个默认的形参this，限定为第一个形参" class="headerlink" title="5.1.4 作为类成员的重载函数时，其形参看起来比操作数数目少1成员函数的操作符有一个默认的形参this，限定为第一个形参"></a>5.1.4 作为类成员的重载函数时，其形参看起来比操作数数目少1成员函数的操作符有一个默认的形参this，限定为第一个形参</h6><h6 id="5-1-5-lt-gt-lt-gt-lt-sizeof-gt-lt-gt-lt-gt-注意以上5个运算符不能重载。这个经常在笔试选择题中出现"><a href="#5-1-5-lt-gt-lt-gt-lt-sizeof-gt-lt-gt-lt-gt-注意以上5个运算符不能重载。这个经常在笔试选择题中出现" class="headerlink" title="5.1.5 &lt; .* &gt;&lt; ::  &gt; &lt; sizeof  &gt; &lt;  ?:  &gt;&lt; . &gt;注意以上5个运算符不能重载。这个经常在笔试选择题中出现"></a>5.1.5 &lt; .* &gt;&lt; ::  &gt; &lt; sizeof  &gt; &lt;  ?:  &gt;&lt; . &gt;注意以上5个运算符不能重载。这个经常在笔试选择题中出现</h6><h5 id="5-2-赋值运算符重载"><a href="#5-2-赋值运算符重载" class="headerlink" title="5.2. 赋值运算符重载"></a>5.2. 赋值运算符重载</h5><p>  赋值运算符主要有四点：</p>
+<h6 id="5-2-1-参数类型"><a href="#5-2-1-参数类型" class="headerlink" title="5.2.1. 参数类型"></a>5.2.1. 参数类型</h6><h6 id="5-2-2-返回值"><a href="#5-2-2-返回值" class="headerlink" title="5.2.2. 返回值"></a>5.2.2. 返回值</h6><h6 id="5-2-3-检测是否自己给自己赋值"><a href="#5-2-3-检测是否自己给自己赋值" class="headerlink" title="5.2.3. 检测是否自己给自己赋值"></a>5.2.3. 检测是否自己给自己赋值</h6><h6 id="5-2-4-返回-this"><a href="#5-2-4-返回-this" class="headerlink" title="5.2.4. 返回*this"></a>5.2.4. 返回*this</h6><h6 id="5-2-5-一个类如果没有显式定义赋值运算符重载，编译器也会生成一个，完成对象按字节序的值拷贝"><a href="#5-2-5-一个类如果没有显式定义赋值运算符重载，编译器也会生成一个，完成对象按字节序的值拷贝" class="headerlink" title="5.2.5. 一个类如果没有显式定义赋值运算符重载，编译器也会生成一个，完成对象按字节序的值拷贝"></a>5.2.5. 一个类如果没有显式定义赋值运算符重载，编译器也会生成一个，完成对象按字节序的值拷贝</h6>  <figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">&gt;   <span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line">&gt;   <span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;windows.h&gt;</span></span></span><br><span class="line">&gt;   </span><br><span class="line">&gt;   <span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line">&gt;   </span><br><span class="line">&gt;   <span class="class"><span class="keyword">class</span> <span class="title">Date</span></span></span><br><span class="line"><span class="class">&gt;   &#123;</span></span><br><span class="line">&gt;   <span class="keyword">public</span>:</span><br><span class="line">&gt;   	Date(<span class="keyword">int</span> year = <span class="number">1900</span>, <span class="keyword">int</span> month = <span class="number">1</span>, <span class="keyword">int</span> day = <span class="number">1</span>)</span><br><span class="line">&gt;   	&#123;</span><br><span class="line">&gt;   		_year = year;</span><br><span class="line">&gt;   		_month = month;</span><br><span class="line">&gt;   		_day = day;</span><br><span class="line">&gt;   	&#125;</span><br><span class="line">&gt;   	<span class="comment">//d2=d1</span></span><br><span class="line">&gt;   	<span class="comment">//d2.operator(d1)</span></span><br><span class="line">&gt;   	<span class="comment">//d2.operator(&amp;d2,d1)</span></span><br><span class="line">&gt;   	<span class="keyword">void</span> <span class="keyword">operator</span>=(<span class="keyword">const</span> Date&amp; d)&#123;  <span class="comment">//默认含有第一个参数的地址，</span></span><br><span class="line">&gt;   		<span class="comment">//已经被this指针所指代</span></span><br><span class="line">&gt;   		<span class="keyword">if</span> (<span class="keyword">this</span> != &amp;d)&#123;   <span class="comment">//防止自己给自己传值</span></span><br><span class="line">&gt;   			<span class="keyword">this</span>-&gt;_year = d._year;</span><br><span class="line">&gt;   			<span class="keyword">this</span>-&gt;_month = d._month;</span><br><span class="line">&gt;   			<span class="keyword">this</span>-&gt;_day = d._day;</span><br><span class="line">&gt;   		&#125;</span><br><span class="line">&gt;   	&#125;</span><br><span class="line">&gt;   	<span class="comment">/*Date operator=(const Date&amp; d)&#123; //有返回值</span></span><br><span class="line"><span class="comment">&gt;   		if (this != &amp;d)&#123;</span></span><br><span class="line"><span class="comment">&gt;   			this-&gt;_year = d._year;</span></span><br><span class="line"><span class="comment">&gt;   			this-&gt;_month = d._month;</span></span><br><span class="line"><span class="comment">&gt;   			this-&gt;_day = d._day;</span></span><br><span class="line"><span class="comment">&gt;   		&#125;</span></span><br><span class="line"><span class="comment">&gt;   		return *this;</span></span><br><span class="line"><span class="comment">&gt;   	&#125;*/</span></span><br><span class="line">&gt;   		<span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">()</span></span>&#123;</span><br><span class="line">&gt;   			<span class="built_in">cout</span> &lt;&lt; _year &lt;&lt; <span class="string">"-"</span> &lt;&lt; _month &lt;&lt; <span class="string">"-"</span> &lt;&lt; _day &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&gt;   		&#125;</span><br><span class="line">&gt;   <span class="keyword">private</span>:</span><br><span class="line">&gt;   	<span class="keyword">int</span> _year;</span><br><span class="line">&gt;   	<span class="keyword">int</span> _month;</span><br><span class="line">&gt;   	<span class="keyword">int</span> _day;</span><br><span class="line">&gt;   &#125;;</span><br><span class="line">&gt;   <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">&gt;   	<span class="function">Date <span class="title">d1</span><span class="params">(<span class="number">2018</span>,<span class="number">10</span>, <span class="number">20</span>)</span></span>;</span><br><span class="line">&gt;   	<span class="function">Date <span class="title">d2</span><span class="params">(<span class="number">2019</span>,<span class="number">10</span>, <span class="number">10</span>)</span></span>;</span><br><span class="line">&gt;   	d1.print();</span><br><span class="line">&gt;   <span class="comment">// 这里d1调用的编译器生成operator=完成拷贝，d2和d1的值也是一样的。</span></span><br><span class="line">&gt;   	<span class="function">Date <span class="title">d3</span><span class="params">(d1)</span></span>;  <span class="comment">//拷贝构造</span></span><br><span class="line">&gt;   	d1 = d2;  <span class="comment">//赋值运算符的用运</span></span><br><span class="line">&gt;   </span><br><span class="line">&gt;   	d3.print();</span><br><span class="line">&gt;   	d1.print();</span><br><span class="line">&gt;   	<span class="comment">//用运这个表达式需要调用函数Date operator=(const Date&amp; d)</span></span><br><span class="line">&gt;   	<span class="comment">//d3 = d2 = d1;//被转换成 d3=(d2.oprator=(&amp;d2,d1))</span></span><br><span class="line">&gt;   	<span class="comment">//d3.print();</span></span><br><span class="line">&gt;      <span class="comment">//Date d4 = d1; //拷贝构造，将已知的值赋给创建的变量。</span></span><br><span class="line">&gt;     <span class="comment">//运算符重载</span></span><br><span class="line">&gt;     <span class="comment">//函数重载   两者没有任何关系</span></span><br><span class="line">&gt;   	system(<span class="string">"pause"</span>);</span><br><span class="line">&gt;   	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&gt;   &#125;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>运行结果</p>
+<p>不加d3 = d2 = d1;<img src="https://img-blog.csdnimg.cn/20190322203217720.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY2tfd2FuZzEyODgwMQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p>加上d3 = d2 = d1;<br><img src="https://img-blog.csdnimg.cn/20190322203402120.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY2tfd2FuZzEyODgwMQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+  <figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;   Date <span class="keyword">operator</span>-(<span class="keyword">int</span> day);<span class="comment">//日期减去日期</span></span><br><span class="line">&gt;   <span class="keyword">int</span> <span class="keyword">operator</span>-(<span class="keyword">const</span> Date&amp; day);  <span class="comment">//返回天数</span></span><br><span class="line">&gt;   <span class="comment">//两者而言即是函数重载，又是运算符重载</span></span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>简单整理：</p>
+<p>封装：管理</p>
+<p>构造、析构：初始化、清理<br>拷贝构造、operator= ： 复制</p>
+<ul>
+<li><p>那么编译器生成的默认赋值重载函数已经可以完成字节序的值拷贝了，我们还需要自己实现吗？当然像日期类这样的类是没必要的。那么下面的类呢？验证一下试试？</p>
+<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&gt;   <span class="comment">// 这里会发现下面的程序会崩溃掉？这里就需要我们以后讲的深拷贝去解决。</span></span><br><span class="line">&gt;   <span class="class"><span class="keyword">class</span> <span class="title">String</span></span></span><br><span class="line"><span class="class">&gt;   &#123;</span></span><br><span class="line">&gt;   <span class="keyword">public</span>:</span><br><span class="line">&gt;    String(<span class="keyword">const</span> <span class="keyword">char</span>* str = <span class="string">"jack"</span>)</span><br><span class="line">&gt;    &#123;</span><br><span class="line">&gt;    _str = (<span class="keyword">char</span>*)<span class="built_in">malloc</span>(<span class="built_in">strlen</span>(str) + <span class="number">1</span>);</span><br><span class="line">&gt;    <span class="built_in">strcpy</span>(_str, str);</span><br><span class="line">&gt;    &#125;</span><br><span class="line">&gt;    ~String()</span><br><span class="line">&gt;    &#123;</span><br><span class="line">&gt;    <span class="built_in">cout</span> &lt;&lt; <span class="string">"~String()"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&gt;    <span class="built_in">free</span>(_str);</span><br><span class="line">&gt;    &#125;</span><br><span class="line">&gt;   <span class="keyword">private</span>:</span><br><span class="line">&gt;    <span class="keyword">char</span>* _str;</span><br><span class="line">&gt;   &#125;;</span><br><span class="line">&gt;   <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line">&gt;   &#123;</span><br><span class="line">&gt;    <span class="function">String <span class="title">s1</span><span class="params">(<span class="string">"hello"</span>)</span></span>;</span><br><span class="line">&gt;    <span class="function">String <span class="title">s2</span><span class="params">(<span class="string">"world"</span>)</span></span>;</span><br><span class="line">&gt;    </span><br><span class="line">&gt;    s1 = s2;</span><br><span class="line">&gt;   &#125;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</blockquote>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2019/03/20/C ++类与对象-中/">c++ 类与对象(中)</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">jack-wang128801</a></p>
+        <p><span>发布时间:</span>2019-03-20, 21:06:58</p>
+        <p><span>最后更新:</span>2019-03-22, 21:12:34</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2019/03/20/C ++类与对象-中/" title="c++ 类与对象(中)">https://jack-wang128801.github.io/2019/03/20/C ++类与对象-中/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://jack-wang128801.github.io/2019/03/20/C ++类与对象-中/　　作者: jack-wang128801" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target="_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2019/03/22/c语言内存管理/">
+                    c语言内存管理
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2019/03/19/数据结构-双向链表/">
+                    数据结构--双向链表
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#类与对象"><span class="toc-number">1.</span> <span class="toc-text">类与对象</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-类的6个默认成员函数"><span class="toc-number">1.1.</span> <span class="toc-text">1.类的6个默认成员函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-构造函数"><span class="toc-number">1.2.</span> <span class="toc-text">2. 构造函数</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#2-1-概念：不是创建，某种意义上来说是初始化"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1 概念：不是创建，某种意义上来说是初始化</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-2-特征"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.2. 特征</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-析构函数"><span class="toc-number">1.3.</span> <span class="toc-text">3.析构函数</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#3-1-概念："><span class="toc-number">1.3.1.</span> <span class="toc-text">3.1 概念：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-2-特性"><span class="toc-number">1.3.2.</span> <span class="toc-text">3.2. 特性</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#3-2-1-析构函数名是在类名前加上字符-。"><span class="toc-number">1.3.2.1.</span> <span class="toc-text">3.2.1. 析构函数名是在类名前加上字符  ~ 。</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#3-2-2-无参数无返回值。"><span class="toc-number">1.3.2.2.</span> <span class="toc-text">3.2.2. 无参数无返回值。</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#3-2-3-一个类有且只有一个析构函数。若未显式定义，系统会自动生成默认的析构函数。"><span class="toc-number">1.3.2.3.</span> <span class="toc-text">3.2.3. 一个类有且只有一个析构函数。若未显式定义，系统会自动生成默认的析构函数。</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#3-2-4-对象生命周期结束时，C-编译系统系统自动调用析构函数"><span class="toc-number">1.3.2.4.</span> <span class="toc-text">3.2.4. 对象生命周期结束时，C++编译系统系统自动调用析构函数.</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-概念"><span class="toc-number">1.4.</span> <span class="toc-text">4.1   概念</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#4-2-特征"><span class="toc-number">1.4.1.</span> <span class="toc-text">4.2 特征</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#4-2-1-拷贝构造函数是构造函数的一个重载形式"><span class="toc-number">1.4.1.1.</span> <span class="toc-text">4.2.1 拷贝构造函数是构造函数的一个重载形式</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#4-2-2-拷贝构造函数的参数只有一个且必须使用引用传参，使用传参方式会引发无穷递归调用"><span class="toc-number">1.4.1.2.</span> <span class="toc-text">4.2.2 拷贝构造函数的参数只有一个且必须使用引用传参，使用传参方式会引发无穷递归调用</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#4-2-3-若未显示定义，系统生成默认的拷贝构造函数。-默认的拷贝构造函数对象按内存存储按字节序完成拷贝，这种拷贝我们叫做浅拷贝，或者值拷贝"><span class="toc-number">1.4.1.3.</span> <span class="toc-text">4.2.3 若未显示定义，系统生成默认的拷贝构造函数。 默认的拷贝构造函数对象按内存存储按字节序完成拷贝，这种拷贝我们叫做浅拷贝，或者值拷贝</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#4-2-4-那么编译器生成的默认拷贝构造函数已经可以完成字节序的值拷贝了，我们还需要自己实现吗？当然像日期类这样的类是没必要的。"><span class="toc-number">1.4.1.4.</span> <span class="toc-text">4.2.4  那么编译器生成的默认拷贝构造函数已经可以完成字节序的值拷贝了，我们还需要自己实现吗？当然像日期类这样的类是没必要的。</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-赋值运算符重载"><span class="toc-number">1.5.</span> <span class="toc-text">5.赋值运算符重载</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#5-1-运算符重载"><span class="toc-number">1.5.1.</span> <span class="toc-text">5.1 运算符重载</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#5-1-1-不能通过连接其他符号来创建新的操作符：比如operator"><span class="toc-number">1.5.1.1.</span> <span class="toc-text">5.1.1 不能通过连接其他符号来创建新的操作符：比如operator@</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#5-1-2-重载操作符必须有一个类类型或者枚举类型的操作数"><span class="toc-number">1.5.1.2.</span> <span class="toc-text">5.1.2 重载操作符必须有一个类类型或者枚举类型的操作数</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#5-1-3-用于内置类型的操作符，其含义不能改变，例如：内置的整型-，不能改变其含义"><span class="toc-number">1.5.1.3.</span> <span class="toc-text">5.1.3 用于内置类型的操作符，其含义不能改变，例如：内置的整型+，不能改变其含义</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#5-1-4-作为类成员的重载函数时，其形参看起来比操作数数目少1成员函数的操作符有一个默认的形参this，限定为第一个形参"><span class="toc-number">1.5.1.4.</span> <span class="toc-text">5.1.4 作为类成员的重载函数时，其形参看起来比操作数数目少1成员函数的操作符有一个默认的形参this，限定为第一个形参</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#5-1-5-lt-gt-lt-gt-lt-sizeof-gt-lt-gt-lt-gt-注意以上5个运算符不能重载。这个经常在笔试选择题中出现"><span class="toc-number">1.5.1.5.</span> <span class="toc-text">5.1.5 &lt; .* &gt;&lt; ::  &gt; &lt; sizeof  &gt; &lt;  ?:  &gt;&lt; . &gt;注意以上5个运算符不能重载。这个经常在笔试选择题中出现</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#5-2-赋值运算符重载"><span class="toc-number">1.5.2.</span> <span class="toc-text">5.2. 赋值运算符重载</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#5-2-1-参数类型"><span class="toc-number">1.5.2.1.</span> <span class="toc-text">5.2.1. 参数类型</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#5-2-2-返回值"><span class="toc-number">1.5.2.2.</span> <span class="toc-text">5.2.2. 返回值</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#5-2-3-检测是否自己给自己赋值"><span class="toc-number">1.5.2.3.</span> <span class="toc-text">5.2.3. 检测是否自己给自己赋值</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#5-2-4-返回-this"><span class="toc-number">1.5.2.4.</span> <span class="toc-text">5.2.4. 返回*this</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#5-2-5-一个类如果没有显式定义赋值运算符重载，编译器也会生成一个，完成对象按字节序的值拷贝"><span class="toc-number">1.5.2.5.</span> <span class="toc-text">5.2.5. 一个类如果没有显式定义赋值运算符重载，编译器也会生成一个，完成对象按字节序的值拷贝</span></a></li></ol></li></ol></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录" title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"c++ 类与对象(中)　| Kano.cn　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2019/03/22/c语言内存管理/" title="上一篇: c语言内存管理">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2019/03/19/数据结构-双向链表/" title="下一篇: 数据结构--双向链表">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/03/22/c语言内存管理/">c语言内存管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/20/C ++类与对象-中/">c++ 类与对象(中)</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/19/数据结构-双向链表/">数据结构--双向链表</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/18/C ++入门/">C++入门</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/17/数据结构 - 链表/">数据结构->链表</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/17/C++ 内存管理/">C++内存管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/14/C++ 类与对象/">C ++ 类与对象</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/14/hello-world/">Hello World</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/14/c 语言版-数据结构(顺序表)/">数据结构</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2019 jack-wang128801
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style="display:none">
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style="display:none">
+                        <span id="page-visit" title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 1;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
