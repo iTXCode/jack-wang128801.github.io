@@ -178,7 +178,8 @@
 <li>那么编译器生成的默认赋值重载函数已经可以完成字节序的值拷贝了，我们还需要自己实现吗？当然像日期类这样的类是没必要的。那么下面的类呢？验证一下试试？</li>
 </ul>
 </blockquote>
-<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 这里会发现下面的程序会崩溃掉？这里就需要我们以后讲的深拷贝去解决。</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">String</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"> String(<span class="keyword">const</span> <span class="keyword">char</span>* str = <span class="string">"jack"</span>)</span><br><span class="line"> &#123;</span><br><span class="line"> _str = (<span class="keyword">char</span>*)<span class="built_in">malloc</span>(<span class="built_in">strlen</span>(str) + <span class="number">1</span>);</span><br><span class="line"> <span class="built_in">strcpy</span>(_str, str);</span><br><span class="line"> &#125;</span><br><span class="line"> ~String()</span><br><span class="line"> &#123;</span><br><span class="line"> <span class="built_in">cout</span> &lt;&lt; <span class="string">"~String()"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"> <span class="built_in">free</span>(_str);</span><br><span class="line"> &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line"> <span class="keyword">char</span>* _str;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"> <span class="function">String <span class="title">s1</span><span class="params">(<span class="string">"hello"</span>)</span></span>;</span><br><span class="line"> <span class="function">String <span class="title">s2</span><span class="params">(<span class="string">"world"</span>)</span></span>;</span><br><span class="line"> </span><br><span class="line"> s1 = s2;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>	  
+<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 这里会发现下面的程序会崩溃掉？这里就需要我们以后讲的深拷贝去解决。</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">String</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"> String(<span class="keyword">const</span> <span class="keyword">char</span>* str = <span class="string">"jack"</span>)</span><br><span class="line"> &#123;</span><br><span class="line"> _str = (<span class="keyword">char</span>*)<span class="built_in">malloc</span>(<span class="built_in">strlen</span>(str) + <span class="number">1</span>);</span><br><span class="line"> <span class="built_in">strcpy</span>(_str, str);</span><br><span class="line"> &#125;</span><br><span class="line"> ~String()</span><br><span class="line"> &#123;</span><br><span class="line"> <span class="built_in">cout</span> &lt;&lt; <span class="string">"~String()"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"> <span class="built_in">free</span>(_str);</span><br><span class="line"> &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line"> <span class="keyword">char</span>* _str;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"> <span class="function">String <span class="title">s1</span><span class="params">(<span class="string">"hello"</span>)</span></span>;</span><br><span class="line"> <span class="function">String <span class="title">s2</span><span class="params">(<span class="string">"world"</span>)</span></span>;</span><br><span class="line"> </span><br><span class="line"> s1 = s2;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+	  
 
 	  <div>
   		<center>
@@ -194,7 +195,6 @@
 	
 		
 			
-			
 		
 	
 		
@@ -202,6 +202,13 @@
 		
 			
 			
+		
+	
+		
+	
+		
+			
+			
 			
 		
 	
@@ -217,7 +224,7 @@
 	
 	
 	
-		<li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>prev</a></li>
+		<li class="prev"><a href="/jun/2019/03/24/CPP类与对象下/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>prev</a></li>
 	
 	<li><a href="/jun/"><i class="fa fa-archive"></i>Home</a></li>
 	
