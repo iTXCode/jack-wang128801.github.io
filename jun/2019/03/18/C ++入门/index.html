@@ -66,7 +66,9 @@
 <h5 id="5-2名字修饰"><a href="#5-2名字修饰" class="headerlink" title="5.2名字修饰"></a>5.2名字修饰</h5><ul>
 <li><p>[ ] 在c/c++中，一个程序要跑起来需要经历：预处理、编辑、汇编、链接等步骤</p>
 <h6 id="5-2-1-预处理：去注释，宏替换，头文件展开"><a href="#5-2-1-预处理：去注释，宏替换，头文件展开" class="headerlink" title="5.2.1   预处理：去注释，宏替换，头文件展开"></a>5.2.1   预处理：去注释，宏替换，头文件展开</h6><h6 id="5-2-2-汇编：语法检查，转换成汇编代码"><a href="#5-2-2-汇编：语法检查，转换成汇编代码" class="headerlink" title="5.2.2   汇编：语法检查，转换成汇编代码"></a>5.2.2   汇编：语法检查，转换成汇编代码</h6><h6 id="5-2-3-编译：汇编代码————-gt-机器码"><a href="#5-2-3-编译：汇编代码————-gt-机器码" class="headerlink" title="5.2.3   编译：汇编代码————&gt;机器码"></a>5.2.3   编译：汇编代码————&gt;机器码</h6><h6 id="5-2-4-链接：生成可执行文件"><a href="#5-2-4-链接：生成可执行文件" class="headerlink" title="5.2.4   链接：生成可执行文件"></a>5.2.4   链接：生成可执行文件</h6><h6 id="5-2-5-在Linux下的修饰"><a href="#5-2-5-在Linux下的修饰" class="headerlink" title="5.2.5    在Linux下的修饰"></a>5.2.5    在Linux下的修饰</h6><blockquote>
-<p>void F1(int a);<br>//——Z2F1I<br>其中—Z为前缀，2代表函数名有两个字符，F1为函数名，而i(int)为参数的类型的首字母<br>void F1(char b);<br>//_Z2F1C<br>void F1(int a,char b);<br>//——Z2F1IC</p>
+<p>void F1(int a);</p>
+<p>——Z2F1I</p>
+<p>其中—Z为前缀，2代表函数名有两个字符，F1为函数名，而i(int)为参数的类型的首字母<br>void F1(char b);<br>//_Z2F1C<br>void F1(int a,char b);<br>//——Z2F1IC</p>
 </blockquote>
 <h6 id="5-2-6-C语言的名字修饰规则非常简单，只是在函数名字前面加一个下划线-函数名-，"><a href="#5-2-6-C语言的名字修饰规则非常简单，只是在函数名字前面加一个下划线-函数名-，" class="headerlink" title="5.2.6    C语言的名字修饰规则非常简单，只是在函数名字前面加一个下划线(_函数名)，"></a>5.2.6    C语言的名字修饰规则非常简单，只是在函数名字前面加一个下划线(_函数名)，</h6></li>
 <li><p>[ ] 而在C++文件(xx.cpp)中在函数名字前面加一个  extern “c”既是告诉编辑器该函数按照c语言规则来编译</p>
@@ -91,14 +93,8 @@
 <ul>
 <li><p>[ ] 监视结果：&amp;ra=&amp;a,ra=a=10;</p>
 <blockquote>
-<ul>
-<li>注意点： 引用类型和引用实体必须是相同类型的<blockquote>
-<ul>
-<li>上例中如果出现  double &amp;ra=a;  则会报错</li>
-</ul>
-</blockquote>
-</li>
-</ul>
+<p>注意点： 引用类型和引用实体必须是相同类型的</p>
+<p>上例中如果出现  double &amp;ra=a;  则会报错</p>
 </blockquote>
 <h5 id="6-2-引用特性"><a href="#6-2-引用特性" class="headerlink" title="6.2 引用特性"></a>6.2 引用特性</h5><blockquote>
 <ul>
