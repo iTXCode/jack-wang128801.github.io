@@ -10,7 +10,9 @@
 cbegin()与cend ()迭代器内的值不可修改
 
 
-头文件#include">
+头文件#include
+
+迭代器失效出现实现的代码1234567891011121314151617181920212223242526272829#include&amp;lt;iostream&amp;">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -68,6 +70,11 @@ cbegin()与cend ()迭代器内的值不可修改
 <blockquote>
 <p>头文件#include<algorithm></algorithm></p>
 </blockquote>
+<h4 id="迭代器失效"><a href="#迭代器失效" class="headerlink" title="迭代器失效"></a>迭代器失效</h4><h5 id="出现实现的代码"><a href="#出现实现的代码" class="headerlink" title="出现实现的代码"></a>出现实现的代码</h5><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;windows.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v;</span><br><span class="line">	v.push_back(<span class="number">1</span>);</span><br><span class="line">	v.push_back(<span class="number">2</span>);</span><br><span class="line">	v.push_back(<span class="number">3</span>);</span><br><span class="line">	v.push_back(<span class="number">4</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">auto</span> it = v.begin();</span><br><span class="line">	<span class="keyword">while</span> (it != v.end())&#123;</span><br><span class="line">		<span class="keyword">if</span> (*it % <span class="number">2</span> == <span class="number">0</span>)&#123;</span><br><span class="line">			 v.erase(it);</span><br><span class="line">		&#125;</span><br><span class="line">			++it;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">auto</span> e : v)&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; e &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	system(<span class="string">"pause"</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//指针指向了 原来的空间，使得指针你已失效的内存地址。</span></span><br></pre></td></tr></table></figure>
+<h5 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h5><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;windows.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v;</span><br><span class="line">	v.push_back(<span class="number">1</span>);</span><br><span class="line">	v.push_back(<span class="number">2</span>);</span><br><span class="line">	v.push_back(<span class="number">3</span>);</span><br><span class="line">	v.push_back(<span class="number">4</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">auto</span> it = v.begin();</span><br><span class="line">	<span class="keyword">while</span> (it != v.end())&#123;</span><br><span class="line">		<span class="keyword">if</span> (*it % <span class="number">2</span> == <span class="number">0</span>)&#123;</span><br><span class="line">			it = v.erase(it);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span>&#123;</span><br><span class="line">			++it;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">auto</span> e : v)&#123;</span><br><span class="line">		<span class="built_in">cout</span>&lt;&lt;e&lt;&lt; <span class="string">" "</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	system(<span class="string">"pause"</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//输出结果为 1 3</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;windows.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v;</span><br><span class="line">	v.push_back(<span class="number">1</span>);</span><br><span class="line">	v.push_back(<span class="number">2</span>);</span><br><span class="line">	v.push_back(<span class="number">3</span>);</span><br><span class="line">	v.push_back(<span class="number">4</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">auto</span> it = v.begin();</span><br><span class="line">	<span class="keyword">while</span> (it != v.end())&#123;</span><br><span class="line">			it = v.erase(it);</span><br><span class="line">			++it;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">auto</span> e : v)&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; e &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	system(<span class="string">"pause"</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//输出结果为2 4</span></span><br></pre></td></tr></table></figure>
+<h5 id="vector在oj中的使用"><a href="#vector在oj中的使用" class="headerlink" title="vector在oj中的使用"></a>vector在oj中的使用</h5><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"> <span class="function"><span class="keyword">int</span> <span class="title">singleNumber</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line"> <span class="keyword">int</span> value = <span class="number">0</span>;</span><br><span class="line"> <span class="keyword">for</span>(<span class="keyword">size_t</span> i =<span class="number">0</span> ; i &lt; nums.size(); ++i)&#123;</span><br><span class="line"> value ^= nums[i];</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="keyword">return</span> value;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//在c++11中</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"> <span class="function"><span class="keyword">int</span> <span class="title">singleNumber</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line"> <span class="keyword">int</span> value = <span class="number">0</span>;</span><br><span class="line"> <span class="keyword">for</span>(<span class="keyword">const</span> <span class="keyword">auto</span>&amp; e:nums)&#123;</span><br><span class="line"> value ^= e;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="keyword">return</span> value;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//迭代器值的交换接口</span></span><br><span class="line">v1.swap(v2);</span><br></pre></td></tr></table></figure>
 	  
 
 	  <div>
@@ -82,6 +89,10 @@ cbegin()与cend ()迭代器内的值不可修改
 	
 		
 			
+		
+	
+		
+			
 			
 		
 	
@@ -89,18 +100,6 @@ cbegin()与cend ()迭代器内的值不可修改
 			
 			
 			
-		
-			
-		
-	
-		
-	
-		
-			
-		
-	
-		
-	
 		
 			
 		
@@ -118,6 +117,18 @@ cbegin()与cend ()迭代器内的值不可修改
 		
 	
 		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
 			
 		
 	
@@ -125,7 +136,7 @@ cbegin()与cend ()迭代器内的值不可修改
 	
 	
 	
-		<li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>prev</a></li>
+		<li class="prev"><a href="/jun/2019/04/05/List/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>prev</a></li>
 	
 	<li><a href="/jun/"><i class="fa fa-archive"></i>Home</a></li>
 	
