@@ -1,0 +1,272 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>二叉树 | Hexo</title>
+  <meta name="author" content="John Doe">
+  
+  <meta name="description" content="二叉树一：二叉树的概述1.二叉树的概念
+一棵二叉树是结点的一个有限集合，该集合或者为空，或者是由一个根节点加上两棵别称为左子树和右子树的二叉树组成
+
+2.二叉树的特点：
+每个结点最多有两棵子树，即二叉树不存在度大于2的结点。
+二叉树的子树有左右之分，其子树的次序不能颠倒。
+
+3.二叉树的几种形态
+4">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="二叉树">
+  <meta property="og:site_name" content="Hexo">
+
+  
+    <meta property="og:image" content>
+  
+
+  
+    <link rel="alternative" href="/jun/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link href="/jun/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/jun/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/responsive.css" media="screen" type="text/css">  
+  <link rel="stylesheet" href="/jun/css/sidenav.css" media="screen" type="text/css">  
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/jun/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+</head>
+</html>
+<body id="body" data-spy="scroll" data-target=".toc">
+  <div class="container" id="container">
+	<div class="content">
+	  <div class="page-header">		
+  <h1><a class="brand" href="/jun/">Hexo</a><span class="split"></span><span class="title">二叉树</span><span class="date" id="title-date"><i class="fa fa-clock-o"></i> 2019-04-14</span></h1>
+</div>		
+
+<div class="row page">
+  <!-- cols -->	
+  
+  
+
+  
+	<div class="col-md-12">
+	  
+
+	  <!-- content -->
+	  <h3 id="二叉树"><a href="#二叉树" class="headerlink" title="二叉树"></a>二叉树</h3><h4 id="一：二叉树的概述"><a href="#一：二叉树的概述" class="headerlink" title="一：二叉树的概述"></a>一：二叉树的概述</h4><h5 id="1-二叉树的概念"><a href="#1-二叉树的概念" class="headerlink" title="1.二叉树的概念"></a>1.二叉树的概念</h5><blockquote>
+<p>一棵二叉树是结点的一个有限集合，该集合或者为空，或者是由一个根节点加上两棵别称为左子树和右子树<br>的二叉树组成</p>
+</blockquote>
+<h5 id="2-二叉树的特点："><a href="#2-二叉树的特点：" class="headerlink" title="2.二叉树的特点："></a>2.二叉树的特点：</h5><ol>
+<li>每个结点最多有两棵子树，即二叉树不存在度大于2的结点。</li>
+<li>二叉树的子树有左右之分，其子树的次序不能颠倒。</li>
+</ol>
+<h5 id="3-二叉树的几种形态"><a href="#3-二叉树的几种形态" class="headerlink" title="3.二叉树的几种形态"></a>3.二叉树的几种形态</h5><p><img src="https://wx2.sinaimg.cn/mw690/0071OE7sly1g21gxhf3h6j30hl07gq3i.jpg" alt></p>
+<h5 id="4-两种特殊的二叉树"><a href="#4-两种特殊的二叉树" class="headerlink" title="4.两种特殊的二叉树"></a>4.两种特殊的二叉树</h5><p><strong>4.1：满二叉树</strong></p>
+<blockquote>
+<p>一个二叉树，如果每一个层的结点数都达到最大值，则这个二叉树就是满二叉树。也就是说，如果一个二叉树的层数为K，且结点总数是(2^k) -1 ，则它就是满二叉树。</p>
+</blockquote>
+<p><strong>满二叉树的图例</strong></p>
+<p><img src="https://wx2.sinaimg.cn/mw690/0071OE7sly1g21h3ea5v4j308k06qq4j.jpg" alt></p>
+<p><strong>满二叉树的特点</strong></p>
+<blockquote>
+<p>如果二叉树的高度为 h </p>
+<p>则满二叉树的节点个数为 2^h - 1;</p>
+<p>而除了最后一层外。剩余的节点个数为2 ^ (h-1) -1个</p>
+<p>最后一层的节点个数为 2 ^ (h-1) -1个 </p>
+<p><strong>特点</strong>：满二叉树的最后一层节点个数为其他层数的结点个数之和 - 1‘</p>
+</blockquote>
+<p><strong>4.2完全二叉树</strong></p>
+<blockquote>
+<p>完全二叉树是效率很高的数据结构，完全二叉树是由满二叉树而引出来的。对于深度为K的，有n个结点的二叉树，当且仅当其每一个结点都与深度为K的满二叉树中编号从1至n的结点一一对应时称之为完全二叉树。 </p>
+</blockquote>
+<p><strong>完全二叉树的特点</strong></p>
+<blockquote>
+<p>已知:父亲节点的下标为[parent]</p>
+<p>则其左孩子的结点下标为[left] = 2* [parent] + 1</p>
+<p>其右孩子的下标为[right] = 2 * [parent] + 2</p>
+<p>已知：左孩子或者右孩子的下标[child]</p>
+<p>其双亲结点的下标为[parent] = ( [child] - 1 ) / 2(结果取整)</p>
+</blockquote>
+<p><strong>要注意的是满二叉树是一种特殊的完全二叉树</strong></p>
+<p><strong>满二叉树与完全二叉树的联系与区别</strong></p>
+<blockquote>
+<p><strong>满二叉树一定是完全二叉树，但是完全二叉树并不一定是满二叉树 </strong></p>
+</blockquote>
+<p><strong>二叉树的重要特征</strong></p>
+<blockquote>
+<p>1.二叉树上第i层上至多有2^(i-1)个结点（i&gt;=1）</p>
+<p>2.深度为h的二叉树至多有2^h - 1个结点</p>
+<p>3.对于任意一颗二叉树，如果其叶子结点数为n，度为2 的结点数为n1,则n=n1+1;</p>
+<p>4.具有n个结点的完全二叉树的深度为[log2 (n+1)]或者为[log2 n]+1(备注:此处的[]为取整，不是中括号)</p>
+<p>5.</p>
+</blockquote>
+<h4 id="二叉树存储"><a href="#二叉树存储" class="headerlink" title="二叉树存储"></a>二叉树存储</h4><p> <strong>1.顺序存储</strong></p>
+<blockquote>
+<p>顺序结构存储就是使用数组来存储，一般使用数组只适合表示完全二叉树，因为不是完全二叉树会有空间的浪费。而现实中使用中只有堆才会使用数组来存储，二叉树顺序存储在物理上是一个数组，在逻辑上是一颗二叉树。</p>
+</blockquote>
+<p><strong>2. 链式存储</strong></p>
+<blockquote>
+<p><strong>二叉树的链式存储结构是指，用链表来表示一棵二叉树，即用链来指示元素的逻辑关系。 通常的方法是链表中每个结点由三个域组成，数据域和左右指域，左右指针分别用来给出该结点左孩子和右孩子所在的链结点的存储地址 </strong></p>
+</blockquote>
+<h4 id="三：二叉树链式存储结构及实现"><a href="#三：二叉树链式存储结构及实现" class="headerlink" title="三：二叉树链式存储结构及实现"></a>三：二叉树链式存储结构及实现</h4><h5 id="1-二叉树的遍历"><a href="#1-二叉树的遍历" class="headerlink" title="1.二叉树的遍历"></a>1.二叉树的遍历</h5><p><strong>A:前序遍历</strong></p>
+<blockquote>
+<p>前序遍历(Preorder Traversal 亦称先序遍历)——访问根结点的操作发生在遍历其左右子树之前</p>
+</blockquote>
+<p><strong>B:中序遍历</strong></p>
+<blockquote>
+<p>中序遍历(Inorder Traversal)——访问根结点的操作发生在遍历其左右子树之中（间）。</p>
+</blockquote>
+<p><strong>C:后序遍历</strong></p>
+<blockquote>
+<p>后序遍历(Postorder Traversal)——访问根结点的操作发生在遍历其左右子树之后。</p>
+</blockquote>
+<p><strong>三种遍历的使用</strong></p>
+<p><img src="https://wx1.sinaimg.cn/mw690/0071OE7sly1g21yczmt1sj30mw09swhy.jpg" alt></p>
+<p><strong>二叉树的层序遍历</strong></p>
+<blockquote>
+<p><strong>在遍历二叉树时按照层的方式遍历</strong></p>
+</blockquote>
+<h4 id="二叉树的代码实现模块"><a href="#二叉树的代码实现模块" class="headerlink" title="二叉树的代码实现模块"></a>二叉树的代码实现模块</h4><h5 id="1-二叉树结构体的定义"><a href="#1-二叉树结构体的定义" class="headerlink" title="1.二叉树结构体的定义"></a>1.二叉树结构体的定义</h5><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> BTDdataType int</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">BinaryTreeNode</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">BTDataType _data;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">BinaryTreeNode</span>* _<span class="title">left</span>;</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">BinaryTreeNode</span>* _<span class="title">right</span>;</span></span><br><span class="line">&#125;BTNode;</span><br><span class="line"><span class="comment">//以左孩子右孩子的方式定义</span></span><br></pre></td></tr></table></figure>
+<h5 id="2-二叉树的前序遍历"><a href="#2-二叉树的前序遍历" class="headerlink" title="2.二叉树的前序遍历"></a>2.二叉树的前序遍历</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">BinaryTreePrevOrder</span><span class="params">(BTNode* root)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(root==<span class="literal">NULL</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> ;</span><br><span class="line">    &#125; </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d "</span>,root-&gt;val);</span><br><span class="line">    BinaryTreePrevOrder(root-&gt;left);</span><br><span class="line">    BinaryTreePrevOrder(root-&gt;right);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//按照递归的形式遍历二叉树的每一个结点</span></span><br></pre></td></tr></table></figure>
+<h5 id="3-二叉树的中序遍历"><a href="#3-二叉树的中序遍历" class="headerlink" title="3.二叉树的中序遍历"></a>3.二叉树的中序遍历</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">BinaryTreeInOrder</span><span class="params">(BTNode* root)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (root == <span class="literal">NULL</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	BinaryTreeInOrder(root-&gt;left);		<span class="comment">// 左子树</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d "</span>, root-&gt;val);	<span class="comment">// 根</span></span><br><span class="line">	BinaryTreeInOrder(root-&gt;right);		<span class="comment">// 右子树</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="4-二叉树的后序遍历"><a href="#4-二叉树的后序遍历" class="headerlink" title="4.二叉树的后序遍历"></a>4.二叉树的后序遍历</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">BinaryTreePostOrder</span><span class="params">(BTNode* root)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (root == <span class="literal">NULL</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">    BinaryTreePostOrder(root-&gt;left);</span><br><span class="line">    BinaryTreePostOrder(root-&gt;right);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d "</span>, root-&gt;val);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="5-二叉树的层序遍历"><a href="#5-二叉树的层序遍历" class="headerlink" title="5.二叉树的层序遍历"></a>5.二叉树的层序遍历</h5><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">LevelorderTraversal</span><span class="params">(TreeNode *root)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (root == <span class="literal">NULL</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// &lt;&gt;	C++ 模板，意思就是队列中存的类型是 TreeNode *</span></span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">queue</span>&lt;TreeNode *&gt;	qu;</span><br><span class="line"></span><br><span class="line">	qu.push(root);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span> (!qu.empty()) &#123;</span><br><span class="line">		TreeNode *front = qu.front();</span><br><span class="line">		qu.pop();</span><br><span class="line"></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%c "</span>, front-&gt;val);</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (front-&gt;left != <span class="literal">NULL</span>) &#123;</span><br><span class="line">			qu.push(front-&gt;left);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (front-&gt;right != <span class="literal">NULL</span>) &#123;</span><br><span class="line">			qu.push(front-&gt;right);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//此代码是用c++语言实现的。</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>总体思想：首先需要另外创建一个空的队列，在判断二叉树不为空树的情况下,先将二叉树的根节点入队，然后在根节点出队的时候将它的左右孩子放到队列中，下一次它的左右孩子又是它左右子树的根节点，依次放到队列中，然后出栈，直到队列为空。</p>
+</blockquote>
+<h4 id="四-二叉树面试题"><a href="#四-二叉树面试题" class="headerlink" title="四:二叉树面试题"></a>四:二叉树面试题</h4><p><strong>1.判断两个二叉树是否相等</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//接口</span></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">isSameTree</span><span class="params">(struct TreeNode* p,struct TreeNode *q)</span></span></span><br></pre></td></tr></table></figure>
+<p><strong>解题思路</strong></p>
+<blockquote>
+<p>首先考虑到如果两棵树都为空，则两棵树是相等的；如果两者中的一个为空，另外一个不为空，则两棵树肯定不相等。若两者都不为空，则需要考虑两根的值是否相等?两者对应的左右子树是否相等?如果两根的值相等，且两根的左右子树都相等，则两棵树是相等的否则两棵树不相等。</p>
+</blockquote>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//利用递归的思想，先判断根的情况，再判断左右子树的情况</span></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">isSameTree</span><span class="params">(struct TreeNode* p,struct TreeNode *q)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(p==<span class="literal">NULL</span>&amp;&amp;q==<span class="literal">NULL</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(p==<span class="literal">NULL</span>||q==<span class="literal">NULL</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> p-&gt;_data==q-&gt;_data</span><br><span class="line">        &amp;&amp;isSameTree(p-&gt;left,q-&gt;left)</span><br><span class="line">        &amp;&amp;isSameTree(p-&gt;right,q-&gt;right);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>2.判断对称树</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//接口</span></span><br></pre></td></tr></table></figure>
+	  
+
+	  <div>
+  		<center>
+		  <div class="pagination">
+<ul class="pagination">
+	
+	
+	
+	
+	
+	
+		
+			
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+			
+			
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+	
+	
+		<li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>prev</a></li>
+	
+	<li><a href="/jun/"><i class="fa fa-archive"></i>Home</a></li>
+	
+		<li class="next"><a href="/jun/2019/03/19/数据结构-双向链表/" class="alignright next">next<i class="fa fa-arrow-circle-o-right"></i></a></li>
+	
+</ul>
+</div>
+
+		</center>
+	  </div>
+	  
+	</div> <!-- col-md-9/col-md-12 -->
+	
+  </div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+	<footer> <p>
+  &copy; 2019 John Doe
+  
+      with help from <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-wixo/">Wixo</a>.    
+</p> </footer>
+  </div> <!-- container-narrow -->
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/jun/js/jquery.imagesloaded.min.js"></script>
+<script src="/jun/js/gallery.js"></script>
+<script src="/jun/js/bootstrap.min.js"></script>
+<script src="/jun/js/jquery.tableofcontents.min.js"></script>
+<script src="/jun/js/tocgenerator.min.js"></script>
+<script src="/jun/js/main.js"></script>
+<script src="/jun/js/search.js"></script> 
+
+
+
+
+<link rel="stylesheet" href="/jun/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/jun/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+</body>
+</html>
