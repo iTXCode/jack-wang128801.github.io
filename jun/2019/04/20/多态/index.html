@@ -6,7 +6,16 @@
   <title>多态 | Hexo</title>
   <meta name="author" content="John Doe">
   
-  <meta name="description" content="多态一：多态的简介1.多态的概念">
+  <meta name="description" content="多态一：多态的简介1.多态的概念复习
+
+多态：不同对象 执行同一种行为的多种表现形态(或者执行同一种行为产生的不同结果)
+0.前提是继承
+1.调用函数的对象必须是引用或指针
+2.被调用的函数必须为虚函数，且在子类当中被重写 
+非多态看类型：
+多态看对象：
+
+函数重写： 函数分别存在于子类和父类，函数">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -58,7 +67,30 @@
 	  
 
 	  <!-- content -->
-	  <h3 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h3><h4 id="一：多态的简介"><a href="#一：多态的简介" class="headerlink" title="一：多态的简介"></a>一：多态的简介</h4><h5 id="1-多态的概念"><a href="#1-多态的概念" class="headerlink" title="1.多态的概念"></a>1.多态的概念</h5>	  
+	  <h3 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h3><h4 id="一：多态的简介"><a href="#一：多态的简介" class="headerlink" title="一：多态的简介"></a>一：多态的简介</h4><h5 id="1-多态的概念"><a href="#1-多态的概念" class="headerlink" title="1.多态的概念"></a>1.多态的概念</h5><p><strong>复习</strong></p>
+<blockquote>
+<p>多态：不同对象 执行同一种行为的多种表现形态(或者执行同一种行为产生的不同结果)</p>
+<p>0.前提是继承</p>
+<p>1.调用函数的对象必须是引用或指针</p>
+<p>2.被调用的函数必须为虚函数，且在子类当中被重写 </p>
+<p>非多态看类型：</p>
+<p>多态看对象：</p>
+</blockquote>
+<p><strong>函数重写：</strong> 函数分别存在于子类和父类，函数名，参数，返回值都相同(可以是协变)</p>
+<p><strong>协变：</strong> 返回值的类型可以是构造父子关系的指针或者引用</p>
+<p><strong>非多态</strong></p>
+<blockquote>
+<p>汇编代码： 语句简单</p>
+</blockquote>
+<p><strong>多态</strong></p>
+<blockquote>
+</blockquote>
+<p><strong>如何实现多态</strong></p>
+<blockquote>
+<p>多态的对象模型：只要类中有虚函数，对象 模型中就存放了一个虚标指针，虚表指针指向虚表，虚表本质上为函数指针数组，虚表在vs下存在代码段、</p>
+<p>1.本质上是通过虚表实现：程序在运行的 时候，根据引用或者指针指向的对象，访问对象模型中虚表指针，获取虚表中对应位置的函数指针，</p>
+</blockquote>
+	  
 
 	  <div>
   		<center>
@@ -69,6 +101,8 @@
 	
 	
 	
+	
+		
 	
 		
 			
