@@ -156,19 +156,65 @@ PHP">
 <p>2.支持Vim 的扩展功能(安装插件极其方便)</p>
 <p>3.启动速度很快</p>
 </blockquote>
-<h5 id="gcc"><a href="#gcc" class="headerlink" title="gcc"></a>gcc</h5><blockquote>
+<h5 id="vim-打开的同是会产生一个-swap文件"><a href="#vim-打开的同是会产生一个-swap文件" class="headerlink" title="vim 打开的同是会产生一个     . swap文件"></a>vim 打开的同是会产生一个     . swap文件</h5><h5 id="gcc"><a href="#gcc" class="headerlink" title="gcc"></a>gcc</h5><blockquote>
 <p>预处理： 头文件替换，宏展开，去掉注释，条件编译，其他预处理指令</p>
 <p>编译：源代码文件转换成汇编代码</p>
 <p>汇编：汇编代码转换成二进制文件</p>
 <p>链接：把所有的二进制文件和依赖的库合到一块，得到可执行程序</p>
 </blockquote>
 <blockquote>
-<p>gcc test.c -o test //生成一个叫test的可执行文件 ，默认生成的是  a.out</p>
+<p>gcc test.c -o test //生成一个叫 test 的可执行文件 ，默认生成的是  a.out</p>
 <p>gcc    -E //只进行预处理</p>
 <p>gcc    -E  test.c   -o test.i    //对test.c进行预处理</p>
 <p>vim test.i     //查看预处理后的结果</p>
 <p>gcc   -S  test.i   - 0   test.s     //进行编译得到汇编代码</p>
 </blockquote>
+<blockquote>
+<p>-g 选项  编译得时候保留调试信息         </p>
+</blockquote>
+<h5 id="debug-VS-realase-的区别"><a href="#debug-VS-realase-的区别" class="headerlink" title="debug VS realase 的区别"></a>debug VS realase 的区别</h5><h5 id="Linux-下的优化"><a href="#Linux-下的优化" class="headerlink" title="Linux 下的优化"></a>Linux 下的优化</h5><blockquote>
+<p>-O0   -O1    -O2    -O3</p>
+</blockquote>
+<h5 id="gbd-：-Linux下的调试"><a href="#gbd-：-Linux下的调试" class="headerlink" title="gbd ： Linux下的调试"></a>gbd ： Linux下的调试</h5><blockquote>
+<p>break  n   //在第n 行打断点，参数可以是一个行号，也可以是函数名</p>
+<p>run/r    开始执行</p>
+<p>next/n :单步执行(逐过程)</p>
+<p>stp/s :单步执行(逐语句)</p>
+<p>bt: 调用函数栈帧</p>
+<p>Ctrl + r快速搜索</p>
+<p>frame/f   :  切换到某个指定栈帧</p>
+</blockquote>
+<p><strong>gdb的使用场景</strong></p>
+<blockquote>
+<p>1.使用gdb调试coredump(核心转储文件)文件<strong>(coredump是程序的临终遗言，最后的 运行状况</strong>)     </p>
+<p>​                                                                           程序奔溃：可以利用空指针的方式 </p>
+<p>​                                                                                事后调试:   </p>
+<p>2.使用gdb attach(附加) 上一个程序。</p>
+<p>​                                                                        TODO(进程相关的内容)</p>
+</blockquote>
+<p><strong>cgdb：更方便一点</strong></p>
+<h5 id="调试一个问题的步骤和思路"><a href="#调试一个问题的步骤和思路" class="headerlink" title="调试一个问题的步骤和思路"></a>调试一个问题的步骤和思路</h5><blockquote>
+<p>1.确认是不是bug：唯一依据就是产品需求</p>
+<p>2.确认有bug后，开始定位bug ：找到是那行代码引起的bug</p>
+<p>3.分析问题的原因(幸福感).</p>
+<p>4.提出方案并修改问题</p>
+<p>5.测试(回归测试,防止代码的修改引入新的问题).由于回归测试 ，成本比较高</p>
+<p>往往以自动化测试为主。</p>
+</blockquote>
+<h5 id="vs-中-调试的操作"><a href="#vs-中-调试的操作" class="headerlink" title="vs 中 调试的操作"></a>vs 中 调试的操作</h5><blockquote>
+<p>1.打断点</p>
+<p>2.</p>
+</blockquote>
+<h4 id="工程管理工具-c-java中存在"><a href="#工程管理工具-c-java中存在" class="headerlink" title="工程管理工具(c++,java中存在)"></a>工程管理工具(c++,java中存在)</h4><p><strong>解决大型项目中的模块之间的依赖问题</strong></p>
+<p><strong>工具名称：makefile(40年前的技术)</strong></p>
+<p><strong>当前的现代c/c++工程管理工具本质都是通过自动化 的方式生成makefile</strong></p>
+<blockquote>
+<p>1.先在当前目录中查找Makefile/Makefile 文件</p>
+<p>2.找到要生成的目标(决定是否要真的生成)</p>
+<p>3.检查以来的文件是否存在</p>
+<p>4.执行生成动作的命令</p>
+</blockquote>
+<p><strong>增量编译</strong> </p>
 <h3 id="vim-的配置"><a href="#vim-的配置" class="headerlink" title="vim 的配置"></a>vim 的配置</h3><p><strong>码云  Vimforcpp</strong></p>
 <blockquote>
 <p>按下Esc进入普通模式，按空格进人编辑器功能 选择模式</p>
@@ -194,6 +240,40 @@ PHP">
 	
 		
 			
+		
+	
+		
+			
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+			
+			
 			
 		
 	
@@ -213,39 +293,9 @@ PHP">
 	
 		
 	
-		
-	
-		
-	
-		
-	
-		
-	
-		
-			
-			
-			
-		
-	
-		
-	
-		
-	
-		
-	
-		
-	
-		
-	
-		
-	
-		
-	
-		
 	
 	
-	
-		<li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>prev</a></li>
+		<li class="prev"><a href="/jun/2019/04/27/=      欢     迎     阅     读   《 V I M  教  程 》   ——     版本 1.5      =/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>prev</a></li>
 	
 	<li><a href="/jun/"><i class="fa fa-archive"></i>Home</a></li>
 	
