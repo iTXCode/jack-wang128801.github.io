@@ -1,0 +1,1547 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.1.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Linux 下的开发工具">
+<meta name="keywords" content="Linux的开发工具">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux的开发工具">
+<meta property="og:url" content="https://jack-wang128801.github.io/2019/04/29/Linux的开发工具/index.html">
+<meta property="og:site_name" content="jack-wang&#39;s blog">
+<meta property="og:description" content="Linux 下的开发工具">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://wx1.sinaimg.cn/mw690/0071OE7sly1g2jl08p9xfj30un0gddhv.jpg">
+<meta property="og:updated_time" content="2019-05-05T15:05:04.455Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux的开发工具">
+<meta name="twitter:description" content="Linux 下的开发工具">
+<meta name="twitter:image" content="https://wx1.sinaimg.cn/mw690/0071OE7sly1g2jl08p9xfj30un0gddhv.jpg">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="jack-wang's blog" type="application/atom+xml">
+
+
+
+  
+  
+  <link rel="canonical" href="https://jack-wang128801.github.io/2019/04/29/Linux的开发工具/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Linux的开发工具 | jack-wang's blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">jack-wang's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">Fly to the distance</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-站点简介">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>站点简介</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-工作站">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/jun/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>工作站</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-关于我">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于我</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-标签">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-类别">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>类别</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-提交进程">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>提交进程</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>Search</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://jack-wang128801.github.io/2019/04/29/Linux的开发工具/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jack-wang128801">
+      <meta itemprop="description" content="Yes,I can.">
+      <meta itemprop="image" content="/images/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jack-wang's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Linux的开发工具
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-04-29 22:49:24" itemprop="dateCreated datePublished" datetime="2019-04-29T22:49:24+08:00">2019-04-29</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-05-05 23:05:04" itemprop="dateModified" datetime="2019-05-05T23:05:04+08:00">2019-05-05</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">Comments: </span>
+                <a href="/2019/04/29/Linux的开发工具/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2019/04/29/Linux的开发工具/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             Views:  
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Symbols count in article: </span>
+                
+                <span title="Symbols count in article">7.7k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">7 mins.</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="Linux-下的开发工具"><a href="#Linux-下的开发工具" class="headerlink" title="Linux 下的开发工具"></a>Linux 下的开发工具</h3><a id="more"></a>
+<p><strong>vs是一个IDE(集成开发环境)</strong></p>
+<blockquote>
+<p>1.代码编辑器</p>
+<p>2.编译器</p>
+<p>3.调试器</p>
+<p>4.工程管理工具</p>
+<p>5其他 ….</p>
+</blockquote>
+<p><strong>Java</strong></p>
+<blockquote>
+<p>Eclipse ===&gt;也可以开发C++</p>
+<p>IDEA  ====&gt;也可开发c++</p>
+</blockquote>
+<p><strong>JetBrains(全家桶)</strong></p>
+<blockquote>
+<p>CLion(C++)</p>
+<p>PHP(PHPStorm)</p>
+<p>PyCharm(Python)</p>
+<p>JavaScript(WebStorm)</p>
+<p>Go(GoLand)</p>
+</blockquote>
+<h4 id="开发工具"><a href="#开发工具" class="headerlink" title="开发工具"></a>开发工具</h4><p><strong>1.代码编辑：vim</strong></p>
+<p><strong>2.编译：gcc</strong></p>
+<p><strong>3.调试：gdb </strong></p>
+<p><strong>4.工程管理:makefile</strong></p>
+<h5 id="包管理器-：-yum-命令行版的应用商店"><a href="#包管理器-：-yum-命令行版的应用商店" class="headerlink" title="包管理器 ：  yum(命令行版的应用商店)"></a>包管理器 ：  yum(命令行版的应用商店)</h5><p><strong>对应的服务器叫做软件源</strong></p>
+<p><strong>yum的所有操作都要在网络畅通的情况下使用</strong></p>
+<p><strong>yum的局限性: 只能安装一些比较知名的软件(也可以直接以源代码的方式进行安装)</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yun list | grep tree</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>“ | “   左边的输出内容做为右边的输入</p>
+<p>“ |”   叫做管道,能够链接两条指令</p>
+<p>通过  “|”  将左边的指令执行结果进行过滤</p>
+</blockquote>
+<h5 id="yum-的基本用法"><a href="#yum-的基本用法" class="headerlink" title="yum  的基本用法"></a>yum  的基本用法</h5><blockquote>
+<p>1.yum list    //查找需要的软件(一般不按回车,服务器上的软件过多会导致电脑卡死)</p>
+<p>2.yum install 安装(必须有管理员权限)</p>
+<p>3.yum  remove (卸载软件)</p>
+<p><strong>除了yum安装之外，还可以使用源代码直接编译的方式安装(极其复杂，非专业人士不要尝试)</strong></p>
+</blockquote>
+<p><strong>su 能够切到管理员用户</strong></p>
+<p><strong>退出管理员:exit 或者 Ctrl + d</strong></p>
+<p><strong>sudo  不切换用户，但是要使用管理员权限运行程序</strong></p>
+<h4 id="vim编辑器-神之编辑器"><a href="#vim编辑器-神之编辑器" class="headerlink" title="vim编辑器(神之编辑器)"></a>vim编辑器(神之编辑器)</h4><p><strong>史上最牛逼的文本编辑器之一</strong>            </p>
+<p><strong>并肩的存在:Emacs(编辑器之神)—-&gt;依赖的编程语言Lisp(与c语言齐名)</strong></p>
+<h5 id="Vim的强大之处"><a href="#Vim的强大之处" class="headerlink" title="Vim的强大之处"></a>Vim的强大之处</h5><blockquote>
+<ol>
+<li>支持非常丰富的快捷键(操作效率非常高，学习成本比较高)演化成了一种思想。</li>
+<li>支持非常强大的扩展能力(插件机制)。背后依赖着一个编程语言(VimL)</li>
+</ol>
+</blockquote>
+<h5 id="Vim-的竞争对手"><a href="#Vim-的竞争对手" class="headerlink" title="Vim 的竞争对手"></a>Vim 的竞争对手</h5><blockquote>
+<p>notepad++ /  notepadplus /utrla edit /source insight</p>
+</blockquote>
+<h5 id="Vim-基于模式的方式完成编辑"><a href="#Vim-基于模式的方式完成编辑" class="headerlink" title="Vim 基于模式的方式完成编辑"></a>Vim 基于模式的方式完成编辑</h5><blockquote>
+<p>Vim  刚刚启动的时候是普通模式(vimtutor)，普通模式下不能直接输入内容。此时敲下的按键多半是带有特殊功能的快捷键，需要进入插入模式才能进行编辑</p>
+<p>1.”：w “ 进行保存</p>
+<p>2.”：q”   进行退出</p>
+<p>3.普通模式下按 “:” 进入底行模式</p>
+</blockquote>
+<h5 id="vim-文件"><a href="#vim-文件" class="headerlink" title="vim[文件]"></a>vim[文件]</h5><blockquote>
+<p>打开一个文件，不存在就会创建新文件</p>
+<p>vim是一个多模式的文本编辑器</p>
+</blockquote>
+<h4 id="能够与Vim并肩的编辑器"><a href="#能够与Vim并肩的编辑器" class="headerlink" title="能够与Vim并肩的编辑器"></a>能够与Vim并肩的编辑器</h4><h5 id="Sublimme-Text-史上最性感的编辑器"><a href="#Sublimme-Text-史上最性感的编辑器" class="headerlink" title="Sublimme Text(史上最性感的编辑器)"></a>Sublimme Text(史上最性感的编辑器)</h5><blockquote>
+<p>1.界面好看</p>
+<p>2.支持vim风格的快捷键</p>
+</blockquote>
+<h5 id="Atom-Github官方编辑器"><a href="#Atom-Github官方编辑器" class="headerlink" title="Atom(Github官方编辑器 )"></a>Atom(Github官方编辑器 )</h5><blockquote>
+<p>1.界面好看</p>
+<p>2.支持Vim风格的快捷键</p>
+<p>3.支持非常强大的扩展(安装插件非常方便)</p>
+<p>4.致命缺陷：启动非常慢</p>
+</blockquote>
+<h5 id="neovim"><a href="#neovim" class="headerlink" title="neovim"></a>neovim</h5><blockquote>
+<p>真正有望取代Vim的软件</p>
+</blockquote>
+<h5 id="VScode-MS-—-》依赖图形界面"><a href="#VScode-MS-—-》依赖图形界面" class="headerlink" title="VScode(MS)  —-》依赖图形界面"></a>VScode(MS)  —-》依赖图形界面</h5><blockquote>
+<p>1.界面好看</p>
+<p>2.支持Vim 的扩展功能(安装插件极其方便)</p>
+<p>3.启动速度很快</p>
+</blockquote>
+<h5 id="vim-打开的同是会产生一个-swap文件"><a href="#vim-打开的同是会产生一个-swap文件" class="headerlink" title="vim 打开的同是会产生一个     . swap文件"></a>vim 打开的同是会产生一个     . swap文件</h5><h5 id="gcc"><a href="#gcc" class="headerlink" title="gcc"></a>gcc</h5><blockquote>
+<p>预处理： 头文件替换，宏展开，去掉注释，条件编译，其他预处理指令</p>
+<p>编译：源代码文件转换成汇编代码</p>
+<p>汇编：汇编代码转换成二进制文件</p>
+<p>链接：把所有的二进制文件和依赖的库合到一块，得到可执行程序</p>
+</blockquote>
+<blockquote>
+<p>gcc test.c -o test //生成一个叫 test 的可执行文件 ，默认生成的是  a.out</p>
+<p>gcc    -E //只进行预处理,不生成文件，你需要把他重定向到一个输出文件里面</p>
+<p>gcc    -E  test.c   -o test.i    //对test.c进行预处理</p>
+<p>vim test.i     //查看预处理后的结果</p>
+<p>gcc   -S  test.i   - 0   test.s     //进行编译得到汇编代码</p>
+</blockquote>
+<blockquote>
+<p>-g 选项  编译的时候保留调试信息         </p>
+</blockquote>
+<p><strong>gcc 下的选项</strong></p>
+<blockquote>
+<p>-E 只激活预处理,这个不生成文件,你需要把它重定向到一个输出文件里面<br>-S  编译到汇编语言不进行汇编和链接<br>-c  编译到目标代码<br>-o 文件输出到 文件<br>-static 此选项对生成的文件采用静态链接<br>-g 生成调试信息。GNU 调试器可利用该信息。<br>-shared 此选项将尽量使用动态库，所以生成文件比较小，但是需要系统由动态库.<br>-O0<br>-O1<br>-O2<br>-O3 编译器的优化选项的4个级别，-O0表示没有优化,-O1为缺省值，-O3优化级别最高<br>-w  不生成任何警告信息。<br>-Wall 生成所有警告信息</p>
+</blockquote>
+<p><strong>优化级别越高程序的实际执行顺序就和原来的执行顺序差别越大必须 要关闭优化才能进行调试 </strong></p>
+<p><strong>一般调试的时候用  -O0</strong></p>
+<h5 id="gbd-：-Linux下的命令行调试工具"><a href="#gbd-：-Linux下的命令行调试工具" class="headerlink" title="gbd ： Linux下的命令行调试工具"></a>gbd ： Linux下的命令行调试工具</h5><p><strong>Linux下调试的背景</strong></p>
+<blockquote>
+<ul>
+<li>程序的发布方式有两种，debug模式和release模式</li>
+<li>Linux gcc/g++出来的二进制程序，默认是release模式</li>
+<li>要使用gdb调试，必须在源代码生成二进制程序的时候, 加上 -g 选项［重要］</li>
+</ul>
+</blockquote>
+<p><strong>使用场景</strong></p>
+<blockquote>
+<p>break  n   //在第n 行打断点，参数可以是一个行号，也可以是函数名</p>
+<p>run/r     : 开始执行</p>
+<p>next/n   :单步执行(逐过程)</p>
+<p>stp/s      :单步执行(逐语句)</p>
+<p>bt           : 调用函数栈帧</p>
+<p>Ctrl + r   :快速搜索</p>
+<p>frame/f  :  切换到某个指定栈帧</p>
+</blockquote>
+<p><strong>gdb的使用场景</strong></p>
+<blockquote>
+<p>1.使用gdb调试coredump(核心转储文件)文件<strong>(coredump是程序的临终遗言，最后的 运行状况</strong>)     </p>
+<p>​                                                                           程序奔溃：可以利用空指针的方式 </p>
+<p>​                                                                           事后调试:   </p>
+<p>2.使用gdb attach(附加) 上一个程序。</p>
+<p>​                                                                        TODO(进程相关的内容)</p>
+</blockquote>
+<p><strong>cgdb：更方便一点</strong></p>
+<h5 id="调试一个问题的步骤和思路"><a href="#调试一个问题的步骤和思路" class="headerlink" title="调试一个问题的步骤和思路"></a>调试一个问题的步骤和思路</h5><blockquote>
+<p>1.确认是不是bug：唯一依据就是产品需求</p>
+<p>2.确认有bug后，开始定位bug ：找到是那行代码引起的bug</p>
+<p>3.分析问题的原因(幸福感).</p>
+<p>4.提出方案并修改问题</p>
+<p>5.测试(回归测试,防止代码的修改引入新的问题).由于回归测试 ，成本比较高</p>
+<p>往往以自动化测试为主。</p>
+</blockquote>
+<h5 id="vs-中-调试的操作"><a href="#vs-中-调试的操作" class="headerlink" title="vs 中 调试的操作"></a>vs 中 调试的操作</h5><blockquote>
+<p>1.打断点</p>
+<p>2.</p>
+</blockquote>
+<h4 id="工程管理工具-c-java中存在"><a href="#工程管理工具-c-java中存在" class="headerlink" title="工程管理工具(c++,java中存在)"></a>工程管理工具(c++,java中存在)</h4><p><strong>解决大型项目中的模块之间的依赖问题</strong></p>
+<p><strong>工具名称：makefile(40年前的技术)</strong></p>
+<p><strong>当前的现代c/c++工程管理工具本质都是通过自动化 的方式生成makefile</strong></p>
+<blockquote>
+<p>1.先在当前目录中查找Makefile/Makefile 文件</p>
+<p>2.找到要生成的目标(决定是否要真的生成)</p>
+<p>3.检查以来的文件是否存在</p>
+<p>4.执行生成动作的命令</p>
+</blockquote>
+<p><strong>增量编译</strong> </p>
+<h3 id="vim-的配置"><a href="#vim-的配置" class="headerlink" title="vim 的配置"></a>vim 的配置</h3><p><strong>码云  Vimforcpp</strong></p>
+<blockquote>
+<p>按下Esc进入普通模式，按空格进人编辑器功能 选择模式</p>
+<p>退出选择模式的方法 按下空格键然后按下 f 和a</p>
+</blockquote>
+<h5 id="其他的vim配置"><a href="#其他的vim配置" class="headerlink" title="其他的vim配置"></a>其他的vim配置</h5><blockquote>
+<p>spacevim 一套比较知名的配置(对于新手特别不友好)</p>
+<p>vimplus   稍微旧一点的，有些功能不是很科学</p>
+<p>vimforcpp ：为比特同学量身定做</p>
+</blockquote>
+<h5 id="vimtutor下几种模式间的相互转换"><a href="#vimtutor下几种模式间的相互转换" class="headerlink" title="vimtutor下几种模式间的相互转换"></a>vimtutor下几种模式间的相互转换</h5><p><img src="https://wx1.sinaimg.cn/mw690/0071OE7sly1g2jl08p9xfj30un0gddhv.jpg" alt></p>
+<p>《龙书》，《虎书》，《鲸书》</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linux的开发工具/" rel="tag"># Linux的开发工具</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/29/系统编程/" rel="next" title="系统编程">
+                <i class="fa fa-chevron-left"></i> 系统编程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/05/01/排序/" rel="prev" title="排序">
+                排序 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/header.jpg" alt="jack-wang128801">
+            
+              <p class="site-author-name" itemprop="name">jack-wang128801</p>
+              <div class="site-description motion-element" itemprop="description">Yes,I can.</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives">
+                
+                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">categories</span>
+                  
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-name">tags</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/jack-wang128801" title="GitHub &rarr; https://github.com/jack-wang128801" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux-下的开发工具"><span class="nav-number">1.</span> <span class="nav-text">Linux 下的开发工具</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#开发工具"><span class="nav-number">1.1.</span> <span class="nav-text">开发工具</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#包管理器-：-yum-命令行版的应用商店"><span class="nav-number">1.1.1.</span> <span class="nav-text">包管理器 ：  yum(命令行版的应用商店)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#yum-的基本用法"><span class="nav-number">1.1.2.</span> <span class="nav-text">yum  的基本用法</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#vim编辑器-神之编辑器"><span class="nav-number">1.2.</span> <span class="nav-text">vim编辑器(神之编辑器)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Vim的强大之处"><span class="nav-number">1.2.1.</span> <span class="nav-text">Vim的强大之处</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Vim-的竞争对手"><span class="nav-number">1.2.2.</span> <span class="nav-text">Vim 的竞争对手</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Vim-基于模式的方式完成编辑"><span class="nav-number">1.2.3.</span> <span class="nav-text">Vim 基于模式的方式完成编辑</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#vim-文件"><span class="nav-number">1.2.4.</span> <span class="nav-text">vim[文件]</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#能够与Vim并肩的编辑器"><span class="nav-number">1.3.</span> <span class="nav-text">能够与Vim并肩的编辑器</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Sublimme-Text-史上最性感的编辑器"><span class="nav-number">1.3.1.</span> <span class="nav-text">Sublimme Text(史上最性感的编辑器)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Atom-Github官方编辑器"><span class="nav-number">1.3.2.</span> <span class="nav-text">Atom(Github官方编辑器 )</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#neovim"><span class="nav-number">1.3.3.</span> <span class="nav-text">neovim</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#VScode-MS-—-》依赖图形界面"><span class="nav-number">1.3.4.</span> <span class="nav-text">VScode(MS)  —-》依赖图形界面</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#vim-打开的同是会产生一个-swap文件"><span class="nav-number">1.3.5.</span> <span class="nav-text">vim 打开的同是会产生一个     . swap文件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#gcc"><span class="nav-number">1.3.6.</span> <span class="nav-text">gcc</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#gbd-：-Linux下的命令行调试工具"><span class="nav-number">1.3.7.</span> <span class="nav-text">gbd ： Linux下的命令行调试工具</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#调试一个问题的步骤和思路"><span class="nav-number">1.3.8.</span> <span class="nav-text">调试一个问题的步骤和思路</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#vs-中-调试的操作"><span class="nav-number">1.3.9.</span> <span class="nav-text">vs 中 调试的操作</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#工程管理工具-c-java中存在"><span class="nav-number">1.4.</span> <span class="nav-text">工程管理工具(c++,java中存在)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vim-的配置"><span class="nav-number">2.</span> <span class="nav-text">vim 的配置</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#其他的vim配置"><span class="nav-number">2.0.1.</span> <span class="nav-text">其他的vim配置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#vimtutor下几种模式间的相互转换"><span class="nav-number">2.0.2.</span> <span class="nav-text">vimtutor下几种模式间的相互转换</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jack-wang128801</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="Symbols count total">142k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="Reading time total">2:09</span>
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.1.0</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="Total Visitors">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="Total Views">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.0"></script>
+
+  <script src="/js/motion.js?v=7.1.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.0"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.0"></script>
+<script src="/js/post-details.js?v=7.1.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

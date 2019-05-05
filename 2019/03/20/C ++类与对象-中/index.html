@@ -96,22 +96,22 @@
 
 
 
-  <meta name="description" content="类与对象1.类的6个默认成员函数 1.1 构造函数 1.2 拷贝函数构造 1.3 析构函数    1.4 赋值操作符重载                        1.5 取地址操作符重载                         1.6 const修饰的取地址操作符重载                        2. 构造函数   2.1 概念：不是创建，某种意义上来说是初始化">
+  <meta name="description" content="类与对象">
 <meta name="keywords" content="类与对象(中)">
 <meta property="og:type" content="article">
 <meta property="og:title" content="c++ 类与对象(中)">
 <meta property="og:url" content="https://jack-wang128801.github.io/2019/03/20/C ++类与对象-中/index.html">
 <meta property="og:site_name" content="jack-wang&#39;s blog">
-<meta property="og:description" content="类与对象1.类的6个默认成员函数 1.1 构造函数 1.2 拷贝函数构造 1.3 析构函数    1.4 赋值操作符重载                        1.5 取地址操作符重载                         1.6 const修饰的取地址操作符重载                        2. 构造函数   2.1 概念：不是创建，某种意义上来说是初始化">
+<meta property="og:description" content="类与对象">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20190320211328591.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY2tfd2FuZzEyODgwMQ==,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20190322192703218.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY2tfd2FuZzEyODgwMQ==,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20190322203217720.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY2tfd2FuZzEyODgwMQ==,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20190322203402120.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY2tfd2FuZzEyODgwMQ==,size_16,color_FFFFFF,t_70">
-<meta property="og:updated_time" content="2019-03-23T10:43:47.254Z">
+<meta property="og:updated_time" content="2019-05-05T15:00:43.947Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="c++ 类与对象(中)">
-<meta name="twitter:description" content="类与对象1.类的6个默认成员函数 1.1 构造函数 1.2 拷贝函数构造 1.3 析构函数    1.4 赋值操作符重载                        1.5 取地址操作符重载                         1.6 const修饰的取地址操作符重载                        2. 构造函数   2.1 概念：不是创建，某种意义上来说是初始化">
+<meta name="twitter:description" content="类与对象">
 <meta name="twitter:image" content="https://img-blog.csdnimg.cn/20190320211328591.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY2tfd2FuZzEyODgwMQ==,size_16,color_FFFFFF,t_70">
 
 
@@ -204,7 +204,7 @@
   </div>
 
   <div class="site-nav-toggle">
-    <button aria-label="Navigationsleiste an/ausschalten">
+    <button aria-label="Toggle navigation bar">
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
@@ -328,7 +328,7 @@
             <a href="javascript:;" class="popup-trigger">
           
             
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>Suche</a>
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>Search</a>
         </li>
       
     </ul>
@@ -348,7 +348,7 @@
       <i class="fa fa-times-circle"></i>
     </span>
     <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="Suche..." spellcheck="false" type="text" id="local-search-input">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
     </div>
   </div>
   <div id="local-search-result"></div>
@@ -434,14 +434,14 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
 
               
                 
               
 
-              <time title="Erstellt: 2019-03-20 21:06:58" itemprop="dateCreated datePublished" datetime="2019-03-20T21:06:58+08:00">2019-03-20</time>
+              <time title="Created: 2019-03-20 21:06:58" itemprop="dateCreated datePublished" datetime="2019-03-20T21:06:58+08:00">2019-03-20</time>
             
 
             
@@ -456,9 +456,9 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">Bearbeitet am</span>
+                  <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Geändert am: 2019-03-23 18:43:47" itemprop="dateModified" datetime="2019-03-23T18:43:47+08:00">2019-03-23</time>
+                <time title="Modified: 2019-05-05 23:00:43" itemprop="dateModified" datetime="2019-05-05T23:00:43+08:00">2019-05-05</time>
               
             
           </span>
@@ -472,7 +472,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">in</span>
+                <span class="post-meta-item-text">In</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Cpp/" itemprop="url" rel="index"><span itemprop="name">Cpp</span></a></span>
@@ -493,7 +493,7 @@
                   <i class="fa fa-comment-o"></i>
                 </span>
             
-                <span class="post-meta-item-text">Kommentare: </span>
+                <span class="post-meta-item-text">Comments: </span>
                 <a href="/2019/03/20/C ++类与对象-中/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count gitment-comments-count" data-xid="/2019/03/20/C ++类与对象-中/" itemprop="commentCount"></span>
                 </a>
@@ -508,7 +508,7 @@
             <span class="post-meta-divider">|</span>
             <span class="post-meta-item-icon">
             <i class="fa fa-eye"></i>
-             Aufrufe:  
+             Views:  
             <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
             </span>
           
@@ -522,9 +522,9 @@
                   <i class="fa fa-file-word-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">Symbole im Artikel gezählt: </span>
+                  <span class="post-meta-item-text">Symbols count in article: </span>
                 
-                <span title="Symbole im Artikel gezählt">65k</span>
+                <span title="Symbols count in article">65k</span>
               
 
               
@@ -536,9 +536,9 @@
                   <i class="fa fa-clock-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">Lesezeit &asymp;</span>
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
                 
-                <span title="Lesezeit">59 minuten.</span>
+                <span title="Reading time">59 mins.</span>
               
             </div>
           
@@ -558,7 +558,8 @@
       
 
       
-        <h3 id="类与对象"><a href="#类与对象" class="headerlink" title="类与对象"></a>类与对象</h3><h4 id="1-类的6个默认成员函数"><a href="#1-类的6个默认成员函数" class="headerlink" title="1.类的6个默认成员函数"></a>1.类的6个默认成员函数</h4><blockquote>
+        <h3 id="类与对象"><a href="#类与对象" class="headerlink" title="类与对象"></a>类与对象</h3><a id="more"></a>
+<h4 id="1-类的6个默认成员函数"><a href="#1-类的6个默认成员函数" class="headerlink" title="1.类的6个默认成员函数"></a>1.类的6个默认成员函数</h4><blockquote>
 <p>1.1 构造函数</p>
 <p>1.2 拷贝函数构造</p>
 <p>1.3 析构函数   </p>
@@ -640,11 +641,11 @@
 </li>
 </ul>
 <figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> DataType;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SeqList</span></span></span><br><span class="line"><span class="class">&#123;</span> </span><br><span class="line"><span class="keyword">public</span> :</span><br><span class="line"> SeqList (<span class="keyword">int</span> capacity = <span class="number">10</span>)</span><br><span class="line"> &#123;</span><br><span class="line"> _pData = (DataType*)<span class="built_in">malloc</span>(capacity * <span class="keyword">sizeof</span>(DataType));</span><br><span class="line"> assert(_pData);</span><br><span class="line"> </span><br><span class="line"> _size = <span class="number">0</span>;</span><br><span class="line"> _capacity = capacity;</span><br><span class="line"> &#125;</span><br><span class="line"> ~SeqList()</span><br><span class="line"> &#123;</span><br><span class="line"> <span class="keyword">if</span> (_pData)</span><br><span class="line"> &#123;</span><br><span class="line"> <span class="built_in">free</span>(_pData ); <span class="comment">// 释放堆上的空间</span></span><br><span class="line"> _pData = <span class="literal">NULL</span>; <span class="comment">// 将指针置为空</span></span><br><span class="line"> _capacity = <span class="number">0</span>;</span><br><span class="line"> _size = <span class="number">0</span>;</span><br><span class="line"> &#125;</span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">private</span> :</span><br><span class="line"> <span class="keyword">int</span>* _pData ;</span><br><span class="line"> <span class="keyword">size_t</span> _size;</span><br><span class="line"> <span class="keyword">size_t</span> _capacity;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<h4 id="4-1-概念"><a href="#4-1-概念" class="headerlink" title="4.1   概念"></a>4.1   概念</h4><ul>
+<h4 id="4-拷贝构造函数"><a href="#4-拷贝构造函数" class="headerlink" title="4. 拷贝构造函数"></a>4. 拷贝构造函数</h4><h5 id="4-1-概念"><a href="#4-1-概念" class="headerlink" title="4.1   概念"></a>4.1   概念</h5><ul>
 <li style="list-style: none"><input type="checkbox"> 构造函数：只是单个形参，该形参是对本类类型对象的引用(一般常用const 修饰)，在已存在的</li>
-<li style="list-style: none"><input type="checkbox"> 类类型对象创建新对象时由编译器自动调用</li>
+<li style="list-style: none"><input type="checkbox"> 类型对象创建新对象时由编译器自动调用</li>
 </ul>
-<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;windows.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Date</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	Date(<span class="keyword">int</span> year = <span class="number">1900</span>, <span class="keyword">int</span> month = <span class="number">1</span>, <span class="keyword">int</span> day = <span class="number">1</span>)&#123;</span><br><span class="line">		_year = year;</span><br><span class="line">		_month = month;</span><br><span class="line">		_day = day;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; _year &lt;&lt; <span class="string">"-"</span> &lt;&lt; _month &lt;&lt; <span class="string">"-"</span> &lt;&lt; _day &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	~Date()&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"~Date"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="keyword">int</span> _year;</span><br><span class="line">	<span class="keyword">int</span> _month;</span><br><span class="line">	<span class="keyword">int</span> _day;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 以下测试函数能通过编译吗？</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	Date d1;</span><br><span class="line">	d1.print();</span><br><span class="line"></span><br><span class="line">	<span class="function">Date  <span class="title">d2</span><span class="params">(d1)</span></span>;   <span class="comment">//拷贝构造</span></span><br><span class="line">	d2.print();</span><br><span class="line"></span><br><span class="line">	system(<span class="string">"pause"</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;windows.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Date</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	Date(<span class="keyword">int</span> year = <span class="number">1900</span>, <span class="keyword">int</span> month = <span class="number">1</span>, <span class="keyword">int</span> day = <span class="number">1</span>)&#123;</span><br><span class="line">		_year = year;</span><br><span class="line">		_month = month;</span><br><span class="line">		_day = day;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; _year &lt;&lt; <span class="string">"-"</span> &lt;&lt; _month &lt;&lt; <span class="string">"-"</span> &lt;&lt; _day &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	~Date()&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"~Date"</span> &lt;&lt; <span class="built_in">endl</span>;<span class="comment">//析构函数</span></span><br><span class="line">	&#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="keyword">int</span> _year;</span><br><span class="line">	<span class="keyword">int</span> _month;</span><br><span class="line">	<span class="keyword">int</span> _day;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 以下测试函数能通过编译吗？</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	Date d1;</span><br><span class="line">	d1.print();</span><br><span class="line"></span><br><span class="line">	<span class="function">Date  <span class="title">d2</span><span class="params">(d1)</span></span>;   <span class="comment">//拷贝构造</span></span><br><span class="line">	d2.print();</span><br><span class="line"></span><br><span class="line">	system(<span class="string">"pause"</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h5 id="4-2-特征"><a href="#4-2-特征" class="headerlink" title="4.2 特征"></a>4.2 特征</h5><h6 id="4-2-1-拷贝构造函数是构造函数的一个重载形式"><a href="#4-2-1-拷贝构造函数是构造函数的一个重载形式" class="headerlink" title="4.2.1 拷贝构造函数是构造函数的一个重载形式"></a>4.2.1 拷贝构造函数是构造函数的一个重载形式</h6><h6 id="4-2-2-拷贝构造函数的参数只有一个且必须使用引用传参，使用传参方式会引发无穷递归调用"><a href="#4-2-2-拷贝构造函数的参数只有一个且必须使用引用传参，使用传参方式会引发无穷递归调用" class="headerlink" title="4.2.2 拷贝构造函数的参数只有一个且必须使用引用传参，使用传参方式会引发无穷递归调用"></a>4.2.2 拷贝构造函数的参数只有一个且必须使用引用传参，使用传参方式会引发无穷递归调用</h6><blockquote>
 <p><img src="https://img-blog.csdnimg.cn/20190322192703218.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY2tfd2FuZzEyODgwMQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
 <h6 id="4-2-3-若未显示定义，系统生成默认的拷贝构造函数。-默认的拷贝构造函数对象按内存存储按字节序完成拷贝，这种拷贝我们叫做浅拷贝，或者值拷贝"><a href="#4-2-3-若未显示定义，系统生成默认的拷贝构造函数。-默认的拷贝构造函数对象按内存存储按字节序完成拷贝，这种拷贝我们叫做浅拷贝，或者值拷贝" class="headerlink" title="4.2.3 若未显示定义，系统生成默认的拷贝构造函数。 默认的拷贝构造函数对象按内存存储按字节序完成拷贝，这种拷贝我们叫做浅拷贝，或者值拷贝"></a>4.2.3 若未显示定义，系统生成默认的拷贝构造函数。 默认的拷贝构造函数对象按内存存储按字节序完成拷贝，这种拷贝我们叫做浅拷贝，或者值拷贝</h6><h6 id="4-2-4-那么编译器生成的默认拷贝构造函数已经可以完成字节序的值拷贝了，我们还需要自己实现吗？当然像日期类这样的类是没必要的。"><a href="#4-2-4-那么编译器生成的默认拷贝构造函数已经可以完成字节序的值拷贝了，我们还需要自己实现吗？当然像日期类这样的类是没必要的。" class="headerlink" title="4.2.4  那么编译器生成的默认拷贝构造函数已经可以完成字节序的值拷贝了，我们还需要自己实现吗？当然像日期类这样的类是没必要的。"></a>4.2.4  那么编译器生成的默认拷贝构造函数已经可以完成字节序的值拷贝了，我们还需要自己实现吗？当然像日期类这样的类是没必要的。</h6></blockquote>
@@ -774,10 +775,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Inhaltsverzeichnis
+            Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Übersicht
+            Overview
           </li>
         </ul>
       
@@ -799,8 +800,8 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">10</span>
-                    <span class="site-state-item-name">Artikel</span>
+                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
               
@@ -818,8 +819,10 @@
                     
                       
                     
-                    <span class="site-state-item-count">3</span>
-                    <span class="site-state-item-name">Kategorien</span>
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">categories</span>
                   
                 </div>
               
@@ -849,8 +852,40 @@
                     
                       
                     
-                    <span class="site-state-item-count">9</span>
-                    <span class="site-state-item-name">schlagwörter</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-name">tags</span>
                   
                 </div>
               
@@ -909,7 +944,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#类与对象"><span class="nav-number">1.</span> <span class="nav-text">类与对象</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-类的6个默认成员函数"><span class="nav-number">1.1.</span> <span class="nav-text">1.类的6个默认成员函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-构造函数"><span class="nav-number">1.2.</span> <span class="nav-text">2. 构造函数</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-概念：不是创建，某种意义上来说是初始化"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 概念：不是创建，某种意义上来说是初始化</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-特征"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2. 特征</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-析构函数"><span class="nav-number">1.3.</span> <span class="nav-text">3.析构函数</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-1-概念："><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1 概念：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2-特性"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2. 特性</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#3-2-1-析构函数名是在类名前加上字符-。"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">3.2.1. 析构函数名是在类名前加上字符  ~ 。</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#3-2-2-无参数无返回值。"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">3.2.2. 无参数无返回值。</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#3-2-3-一个类有且只有一个析构函数。若未显式定义，系统会自动生成默认的析构函数。"><span class="nav-number">1.3.2.3.</span> <span class="nav-text">3.2.3. 一个类有且只有一个析构函数。若未显式定义，系统会自动生成默认的析构函数。</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#3-2-4-对象生命周期结束时，C-编译系统系统自动调用析构函数"><span class="nav-number">1.3.2.4.</span> <span class="nav-text">3.2.4. 对象生命周期结束时，C++编译系统系统自动调用析构函数.</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-概念"><span class="nav-number">1.4.</span> <span class="nav-text">4.1   概念</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#4-2-特征"><span class="nav-number">1.4.1.</span> <span class="nav-text">4.2 特征</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#4-2-1-拷贝构造函数是构造函数的一个重载形式"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">4.2.1 拷贝构造函数是构造函数的一个重载形式</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#4-2-2-拷贝构造函数的参数只有一个且必须使用引用传参，使用传参方式会引发无穷递归调用"><span class="nav-number">1.4.1.2.</span> <span class="nav-text">4.2.2 拷贝构造函数的参数只有一个且必须使用引用传参，使用传参方式会引发无穷递归调用</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#4-2-3-若未显示定义，系统生成默认的拷贝构造函数。-默认的拷贝构造函数对象按内存存储按字节序完成拷贝，这种拷贝我们叫做浅拷贝，或者值拷贝"><span class="nav-number">1.4.1.3.</span> <span class="nav-text">4.2.3 若未显示定义，系统生成默认的拷贝构造函数。 默认的拷贝构造函数对象按内存存储按字节序完成拷贝，这种拷贝我们叫做浅拷贝，或者值拷贝</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#4-2-4-那么编译器生成的默认拷贝构造函数已经可以完成字节序的值拷贝了，我们还需要自己实现吗？当然像日期类这样的类是没必要的。"><span class="nav-number">1.4.1.4.</span> <span class="nav-text">4.2.4  那么编译器生成的默认拷贝构造函数已经可以完成字节序的值拷贝了，我们还需要自己实现吗？当然像日期类这样的类是没必要的。</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-赋值运算符重载"><span class="nav-number">1.5.</span> <span class="nav-text">5.赋值运算符重载</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#5-1-运算符重载"><span class="nav-number">1.5.1.</span> <span class="nav-text">5.1 运算符重载</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#5-1-1-不能通过连接其他符号来创建新的操作符：比如operator"><span class="nav-number">1.5.1.1.</span> <span class="nav-text">5.1.1 不能通过连接其他符号来创建新的操作符：比如operator@</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#5-1-2-重载操作符必须有一个类类型或者枚举类型的操作数"><span class="nav-number">1.5.1.2.</span> <span class="nav-text">5.1.2 重载操作符必须有一个类类型或者枚举类型的操作数</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#5-1-3-用于内置类型的操作符，其含义不能改变，例如：内置的整型-，不能改变其含义"><span class="nav-number">1.5.1.3.</span> <span class="nav-text">5.1.3 用于内置类型的操作符，其含义不能改变，例如：内置的整型+，不能改变其含义</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#5-1-4-作为类成员的重载函数时，其形参看起来比操作数数目少1成员函数的操作符有一个默认的形参this，限定为第一个形参"><span class="nav-number">1.5.1.4.</span> <span class="nav-text">5.1.4 作为类成员的重载函数时，其形参看起来比操作数数目少1成员函数的操作符有一个默认的形参this，限定为第一个形参</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#5-1-5-lt-gt-lt-gt-lt-sizeof-gt-lt-gt-lt-gt-注意以上5个运算符不能重载。这个经常在笔试选择题中出现"><span class="nav-number">1.5.1.5.</span> <span class="nav-text">5.1.5 &lt; .* &gt;&lt; ::  &gt; &lt; sizeof  &gt; &lt;  ?:  &gt;&lt; . &gt;注意以上5个运算符不能重载。这个经常在笔试选择题中出现</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-2-赋值运算符重载"><span class="nav-number">1.5.2.</span> <span class="nav-text">5.2. 赋值运算符重载</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#5-2-1-参数类型"><span class="nav-number">1.5.2.1.</span> <span class="nav-text">5.2.1. 参数类型</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#5-2-2-返回值"><span class="nav-number">1.5.2.2.</span> <span class="nav-text">5.2.2. 返回值</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#5-2-3-检测是否自己给自己赋值"><span class="nav-number">1.5.2.3.</span> <span class="nav-text">5.2.3. 检测是否自己给自己赋值</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#5-2-4-返回-this"><span class="nav-number">1.5.2.4.</span> <span class="nav-text">5.2.4. 返回*this</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#5-2-5-一个类如果没有显式定义赋值运算符重载，编译器也会生成一个，完成对象按字节序的值拷贝"><span class="nav-number">1.5.2.5.</span> <span class="nav-text">5.2.5. 一个类如果没有显式定义赋值运算符重载，编译器也会生成一个，完成对象按字节序的值拷贝</span></a></li></ol></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#类与对象"><span class="nav-number">1.</span> <span class="nav-text">类与对象</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-类的6个默认成员函数"><span class="nav-number">1.1.</span> <span class="nav-text">1.类的6个默认成员函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-构造函数"><span class="nav-number">1.2.</span> <span class="nav-text">2. 构造函数</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-概念：不是创建，某种意义上来说是初始化"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 概念：不是创建，某种意义上来说是初始化</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-特征"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2. 特征</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-析构函数"><span class="nav-number">1.3.</span> <span class="nav-text">3.析构函数</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-1-概念："><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1 概念：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2-特性"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2. 特性</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#3-2-1-析构函数名是在类名前加上字符-。"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">3.2.1. 析构函数名是在类名前加上字符  ~ 。</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#3-2-2-无参数无返回值。"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">3.2.2. 无参数无返回值。</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#3-2-3-一个类有且只有一个析构函数。若未显式定义，系统会自动生成默认的析构函数。"><span class="nav-number">1.3.2.3.</span> <span class="nav-text">3.2.3. 一个类有且只有一个析构函数。若未显式定义，系统会自动生成默认的析构函数。</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#3-2-4-对象生命周期结束时，C-编译系统系统自动调用析构函数"><span class="nav-number">1.3.2.4.</span> <span class="nav-text">3.2.4. 对象生命周期结束时，C++编译系统系统自动调用析构函数.</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-拷贝构造函数"><span class="nav-number">1.4.</span> <span class="nav-text">4. 拷贝构造函数</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#4-1-概念"><span class="nav-number">1.4.1.</span> <span class="nav-text">4.1   概念</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-2-特征"><span class="nav-number">1.4.2.</span> <span class="nav-text">4.2 特征</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#4-2-1-拷贝构造函数是构造函数的一个重载形式"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">4.2.1 拷贝构造函数是构造函数的一个重载形式</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#4-2-2-拷贝构造函数的参数只有一个且必须使用引用传参，使用传参方式会引发无穷递归调用"><span class="nav-number">1.4.2.2.</span> <span class="nav-text">4.2.2 拷贝构造函数的参数只有一个且必须使用引用传参，使用传参方式会引发无穷递归调用</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#4-2-3-若未显示定义，系统生成默认的拷贝构造函数。-默认的拷贝构造函数对象按内存存储按字节序完成拷贝，这种拷贝我们叫做浅拷贝，或者值拷贝"><span class="nav-number">1.4.2.3.</span> <span class="nav-text">4.2.3 若未显示定义，系统生成默认的拷贝构造函数。 默认的拷贝构造函数对象按内存存储按字节序完成拷贝，这种拷贝我们叫做浅拷贝，或者值拷贝</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#4-2-4-那么编译器生成的默认拷贝构造函数已经可以完成字节序的值拷贝了，我们还需要自己实现吗？当然像日期类这样的类是没必要的。"><span class="nav-number">1.4.2.4.</span> <span class="nav-text">4.2.4  那么编译器生成的默认拷贝构造函数已经可以完成字节序的值拷贝了，我们还需要自己实现吗？当然像日期类这样的类是没必要的。</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-赋值运算符重载"><span class="nav-number">1.5.</span> <span class="nav-text">5.赋值运算符重载</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#5-1-运算符重载"><span class="nav-number">1.5.1.</span> <span class="nav-text">5.1 运算符重载</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#5-1-1-不能通过连接其他符号来创建新的操作符：比如operator"><span class="nav-number">1.5.1.1.</span> <span class="nav-text">5.1.1 不能通过连接其他符号来创建新的操作符：比如operator@</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#5-1-2-重载操作符必须有一个类类型或者枚举类型的操作数"><span class="nav-number">1.5.1.2.</span> <span class="nav-text">5.1.2 重载操作符必须有一个类类型或者枚举类型的操作数</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#5-1-3-用于内置类型的操作符，其含义不能改变，例如：内置的整型-，不能改变其含义"><span class="nav-number">1.5.1.3.</span> <span class="nav-text">5.1.3 用于内置类型的操作符，其含义不能改变，例如：内置的整型+，不能改变其含义</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#5-1-4-作为类成员的重载函数时，其形参看起来比操作数数目少1成员函数的操作符有一个默认的形参this，限定为第一个形参"><span class="nav-number">1.5.1.4.</span> <span class="nav-text">5.1.4 作为类成员的重载函数时，其形参看起来比操作数数目少1成员函数的操作符有一个默认的形参this，限定为第一个形参</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#5-1-5-lt-gt-lt-gt-lt-sizeof-gt-lt-gt-lt-gt-注意以上5个运算符不能重载。这个经常在笔试选择题中出现"><span class="nav-number">1.5.1.5.</span> <span class="nav-text">5.1.5 &lt; .* &gt;&lt; ::  &gt; &lt; sizeof  &gt; &lt;  ?:  &gt;&lt; . &gt;注意以上5个运算符不能重载。这个经常在笔试选择题中出现</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-2-赋值运算符重载"><span class="nav-number">1.5.2.</span> <span class="nav-text">5.2. 赋值运算符重载</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#5-2-1-参数类型"><span class="nav-number">1.5.2.1.</span> <span class="nav-text">5.2.1. 参数类型</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#5-2-2-返回值"><span class="nav-number">1.5.2.2.</span> <span class="nav-text">5.2.2. 返回值</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#5-2-3-检测是否自己给自己赋值"><span class="nav-number">1.5.2.3.</span> <span class="nav-text">5.2.3. 检测是否自己给自己赋值</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#5-2-4-返回-this"><span class="nav-number">1.5.2.4.</span> <span class="nav-text">5.2.4. 返回*this</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#5-2-5-一个类如果没有显式定义赋值运算符重载，编译器也会生成一个，完成对象按字节序的值拷贝"><span class="nav-number">1.5.2.5.</span> <span class="nav-text">5.2.5. 一个类如果没有显式定义赋值运算符重载，编译器也会生成一个，完成对象按字节序的值拷贝</span></a></li></ol></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -942,7 +977,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="Insgesamt gezählte Symbole">76k</span>
+    <span title="Symbols count total">142k</span>
   
 
   
@@ -951,12 +986,12 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="Insgesamte Lesezeit">1:09</span>
+    <span title="Reading time total">2:09</span>
   
 </div>
 
 
-  <div class="powered-by">Erstellt mit  <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
 
 
 
@@ -964,7 +999,7 @@
 
 
 
-  <div class="theme-info">Design – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.1.0</div>
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.1.0</div>
 
 
 
@@ -977,7 +1012,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-user"></i>
     </span>
-    <span class="site-uv" title="Alle Besucher">
+    <span class="site-uv" title="Total Visitors">
       <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
     </span>
   
@@ -990,7 +1025,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-eye"></i>
     </span>
-    <span class="site-pv" title="Alle Aufrufe">
+    <span class="site-pv" title="Total Views">
       <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
     </span>
   
