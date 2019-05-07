@@ -7,6 +7,7 @@
   <meta name="author" content="John Doe">
   
   <meta name="description" content="Linux 下的开发工具vs是一个IDE(集成开发环境)
+集成环境所需要具备的条件
 
 1.代码编辑器
 2.编译器
@@ -14,15 +15,12 @@
 4.工程管理工具
 5其他 ….
 
-Java
+其他语言相关的编辑器Java
 
 Eclipse ===&amp;gt;也可以开发C++
 IDEA  ====&amp;gt;也可开发c++
 
-JetBrains(全家桶)
-
-CLion(C++)
-PHP">
+JetBrai">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -75,6 +73,7 @@ PHP">
 
 	  <!-- content -->
 	  <h3 id="Linux-下的开发工具"><a href="#Linux-下的开发工具" class="headerlink" title="Linux 下的开发工具"></a>Linux 下的开发工具</h3><p><strong>vs是一个IDE(集成开发环境)</strong></p>
+<p><strong>集成环境所需要具备的条件</strong></p>
 <blockquote>
 <p>1.代码编辑器</p>
 <p>2.编译器</p>
@@ -82,7 +81,7 @@ PHP">
 <p>4.工程管理工具</p>
 <p>5其他 ….</p>
 </blockquote>
-<p><strong>Java</strong></p>
+<h3 id="其他语言相关的编辑器"><a href="#其他语言相关的编辑器" class="headerlink" title="其他语言相关的编辑器"></a>其他语言相关的编辑器</h3><p><strong>Java</strong></p>
 <blockquote>
 <p>Eclipse ===&gt;也可以开发C++</p>
 <p>IDEA  ====&gt;也可开发c++</p>
@@ -95,9 +94,9 @@ PHP">
 <p>JavaScript(WebStorm)</p>
 <p>Go(GoLand)</p>
 </blockquote>
-<h4 id="开发工具"><a href="#开发工具" class="headerlink" title="开发工具"></a>开发工具</h4><p><strong>1.代码编辑：vim</strong></p>
+<h4 id="Linux下的开发工具"><a href="#Linux下的开发工具" class="headerlink" title="Linux下的开发工具"></a>Linux下的开发工具</h4><p><strong>1.代码编辑：vim</strong></p>
 <p><strong>2.编译：gcc</strong></p>
-<p><strong>3.调试：gdb </strong></p>
+<p><strong>3.调试：gdb / cgdb</strong></p>
 <p><strong>4.工程管理:makefile</strong></p>
 <h5 id="包管理器-：-yum-命令行版的应用商店"><a href="#包管理器-：-yum-命令行版的应用商店" class="headerlink" title="包管理器 ：  yum(命令行版的应用商店)"></a>包管理器 ：  yum(命令行版的应用商店)</h5><p><strong>对应的服务器叫做软件源</strong></p>
 <p><strong>yum的所有操作都要在网络畅通的情况下使用</strong></p>
@@ -109,7 +108,7 @@ PHP">
 <p>通过  “|”  将左边的指令执行结果进行过滤</p>
 </blockquote>
 <h5 id="yum-的基本用法"><a href="#yum-的基本用法" class="headerlink" title="yum  的基本用法"></a>yum  的基本用法</h5><blockquote>
-<p>1.yum list    //查找需要的软件(一般不按回车,服务器上的软件过多会导致电脑卡死)</p>
+<p>1.yum list    //查找需要的软件(一般不按回车,因为服务器上的软件过多会导致电脑卡死)</p>
 <p>2.yum install 安装(必须有管理员权限)</p>
 <p>3.yum  remove (卸载软件)</p>
 <p><strong>除了yum安装之外，还可以使用源代码直接编译的方式安装(极其复杂，非专业人士不要尝试)</strong></p>
@@ -132,11 +131,11 @@ PHP">
 <p>Vim  刚刚启动的时候是普通模式(vimtutor)，普通模式下不能直接输入内容。此时敲下的按键多半是带有特殊功能的快捷键，需要进入插入模式才能进行编辑</p>
 <p>1.”：w “ 进行保存</p>
 <p>2.”：q”   进行退出</p>
-<p>3.普通模式下按 “:” 进入底行模式</p>
+<p>3.普通模式下按 “:” 进入底行模式(只有在低行模式下才能进行vim的退出与保存)</p>
 </blockquote>
 <h5 id="vim-文件"><a href="#vim-文件" class="headerlink" title="vim[文件]"></a>vim[文件]</h5><blockquote>
-<p>打开一个文件，不存在就会创建新文件</p>
-<p>vim是一个多模式的文本编辑器</p>
+<p>打开一个文件，不存在系统就会自动创建新文件</p>
+<p>vim是一个多模式的文本编辑器(例如：普通模式，低行模式，插入模式等)</p>
 </blockquote>
 <h4 id="能够与Vim并肩的编辑器"><a href="#能够与Vim并肩的编辑器" class="headerlink" title="能够与Vim并肩的编辑器"></a>能够与Vim并肩的编辑器</h4><h5 id="Sublimme-Text-史上最性感的编辑器"><a href="#Sublimme-Text-史上最性感的编辑器" class="headerlink" title="Sublimme Text(史上最性感的编辑器)"></a>Sublimme Text(史上最性感的编辑器)</h5><blockquote>
 <p>1.界面好看</p>
@@ -156,12 +155,13 @@ PHP">
 <p>2.支持Vim 的扩展功能(安装插件极其方便)</p>
 <p>3.启动速度很快</p>
 </blockquote>
-<h5 id="vim-打开的同是会产生一个-swap文件"><a href="#vim-打开的同是会产生一个-swap文件" class="headerlink" title="vim 打开的同是会产生一个     . swap文件"></a>vim 打开的同是会产生一个     . swap文件</h5><h5 id="gcc"><a href="#gcc" class="headerlink" title="gcc"></a>gcc</h5><blockquote>
+<h5 id="vim-打开的同是会产生一个-swap文件"><a href="#vim-打开的同是会产生一个-swap文件" class="headerlink" title="vim 打开的同是会产生一个     . swap文件"></a>vim 打开的同是会产生一个     . swap文件</h5><h5 id="gcc进行预处理"><a href="#gcc进行预处理" class="headerlink" title="gcc进行预处理"></a>gcc进行预处理</h5><blockquote>
 <p>预处理： 头文件替换，宏展开，去掉注释，条件编译，其他预处理指令</p>
 <p>编译：源代码文件转换成汇编代码</p>
 <p>汇编：汇编代码转换成二进制文件</p>
 <p>链接：把所有的二进制文件和依赖的库合到一块，得到可执行程序</p>
 </blockquote>
+<p><strong>相关指令</strong></p>
 <blockquote>
 <p>gcc test.c -o test //生成一个叫 test 的可执行文件 ，默认生成的是  a.out</p>
 <p>gcc    -E //只进行预处理,不生成文件，你需要把他重定向到一个输出文件里面</p>
@@ -212,10 +212,6 @@ PHP">
 <p>4.提出方案并修改问题</p>
 <p>5.测试(回归测试,防止代码的修改引入新的问题).由于回归测试 ，成本比较高</p>
 <p>往往以自动化测试为主。</p>
-</blockquote>
-<h5 id="vs-中-调试的操作"><a href="#vs-中-调试的操作" class="headerlink" title="vs 中 调试的操作"></a>vs 中 调试的操作</h5><blockquote>
-<p>1.打断点</p>
-<p>2.</p>
 </blockquote>
 <h4 id="工程管理工具-c-java中存在"><a href="#工程管理工具-c-java中存在" class="headerlink" title="工程管理工具(c++,java中存在)"></a>工程管理工具(c++,java中存在)</h4><p><strong>解决大型项目中的模块之间的依赖问题</strong></p>
 <p><strong>工具名称：makefile(40年前的技术)</strong></p>
