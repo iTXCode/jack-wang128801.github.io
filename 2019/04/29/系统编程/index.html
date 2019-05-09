@@ -96,18 +96,23 @@
 
 
 
-  <meta name="description" content="系统编程">
+  <meta name="description" content="Linux进程的概念1.冯诺依曼体系 2. 操作系统 3.进程 3.1 主要：僵尸进程">
 <meta name="keywords" content="系统编程">
 <meta property="og:type" content="article">
 <meta property="og:title" content="系统编程">
 <meta property="og:url" content="https://jack-wang128801.github.io/2019/04/29/系统编程/index.html">
 <meta property="og:site_name" content="jack-wang&#39;s blog">
-<meta property="og:description" content="系统编程">
+<meta property="og:description" content="Linux进程的概念1.冯诺依曼体系 2. 操作系统 3.进程 3.1 主要：僵尸进程">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-05-05T15:03:22.226Z">
+<meta property="og:image" content="https://wx2.sinaimg.cn/mw690/0071OE7sly1g2qw6d7t2yj30v40f1aao.jpg">
+<meta property="og:image" content="https://wx1.sinaimg.cn/mw690/0071OE7sly1g2qwkplzovj30v20dmdgo.jpg">
+<meta property="og:image" content="https://wx2.sinaimg.cn/mw690/0071OE7sly1g2stgtf6i7j316206g0th.jpg">
+<meta property="og:image" content="https://wx2.sinaimg.cn/mw690/0071OE7sly1g2uwedpisyj30lt06nwg6.jpg">
+<meta property="og:updated_time" content="2019-05-09T03:34:52.334Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="系统编程">
-<meta name="twitter:description" content="系统编程">
+<meta name="twitter:description" content="Linux进程的概念1.冯诺依曼体系 2. 操作系统 3.进程 3.1 主要：僵尸进程">
+<meta name="twitter:image" content="https://wx2.sinaimg.cn/mw690/0071OE7sly1g2qw6d7t2yj30v40f1aao.jpg">
 
 
 
@@ -199,7 +204,7 @@
   </div>
 
   <div class="site-nav-toggle">
-    <button aria-label="Toggle navigation bar">
+    <button aria-label="Navigationsleiste an/ausschalten">
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
@@ -323,7 +328,7 @@
             <a href="javascript:;" class="popup-trigger">
           
             
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>Search</a>
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>Suche</a>
         </li>
       
     </ul>
@@ -343,7 +348,7 @@
       <i class="fa fa-times-circle"></i>
     </span>
     <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+      <input autocomplete="off" placeholder="Suche..." spellcheck="false" type="text" id="local-search-input">
     </div>
   </div>
   <div id="local-search-result"></div>
@@ -429,14 +434,14 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
 
               
                 
               
 
-              <time title="Created: 2019-04-29 20:36:03" itemprop="dateCreated datePublished" datetime="2019-04-29T20:36:03+08:00">2019-04-29</time>
+              <time title="Erstellt: 2019-04-29 20:36:03" itemprop="dateCreated datePublished" datetime="2019-04-29T20:36:03+08:00">2019-04-29</time>
             
 
             
@@ -451,9 +456,9 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">Edited on</span>
+                  <span class="post-meta-item-text">Bearbeitet am</span>
                 
-                <time title="Modified: 2019-05-05 23:03:22" itemprop="dateModified" datetime="2019-05-05T23:03:22+08:00">2019-05-05</time>
+                <time title="Geändert am: 2019-05-09 11:34:52" itemprop="dateModified" datetime="2019-05-09T11:34:52+08:00">2019-05-09</time>
               
             
           </span>
@@ -467,7 +472,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">In</span>
+                <span class="post-meta-item-text">in</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a></span>
@@ -488,7 +493,7 @@
                   <i class="fa fa-comment-o"></i>
                 </span>
             
-                <span class="post-meta-item-text">Comments: </span>
+                <span class="post-meta-item-text">Kommentare: </span>
                 <a href="/2019/04/29/系统编程/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count gitment-comments-count" data-xid="/2019/04/29/系统编程/" itemprop="commentCount"></span>
                 </a>
@@ -503,7 +508,7 @@
             <span class="post-meta-divider">|</span>
             <span class="post-meta-item-icon">
             <i class="fa fa-eye"></i>
-             Views:  
+             Aufrufe:  
             <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
             </span>
           
@@ -517,9 +522,9 @@
                   <i class="fa fa-file-word-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">Symbols count in article: </span>
+                  <span class="post-meta-item-text">Symbole im Artikel gezählt: </span>
                 
-                <span title="Symbols count in article">785</span>
+                <span title="Symbole im Artikel gezählt">15k</span>
               
 
               
@@ -531,9 +536,9 @@
                   <i class="fa fa-clock-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                  <span class="post-meta-item-text">Lesezeit &asymp;</span>
                 
-                <span title="Reading time">1 mins.</span>
+                <span title="Lesezeit">14 minuten.</span>
               
             </div>
           
@@ -553,8 +558,18 @@
       
 
       
-        <h3 id="系统编程"><a href="#系统编程" class="headerlink" title="系统编程"></a>系统编程</h3><a id="more"></a>
-<h4 id="冯诺依曼体系"><a href="#冯诺依曼体系" class="headerlink" title="冯诺依曼体系"></a>冯诺依曼体系</h4><p><strong>CPU: </strong></p>
+        <h2 id="Linux进程的概念"><a href="#Linux进程的概念" class="headerlink" title="Linux进程的概念"></a>Linux进程的概念</h2><p><strong>1.冯诺依曼体系</strong></p>
+<p><strong>2. 操作系统</strong></p>
+<p><strong>3.进程</strong></p>
+<p><strong>3.1 主要：僵尸进程</strong></p>
+<a id="more"></a>
+<h3 id="系统编程"><a href="#系统编程" class="headerlink" title="系统编程"></a>系统编程</h3><h4 id="冯诺依曼体系"><a href="#冯诺依曼体系" class="headerlink" title="冯诺依曼体系"></a>冯诺依曼体系</h4><h4 id="1-图示"><a href="#1-图示" class="headerlink" title="1.图示"></a>1.图示</h4><p><img src="https://wx2.sinaimg.cn/mw690/0071OE7sly1g2qw6d7t2yj30v40f1aao.jpg" alt></p>
+<h4 id="2-计算机的组成分类"><a href="#2-计算机的组成分类" class="headerlink" title="2.计算机的组成分类"></a>2.计算机的组成分类</h4><ul>
+<li style="list-style: none"><input type="checkbox"> 1.输入单元：包括键盘、鼠标、卡片阅读器、扫描仪、手写板、触摸屏等</li>
+<li style="list-style: none"><input type="checkbox"> 中央处理器(CPU):含有算术逻辑、控制、记忆等单元</li>
+<li style="list-style: none"><input type="checkbox"> 输出设备:例如屏幕、打印机等</li>
+</ul>
+<p><strong>CPU: </strong></p>
 <blockquote>
 <p>也可以通过”<strong>寄存器</strong>“存储少量的数据，寄存器的访问速度特别快</p>
 </blockquote>
@@ -563,20 +578,21 @@
 <thead>
 <tr>
 <th style="text-align:center">与门</th>
-<th></th>
+<th>遇0则0</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align:center">或</td>
-<td></td>
+<td>遇1则1</td>
 </tr>
 <tr>
 <td style="text-align:center">非</td>
-<td></td>
+<td>改变状态</td>
 </tr>
 <tr>
 <td style="text-align:center">异或门</td>
+<td>相同为0，相异为1</td>
 </tr>
 </tbody>
 </table>
@@ -585,8 +601,177 @@
 <p>内存:   空间比较小，访问速度快，成本较高，断电之后数据丢失</p>
 <p>外存：空间较大。访问速度慢成本较低，断电之后数据依然存在</p>
 </blockquote>
-<p><strong>输入设备:</strong></p>
-<p><strong>输出设备:</strong></p>
+<p><strong>强调的点</strong></p>
+<blockquote>
+<p>这里的存储器指的是内存不考虑缓存情况，这里的CPU能且只能对内存进行读写，不能访问外设(输入或输出设备)外设(输入或输出设备)要输入或者输出数据，也只能写入内存或者从内存中读取。<br><strong>一句话，所有设备都只能直接和内存打交道</strong>。</p>
+</blockquote>
+<h3 id="操作系统-搞管理的软件"><a href="#操作系统-搞管理的软件" class="headerlink" title="操作系统(搞管理的软件)"></a>操作系统(搞管理的软件)</h3><p><img src="https://wx1.sinaimg.cn/mw690/0071OE7sly1g2qwkplzovj30v20dmdgo.jpg" alt></p>
+<ul>
+<li style="list-style: none"><input type="checkbox"> 管理硬件设备</li>
+<li style="list-style: none"><input type="checkbox"> 管理软件资源</li>
+</ul>
+<h4 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h4><blockquote>
+<ul>
+<li>内核（进程管理，内存管理、文件管理、驱动管理）</li>
+<li>其他程序(例如函数库，shell程序等等)</li>
+</ul>
+</blockquote>
+<h4 id="设计操作系统的目的"><a href="#设计操作系统的目的" class="headerlink" title="设计操作系统的目的"></a>设计操作系统的目的</h4><blockquote>
+<ul>
+<li>与硬件交互，管理所有的软硬件资源</li>
+<li>为用户程序(应用程序)提供一个良好的执行环境</li>
+</ul>
+</blockquote>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p><strong>计算机管理硬件</strong></p>
+<blockquote>
+<p>1.描述起来 :用struct结构体</p>
+<p>2.组织起来: 用链表或者其他高效的数据结构</p>
+</blockquote>
+<h3 id="进程查看"><a href="#进程查看" class="headerlink" title="进程查看"></a>进程查看</h3><ul>
+<li style="list-style: none"><input type="checkbox"> <strong>ps</strong> 相当于任务管理去器，能够查看系统都有哪些进程</li>
+<li style="list-style: none"><input type="checkbox"> <strong>ps   aux</strong>  查看所有进程</li>
+<li style="list-style: none"><input type="checkbox"> <strong>ps   aux  | less</strong>  配合<strong>less</strong> 对查看结果进行翻页和其他操作</li>
+<li style="list-style: none"><input type="checkbox"> <strong>ps   aux   | grep [进程名]</strong>   查看匹配的结果</li>
+<li style="list-style: none"><input type="checkbox"> <strong>Ctrl   +   z</strong>  将一个程序放到后台，但是不退出程序</li>
+<li style="list-style: none"><input type="checkbox"> 按下  <strong>fg</strong>   将后台的程序调到前台继续执行</li>
+<li style="list-style: none"><input type="checkbox"> <strong>Ctrl     +  c</strong>    关闭一个正在执行的进程</li>
+</ul>
+<blockquote>
+<p>敲下的命令，在命令执行的过程中也是一个进程</p>
+</blockquote>
+<p><img src="https://wx2.sinaimg.cn/mw690/0071OE7sly1g2stgtf6i7j316206g0th.jpg" alt></p>
+<h5 id="进程的管理"><a href="#进程的管理" class="headerlink" title="进程的管理"></a>进程的管理</h5><h5 id="1-描述进程-PCB进程控制块-–-gt-就是一个结构-task-struct"><a href="#1-描述进程-PCB进程控制块-–-gt-就是一个结构-task-struct" class="headerlink" title="1.描述进程(PCB进程控制块 –&gt; 就是一个结构(task_struct))"></a>1.描述进程(PCB进程控制块 –&gt; 就是一个结构(task_struct))</h5><p><strong>PCB：针对通常情况</strong></p>
+<p><strong>task_struct：只针对Linux</strong></p>
+<blockquote>
+<p>​      task_struct 是一个很大的结构体，包含很多的内容</p>
+<p>​       <strong>a.进程标识符(pid)</strong></p>
+<p>​        <strong>b.内存指针(告诉 进程代码/数据都存在内存的那个部分)</strong></p>
+<hr>
+<p>​       <strong>c.进程状态</strong></p>
+<p>​       <strong>d.优先级:数字，表示这个进程是先被调度还是后被调度执行</strong></p>
+<p>​       <strong>PR:</strong>      数字越小，优先级别越高</p>
+<p>​        <strong>NI(nice):</strong>      优先级的修正值，<strong>PR+NI =&gt; 最终的PR</strong></p>
+<p>通过指令可以调整nice，宏观上往往看不出效果</p>
+<p><strong>e:上下文(寄存器)</strong></p>
+<p>   cpu 可能又几十个寄存器，</p>
+<p>​    作用：<strong>保存上下文</strong>，cpu寄存器的内容保存到内存中</p>
+<p>​               <strong>恢复向下文</strong>，内存中的寄存器值恢复到cpu中</p>
+<p><strong>f:记账信息;每个进程已经在C</strong>PU上执行<strong>多久统计数据</strong></p>
+</blockquote>
+<h5 id="进程的状态"><a href="#进程的状态" class="headerlink" title="进程的状态"></a>进程的状态</h5><blockquote>
+<p>R 就绪状态，进程在就绪队列中，就会处于这个状态</p>
+<p>S   睡眠状态，单身状态，暂时还轮不到他</p>
+<p>D   深度睡眠状态，密集地进行IO操作的时候(吐coredump)</p>
+<p>T    暂停stop</p>
+<p>t    跟踪trace</p>
+<p>X    进程已经结束，只是在Linux 源代码中存在，真实是看不到的</p>
+<p>Z     <strong>僵尸进程</strong>  和父进程子进程这些有关联</p>
+</blockquote>
+<h4 id="父进程-ppid-与子进程-pid"><a href="#父进程-ppid-与子进程-pid" class="headerlink" title="父进程(ppid)与子进程(pid)"></a>父进程(ppid)与子进程(pid)</h4><p><strong>使用代码来创建子进程</strong></p>
+<blockquote>
+<p>fork ()</p>
+<p>fork有两个返回值<br>父子进程代码共享，数据各自开辟空间，私有一份（采用写时拷贝）</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line">  <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">      fork();</span><br><span class="line">    <span class="comment">//gitpid 获取进程的进程</span></span><br><span class="line">    <span class="comment">//gitppid 获取夫进程</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d  %d\n"</span>,getpid(),getppid());</span><br><span class="line">    sleep(<span class="number">1</span>);                                                                           </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p><strong>fork 之后通常要用 if 进行分流</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"> <span class="keyword">int</span> ret = fork();</span><br><span class="line"> <span class="keyword">if</span>(ret &lt; <span class="number">0</span>)&#123;</span><br><span class="line"> perror(<span class="string">"fork"</span>);</span><br><span class="line"> <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="keyword">else</span> <span class="keyword">if</span>(ret == <span class="number">0</span>)&#123; <span class="comment">//child</span></span><br><span class="line"> <span class="built_in">printf</span>(<span class="string">"I am child : %d!, ret: %d\n"</span>, getpid(), ret);</span><br><span class="line"> &#125;<span class="keyword">else</span>&#123; <span class="comment">//father</span></span><br><span class="line"> <span class="built_in">printf</span>(<span class="string">"I am father : %d!, ret: %d\n"</span>, getpid(), ret);</span><br><span class="line"> &#125;</span><br><span class="line"> sleep(<span class="number">1</span>);</span><br><span class="line"> <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="fork"><a href="#fork" class="headerlink" title="fork ()"></a>fork ()</h5><p><strong>1.返回值：一次调用两个返回值</strong></p>
+<blockquote>
+<p>  父进程返回子进程的pid</p>
+<p>​    子进程返回 0</p>
+<p>​     通常需要让父子进程执行不同的逻辑，就可以借助<strong>fork</strong>的返回值来进行区分</p>
+<p><strong>如果失败  返回&lt; 0 的结果(可能原因)</strong></p>
+<p>   a. 内存不够</p>
+<p>   b. 进程太多达到上限</p>
+<p>​    RLIMIT_NPROC</p>
+</blockquote>
+<p><strong>2. 执行过程</strong></p>
+<blockquote>
+<p>父子进程都是紧接着fork继续执行</p>
+</blockquote>
+<p><strong>3. 先后顺序</strong></p>
+<blockquote>
+<p>不确定，取决于操作系统的调度器</p>
+</blockquote>
+<h5 id="进程的调度"><a href="#进程的调度" class="headerlink" title="进程的调度"></a>进程的调度</h5><p><strong>让少量的CPU能够满足大量的进程同时执行的需求</strong></p>
+<p><strong>并行：两个CPU分别执行两个进程</strong></p>
+<p><strong>并发:一个CPU”同时”执行两个进程，切换执行，并非同时进行</strong></p>
+<h4 id="僵尸进程"><a href="#僵尸进程" class="headerlink" title="僵尸进程"></a>僵尸进程</h4><p><strong>成因:子进程结束之后，父进程没有回收子进程的资源，为了解决子进程向父进程汇报工作的问题</strong></p>
+<p><strong>危害：处理不当会造成内存泄漏</strong></p>
+<p><strong>处理：直kill 僵尸进程是kill 不掉的，可以kill 僵尸进程的父进程。更科学的处理办法是: 进程等待</strong></p>
+<p><strong>为什么 kill 父进程僵尸进程没了？</strong></p>
+<blockquote>
+<p>当kill 掉父进程之后，<strong>子进程就被称为孤儿进程</strong>，孤儿进程会<strong>被 1 号进程(init进程)收养</strong>，从而释放资源</p>
+</blockquote>
+<p><strong>init进程：开机时运行的第一个进程</strong></p>
+<h5 id="2-组织进程"><a href="#2-组织进程" class="headerlink" title="2.组织进程"></a>2.组织进程</h5><blockquote>
+<p>双向链表进行组织，每个结点就是一个task_ struct(只针对Linux)</p>
+</blockquote>
+<h5 id="除了ps-之外top也可以查看进程的状态"><a href="#除了ps-之外top也可以查看进程的状态" class="headerlink" title="除了ps 之外top也可以查看进程的状态"></a>除了ps 之外top也可以查看进程的状态</h5><blockquote>
+<p><strong>PR:</strong>数字越小，优先级别越高</p>
+<p><strong>NI(nice):</strong>优先级的修正值，<strong>PR+NI =&gt; 最终的PR</strong></p>
+<p>通过指令可以调整nice，宏观上往往看不出效果</p>
+</blockquote>
+<h3 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h3><h5 id="概念-1"><a href="#概念-1" class="headerlink" title="概念"></a>概念</h5><blockquote>
+<p> 环境变量(environment variables)一般是指在操作系统中用来指定操作系统运行环境的一些参数</p>
+<p>环境<a href="https://baike.baidu.com/item/%E5%8F%98%E9%87%8F" target="_blank" rel="noopener">变量</a>是在操作系统中一个具有特定名字的对象，它包含了一个或者多个应用<a href="https://baike.baidu.com/item/%E7%A8%8B%E5%BA%8F" target="_blank" rel="noopener">程序</a>所将使用到的信息。例如Windows和DOS操作系统中的path环境变量，当要求系统运行一个<a href="https://baike.baidu.com/item/%E7%A8%8B%E5%BA%8F/71525" target="_blank" rel="noopener">程序</a>而没有告诉它程序所在的完整路径时，系统除了在<a href="https://baike.baidu.com/item/%E5%BD%93%E5%89%8D%E7%9B%AE%E5%BD%95/7205107" target="_blank" rel="noopener">当前目录</a>下面寻找此程序外，还应到path中指定的路径去找。用户通过设置环境<a href="https://baike.baidu.com/item/%E5%8F%98%E9%87%8F" target="_blank" rel="noopener">变量</a>，来更好的运行进程。 </p>
+<p>环境变量通常具有某些特殊用途，还有在系统当中通常具有全局特性</p>
+</blockquote>
+<h5 id="常见环境变量"><a href="#常见环境变量" class="headerlink" title="常见环境变量"></a>常见环境变量</h5><p><strong>PATH : 指定命令的搜索路径</strong><br><strong>HOME : 指定用户的主工作目录(即用户登陆到Linux系统中时,默认的目录)</strong><br><strong>SHELL : 当前Shell,它的值通常是/bin/bash</strong>。</p>
+<h5 id="查看环境变量的命令"><a href="#查看环境变量的命令" class="headerlink" title="查看环境变量的命令"></a>查看环境变量的命令</h5><p><strong>echo $NAME //NAME:你的环境变量名称</strong></p>
+<blockquote>
+<p>例如: <strong>echo $PATH 或者echo $HOME</strong></p>
+</blockquote>
+<h4 id="键值对-key-value"><a href="#键值对-key-value" class="headerlink" title="键值对(key_value)"></a>键值对(key_value)</h4><p><strong>环境变量是一个键值对结构</strong></p>
+<blockquote>
+<p>键：变量名</p>
+<p>值：变量内容</p>
+</blockquote>
+<h5 id="和环境变量相关的命令"><a href="#和环境变量相关的命令" class="headerlink" title="和环境变量相关的命令"></a>和环境变量相关的命令</h5><blockquote>
+<ol>
+<li>echo: 显示某个环境变量值［重点］</li>
+<li>export: 设置一个新的环境变量［重点］</li>
+<li>env: 显示所有环境变量［重点］</li>
+<li>unset: 清除环境变量</li>
+<li>set: 显示本地定义的shell变量和环境变量</li>
+</ol>
+</blockquote>
+<p><strong>Linux 上查看键值对命令:env</strong></p>
+<blockquote>
+<p>env : 查看系统上所有的环境变量</p>
+<p>echo $ (环境变量名)  查看某个环境变量</p>
+<p>export  修改环境变量，对于PATH 修改一般只是进行追加，不会把原来内容(路径)去掉</p>
+<p><strong>可以通过重启终端来恢复PATH</strong></p>
+<p><strong>PATH：shell中敲下的指令，去哪些目录中查找对应的可执行程序</strong></p>
+<p>修改这个文件 ~ /.  bashrc 能够让环境变量持久生效</p>
+</blockquote>
+<p><img src="https://wx2.sinaimg.cn/mw690/0071OE7sly1g2uwedpisyj30lt06nwg6.jpg" alt></p>
+<h5 id="mian函数的参数"><a href="#mian函数的参数" class="headerlink" title="mian函数的参数"></a>mian函数的参数</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc <span class="comment">/*命令行参数个数*/</span> ,<span class="keyword">char</span>* argv[]<span class="comment">/*命令行参数命令*/</span> )</span></span></span><br><span class="line"><span class="function"><span class="comment">//没参数</span></span></span><br><span class="line"><span class="function"><span class="comment">//int argc,char* argv[] </span></span></span><br><span class="line"><span class="function"><span class="comment">//int argc,char* argv[],char* env[] （env 数组的结束标志 NULL）</span></span></span><br></pre></td></tr></table></figure>
+<h5 id="程序地址空间"><a href="#程序地址空间" class="headerlink" title="程序地址空间"></a>程序地址空间</h5><p><strong>栈</strong></p>
+<blockquote>
+<p>保存局部变量</p>
+<p>在(centors 上大小约为8M)</p>
+<p>栈的大小可以配置(要看平台)</p>
+<p>如果是小对象，并且需要频繁创建和销毁，推荐在栈上分配栈上空间内存更高效</p>
+</blockquote>
+<p><strong>堆</strong></p>
+<blockquote>
+<p>动态申请的空间</p>
+<p>如果是大对象，必须在堆上分配</p>
+<p>malloc/new 申请空间</p>
+</blockquote>
+<p><strong>数据段</strong></p>
+<blockquote>
+<p>全局变量/静态变量</p>
+</blockquote>
+<p><strong>代码段</strong></p>
+<blockquote>
+<p>存放二进制代码/字符串的字面常量</p>
+</blockquote>
+<p><strong>内存池</strong></p>
+<blockquote>
+<p>需要比较大的内存又需要频繁的申请和释放的就用内存池比较好</p>
+</blockquote>
 
       
     </div>
@@ -688,10 +873,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
+            Inhaltsverzeichnis
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
+            Übersicht
           </li>
         </ul>
       
@@ -714,7 +899,7 @@
                   <a href="/archives">
                 
                     <span class="site-state-item-count">25</span>
-                    <span class="site-state-item-name">posts</span>
+                    <span class="site-state-item-name">Artikel</span>
                   </a>
                 </div>
               
@@ -735,7 +920,7 @@
                       
                     
                     <span class="site-state-item-count">4</span>
-                    <span class="site-state-item-name">categories</span>
+                    <span class="site-state-item-name">Kategorien</span>
                   
                 </div>
               
@@ -798,7 +983,7 @@
                       
                     
                     <span class="site-state-item-count">25</span>
-                    <span class="site-state-item-name">tags</span>
+                    <span class="site-state-item-name">schlagwörter</span>
                   
                 </div>
               
@@ -857,7 +1042,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#系统编程"><span class="nav-number">1.</span> <span class="nav-text">系统编程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#冯诺依曼体系"><span class="nav-number">1.1.</span> <span class="nav-text">冯诺依曼体系</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux进程的概念"><span class="nav-number">1.</span> <span class="nav-text">Linux进程的概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#系统编程"><span class="nav-number">1.1.</span> <span class="nav-text">系统编程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#冯诺依曼体系"><span class="nav-number">1.1.1.</span> <span class="nav-text">冯诺依曼体系</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-图示"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.图示</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-计算机的组成分类"><span class="nav-number">1.1.3.</span> <span class="nav-text">2.计算机的组成分类</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#操作系统-搞管理的软件"><span class="nav-number">1.2.</span> <span class="nav-text">操作系统(搞管理的软件)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#概念"><span class="nav-number">1.2.1.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设计操作系统的目的"><span class="nav-number">1.2.2.</span> <span class="nav-text">设计操作系统的目的</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#总结"><span class="nav-number">1.2.3.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进程查看"><span class="nav-number">1.3.</span> <span class="nav-text">进程查看</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#进程的管理"><span class="nav-number">1.3.0.1.</span> <span class="nav-text">进程的管理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-描述进程-PCB进程控制块-–-gt-就是一个结构-task-struct"><span class="nav-number">1.3.0.2.</span> <span class="nav-text">1.描述进程(PCB进程控制块 –&gt; 就是一个结构(task_struct))</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#进程的状态"><span class="nav-number">1.3.0.3.</span> <span class="nav-text">进程的状态</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#父进程-ppid-与子进程-pid"><span class="nav-number">1.3.1.</span> <span class="nav-text">父进程(ppid)与子进程(pid)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#fork"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">fork ()</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#进程的调度"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">进程的调度</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#僵尸进程"><span class="nav-number">1.3.2.</span> <span class="nav-text">僵尸进程</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-组织进程"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">2.组织进程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#除了ps-之外top也可以查看进程的状态"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">除了ps 之外top也可以查看进程的状态</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#环境变量"><span class="nav-number">1.4.</span> <span class="nav-text">环境变量</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#概念-1"><span class="nav-number">1.4.0.1.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#常见环境变量"><span class="nav-number">1.4.0.2.</span> <span class="nav-text">常见环境变量</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#查看环境变量的命令"><span class="nav-number">1.4.0.3.</span> <span class="nav-text">查看环境变量的命令</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#键值对-key-value"><span class="nav-number">1.4.1.</span> <span class="nav-text">键值对(key_value)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#和环境变量相关的命令"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">和环境变量相关的命令</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#mian函数的参数"><span class="nav-number">1.4.1.2.</span> <span class="nav-text">mian函数的参数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#程序地址空间"><span class="nav-number">1.4.1.3.</span> <span class="nav-text">程序地址空间</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -890,7 +1075,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="Symbols count total">142k</span>
+    <span title="Insgesamt gezählte Symbole">145k</span>
   
 
   
@@ -899,12 +1084,12 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="Reading time total">2:09</span>
+    <span title="Insgesamte Lesezeit">2:12</span>
   
 </div>
 
 
-  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+  <div class="powered-by">Erstellt mit  <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
 
 
 
@@ -912,7 +1097,7 @@
 
 
 
-  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.1.0</div>
+  <div class="theme-info">Design – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.1.0</div>
 
 
 
@@ -925,7 +1110,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-user"></i>
     </span>
-    <span class="site-uv" title="Total Visitors">
+    <span class="site-uv" title="Alle Besucher">
       <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
     </span>
   
@@ -938,7 +1123,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-eye"></i>
     </span>
-    <span class="site-pv" title="Total Views">
+    <span class="site-pv" title="Alle Aufrufe">
       <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
     </span>
   

@@ -130,7 +130,7 @@
 <p>1.描述起来 :用struct结构体</p>
 <p>2.组织起来: 用链表或者其他高效的数据结构</p>
 </blockquote>
-<h3 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h3><ul>
+<h3 id="进程查看"><a href="#进程查看" class="headerlink" title="进程查看"></a>进程查看</h3><ul>
 <li style="list-style: none"><input type="checkbox"> <strong>ps</strong> 相当于任务管理去器，能够查看系统都有哪些进程</li>
 <li style="list-style: none"><input type="checkbox"> <strong>ps   aux</strong>  查看所有进程</li>
 <li style="list-style: none"><input type="checkbox"> <strong>ps   aux  | less</strong>  配合<strong>less</strong> 对查看结果进行翻页和其他操作</li>
@@ -143,12 +143,23 @@
 <p>敲下的命令，在命令执行的过程中也是一个进程</p>
 </blockquote>
 <p><img src="https://wx2.sinaimg.cn/mw690/0071OE7sly1g2stgtf6i7j316206g0th.jpg" alt></p>
-<h5 id="进程的管理"><a href="#进程的管理" class="headerlink" title="进程的管理"></a>进程的管理</h5><blockquote>
-<p>1.描述进程(PCB进程控制块 –&gt; 就是一个结构(task_struct))</p>
+<h5 id="进程的管理"><a href="#进程的管理" class="headerlink" title="进程的管理"></a>进程的管理</h5><h5 id="1-描述进程-PCB进程控制块-–-gt-就是一个结构-task-struct"><a href="#1-描述进程-PCB进程控制块-–-gt-就是一个结构-task-struct" class="headerlink" title="1.描述进程(PCB进程控制块 –&gt; 就是一个结构(task_struct))"></a>1.描述进程(PCB进程控制块 –&gt; 就是一个结构(task_struct))</h5><p><strong>PCB：针对通常情况</strong></p>
+<p><strong>task_struct：只针对Linux</strong></p>
+<blockquote>
 <p>​      task_struct 是一个很大的结构体，包含很多的内容</p>
 <p>​       <strong>a.进程标识符(pid)</strong></p>
 <p>​        <strong>b.内存指针(告诉 进程代码/数据都存在内存的那个部分)</strong></p>
+<hr>
 <p>​       <strong>c.进程状态</strong></p>
+<p>​       <strong>d.优先级:数字，表示这个进程是先被调度还是后被调度执行</strong></p>
+<p>​       <strong>PR:</strong>      数字越小，优先级别越高</p>
+<p>​        <strong>NI(nice):</strong>      优先级的修正值，<strong>PR+NI =&gt; 最终的PR</strong></p>
+<p>通过指令可以调整nice，宏观上往往看不出效果</p>
+<p><strong>e:上下文(寄存器)</strong></p>
+<p>   cpu 可能又几十个寄存器，</p>
+<p>​    作用：<strong>保存上下文</strong>，cpu寄存器的内容保存到内存中</p>
+<p>​               <strong>恢复向下文</strong>，内存中的寄存器值恢复到cpu中</p>
+<p><strong>f:记账信息;每个进程已经在C</strong>PU上执行<strong>多久统计数据</strong></p>
 </blockquote>
 <h5 id="进程的状态"><a href="#进程的状态" class="headerlink" title="进程的状态"></a>进程的状态</h5><blockquote>
 <p>R 就绪状态，进程在就绪队列中，就会处于这个状态</p>
@@ -157,7 +168,7 @@
 <p>T    暂停stop</p>
 <p>t    跟踪trace</p>
 <p>X    进程已经结束，只是在Linux 源代码中存在，真实是看不到的</p>
-<p>Z     僵尸进程  和父进程子进程这些有关联</p>
+<p>Z     <strong>僵尸进程</strong>  和父进程子进程这些有关联</p>
 </blockquote>
 <h4 id="父进程-ppid-与子进程-pid"><a href="#父进程-ppid-与子进程-pid" class="headerlink" title="父进程(ppid)与子进程(pid)"></a>父进程(ppid)与子进程(pid)</h4><p><strong>使用代码来创建子进程</strong></p>
 <blockquote>
@@ -190,13 +201,79 @@
 <p><strong>并发:一个CPU”同时”执行两个进程，切换执行，并非同时进行</strong></p>
 <h4 id="僵尸进程"><a href="#僵尸进程" class="headerlink" title="僵尸进程"></a>僵尸进程</h4><p><strong>成因:子进程结束之后，父进程没有回收子进程的资源，为了解决子进程向父进程汇报工作的问题</strong></p>
 <p><strong>危害：处理不当会造成内存泄漏</strong></p>
-<p><strong>处理：直kill 僵尸进程是kill 不掉的，可以kill 僵尸进程的父进程跟科学的处理办法是: 进程等待</strong></p>
+<p><strong>处理：直kill 僵尸进程是kill 不掉的，可以kill 僵尸进程的父进程。更科学的处理办法是: 进程等待</strong></p>
 <p><strong>为什么 kill 父进程僵尸进程没了？</strong></p>
 <blockquote>
-<p>当kill 掉父进程之后，<strong>子进程就被称为孤儿进程</strong>，孤儿进程会被 1 号进程收养，从而释放资源</p>
+<p>当kill 掉父进程之后，<strong>子进程就被称为孤儿进程</strong>，孤儿进程会<strong>被 1 号进程(init进程)收养</strong>，从而释放资源</p>
 </blockquote>
+<p><strong>init进程：开机时运行的第一个进程</strong></p>
 <h5 id="2-组织进程"><a href="#2-组织进程" class="headerlink" title="2.组织进程"></a>2.组织进程</h5><blockquote>
-<p>双向链表进行组织，每个结点就是一个task_ struct</p>
+<p>双向链表进行组织，每个结点就是一个task_ struct(只针对Linux)</p>
+</blockquote>
+<h5 id="除了ps-之外top也可以查看进程的状态"><a href="#除了ps-之外top也可以查看进程的状态" class="headerlink" title="除了ps 之外top也可以查看进程的状态"></a>除了ps 之外top也可以查看进程的状态</h5><blockquote>
+<p><strong>PR:</strong>数字越小，优先级别越高</p>
+<p><strong>NI(nice):</strong>优先级的修正值，<strong>PR+NI =&gt; 最终的PR</strong></p>
+<p>通过指令可以调整nice，宏观上往往看不出效果</p>
+</blockquote>
+<h3 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h3><h5 id="概念-1"><a href="#概念-1" class="headerlink" title="概念"></a>概念</h5><blockquote>
+<p> 环境变量(environment variables)一般是指在操作系统中用来指定操作系统运行环境的一些参数</p>
+<p>环境<a href="https://baike.baidu.com/item/%E5%8F%98%E9%87%8F" target="_blank" rel="noopener">变量</a>是在操作系统中一个具有特定名字的对象，它包含了一个或者多个应用<a href="https://baike.baidu.com/item/%E7%A8%8B%E5%BA%8F" target="_blank" rel="noopener">程序</a>所将使用到的信息。例如Windows和DOS操作系统中的path环境变量，当要求系统运行一个<a href="https://baike.baidu.com/item/%E7%A8%8B%E5%BA%8F/71525" target="_blank" rel="noopener">程序</a>而没有告诉它程序所在的完整路径时，系统除了在<a href="https://baike.baidu.com/item/%E5%BD%93%E5%89%8D%E7%9B%AE%E5%BD%95/7205107" target="_blank" rel="noopener">当前目录</a>下面寻找此程序外，还应到path中指定的路径去找。用户通过设置环境<a href="https://baike.baidu.com/item/%E5%8F%98%E9%87%8F" target="_blank" rel="noopener">变量</a>，来更好的运行进程。 </p>
+<p>环境变量通常具有某些特殊用途，还有在系统当中通常具有全局特性</p>
+</blockquote>
+<h5 id="常见环境变量"><a href="#常见环境变量" class="headerlink" title="常见环境变量"></a>常见环境变量</h5><p><strong>PATH : 指定命令的搜索路径</strong><br><strong>HOME : 指定用户的主工作目录(即用户登陆到Linux系统中时,默认的目录)</strong><br><strong>SHELL : 当前Shell,它的值通常是/bin/bash</strong>。</p>
+<h5 id="查看环境变量的命令"><a href="#查看环境变量的命令" class="headerlink" title="查看环境变量的命令"></a>查看环境变量的命令</h5><p><strong>echo $NAME //NAME:你的环境变量名称</strong></p>
+<blockquote>
+<p>例如: <strong>echo $PATH 或者echo $HOME</strong></p>
+</blockquote>
+<h4 id="键值对-key-value"><a href="#键值对-key-value" class="headerlink" title="键值对(key_value)"></a>键值对(key_value)</h4><p><strong>环境变量是一个键值对结构</strong></p>
+<blockquote>
+<p>键：变量名</p>
+<p>值：变量内容</p>
+</blockquote>
+<h5 id="和环境变量相关的命令"><a href="#和环境变量相关的命令" class="headerlink" title="和环境变量相关的命令"></a>和环境变量相关的命令</h5><blockquote>
+<ol>
+<li>echo: 显示某个环境变量值［重点］</li>
+<li>export: 设置一个新的环境变量［重点］</li>
+<li>env: 显示所有环境变量［重点］</li>
+<li>unset: 清除环境变量</li>
+<li>set: 显示本地定义的shell变量和环境变量</li>
+</ol>
+</blockquote>
+<p><strong>Linux 上查看键值对命令:env</strong></p>
+<blockquote>
+<p>env : 查看系统上所有的环境变量</p>
+<p>echo $ (环境变量名)  查看某个环境变量</p>
+<p>export  修改环境变量，对于PATH 修改一般只是进行追加，不会把原来内容(路径)去掉</p>
+<p><strong>可以通过重启终端来恢复PATH</strong></p>
+<p><strong>PATH：shell中敲下的指令，去哪些目录中查找对应的可执行程序</strong></p>
+<p>修改这个文件 ~ /.  bashrc 能够让环境变量持久生效</p>
+</blockquote>
+<p><img src="https://wx2.sinaimg.cn/mw690/0071OE7sly1g2uwedpisyj30lt06nwg6.jpg" alt></p>
+<h5 id="mian函数的参数"><a href="#mian函数的参数" class="headerlink" title="mian函数的参数"></a>mian函数的参数</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc <span class="comment">/*命令行参数个数*/</span> ,<span class="keyword">char</span>* argv[]<span class="comment">/*命令行参数命令*/</span> )</span></span></span><br><span class="line"><span class="function"><span class="comment">//没参数</span></span></span><br><span class="line"><span class="function"><span class="comment">//int argc,char* argv[] </span></span></span><br><span class="line"><span class="function"><span class="comment">//int argc,char* argv[],char* env[] （env 数组的结束标志 NULL）</span></span></span><br></pre></td></tr></table></figure>
+<h5 id="程序地址空间"><a href="#程序地址空间" class="headerlink" title="程序地址空间"></a>程序地址空间</h5><p><strong>栈</strong></p>
+<blockquote>
+<p>保存局部变量</p>
+<p>在(centors 上大小约为8M)</p>
+<p>栈的大小可以配置(要看平台)</p>
+<p>如果是小对象，并且需要频繁创建和销毁，推荐在栈上分配栈上空间内存更高效</p>
+</blockquote>
+<p><strong>堆</strong></p>
+<blockquote>
+<p>动态申请的空间</p>
+<p>如果是大对象，必须在堆上分配</p>
+<p>malloc/new 申请空间</p>
+</blockquote>
+<p><strong>数据段</strong></p>
+<blockquote>
+<p>全局变量/静态变量</p>
+</blockquote>
+<p><strong>代码段</strong></p>
+<blockquote>
+<p>存放二进制代码/字符串的字面常量</p>
+</blockquote>
+<p><strong>内存池</strong></p>
+<blockquote>
+<p>需要比较大的内存又需要频繁的申请和释放的就用内存池比较好</p>
 </blockquote>
 	  
 
