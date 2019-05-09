@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[数据库基础]]></title>
+    <url>%2F2019%2F05%2F09%2F%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E7%A1%80%2F</url>
+    <content type="text"><![CDATA[数据库1.数据库的建立2.新建数据库对应表的建立3.删除表的操作4.简单的查询语句5.建立对应表的索引6.删除建立的索引 1.数据库的建立1.建库指令1create database &lt;数据库名&gt; 如下:建立一个叫 jack 的数据库 1create database jack 2.在新建的数据库下创建新表1.建表指令 1234use &lt;数据库名&gt; create table &lt;表名&gt;( &lt;表的列名&gt; &lt;该列将要存储的数据的类型&gt; (所存数据的长度)，); 如下：在 jack 库下建立一个student 表 12345678use jack create table student(sname char(10),sno char(20),ssex char(2),sage smallint,primary key nonclustered(sno)) 在 jack 库下建立一个 student 表 student 表包含学生姓名、学号、性别和年龄， 在建表是必须要申明主码既关键词 primary key 所修饰的列名 SQL server 在创建主码时会自动生成聚簇索引，如果表中还需要给别的字段创建聚簇，则可以通过 nonclustered 关键字来取消 好像不加那个use&lt;库名&gt;也可以创建新表 ，但是你要保证你只打开了这一个表 3.删除表的操作1.删表命令 1drop table &lt;要删除的表名&gt; 如下：删除表 ss 1drop table ss 4.简单的查询语句1.查询指令 123select &lt;所查属性1&gt;，&lt;所查属性n&gt;from &lt;标名/视图名&gt;where &lt;所查的对象&gt; 如下: 在jack库下的student表中查找sdept(系别)为is 的学生的学号和姓名及年龄 123select sno,sname,sagefrom student where sdept = &apos;is&apos; 查询结果如下 5.建立对应表的索引建立指令 1create [unique][clustered] index &lt;索引名&gt; 如下:为student表的sno 建立唯一索引 1create unique index stusno on student(sno) 命令运行结果 建立sname 的聚簇索引 1create clustered index stusname on student(sname) 执行结果 此处需要强调的是如果在建表是没有取消表默认的聚簇索引，则此时建立聚簇索引会报错 6.删除建立的索引1drop index &lt;建立的索引名&gt; on &lt;指定表名&gt; 删除建立的stusname 的聚簇索引 1drop index stusname on student]]></content>
+      <categories>
+        <category>Database</category>
+      </categories>
+      <tags>
+        <tag>数据库基础</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Linux 系统下cat指令与more指令的异同]]></title>
     <url>%2F2019%2F05%2F04%2FLinux-%E7%B3%BB%E7%BB%9F%E4%B8%8Bcat%E6%8C%87%E4%BB%A4%E4%B8%8Emore%E6%8C%87%E4%BB%A4%E7%9A%84%E5%BC%82%E5%90%8C%2F</url>
     <content type="text"><![CDATA[Linux 系统下cat指令与more指令的异同 cat指令的功能 语法 cat 选项 文件 功能 查看目标文件的内容 使用方法主要选项 -b 对非空输出行编号-n 对输出的所有行编号-s 不输出多行空行 more的功能 大体功能相同与cat指令相同 语法 more 选项 文件 功能 more命令，功能类似 cat 使用方法主要选项 -n 对输出的所有行编号q 退出more 两者的相同点 相同点在于：都是用来查看文件内容的指令，两者用法基本相同两者的不同点不同点在于：cat指令查看完毕后会自动返回到正常模式而more指令则需要用户手动退出查看模式]]></content>
