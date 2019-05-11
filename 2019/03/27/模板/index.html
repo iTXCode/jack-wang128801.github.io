@@ -96,20 +96,20 @@
 
 
 
-  <meta name="description" content="模板初阶1.泛型编程">
+  <meta name="description" content="模板初阶1.泛型编程 实现函数的交换  123456789101112131415161718void Swap(int&amp;amp; left, int&amp;amp; right)&amp;#123; int temp = left; left = right; right = temp;&amp;#125;void Swap(double&amp;amp; left, double&amp;amp; right)&amp;#123; dou">
 <meta name="keywords" content="模板">
 <meta property="og:type" content="article">
 <meta property="og:title" content="模板">
 <meta property="og:url" content="https://jack-wang128801.github.io/2019/03/27/模板/index.html">
 <meta property="og:site_name" content="jack-wang&#39;s blog">
-<meta property="og:description" content="模板初阶1.泛型编程">
+<meta property="og:description" content="模板初阶1.泛型编程 实现函数的交换  123456789101112131415161718void Swap(int&amp;amp; left, int&amp;amp; right)&amp;#123; int temp = left; left = right; right = temp;&amp;#125;void Swap(double&amp;amp; left, double&amp;amp; right)&amp;#123; dou">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://wx1.sinaimg.cn/mw690/0071OE7sly1g1hkd9mh20j30dv0b30st.jpg">
 <meta property="og:image" content="https://wx3.sinaimg.cn/mw690/0071OE7sly1g1hkewaignj30yn0k1teo.jpg">
-<meta property="og:updated_time" content="2019-05-05T15:02:34.858Z">
+<meta property="og:updated_time" content="2019-04-02T16:17:43.652Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="模板">
-<meta name="twitter:description" content="模板初阶1.泛型编程">
+<meta name="twitter:description" content="模板初阶1.泛型编程 实现函数的交换  123456789101112131415161718void Swap(int&amp;amp; left, int&amp;amp; right)&amp;#123; int temp = left; left = right; right = temp;&amp;#125;void Swap(double&amp;amp; left, double&amp;amp; right)&amp;#123; dou">
 <meta name="twitter:image" content="https://wx1.sinaimg.cn/mw690/0071OE7sly1g1hkd9mh20j30dv0b30st.jpg">
 
 
@@ -202,7 +202,7 @@
   </div>
 
   <div class="site-nav-toggle">
-    <button aria-label="Navigationsleiste an/ausschalten">
+    <button aria-label="Toggle navigation bar">
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
@@ -326,7 +326,7 @@
             <a href="javascript:;" class="popup-trigger">
           
             
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>Suche</a>
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>Search</a>
         </li>
       
     </ul>
@@ -346,7 +346,7 @@
       <i class="fa fa-times-circle"></i>
     </span>
     <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="Suche..." spellcheck="false" type="text" id="local-search-input">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
     </div>
   </div>
   <div id="local-search-result"></div>
@@ -432,14 +432,14 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
 
               
                 
               
 
-              <time title="Erstellt: 2019-03-27 18:42:10" itemprop="dateCreated datePublished" datetime="2019-03-27T18:42:10+08:00">2019-03-27</time>
+              <time title="Created: 2019-03-27 18:42:10" itemprop="dateCreated datePublished" datetime="2019-03-27T18:42:10+08:00">2019-03-27</time>
             
 
             
@@ -454,9 +454,9 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">Bearbeitet am</span>
+                  <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Geändert am: 2019-05-05 23:02:34" itemprop="dateModified" datetime="2019-05-05T23:02:34+08:00">2019-05-05</time>
+                <time title="Modified: 2019-04-03 00:17:43" itemprop="dateModified" datetime="2019-04-03T00:17:43+08:00">2019-04-03</time>
               
             
           </span>
@@ -470,7 +470,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">in</span>
+                <span class="post-meta-item-text">In</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Cpp/" itemprop="url" rel="index"><span itemprop="name">Cpp</span></a></span>
@@ -491,7 +491,7 @@
                   <i class="fa fa-comment-o"></i>
                 </span>
             
-                <span class="post-meta-item-text">Kommentare: </span>
+                <span class="post-meta-item-text">Comments: </span>
                 <a href="/2019/03/27/模板/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count gitment-comments-count" data-xid="/2019/03/27/模板/" itemprop="commentCount"></span>
                 </a>
@@ -506,7 +506,7 @@
             <span class="post-meta-divider">|</span>
             <span class="post-meta-item-icon">
             <i class="fa fa-eye"></i>
-             Aufrufe:  
+             Views:  
             <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
             </span>
           
@@ -520,9 +520,9 @@
                   <i class="fa fa-file-word-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">Symbole im Artikel gezählt: </span>
+                  <span class="post-meta-item-text">Symbols count in article: </span>
                 
-                <span title="Symbole im Artikel gezählt">23k</span>
+                <span title="Symbols count in article">23k</span>
               
 
               
@@ -534,9 +534,9 @@
                   <i class="fa fa-clock-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">Lesezeit &asymp;</span>
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
                 
-                <span title="Lesezeit">21 minuten.</span>
+                <span title="Reading time">21 mins.</span>
               
             </div>
           
@@ -556,8 +556,7 @@
       
 
       
-        <h2 id="模板初阶"><a href="#模板初阶" class="headerlink" title="模板初阶"></a>模板初阶</h2><h3 id="1-泛型编程"><a href="#1-泛型编程" class="headerlink" title="1.泛型编程"></a>1.泛型编程</h3><a id="more"></a>
-<blockquote>
+        <h2 id="模板初阶"><a href="#模板初阶" class="headerlink" title="模板初阶"></a>模板初阶</h2><h3 id="1-泛型编程"><a href="#1-泛型编程" class="headerlink" title="1.泛型编程"></a>1.泛型编程</h3><blockquote>
 <p>实现函数的交换</p>
 </blockquote>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Swap</span><span class="params">(<span class="keyword">int</span>&amp; left, <span class="keyword">int</span>&amp; right)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"> <span class="keyword">int</span> temp = left;</span><br><span class="line"> left = right;</span><br><span class="line"> right = temp;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Swap</span><span class="params">(<span class="keyword">double</span>&amp; left, <span class="keyword">double</span>&amp; right)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"> <span class="keyword">double</span> temp = left;</span><br><span class="line"> left = right;</span><br><span class="line"> right = temp;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Swap</span><span class="params">(<span class="keyword">char</span>&amp; left, <span class="keyword">char</span>&amp; right)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"> <span class="keyword">char</span> temp = left;</span><br><span class="line"> left = right;</span><br><span class="line"> right = temp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -691,10 +690,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Inhaltsverzeichnis
+            Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Übersicht
+            Overview
           </li>
         </ul>
       
@@ -716,8 +715,8 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">26</span>
-                    <span class="site-state-item-name">Artikel</span>
+                    <span class="site-state-item-count">29</span>
+                    <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
               
@@ -740,7 +739,7 @@
                       
                     
                     <span class="site-state-item-count">5</span>
-                    <span class="site-state-item-name">Kategorien</span>
+                    <span class="site-state-item-name">categories</span>
                   
                 </div>
               
@@ -804,8 +803,12 @@
                     
                       
                     
-                    <span class="site-state-item-count">26</span>
-                    <span class="site-state-item-name">schlagwörter</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">28</span>
+                    <span class="site-state-item-name">tags</span>
                   
                 </div>
               
@@ -897,7 +900,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="Insgesamt gezählte Symbole">147k</span>
+    <span title="Symbols count total">150k</span>
   
 
   
@@ -906,12 +909,12 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="Insgesamte Lesezeit">2:13</span>
+    <span title="Reading time total">2:16</span>
   
 </div>
 
 
-  <div class="powered-by">Erstellt mit  <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
 
 
 
@@ -919,7 +922,7 @@
 
 
 
-  <div class="theme-info">Design – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.1.0</div>
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.1.0</div>
 
 
 
@@ -932,7 +935,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-user"></i>
     </span>
-    <span class="site-uv" title="Alle Besucher">
+    <span class="site-uv" title="Total Visitors">
       <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
     </span>
   
@@ -945,7 +948,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-eye"></i>
     </span>
-    <span class="site-pv" title="Alle Aufrufe">
+    <span class="site-pv" title="Total Views">
       <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
     </span>
   

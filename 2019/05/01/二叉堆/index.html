@@ -96,17 +96,18 @@
 
 
 
-  <meta name="description" content="Yes,I can.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="categories">
-<meta property="og:url" content="https://jack-wang128801.github.io/categories/index.html">
+  <meta name="description" content="二叉堆堆的向下调节(小堆)时间复杂度: log(n) 调整方法：  1.要调整的[root] 所在的结点  建堆时间复杂度:O(n) 向上调整时间复杂度: O(log(n)) TopK问题在海量数据中找到最大的K个数：建立小堆">
+<meta name="keywords" content="二叉堆">
+<meta property="og:type" content="article">
+<meta property="og:title" content="二叉堆">
+<meta property="og:url" content="https://jack-wang128801.github.io/2019/05/01/二叉堆/index.html">
 <meta property="og:site_name" content="jack-wang&#39;s blog">
-<meta property="og:description" content="Yes,I can.">
+<meta property="og:description" content="二叉堆堆的向下调节(小堆)时间复杂度: log(n) 调整方法：  1.要调整的[root] 所在的结点  建堆时间复杂度:O(n) 向上调整时间复杂度: O(log(n)) TopK问题在海量数据中找到最大的K个数：建立小堆">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-05-05T10:13:57.868Z">
+<meta property="og:updated_time" content="2019-05-01T04:59:33.075Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="categories">
-<meta name="twitter:description" content="Yes,I can.">
+<meta name="twitter:title" content="二叉堆">
+<meta name="twitter:description" content="二叉堆堆的向下调节(小堆)时间复杂度: log(n) 调整方法：  1.要调整的[root] 所在的结点  建堆时间复杂度:O(n) 向上调整时间复杂度: O(log(n)) TopK问题在海量数据中找到最大的K个数：建立小堆">
 
 
 
@@ -116,7 +117,7 @@
 
   
   
-  <link rel="canonical" href="https://jack-wang128801.github.io/categories/">
+  <link rel="canonical" href="https://jack-wang128801.github.io/2019/05/01/二叉堆/">
 
 
 
@@ -126,7 +127,7 @@
   };
 </script>
 
-  <title>categories | jack-wang's blog</title>
+  <title>二叉堆 | jack-wang's blog</title>
   
 
 
@@ -284,7 +285,7 @@
         
         
           
-          <li class="menu-item menu-item-类别 menu-item-active">
+          <li class="menu-item menu-item-类别">
 
     
     
@@ -372,76 +373,246 @@
           
             
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
           
           <div id="content" class="content">
             
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://jack-wang128801.github.io/2019/05/01/二叉堆/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jack-wang128801">
+      <meta itemprop="description" content="Yes,I can.">
+      <meta itemprop="image" content="/images/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jack-wang's blog">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-<h1 class="post-title" itemprop="name headline">categories
-
-</h1>
-
-<div class="post-meta">
-  
-  
-
-
-
-</div>
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
+          <h1 class="post-title" itemprop="name headline">二叉堆
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-05-01 09:33:06 / Modified: 12:59:33" itemprop="dateCreated datePublished" datetime="2019-05-01T09:33:06+08:00">2019-05-01</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
           
-        
-      </div>
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/数据结构/" itemprop="url" rel="index"><span itemprop="name">数据结构</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">Comments: </span>
+                <a href="/2019/05/01/二叉堆/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2019/05/01/二叉堆/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             Views:  
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Symbols count in article: </span>
+                
+                <span title="Symbols count in article">634</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">1 mins.</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <h3 id="二叉堆"><a href="#二叉堆" class="headerlink" title="二叉堆"></a>二叉堆</h3><h4 id="堆的向下调节-小堆"><a href="#堆的向下调节-小堆" class="headerlink" title="堆的向下调节(小堆)"></a>堆的向下调节(小堆)</h4><p><strong>时间复杂度: log(n)</strong></p>
+<p><strong>调整方法：</strong></p>
+<blockquote>
+<p>1.要调整的[root] 所在的结点</p>
+</blockquote>
+<h5 id="建堆"><a href="#建堆" class="headerlink" title="建堆"></a>建堆</h5><p><strong>时间复杂度:O(n)</strong></p>
+<h5 id="向上调整"><a href="#向上调整" class="headerlink" title="向上调整"></a>向上调整</h5><p><strong>时间复杂度: O(log(n))</strong></p>
+<h5 id="TopK问题"><a href="#TopK问题" class="headerlink" title="TopK问题"></a>TopK问题</h5><p><strong>在海量数据中找到最大的K个数：建立小堆</strong></p>
+
       
     </div>
-    
-
-
 
     
+
     
     
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/二叉堆/" rel="tag"># 二叉堆</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/29/Linux的开发工具/" rel="next" title="Linux的开发工具">
+                <i class="fa fa-chevron-left"></i> Linux的开发工具
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/05/01/排序/" rel="prev" title="排序">
+                排序 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
   </div>
 
 
@@ -477,8 +648,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -636,6 +816,23 @@
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#二叉堆"><span class="nav-number">1.</span> <span class="nav-text">二叉堆</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#堆的向下调节-小堆"><span class="nav-number">1.1.</span> <span class="nav-text">堆的向下调节(小堆)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#建堆"><span class="nav-number">1.1.1.</span> <span class="nav-text">建堆</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#向上调整"><span class="nav-number">1.1.2.</span> <span class="nav-text">向上调整</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#TopK问题"><span class="nav-number">1.1.3.</span> <span class="nav-text">TopK问题</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       

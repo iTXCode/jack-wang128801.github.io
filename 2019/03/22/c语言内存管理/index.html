@@ -96,13 +96,13 @@
 
 
 
-  <meta name="description" content="一：数据在内存中的存储">
+  <meta name="description" content="一：数据在内存中的存储数据类型介绍1.基本的内存类型：类型的意义1.使用这个类型开辟内存空间的大小（大小决定了使用范围）。2.如何看待内存空间的视角。  char                                       //字符数据类型占1个字节shot                                       //短整形占2个字节int">
 <meta name="keywords" content="数据的存储">
 <meta property="og:type" content="article">
 <meta property="og:title" content="c语言内存管理">
 <meta property="og:url" content="https://jack-wang128801.github.io/2019/03/22/c语言内存管理/index.html">
 <meta property="og:site_name" content="jack-wang&#39;s blog">
-<meta property="og:description" content="一：数据在内存中的存储">
+<meta property="og:description" content="一：数据在内存中的存储数据类型介绍1.基本的内存类型：类型的意义1.使用这个类型开辟内存空间的大小（大小决定了使用范围）。2.如何看待内存空间的视角。  char                                       //字符数据类型占1个字节shot                                       //短整形占2个字节int">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20181111173806517.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY2tfd2FuZzEyODgwMQ==,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20181111181051852.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY2tfd2FuZzEyODgwMQ==,size_16,color_FFFFFF,t_70">
@@ -122,10 +122,10 @@
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20181111205210232.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY2tfd2FuZzEyODgwMQ==,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20181111215516798.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY2tfd2FuZzEyODgwMQ==,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20181111215919722.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY2tfd2FuZzEyODgwMQ==,size_16,color_FFFFFF,t_70">
-<meta property="og:updated_time" content="2019-05-05T15:01:28.175Z">
+<meta property="og:updated_time" content="2019-03-22T10:19:18.770Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="c语言内存管理">
-<meta name="twitter:description" content="一：数据在内存中的存储">
+<meta name="twitter:description" content="一：数据在内存中的存储数据类型介绍1.基本的内存类型：类型的意义1.使用这个类型开辟内存空间的大小（大小决定了使用范围）。2.如何看待内存空间的视角。  char                                       //字符数据类型占1个字节shot                                       //短整形占2个字节int">
 <meta name="twitter:image" content="https://img-blog.csdnimg.cn/20181111173806517.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY2tfd2FuZzEyODgwMQ==,size_16,color_FFFFFF,t_70">
 
 
@@ -218,7 +218,7 @@
   </div>
 
   <div class="site-nav-toggle">
-    <button aria-label="Navigationsleiste an/ausschalten">
+    <button aria-label="Toggle navigation bar">
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
@@ -342,7 +342,7 @@
             <a href="javascript:;" class="popup-trigger">
           
             
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>Suche</a>
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>Search</a>
         </li>
       
     </ul>
@@ -362,7 +362,7 @@
       <i class="fa fa-times-circle"></i>
     </span>
     <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="Suche..." spellcheck="false" type="text" id="local-search-input">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
     </div>
   </div>
   <div id="local-search-result"></div>
@@ -448,31 +448,19 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
 
               
                 
               
 
-              <time title="Erstellt: 2019-03-22 16:57:25" itemprop="dateCreated datePublished" datetime="2019-03-22T16:57:25+08:00">2019-03-22</time>
+              <time title="Created: 2019-03-22 16:57:25 / Modified: 18:19:18" itemprop="dateCreated datePublished" datetime="2019-03-22T16:57:25+08:00">2019-03-22</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Bearbeitet am</span>
-                
-                <time title="Geändert am: 2019-05-05 23:01:28" itemprop="dateModified" datetime="2019-05-05T23:01:28+08:00">2019-05-05</time>
               
             
           </span>
@@ -486,7 +474,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">in</span>
+                <span class="post-meta-item-text">In</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C</span></a></span>
@@ -507,7 +495,7 @@
                   <i class="fa fa-comment-o"></i>
                 </span>
             
-                <span class="post-meta-item-text">Kommentare: </span>
+                <span class="post-meta-item-text">Comments: </span>
                 <a href="/2019/03/22/c语言内存管理/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count gitment-comments-count" data-xid="/2019/03/22/c语言内存管理/" itemprop="commentCount"></span>
                 </a>
@@ -522,7 +510,7 @@
             <span class="post-meta-divider">|</span>
             <span class="post-meta-item-icon">
             <i class="fa fa-eye"></i>
-             Aufrufe:  
+             Views:  
             <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
             </span>
           
@@ -536,9 +524,9 @@
                   <i class="fa fa-file-word-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">Symbole im Artikel gezählt: </span>
+                  <span class="post-meta-item-text">Symbols count in article: </span>
                 
-                <span title="Symbole im Artikel gezählt">21k</span>
+                <span title="Symbols count in article">21k</span>
               
 
               
@@ -550,9 +538,9 @@
                   <i class="fa fa-clock-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">Lesezeit &asymp;</span>
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
                 
-                <span title="Lesezeit">19 minuten.</span>
+                <span title="Reading time">19 mins.</span>
               
             </div>
           
@@ -572,8 +560,7 @@
       
 
       
-        <h1 id="一：数据在内存中的存储"><a href="#一：数据在内存中的存储" class="headerlink" title="一：数据在内存中的存储"></a>一：数据在内存中的存储</h1><a id="more"></a>
-<h3 id="数据类型介绍"><a href="#数据类型介绍" class="headerlink" title="数据类型介绍"></a>数据类型介绍</h3><h4 id="1-基本的内存类型："><a href="#1-基本的内存类型：" class="headerlink" title="1.基本的内存类型："></a>1.基本的内存类型：</h4><p>类型的意义<br>1.使用这个类型开辟内存空间的大小（大小决定了使用范围）。<br>2.如何看待内存空间的视角。</p>
+        <h1 id="一：数据在内存中的存储"><a href="#一：数据在内存中的存储" class="headerlink" title="一：数据在内存中的存储"></a>一：数据在内存中的存储</h1><h3 id="数据类型介绍"><a href="#数据类型介绍" class="headerlink" title="数据类型介绍"></a>数据类型介绍</h3><h4 id="1-基本的内存类型："><a href="#1-基本的内存类型：" class="headerlink" title="1.基本的内存类型："></a>1.基本的内存类型：</h4><p>类型的意义<br>1.使用这个类型开辟内存空间的大小（大小决定了使用范围）。<br>2.如何看待内存空间的视角。</p>
 <blockquote>
 <p>char                                       //字符数据类型占1个字节<br>shot                                       //短整形占2个字节<br>int                                          //整形占4个字节<br>long                                       // 长整形占4个字节<br>long long                               //更长的整形占8个字节<br>float                                        //单精度浮点数占4个字节<br>double                                     // 双精度浮点数占8个字节</p>
 </blockquote>
@@ -806,10 +793,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Inhaltsverzeichnis
+            Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Übersicht
+            Overview
           </li>
         </ul>
       
@@ -831,8 +818,8 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">26</span>
-                    <span class="site-state-item-name">Artikel</span>
+                    <span class="site-state-item-count">29</span>
+                    <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
               
@@ -855,7 +842,7 @@
                       
                     
                     <span class="site-state-item-count">5</span>
-                    <span class="site-state-item-name">Kategorien</span>
+                    <span class="site-state-item-name">categories</span>
                   
                 </div>
               
@@ -919,8 +906,12 @@
                     
                       
                     
-                    <span class="site-state-item-count">26</span>
-                    <span class="site-state-item-name">schlagwörter</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">28</span>
+                    <span class="site-state-item-name">tags</span>
                   
                 </div>
               
@@ -1012,7 +1003,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="Insgesamt gezählte Symbole">147k</span>
+    <span title="Symbols count total">150k</span>
   
 
   
@@ -1021,12 +1012,12 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="Insgesamte Lesezeit">2:13</span>
+    <span title="Reading time total">2:16</span>
   
 </div>
 
 
-  <div class="powered-by">Erstellt mit  <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
 
 
 
@@ -1034,7 +1025,7 @@
 
 
 
-  <div class="theme-info">Design – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.1.0</div>
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.1.0</div>
 
 
 
@@ -1047,7 +1038,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-user"></i>
     </span>
-    <span class="site-uv" title="Alle Besucher">
+    <span class="site-uv" title="Total Visitors">
       <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
     </span>
   
@@ -1060,7 +1051,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-eye"></i>
     </span>
-    <span class="site-pv" title="Alle Aufrufe">
+    <span class="site-pv" title="Total Views">
       <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
     </span>
   
