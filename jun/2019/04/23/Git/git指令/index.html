@@ -1,0 +1,319 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>git指令 | Hexo</title>
+  <meta name="author" content="John Doe">
+  
+  <meta name="description" content="git 学习版本管理的演变VCS出现前
+
+用目录拷贝区别不同版本
+公共文件容易被覆盖
+成员沟通成本高，代码集成效率低下
+
+
+集中式vcs
+
+有集中的版本管理服务器
+具备文件版本管理和分支管理能力
+
+
+git的特点
+
+最有的存储能力
+非凡的性能
+开源的
+容易做备份
+支持离线操作
+很容易 定制工作流程
+">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="git指令">
+  <meta property="og:site_name" content="Hexo">
+
+  
+    <meta property="og:image" content>
+  
+
+  
+    <link rel="alternative" href="/jun/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link href="/jun/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/jun/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/responsive.css" media="screen" type="text/css">  
+  <link rel="stylesheet" href="/jun/css/sidenav.css" media="screen" type="text/css">  
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/jun/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+</head>
+</html>
+<body id="body" data-spy="scroll" data-target=".toc">
+  <div class="container" id="container">
+	<div class="content">
+	  <div class="page-header">		
+  <h1><a class="brand" href="/jun/">Hexo</a><span class="split"></span><span class="title">git指令</span><span class="date" id="title-date"><i class="fa fa-clock-o"></i> 2019-04-23</span></h1>
+</div>		
+
+<div class="row page">
+  <!-- cols -->	
+  
+  
+
+  
+	<div class="col-md-12">
+	  
+
+	  <!-- content -->
+	  <h3 id="git-学习"><a href="#git-学习" class="headerlink" title="git 学习"></a>git 学习</h3><h4 id="版本管理的演变"><a href="#版本管理的演变" class="headerlink" title="版本管理的演变"></a>版本管理的演变</h4><h5 id="VCS出现前"><a href="#VCS出现前" class="headerlink" title="VCS出现前"></a>VCS出现前</h5><blockquote>
+<ol>
+<li>用目录拷贝区别不同版本</li>
+<li>公共文件容易被覆盖</li>
+<li>成员沟通成本高，代码集成效率低下</li>
+</ol>
+</blockquote>
+<h5 id="集中式vcs"><a href="#集中式vcs" class="headerlink" title="集中式vcs"></a>集中式vcs</h5><blockquote>
+<ol>
+<li>有集中的版本管理服务器</li>
+<li>具备文件版本管理和分支管理能力</li>
+</ol>
+</blockquote>
+<h4 id="git的特点"><a href="#git的特点" class="headerlink" title="git的特点"></a>git的特点</h4><blockquote>
+<ol>
+<li>最有的存储能力</li>
+<li>非凡的性能</li>
+<li>开源的</li>
+<li>容易做备份</li>
+<li>支持离线操作</li>
+<li>很容易 定制工作流程</li>
+</ol>
+</blockquote>
+<h4 id="安装git"><a href="#安装git" class="headerlink" title="安装git"></a>安装git</h4><h5 id="下载地址-https-git-scm-com-book"><a href="#下载地址-https-git-scm-com-book" class="headerlink" title="下载地址:https://git-scm.com/book/"></a>下载地址:<a href="https://git-scm.com/book/" target="_blank" rel="noopener">https://git-scm.com/book/</a></h5><h4 id="git-最小配置"><a href="#git-最小配置" class="headerlink" title="git 最小配置"></a>git 最小配置</h4><blockquote>
+<p><code>$ git config --global user.name &lt;your_name&gt;</code></p>
+<p><code>$ git config --global user.email &lt;your@ xx.com&gt;</code></p>
+</blockquote>
+<h5 id="config的三个作用域"><a href="#config的三个作用域" class="headerlink" title="config的三个作用域"></a>config的三个作用域</h5><p><strong>缺省等同于loacl</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git config --local(local只对某个仓库有效)</span><br><span class="line">$ git config --global(global对当前用户所有的仓库有效)</span><br><span class="line">$ git config --system(system对系统所有登录的用户有效)</span><br></pre></td></tr></table></figure>
+<p><strong>显示config的配置，加 –list</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git config  --list  --local</span><br><span class="line">$ git config  --list  --global</span><br><span class="line">$ git config  --list  --system</span><br></pre></td></tr></table></figure>
+<h4 id="键Git仓库"><a href="#键Git仓库" class="headerlink" title="键Git仓库"></a>键Git仓库</h4><h5 id="两种场景"><a href="#两种场景" class="headerlink" title="两种场景"></a>两种场景</h5><p><strong>1.把已有的项目代码纳入Git管理</strong></p>
+<blockquote>
+<p>$cd 项目代码所在的文件夹</p>
+<p><code>$ git init</code>   #初始化仓库</p>
+</blockquote>
+<p><strong>2.新建的项目直接用Git管理</strong></p>
+<blockquote>
+<p><code>$ cd</code> 某个文件夹</p>
+<p><code>$ git init your_project</code> #会在当前路径下创建和项目名称同名的文件夹(生成文件 .git)</p>
+</blockquote>
+<blockquote>
+<p><code>git status</code>   #查看当前的状态</p>
+<p><code>git log</code> #查看日志</p>
+</blockquote>
+<h4 id="往仓库里添加文件"><a href="#往仓库里添加文件" class="headerlink" title="往仓库里添加文件"></a>往仓库里添加文件</h4><h5 id="4次提交，一个像模像样的静态页面生成了"><a href="#4次提交，一个像模像样的静态页面生成了" class="headerlink" title="4次提交，一个像模像样的静态页面生成了"></a>4次提交，一个像模像样的静态页面生成了</h5><blockquote>
+<ol>
+<li>加入index.html 和 git-logo</li>
+<li>加入 style.css</li>
+<li>加入script.js</li>
+<li>修改index.html 和 style.css</li>
+</ol>
+</blockquote>
+<p><img src="https://wx2.sinaimg.cn/mw690/0071OE7sly1g371s4ohqwj30h90fkweu.jpg" alt></p>
+<p><strong>暂存区是为了方便更正</strong></p>
+<h5 id="已经添加过的多个文件"><a href="#已经添加过的多个文件" class="headerlink" title="已经添加过的多个文件"></a><strong>已经添加过的多个文件</strong></h5><blockquote>
+<p><code>git add -u</code> #表示把已经添加过的修改文件一起添加到暂存区</p>
+</blockquote>
+<h4 id="对已经添加到git缓存区的文件改名"><a href="#对已经添加到git缓存区的文件改名" class="headerlink" title="对已经添加到git缓存区的文件改名"></a>对已经添加到git缓存区的文件改名</h4><h5 id="1-在本地仓库修改文件名"><a href="#1-在本地仓库修改文件名" class="headerlink" title="1.在本地仓库修改文件名"></a>1.在本地仓库修改文件名</h5><blockquote>
+<p><code>mv    test.c  test.md     (此处将test.c改成test.md)</code> </p>
+</blockquote>
+<h5 id="2-将已经添加到暂存区的test-c文件删除"><a href="#2-将已经添加到暂存区的test-c文件删除" class="headerlink" title="2.将已经添加到暂存区的test.c文件删除"></a>2.将已经添加到暂存区的test.c文件删除</h5><blockquote>
+<p><code>git rm test.c</code></p>
+</blockquote>
+<h5 id="3-再将test-md-添加到缓冲区"><a href="#3-再将test-md-添加到缓冲区" class="headerlink" title="3.再将test.md 添加到缓冲区"></a>3.再将test.md 添加到缓冲区</h5><blockquote>
+<p><code>git add test.md</code></p>
+</blockquote>
+<h5 id="删除暂存区工作路径中的所有变更都会被清除的指令"><a href="#删除暂存区工作路径中的所有变更都会被清除的指令" class="headerlink" title="*** 删除暂存区工作路径中的所有变更都会被清除的指令"></a>*** 删除暂存区工作路径中的所有变更都会被清除的指令</h5><blockquote>
+<p><code>git reset --hard</code> </p>
+</blockquote>
+<h5 id="利用Git命令如何实现呢？-以上三个步骤就会被这一个步骤所替代个"><a href="#利用Git命令如何实现呢？-以上三个步骤就会被这一个步骤所替代个" class="headerlink" title="利用Git命令如何实现呢？(以上三个步骤就会被这一个步骤所替代个)"></a>利用Git命令如何实现呢？(以上三个步骤就会被这一个步骤所替代个)</h5><blockquote>
+<p><code>git mv test.c test.md</code></p>
+</blockquote>
+<h4 id="git-log"><a href="#git-log" class="headerlink" title="git log"></a>git log</h4><p><strong>查看建立git后的所有commit列表</strong></p>
+<blockquote>
+<p><code>git log --oneline</code></p>
+</blockquote>
+<p><strong>查看最近的几个commit记录</strong></p>
+<blockquote>
+<p><code>git log -nx(查看最近的x次)</code></p>
+<p><code>git log -nx  --oneline (查看最近x次的详细记录)</code></p>
+<p><code>git log --all (查看所有分支的版本历史)</code></p>
+<p><code>git log  --all  --graph(图形化的方式查看分支)</code></p>
+<p> <code>git log --oneline --all -n4  --graph</code>                                          ` </p>
+</blockquote>
+<h5 id="查看本地有多少分支"><a href="#查看本地有多少分支" class="headerlink" title="查看本地有多少分支"></a>查看本地有多少分支</h5><blockquote>
+<p><code>git branch -av(查看所有分支)</code></p>
+<p><code>git branch -v (查看当前分支)</code></p>
+</blockquote>
+<p><strong>在网页端查看git的用法</strong></p>
+<blockquote>
+<p><code>git --help  --web log</code> </p>
+</blockquote>
+	  
+
+	  <div>
+  		<center>
+		  <div class="pagination">
+<ul class="pagination">
+	
+	
+	
+	
+	
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+			
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+	
+	
+		<li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>prev</a></li>
+	
+	<li><a href="/jun/"><i class="fa fa-archive"></i>Home</a></li>
+	
+		<li class="next disabled"><a>next<i class="fa fa-arrow-circle-o-right"></i></a></li>
+	
+</ul>
+</div>
+
+		</center>
+	  </div>
+	  
+	</div> <!-- col-md-9/col-md-12 -->
+	
+  </div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+	<footer> <p>
+  &copy; 2019 John Doe
+  
+      with help from <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-wixo/">Wixo</a>.    
+</p> </footer>
+  </div> <!-- container-narrow -->
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/jun/js/jquery.imagesloaded.min.js"></script>
+<script src="/jun/js/gallery.js"></script>
+<script src="/jun/js/bootstrap.min.js"></script>
+<script src="/jun/js/jquery.tableofcontents.min.js"></script>
+<script src="/jun/js/tocgenerator.min.js"></script>
+<script src="/jun/js/main.js"></script>
+<script src="/jun/js/search.js"></script> 
+
+
+
+
+<link rel="stylesheet" href="/jun/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/jun/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+</body>
+</html>

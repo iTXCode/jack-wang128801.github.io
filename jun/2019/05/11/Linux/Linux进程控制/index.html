@@ -1,0 +1,304 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>Linux进程控制 | Hexo</title>
+  <meta name="author" content="John Doe">
+  
+  <meta name="description" content="一：Linux进程控制1.进程的创建">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Linux进程控制">
+  <meta property="og:site_name" content="Hexo">
+
+  
+    <meta property="og:image" content>
+  
+
+  
+    <link rel="alternative" href="/jun/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link href="/jun/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/jun/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/responsive.css" media="screen" type="text/css">  
+  <link rel="stylesheet" href="/jun/css/sidenav.css" media="screen" type="text/css">  
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/jun/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+</head>
+</html>
+<body id="body" data-spy="scroll" data-target=".toc">
+  <div class="container" id="container">
+	<div class="content">
+	  <div class="page-header">		
+  <h1><a class="brand" href="/jun/">Hexo</a><span class="split"></span><span class="title">Linux进程控制</span><span class="date" id="title-date"><i class="fa fa-clock-o"></i> 2019-05-11</span></h1>
+</div>		
+
+<div class="row page">
+  <!-- cols -->	
+  
+  
+
+  
+	<div class="col-md-12">
+	  
+
+	  <!-- content -->
+	  <h3 id="一：Linux进程控制"><a href="#一：Linux进程控制" class="headerlink" title="一：Linux进程控制"></a>一：Linux进程控制</h3><p><strong>1.进程的创建</strong></p>
+<a id="more"></a>
+<h3 id="1-进程的创建"><a href="#1-进程的创建" class="headerlink" title="1.进程的创建"></a>1.进程的创建</h3><p><strong>1.fork的运行规则:以父进程为模板,创建子进程</strong></p>
+<blockquote>
+<ul>
+<li><p>[ ] 1.会把父进程PCB拷贝一份,稍加修改，成为子进程的PCB</p>
+</li>
+<li><p>[ ] 2.会把父进程的虚拟地址空间拷贝一份，作为子进程的地址空间。</p>
+</li>
+</ul>
+<p>​      写时拷贝=&gt;父子进程共用一份代码，各自有一份数据</p>
+<p>​     由于大部分的内存空间可能被拷贝，创建进程开销仍然比较高(和线程相比)</p>
+<p>​      在有些场景下，线程的创建也会被认为开销比较高(和协程(Golang))</p>
+<p>了解协程—-&gt;去go语言</p>
+<ul>
+<li style="list-style: none"><input type="checkbox"> 3.fork返回会在父子进程中分别返回</li>
+</ul>
+<p>​            父进程中返回父子进程的pid</p>
+<p>​            fork成功子进程返回0            </p>
+<p>​            fork失败返回-1(失败原因:1.内存不够 2.进程太多)</p>
+<p>​            两个进程都成功了在fork后面继续往下执行。</p>
+<ul>
+<li style="list-style: none"><input type="checkbox"> 4.父子进程执行顺序没有先后关系，全靠调度器实现</li>
+</ul>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unised.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">2</span>;++i)&#123;</span><br><span class="line">        fork();</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"="</span>); <span class="comment">//第一次执行完后没有刷新缓冲区，所以第二次执行子进程缓冲区中还有了第一次的 = </span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//一共打印出8个   =</span></span><br><span class="line"><span class="comment">//不刷新缓冲区，不打印 = </span></span><br><span class="line"><span class="comment">//第一次执行完fork 创建了新的子进程，父子进程中都有了一个 = 。第二次执行fork 第一次的两个进程又产生出对应的子进程。进而一共有四个进程，两个父进程执行printf语句后缓冲区中有6 个 =(含子进程的两个等号)，之后子进程执行printf语句，又产生2个=。共计 8个=</span></span><br></pre></td></tr></table></figure>
+<p><strong>当执行fork语句后父子进程中拥有了相同的内容(相同的代码和相同的进度(缓冲区也要被拷贝下来))，从而执行相同了的代码，会得到相同的代码</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unised.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">2</span>;++i)&#123;   <span class="comment">//执行了两次</span></span><br><span class="line">        fork(); <span class="comment">//会创建子进程</span></span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"="</span>);</span><br><span class="line">        fflush(<span class="built_in">stdout</span>);<span class="comment">//第一次刷新完缓冲区后，缓冲区的内容就为空了</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//一共打印出6个  =</span></span><br><span class="line"><span class="comment">//第一次刷新缓冲区，将进程中的两个 = 给打印出去了,既第二次执行fork时缓冲区是空的。两个父进程执行完在缓冲区中有两个 = ，子进程执行完缓冲区中多两个 = ，一共是六个 =</span></span><br></pre></td></tr></table></figure>
+<p><strong>创建图形化界面</strong></p>
+<blockquote>
+<p>C#</p>
+<p>MFC(C++)</p>
+<p>GTK(C)</p>
+<p>wxWidget(C++)</p>
+<p>QT</p>
+</blockquote>
+<p><strong>2.进程调用fork，当控制转移到内核中的fork代码后，内核做:</strong></p>
+<blockquote>
+<ul>
+<li>分配新的内存块和内核数据结构给子进程</li>
+<li>将父进程部分数据结构内容拷贝至子进程</li>
+<li>添加子进程到系统进程列表当中fork返回，开始调度器调度</li>
+</ul>
+</blockquote>
+<h4 id="进程终止"><a href="#进程终止" class="headerlink" title="进程终止"></a>进程终止</h4><ul>
+<li style="list-style: none"><input type="checkbox"> 1.代码执行完结果正确</li>
+<li style="list-style: none"><input type="checkbox"> 2.代码执行完,结果不正确</li>
+<li style="list-style: none"><input type="checkbox"> 3.代码没执行完，异常终止</li>
+</ul>
+<h5 id="代码执行完的情况"><a href="#代码执行完的情况" class="headerlink" title="代码执行完的情况"></a>代码执行完的情况</h5><ul>
+<li style="list-style: none"><input type="checkbox"> ​    1.main 函数返回值，返回值叫做进程的退出码，通过这个退出码表示运行结果是否正确(也能刷新缓冲区)</li>
+</ul>
+<p>​        退出码为 0 表示结果正确</p>
+<p>​         退出码非 0 表示结果不正确</p>
+<p>​     $?  这是bash中的一个特殊标量，这个变量表示上个命令对应的进程的退出码</p>
+<h5 id="exit-函数"><a href="#exit-函数" class="headerlink" title="exit 函数"></a>exit 函数</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">exit</span><span class="params">(<span class="keyword">int</span> status)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>2.exit 进程退出(库函数)exit 本质也是调用_exit</p>
+<blockquote>
+<p>a.  exit 关闭流并刷新缓冲区</p>
+<p>b.  exit 还多调用了结束函数</p>
+</blockquote>
+<ul>
+<li style="list-style: none"><input type="checkbox"> 3._exit 进程退出(系统调用)</li>
+</ul>
+<h5 id="进程等待-进程等待-父进程对子进程进行进程等待-为了读取子进程的运行结果。"><a href="#进程等待-进程等待-父进程对子进程进行进程等待-为了读取子进程的运行结果。" class="headerlink" title="进程等待:进程等待:父进程对子进程进行进程等待,为了读取子进程的运行结果。"></a>进程等待:进程等待:父进程对子进程进行进程等待,为了读取子进程的运行结果。</h5><p><strong>进程等待的必要性</strong></p>
+<ul>
+<li><p>[ ] 1.<strong>子进程退出，父进程如果不管不顾，就可能造成‘僵尸进程’的问题，进而造成内存泄漏</strong>。</p>
+</li>
+<li><p>[ ] 2.<strong>另外，进程一旦变成僵尸状态，那就刀枪不入，“杀人不眨眼”的kill -9 也无能为力，因为谁也没有办法杀死一个已经死去的进程</strong>。</p>
+</li>
+<li style="list-style: none"><input type="checkbox"> 3.<strong>最后，父进程派给子进程的任务完成的如何，我们需要知道。如，子进程运行完成，结果对还是不对，或者是否正常退出。</strong></li>
+<li style="list-style: none"><input type="checkbox"> 4.<strong>父进程通过进程等待的方式，回收子进程资源，获取子进程退出信息</strong></li>
+</ul>
+<h5 id="进程等待的方法-wait方法-返回的是子进程的pid"><a href="#进程等待的方法-wait方法-返回的是子进程的pid" class="headerlink" title="进程等待的方法:wait方法:返回的是子进程的pid"></a>进程等待的方法:wait方法:返回的是子进程的pid</h5><p>1.参数是输出型参数  表示退出码  + 正常/异常退出</p>
+<p>2.返回值是子进程的pid</p>
+<p>3.阻塞式等待,一直等到子进程结束才返回</p>
+<p>wait(NULL) 父进程 不关注子进程的具体退出状态</p>
+<p><strong>注意事项</strong></p>
+<blockquote>
+<p>1.wait的调用次数</p>
+</blockquote>
+<p>wait 调用的次数比较多，多出来的wait  </p>
+<p><strong><em>非阻塞轮询式的wait</em></strong></p>
+<h5 id="进程程序替换"><a href="#进程程序替换" class="headerlink" title="进程程序替换"></a>进程程序替换</h5>	  
+
+	  <div>
+  		<center>
+		  <div class="pagination">
+<ul class="pagination">
+	
+	
+	
+	
+	
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+			
+			
+		
+	
+		
+	
+		
+			
+			
+			
+		
+			
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+	
+	
+		<li class="prev"><a href="/jun/2019/05/20/Linux/Linux-基础IO/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>prev</a></li>
+	
+	<li><a href="/jun/"><i class="fa fa-archive"></i>Home</a></li>
+	
+		<li class="next"><a href="/jun/2019/05/04/Linux/Linux-系统下cat指令与more指令的异同/" class="alignright next">next<i class="fa fa-arrow-circle-o-right"></i></a></li>
+	
+</ul>
+</div>
+
+		</center>
+	  </div>
+	  
+	</div> <!-- col-md-9/col-md-12 -->
+	
+  </div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+	<footer> <p>
+  &copy; 2019 John Doe
+  
+      with help from <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-wixo/">Wixo</a>.    
+</p> </footer>
+  </div> <!-- container-narrow -->
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/jun/js/jquery.imagesloaded.min.js"></script>
+<script src="/jun/js/gallery.js"></script>
+<script src="/jun/js/bootstrap.min.js"></script>
+<script src="/jun/js/jquery.tableofcontents.min.js"></script>
+<script src="/jun/js/tocgenerator.min.js"></script>
+<script src="/jun/js/main.js"></script>
+<script src="/jun/js/search.js"></script> 
+
+
+
+
+<link rel="stylesheet" href="/jun/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/jun/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+</body>
+</html>

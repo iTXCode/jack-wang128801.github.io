@@ -1,0 +1,287 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>Linux基础IO | Hexo</title>
+  <meta name="author" content="John Doe">
+  
+  <meta name="description" content="基础IO本节重点复习c文件IO相关操作
+认识文件相关系统调用接口
+认识文件描述符，理解重定向
+对比fd和file，理解系统调用和库函数的关系
+理解文件系统中inode的概念
+认识软硬链接，对比区别
+认识动态静态库，学会结合gcc选项，制动静态库">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Linux基础IO">
+  <meta property="og:site_name" content="Hexo">
+
+  
+    <meta property="og:image" content>
+  
+
+  
+    <link rel="alternative" href="/jun/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link href="/jun/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/jun/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/responsive.css" media="screen" type="text/css">  
+  <link rel="stylesheet" href="/jun/css/sidenav.css" media="screen" type="text/css">  
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/jun/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+</head>
+</html>
+<body id="body" data-spy="scroll" data-target=".toc">
+  <div class="container" id="container">
+	<div class="content">
+	  <div class="page-header">		
+  <h1><a class="brand" href="/jun/">Hexo</a><span class="split"></span><span class="title">Linux基础IO</span><span class="date" id="title-date"><i class="fa fa-clock-o"></i> 2019-05-20</span></h1>
+</div>		
+
+<div class="row page">
+  <!-- cols -->	
+  
+  
+
+  
+	<div class="col-md-12">
+	  
+
+	  <!-- content -->
+	  <h3 id="基础IO"><a href="#基础IO" class="headerlink" title="基础IO"></a>基础IO</h3><h4 id="本节重点"><a href="#本节重点" class="headerlink" title="本节重点"></a>本节重点</h4><p><strong>复习c文件IO相关操作</strong></p>
+<p><strong>认识文件相关系统调用接口</strong></p>
+<p><strong>认识文件描述符，理解重定向</strong></p>
+<p><strong>对比fd和file，理解系统调用和库函数的关系</strong></p>
+<p><strong>理解文件系统中inode的概念</strong></p>
+<p><strong>认识软硬链接，对比区别</strong></p>
+<p><strong>认识动态静态库，学会结合gcc选项，制动静态库</strong></p>
+<a id="more"></a>
+<h4 id="c语言写文件"><a href="#c语言写文件" class="headerlink" title="c语言写文件"></a>c语言写文件</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"> FILE *fp = fopen(<span class="string">"myfile"</span>, <span class="string">"w"</span>);  </span><br><span class="line">    <span class="comment">//myfile为目标文件，w为写操作</span></span><br><span class="line"> <span class="keyword">if</span>(!fp)&#123;</span><br><span class="line"> <span class="built_in">printf</span>(<span class="string">"fopen error!\n"</span>);</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="keyword">const</span> <span class="keyword">char</span> *msg = <span class="string">"hello bit!\n"</span>;</span><br><span class="line"> <span class="keyword">int</span> count = <span class="number">5</span>;</span><br><span class="line"> <span class="keyword">while</span>(count--)&#123;</span><br><span class="line"> fwrite(msg, <span class="built_in">strlen</span>(msg), <span class="number">1</span>, fp); </span><br><span class="line">     <span class="comment">//size_t fwrite(const void *ptr, size_t size, size_t nmemb,</span></span><br><span class="line">     <span class="comment">//FILE *stream);</span></span><br><span class="line"> &#125;</span><br><span class="line"> fclose(fp);</span><br><span class="line"> <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="c语言读文件"><a href="#c语言读文件" class="headerlink" title="c语言读文件"></a>c语言读文件</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"> FILE *fp = fopen(<span class="string">"myfile"</span>, <span class="string">"r"</span>);</span><br><span class="line"> <span class="keyword">if</span>(!fp)&#123;</span><br><span class="line"> <span class="built_in">printf</span>(<span class="string">"fopen error!\n"</span>);</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="keyword">char</span> buf[<span class="number">1024</span>];</span><br><span class="line"> <span class="keyword">const</span> <span class="keyword">char</span> *msg = <span class="string">"hello bit!\n"</span>;</span><br><span class="line">    <span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line"> <span class="comment">//注意返回值和参数，此处有坑，仔细查看man手册关于该函数的说明</span></span><br><span class="line"> <span class="keyword">ssize_t</span> s = fread(buf, <span class="number">1</span>, <span class="built_in">strlen</span>(msg), fp);</span><br><span class="line"> <span class="keyword">if</span>(s &gt; <span class="number">0</span>)&#123;</span><br><span class="line"> buf[s] = <span class="number">0</span>;</span><br><span class="line"> <span class="built_in">printf</span>(<span class="string">"%s"</span>, buf);</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="keyword">if</span>(feof(fp))&#123;</span><br><span class="line"> <span class="keyword">break</span>;</span><br><span class="line"> &#125;</span><br><span class="line"> &#125;</span><br><span class="line"> fclose(fp);</span><br><span class="line"> <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="文件描述符-fd-文件描述符就是一个小整数"><a href="#文件描述符-fd-文件描述符就是一个小整数" class="headerlink" title="文件描述符  fd(文件描述符就是一个小整数)"></a>文件描述符  fd(文件描述符就是一个小整数)</h4><h5 id="0-amp-1-amp-2"><a href="#0-amp-1-amp-2" class="headerlink" title="0&amp;1&amp;2"></a>0&amp;1&amp;2</h5><blockquote>
+<p>Linux进程默认打开的三个文件描述符 </p>
+<p><strong>0：标准输入</strong></p>
+<p><strong>1：标准输出</strong></p>
+<p><strong>2.标准错误</strong></p>
+<p>0，1，2对应的物理设备一般是:键盘，显示器,显示器。</p>
+</blockquote>
+<h5 id="文件描述符的分配规则"><a href="#文件描述符的分配规则" class="headerlink" title="文件描述符的分配规则"></a>文件描述符的分配规则</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> fd = open(<span class="string">"myfile"</span>, O_RDONLY);</span><br><span class="line">    <span class="keyword">if</span> (fd &lt; <span class="number">0</span>)&#123;</span><br><span class="line">          perror(<span class="string">"open"</span>);</span><br><span class="line">              <span class="keyword">return</span> <span class="number">1</span>;  <span class="comment">//返回值非0表示程序异常终止        </span></span><br><span class="line">    &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"fd: %d\n"</span>, fd); <span class="comment">//输出结果为3</span></span><br><span class="line">  close(fd);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"> close(<span class="number">0</span>);</span><br><span class="line"> <span class="comment">//close(2);</span></span><br><span class="line">  <span class="keyword">int</span> fd = open(<span class="string">"myfile"</span>, O_RDONLY);</span><br><span class="line">  <span class="keyword">if</span>(fd &lt; <span class="number">0</span>)&#123;</span><br><span class="line">   perror(<span class="string">"open"</span>);</span><br><span class="line">   <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">   &#125;</span><br><span class="line"> <span class="built_in">printf</span>(<span class="string">"fd: %d\n"</span>, fd);</span><br><span class="line">   close(fd);</span><br><span class="line">   <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>输出结果为fd : 0</strong></p>
+<blockquote>
+<p>发现结果是：fd:0 或者fd:2 可见文件描述符分配规则为</p>
+<p><strong>在files_struct 数组中，找到当前没有被使用的最小的一个下标作为新的文件描述符</strong></p>
+</blockquote>
+<h3 id="重定向"><a href="#重定向" class="headerlink" title="重定向"></a>重定向</h3><p><strong>来段代码</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">//重定向：将打印到显示器上的内容输入到文件中</span></span><br><span class="line">    <span class="comment">//这种操作依赖系统操作的底层行为</span></span><br><span class="line">    close(<span class="number">1</span>);  <span class="comment">//关闭了标准输出的文件描述符</span></span><br><span class="line">    <span class="comment">//不能正确的读写了</span></span><br><span class="line">    <span class="keyword">int</span> fd = open(<span class="string">"test.txt"</span>,O_WRONLY);</span><br><span class="line">    <span class="comment">//第二个参数决定了打开的方式</span></span><br><span class="line">    <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>,<span class="string">"fd=%d\n"</span>,<span class="built_in">stdout</span>-&gt;_fileno);</span><br><span class="line">    <span class="comment">//显示器中打印出来</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"新的输出:%d\n"</span>,<span class="built_in">stdout</span>-&gt;_fileno);</span><br><span class="line">    <span class="comment">//内容在文件中打印出来</span></span><br><span class="line">    <span class="comment">//fprintf(stdout,"新的输出:%d\n",stdout-&gt;_fileno); // stdout-&gt;_filen文件描述符</span></span><br><span class="line">    <span class="comment">//这条语句的结果在test.txt中输出</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>此时我们发现本该出现在文件中的内容出现在了显示器上，为本该出现在显示器上的内容出现在了文件中。</p>
+<p><strong>其中fd=1这种现象叫做输出重定向。常见的重定向有：&gt;, &gt;&gt; , &lt;</strong></p>
+</blockquote>
+<p><strong>重定向的本质为</strong></p>
+<p><img src="https://wx4.sinaimg.cn/mw690/0071OE7sly1g390z7fobqj30yl0f5acj.jpg" alt></p>
+<h3 id="使用dup2-系统调用"><a href="#使用dup2-系统调用" class="headerlink" title="使用dup2()系统调用"></a>使用dup2()系统调用</h3><h4 id="函数原型如下"><a href="#函数原型如下" class="headerlink" title="函数原型如下"></a>函数原型如下</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">dup2</span><span class="params">(<span class="keyword">int</span> oldfd,<span class="keyword">int</span> newed)</span></span></span><br></pre></td></tr></table></figure>
+<h5 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line"><span class="keyword">int</span> fd = open(<span class="string">"./log"</span>, O_CREAT | O_RDWR);</span><br><span class="line"> <span class="keyword">if</span> (fd &lt; <span class="number">0</span>) &#123;</span><br><span class="line">   perror(<span class="string">"open"</span>);</span><br><span class="line">   <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line"> &#125;</span><br><span class="line"> close(<span class="number">1</span>);</span><br><span class="line"> dup2(fd, <span class="number">1</span>);</span><br><span class="line"> <span class="keyword">for</span> (;;) &#123;</span><br><span class="line">   <span class="keyword">char</span> buf[<span class="number">1024</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">   <span class="keyword">ssize_t</span> read_size = read(<span class="number">0</span>, buf, <span class="keyword">sizeof</span>(buf) - <span class="number">1</span>);</span><br><span class="line">   <span class="keyword">if</span> (read_size &lt; <span class="number">0</span>) &#123;</span><br><span class="line">     perror(<span class="string">"read"</span>);</span><br><span class="line">     <span class="keyword">break</span>;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="built_in">printf</span>(<span class="string">"%s"</span>, buf);</span><br><span class="line">   fflush(<span class="built_in">stdout</span>);</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="常见的缓冲区策略"><a href="#常见的缓冲区策略" class="headerlink" title="常见的缓冲区策略"></a>常见的缓冲区策略</h4><blockquote>
+<ol>
+<li>没缓冲</li>
+<li>行缓冲:遇到\n就刷新，或者缓冲区满才刷新，或者手动刷新(打印到显示器)</li>
+<li>全缓冲：一直到缓冲区满才刷新，或者手动刷新(打印到文件)</li>
+<li>write系统调用，没有缓冲区，直接显示到显示器上</li>
+</ol>
+</blockquote>
+<h4 id="动态库和静态库"><a href="#动态库和静态库" class="headerlink" title="动态库和静态库"></a>动态库和静态库</h4><h5 id="1-动态链接库-把一些-c-cpp-文件编译生成一种特殊的二进制程序，自身不能直接执行，但是可以被其他的可执行程序调用"><a href="#1-动态链接库-把一些-c-cpp-文件编译生成一种特殊的二进制程序，自身不能直接执行，但是可以被其他的可执行程序调用" class="headerlink" title="1.动态链接库:把一些.c/.cpp 文件编译生成一种特殊的二进制程序，自身不能直接执行，但是可以被其他的可执行程序调用"></a>1.动态链接库:把一些.c/.cpp 文件编译生成一种特殊的二进制程序，自身不能直接执行，但是可以被其他的可执行程序调用</h5><p><strong>用途:</strong> <strong>客户端更新的时候不用更新整个程序，自身不能直接执行，但是可以被其他的可执行程序调用</strong></p>
+<h5 id="2-静态链接库"><a href="#2-静态链接库" class="headerlink" title="2.静态链接库"></a>2.静态链接库</h5><p><strong>把一些 .o 文件打包到一起生成一种特殊的二进制文件，自身不能直接执行。但是可以和其他 .c  文件编译生成一个新的可执行程序，这个新的可执行程序就可以单独发布了.</strong></p>
+<p><strong>用途:</strong> <strong>发布小程序的时候可以使用 静态库的方式编译生成一个单独的可执行程序并且不依赖其他的库，发布比较方便</strong></p>
+<h4 id="命名规则"><a href="#命名规则" class="headerlink" title="命名规则"></a>命名规则</h4><blockquote>
+<p>lib前缀</p>
+<p>.a后缀(静态库)</p>
+<p>.so后缀(动态)</p>
+</blockquote>
+<h5 id="生成静态库"><a href="#生成静态库" class="headerlink" title="生成静态库"></a>生成静态库</h5><p>libadd.a:add.c</p>
+<p>​    gcc -c add.c -o add.o</p>
+<p>​        ar -rc libadd.a add.o</p>
+<h5 id="生成动态库"><a href="#生成动态库" class="headerlink" title="生成动态库"></a>生成动态库</h5><p>libadd.so:add.c</p>
+<p>​    gcc add.c -shared  -fPIC -o libadd.so</p>
+<p><strong>ldd:</strong> 命令查看一个可执行程序依赖了那些动态库</p>
+<p>LD_LIBRARY_PATH  设定这个环境变量提醒系统去哪些目录中查找动态库</p>
+<blockquote>
+<p>C++的第三方库一般都需要通过源码编译生成</p>
+</blockquote>
+	  
+
+	  <div>
+  		<center>
+		  <div class="pagination">
+<ul class="pagination">
+	
+	
+	
+	
+	
+	
+		
+			
+		
+	
+		
+			
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+			
+			
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+	
+	
+		<li class="prev"><a href="/jun/2019/05/21/Linux/关于fork-函数的那些事/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>prev</a></li>
+	
+	<li><a href="/jun/"><i class="fa fa-archive"></i>Home</a></li>
+	
+		<li class="next"><a href="/jun/2019/05/11/Linux/Linux进程控制/" class="alignright next">next<i class="fa fa-arrow-circle-o-right"></i></a></li>
+	
+</ul>
+</div>
+
+		</center>
+	  </div>
+	  
+	</div> <!-- col-md-9/col-md-12 -->
+	
+  </div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+	<footer> <p>
+  &copy; 2019 John Doe
+  
+      with help from <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-wixo/">Wixo</a>.    
+</p> </footer>
+  </div> <!-- container-narrow -->
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/jun/js/jquery.imagesloaded.min.js"></script>
+<script src="/jun/js/gallery.js"></script>
+<script src="/jun/js/bootstrap.min.js"></script>
+<script src="/jun/js/jquery.tableofcontents.min.js"></script>
+<script src="/jun/js/tocgenerator.min.js"></script>
+<script src="/jun/js/main.js"></script>
+<script src="/jun/js/search.js"></script> 
+
+
+
+
+<link rel="stylesheet" href="/jun/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/jun/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+</body>
+</html>

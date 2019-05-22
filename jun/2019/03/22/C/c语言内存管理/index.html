@@ -1,0 +1,339 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>c语言内存管理 | Hexo</title>
+  <meta name="author" content="John Doe">
+  
+  <meta name="description" content="一：数据在内存中的存储数据类型介绍1.基本的内存类型：类型的意义1.使用这个类型开辟内存空间的大小（大小决定了使用范围）。2.如何看待内存空间的视角。
+
+char                                       //字符数据类型占1个字节shot             ">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="c语言内存管理">
+  <meta property="og:site_name" content="Hexo">
+
+  
+    <meta property="og:image" content>
+  
+
+  
+    <link rel="alternative" href="/jun/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link href="/jun/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/jun/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/responsive.css" media="screen" type="text/css">  
+  <link rel="stylesheet" href="/jun/css/sidenav.css" media="screen" type="text/css">  
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/jun/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+</head>
+</html>
+<body id="body" data-spy="scroll" data-target=".toc">
+  <div class="container" id="container">
+	<div class="content">
+	  <div class="page-header">		
+  <h1><a class="brand" href="/jun/">Hexo</a><span class="split"></span><span class="title">c语言内存管理</span><span class="date" id="title-date"><i class="fa fa-clock-o"></i> 2019-03-22</span></h1>
+</div>		
+
+<div class="row page">
+  <!-- cols -->	
+  
+  
+
+  
+	<div class="col-md-12">
+	  
+
+	  <!-- content -->
+	  <h1 id="一：数据在内存中的存储"><a href="#一：数据在内存中的存储" class="headerlink" title="一：数据在内存中的存储"></a>一：数据在内存中的存储</h1><h3 id="数据类型介绍"><a href="#数据类型介绍" class="headerlink" title="数据类型介绍"></a>数据类型介绍</h3><h4 id="1-基本的内存类型："><a href="#1-基本的内存类型：" class="headerlink" title="1.基本的内存类型："></a>1.基本的内存类型：</h4><p>类型的意义<br>1.使用这个类型开辟内存空间的大小（大小决定了使用范围）。<br>2.如何看待内存空间的视角。</p>
+<blockquote>
+<p>char                                       //字符数据类型占1个字节<br>shot                                       //短整形占2个字节<br>int                                          //整形占4个字节<br>long                                       // 长整形占4个字节<br>long long                               //更长的整形占8个字节<br>float                                        //单精度浮点数占4个字节<br>double                                     // 双精度浮点数占8个字节</p>
+</blockquote>
+<h5 id="验证这些类型长度"><a href="#验证这些类型长度" class="headerlink" title="验证这些类型长度"></a>验证这些类型长度</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d\n"</span>,<span class="keyword">sizeof</span>(<span class="keyword">char</span>));</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d\n"</span>,<span class="keyword">sizeof</span>(<span class="keyword">short</span>));</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d\n"</span>,<span class="keyword">sizeof</span>(<span class="keyword">int</span> ));</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d\n"</span>,<span class="keyword">sizeof</span>(<span class="keyword">long</span>));</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d\n"</span>,<span class="keyword">sizeof</span>(<span class="keyword">long</span> <span class="keyword">long</span>));</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d\n"</span>,<span class="keyword">sizeof</span>(<span class="keyword">float</span>));</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d\n"</span>,<span class="keyword">sizeof</span>(<span class="keyword">double</span>));</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/20181111173806517.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY2tfd2FuZzEyODgwMQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h4 id="2-整形家族："><a href="#2-整形家族：" class="headerlink" title="2.整形家族："></a>2.整形家族：</h4><blockquote>
+<p>1.char<br>————————&gt;                              unsigned char                      //无符号字符形<br>———————— &gt;                              signed char                          //有符号字符形<br>2.short<br>———————— &gt;                             unsigned  short[int ]           //无符号短整形<br>———————— &gt;                              signed short [int]               //有符号短整形<br>3.int<br>———————— &gt;                             unsigned int                        //无符号整形<br>————————&gt;                               signed  int                          //有符号整形<br>4.long<br>————————&gt;                              unsigned long [int]             //无符号长整形<br> ————————&gt;                               signed  long [int]              //有符号长整形</p>
+</blockquote>
+<h4 id="3-浮点数家族-："><a href="#3-浮点数家族-：" class="headerlink" title="3.浮点数家族 ："></a>3.浮点数家族 ：</h4><blockquote>
+<p>float<br>double</p>
+</blockquote>
+<h4 id="4-构造类型："><a href="#4-构造类型：" class="headerlink" title="4.构造类型："></a>4.构造类型：</h4><blockquote>
+<p>数组类型<br>结构体类型  ————————&gt;        struct<br>枚举类型—————————–&gt;       enum<br>联合类型   —————————&gt;       union</p>
+</blockquote>
+<h4 id="5-指针类型————空类型："><a href="#5-指针类型————空类型：" class="headerlink" title="5.指针类型————空类型："></a>5.指针类型————空类型：</h4><blockquote>
+<p>void不能定义变量【空类型、大小为0】（32位平台下大小为0字节 ，64位平台下为1字节–&gt;但也不能定义变量）<br> 通常用于函数的返回类型、函数的参数、指针类型。<br>void <em>可以定义变量，可以接受任意类型，与其他类型指针一样占四个字节 。（在32位平台下任何类型指针大小都为4个字节）<br>void </em> 不能被截引用</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d\n"</span>,<span class="keyword">sizeof</span>(<span class="keyword">void</span>));</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d\n"</span>,<span class="keyword">sizeof</span>(<span class="keyword">void</span>*));</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>32位平台下void 与void *的大小如图<br><img src="https://img-blog.csdnimg.cn/20181111181051852.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY2tfd2FuZzEyODgwMQ==,size_16,color_FFFFFF,t_70" alt="这里是引用"></p>
+<h1 id="二：整形在内存中的存储"><a href="#二：整形在内存中的存储" class="headerlink" title="二：整形在内存中的存储"></a>二：整形在内存中的存储</h1><h4 id="1-一个变量的创建是要在内存中开辟空间的，空间的大小是根据不同的类型决定的。"><a href="#1-一个变量的创建是要在内存中开辟空间的，空间的大小是根据不同的类型决定的。" class="headerlink" title="1.一个变量的创建是要在内存中开辟空间的，空间的大小是根据不同的类型决定的。"></a><strong><em>1.一个变量的创建是要在内存中开辟空间的，空间的大小是根据不同的类型决定的。</em></strong></h4><blockquote>
+<p>计算机中符号数有三种表示方法，既原码、补码、反码。三种表示方法均有符号位和数值位两部分</p>
+</blockquote>
+<ol>
+<li>符号位都是用0表示“正”，用1表示“负”。</li>
+<li>而数值位有三种表示方法</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>原码</th>
+<th>直接将二进制按照正负数的形式翻译成二进制</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>反码</td>
+<td>将原码的符号位不变，其他位依次按位取反</td>
+</tr>
+<tr>
+<td>补码</td>
+<td>反码+1就得到补码（负数）。 <strong>正数的原、反、补码都相同</strong></td>
+</tr>
+</tbody>
+</table>
+<h4 id="无符号数原、反、补码都相同-amp-正数的原、反、补码都相同。"><a href="#无符号数原、反、补码都相同-amp-正数的原、反、补码都相同。" class="headerlink" title="~~~~  无符号数原、反、补码都相同 &amp; 正数的原、反、补码都相同。"></a>~~~~  无符号数原、反、补码都相同 &amp; 正数的原、反、补码都相同。</h4><h4 id="对于整数来说：数据存放在内存中时，其实存放的是数据的补码。只是正数的原、反、补码都相同。"><a href="#对于整数来说：数据存放在内存中时，其实存放的是数据的补码。只是正数的原、反、补码都相同。" class="headerlink" title="~~~~ 对于整数来说：数据存放在内存中时，其实存放的是数据的补码。只是正数的原、反、补码都相同。"></a>~~~~ 对于整数来说：数据存放在内存中时，其实存放的是数据的补码。只是正数的原、反、补码都相同。</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a=<span class="number">-20</span>;</span><br><span class="line">	<span class="keyword">signed</span> <span class="keyword">int</span> b=<span class="number">-20</span>;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> c=<span class="number">-20</span>;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"a=%d,b=%d,c=%u\n"</span>,a,b,c);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><img src="https://img-blog.csdnimg.cn/20181111201327776.png" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20181111201421334.png" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20181111201443182.png" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20181111202558334.png" alt="在这里插入图片描述"><br>那么为什么-20会被储存成ec ff ff ff 呢？(大小端有介绍)</p>
+</blockquote>
+<h4 id="2-数据存储和读取的差别"><a href="#2-数据存储和读取的差别" class="headerlink" title="2.数据存储和读取的差别"></a>2.数据存储和读取的差别</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;                  </span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a=<span class="number">-20</span>;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> b=<span class="number">10</span>;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d\n"</span>,a+b);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%u\n"</span>,a+b);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>运算过程<br><img src="https://img-blog.csdnimg.cn/20181112201821147.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY2tfd2FuZzEyODgwMQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+</blockquote>
+<blockquote>
+<p>存储数据时存到内存中的数据<br><img src="https://img-blog.csdnimg.cn/20181112194255960.png" alt="在这里插入图片描述"></p>
+</blockquote>
+<blockquote>
+<p>程序运行结果<br><img src="https://img-blog.csdnimg.cn/20181112193912253.png" alt="在这里插入图片描述"></p>
+<h5 id="由上面的程序和内存中储存的数值来看，不管定义的变量是什么类型的其往计算机中储存数据时存入的都是数据本身的反码，只是在取出的时候改变了它们的类型。"><a href="#由上面的程序和内存中储存的数值来看，不管定义的变量是什么类型的其往计算机中储存数据时存入的都是数据本身的反码，只是在取出的时候改变了它们的类型。" class="headerlink" title="由上面的程序和内存中储存的数值来看，不管定义的变量是什么类型的其往计算机中储存数据时存入的都是数据本身的反码，只是在取出的时候改变了它们的类型。"></a>由上面的程序和内存中储存的数值来看，不管定义的变量是什么类型的其往计算机中储存数据时存入的都是数据本身的反码，只是在取出的时候改变了它们的类型。</h5></blockquote>
+<h4 id="3-在计算机中读取整形数据时的规则"><a href="#3-在计算机中读取整形数据时的规则" class="headerlink" title="3.在计算机中读取整形数据时的规则"></a>3.在计算机中读取整形数据时的规则</h4><blockquote>
+<p><img src="https://img-blog.csdnimg.cn/20181114121614420.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY2tfd2FuZzEyODgwMQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+</blockquote>
+<h4 id="4-整形的提升"><a href="#4-整形的提升" class="headerlink" title="4.整形的提升"></a>4.整形的提升</h4><blockquote>
+<p><img src="https://img-blog.csdnimg.cn/20181114000437198.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY2tfd2FuZzEyODgwMQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+</blockquote>
+<h3 id="下面拿char-类型转成-int形的提升来看"><a href="#下面拿char-类型转成-int形的提升来看" class="headerlink" title="下面拿char 类型转成 int形的提升来看"></a>下面拿char 类型转成 int形的提升来看</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">char</span> a=<span class="number">-3</span>;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">char</span> b=<span class="number">-3</span>;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> c=a;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> d=b;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d\n"</span>,c);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%u\n"</span>,c);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%u\n"</span>,d);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d\n"</span>,d);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;c</span><br></pre></td></tr></table></figure>
+<h5 id="监视结果"><a href="#监视结果" class="headerlink" title="监视结果"></a>监视结果</h5><blockquote>
+<p><img src="https://img-blog.csdnimg.cn/20181114000845339.png" alt="在这里插入图片描述"><br>将 a 赋给 c 时，y由于涉及到提升比特位的缘故。所以将char形 -3 的反码1111 1101提升成了int 类型的1111 1111 1111 1111 1111 1111 1111 1101（十进制的4294967293）因为原数据类型为有符号数所以按符号位补充；<br><img src="https://img-blog.csdnimg.cn/20181114001811311.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY2tfd2FuZzEyODgwMQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>将 b 赋给 d 时，由于涉及到提升比特位的缘故。所以将unsigned char形 -3 的反码1111 1101提升成了int 类型的0000 0000 0000 0000 0000 0000  1111 1101（十进制的253）因为原数据类型为无符号整数所以拿“0”补充；</p>
+</blockquote>
+<h5 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h5><blockquote>
+<p><img src="https://img-blog.csdnimg.cn/20181114000644552.png" alt="在这里插入图片描述"></p>
+</blockquote>
+<ul>
+<li><h1 id="三：大端、小端"><a href="#三：大端、小端" class="headerlink" title="三：大端、小端"></a>三：大端、小端</h1><ul>
+<li>地址有高低地址之分</li>
+<li>数据有高低权位之别</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<ul>
+<li>1.大端（存储）模式，是指数据的低位保存在内存的高地址中，而数据的高位，保存在内存的低地址中；<ul>
+<li>2.小端（存储）模式，是指数据的低位保存在内存的低地址中，而数据的高位,，保存在内存的高地址中。</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h4 id="那么为什么会有大端、小端的储存方式呢？"><a href="#那么为什么会有大端、小端的储存方式呢？" class="headerlink" title="那么为什么会有大端、小端的储存方式呢？"></a>那么为什么会有大端、小端的储存方式呢？</h4><blockquote>
+<p>这是因为在计算机系统中，我们是以字节为单位的，每个地址单元都对应着一个字节，一个字节为8bit。但是在C语言中除了8bit的char之外，还有16bit的short型，32bit的long型（要看具体的编译器），另外，对于位数大于8位的处理器，例如16位或者32位的处理器，由于寄存器宽度大于一个字节，那么必然存在着一个如果将多个字节安排的问题。因此就导致了大端存储模式和小端存储模式。</p>
+<p>例如：一个16bit的short型x，在内存中的地址为0x0010，x的值为0x1122，那么0x11为高字节，0x22为低字节。式，就将0x11放在低地址中，即0x0010中，0x22放在高地址中，即0x0011中。小端模式，刚好相反。我们常的X86结构是小端模式，而KEIL C51则为大端模式。很多的ARM，DSP都为小端模式。</p>
+<h2 id="在32位平台下"><a href="#在32位平台下" class="headerlink" title="在32位平台下"></a>在32位平台下</h2></blockquote>
+   <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a=<span class="number">20</span>;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"a=%d\n"</span>,a);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;`</span><br></pre></td></tr></table></figure>
+<p>   如下图：</p>
+<blockquote>
+<p><img src="https://img-blog.csdnimg.cn/20181111205729985.png" alt="在这里插入图片描述"></p>
+</blockquote>
+<p>   <strong>20按16进制储存时应该为00 00 00 14，但是电脑却储存成14 00 00 00。原因就是32位平台采用的是小端的储存方式。</strong></p>
+<h2 id="既数值权位小的数据储存在低位置端为小端储存方式"><a href="#既数值权位小的数据储存在低位置端为小端储存方式" class="headerlink" title="既数值权位小的数据储存在低位置端为小端储存方式"></a>既数值权位小的数据储存在低位置端为小端储存方式</h2><h1 id="四：浮点数在内存中的储存"><a href="#四：浮点数在内存中的储存" class="headerlink" title="四：浮点数在内存中的储存"></a>四：浮点数在内存中的储存</h1><p>   <img src="https://img-blog.csdnimg.cn/20181111205210232.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY2tfd2FuZzEyODgwMQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<blockquote>
+<p>例如：十进制的6.0，写成二进制是 110.0 ，相当于 1.10×2^2 。 那么，按照上面V的格式，可以得出s=0，M=1.10，E=2。<br>而十进制的-6.0，写成二进制是 -110.0 ，相当于 -1.10×2^2 。 那么，按照上面V的格式，可以得出s=1，M=1.10，E=2。</p>
+</blockquote>
+<h3 id="2-对于32位浮点数，最高的1位是符号位s-接着的8位是指数E，剩下的23位为有效数字M。"><a href="#2-对于32位浮点数，最高的1位是符号位s-接着的8位是指数E，剩下的23位为有效数字M。" class="headerlink" title="2.对于32位浮点数，最高的1位是符号位s,接着的8位是指数E，剩下的23位为有效数字M。"></a>2.对于32位浮点数，最高的1位是符号位s,接着的8位是指数E，剩下的23位为有效数字M。</h3><p>   <img src="https://img-blog.csdnimg.cn/20181111215516798.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY2tfd2FuZzEyODgwMQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h3 id="3-对于64位浮点数，最高的1位是符号位s-接着的11位是指数E，剩下的52位为有效数字M"><a href="#3-对于64位浮点数，最高的1位是符号位s-接着的11位是指数E，剩下的52位为有效数字M" class="headerlink" title="3.对于64位浮点数，最高的1位是符号位s,接着的11位是指数E，剩下的52位为有效数字M."></a>3.对于64位浮点数，最高的1位是符号位s,接着的11位是指数E，剩下的52位为有效数字M.</h3><p>   <img src="https://img-blog.csdnimg.cn/20181111215919722.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY2tfd2FuZzEyODgwMQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<blockquote>
+<p><strong>有效数字M和指数E，还有一些特别规定。 前面说过， 1≤M&lt;2 ，也就是说，M可以写成 1.xxxxxx的形式，其中xxxxxx表示小数部分.在计算机内部保存M时，默认这个数的第一位总是1，因此可以被舍去，只保存后面的xxxxxx部分。比如保存1.01的时候，只保存01，等到读取的时候，再把第一位的1加上去。这样做的目的，是节省1位有效数字。以32位浮点数为例，留给M只有23位，将第一位的1舍去以后，等于可以保存24位有效数字。</strong></p>
+</blockquote>
+<h3 id="至于指数E"><a href="#至于指数E" class="headerlink" title="至于指数E"></a>至于指数E</h3><pre><code>首先，E为一个无符号整数（unsigned int） 这意味着，如果E为8位，它的取值范围为0~255；如果E为11位， 它的取值范围为0~2047。但是，我们知道，科学计数法 中的E是可以出现负数的，存入内存 时E的真实值必须再加上一个中间数，对于8位的E， 这个中间数是127；对于11位的E，这个中间数是1023。比如：2^10的E是10，所以保存成32位浮点数时，必须 保存成10+127=137，即10001001。
+#### 如表例题：
+</code></pre><table>
+<thead>
+<tr>
+<th>存-7时</th>
+<th>存入120（-7+127=120） ，取时取出-7（120-127=-7）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>存入0时</td>
+<td>存入127(0+127=127)，取时取出0（127-127=0）</td>
+</tr>
+<tr>
+<td>总结</td>
+<td>存时浮点数+127,取时浮点数-127</td>
+</tr>
+</tbody>
+</table>
+<pre><code>### 指数E还可以再分成三种情况：
+</code></pre><h3 id="1-E不全为0或不全为1"><a href="#1-E不全为0或不全为1" class="headerlink" title="1.E不全为0或不全为1"></a>1.E不全为0或不全为1</h3><blockquote>
+<p>这时，浮点数就采用下面的规则表示，即指数E的计算值减去127（或1023），得到真实值，再将有效数字M加上第一位的1。 比如： 0.5（1/2）的二进制形式为0.1，由于规定正数部分必须为1，即将小数点右移1位，则1.0*2^(-1)，其阶码为-1+127=126，表示为01111110，而尾数1.0去掉整数部分为0，补齐0到2300000000000000000000000，则其二进制表示形式为:</p>
+<h3 id="2-E全为0（浮点数的0值，不能直接与0比较）"><a href="#2-E全为0（浮点数的0值，不能直接与0比较）" class="headerlink" title="2.E全为0（浮点数的0值，不能直接与0比较）"></a>2.E全为0（浮点数的0值，不能直接与0比较）</h3><p>这时，浮点数的指数E等于1-127（或者1-1023）即为真实值， 有效数字M不再加上第一位的1，而是还原0.xxxxxx的小数。这样做是为了表示±0，以及接近于0的很小的数字。</p>
+<h3 id="3-E全为1（S为0，E全为1，则为float表示的最大正数）"><a href="#3-E全为1（S为0，E全为1，则为float表示的最大正数）" class="headerlink" title="3.E全为1（S为0，E全为1，则为float表示的最大正数）"></a>3.E全为1（S为0，E全为1，则为float表示的最大正数）</h3><p>这时，如果有效数字M全为0，表示±无穷大（正负取决于符号位s）；</p>
+</blockquote>
+	  
+
+	  <div>
+  		<center>
+		  <div class="pagination">
+<ul class="pagination">
+	
+	
+	
+	
+	
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+			
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+	
+	
+		<li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>prev</a></li>
+	
+	<li><a href="/jun/"><i class="fa fa-archive"></i>Home</a></li>
+	
+		<li class="next disabled"><a>next<i class="fa fa-arrow-circle-o-right"></i></a></li>
+	
+</ul>
+</div>
+
+		</center>
+	  </div>
+	  
+	</div> <!-- col-md-9/col-md-12 -->
+	
+  </div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+	<footer> <p>
+  &copy; 2019 John Doe
+  
+      with help from <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-wixo/">Wixo</a>.    
+</p> </footer>
+  </div> <!-- container-narrow -->
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/jun/js/jquery.imagesloaded.min.js"></script>
+<script src="/jun/js/gallery.js"></script>
+<script src="/jun/js/bootstrap.min.js"></script>
+<script src="/jun/js/jquery.tableofcontents.min.js"></script>
+<script src="/jun/js/tocgenerator.min.js"></script>
+<script src="/jun/js/main.js"></script>
+<script src="/jun/js/search.js"></script> 
+
+
+
+
+<link rel="stylesheet" href="/jun/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/jun/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+</body>
+</html>

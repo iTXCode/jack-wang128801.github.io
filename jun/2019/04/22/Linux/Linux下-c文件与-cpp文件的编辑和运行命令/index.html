@@ -1,0 +1,284 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>Linux下.c文件与.cpp文件的编辑和运行命令 | Hexo</title>
+  <meta name="author" content="John Doe">
+  
+  <meta name="description" content="Linux平台下.c文件的编辑和运行命令在 Linux 平台下我是用vim文本编辑器编写代码的
+一：在Linux环境下编辑、编译并执行一个 xxx.c 文件步骤
+1.首先要创建一个test.c文件
+
+输入命令:   touch test.c
+
+2. 开始写代码
+
+输入命令 : vim test.c ">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Linux下.c文件与.cpp文件的编辑和运行命令">
+  <meta property="og:site_name" content="Hexo">
+
+  
+    <meta property="og:image" content>
+  
+
+  
+    <link rel="alternative" href="/jun/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link href="/jun/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/jun/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/responsive.css" media="screen" type="text/css">  
+  <link rel="stylesheet" href="/jun/css/sidenav.css" media="screen" type="text/css">  
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/jun/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+</head>
+</html>
+<body id="body" data-spy="scroll" data-target=".toc">
+  <div class="container" id="container">
+	<div class="content">
+	  <div class="page-header">		
+  <h1><a class="brand" href="/jun/">Hexo</a><span class="split"></span><span class="title">Linux下.c文件与.cpp文件的编辑和运行命令</span><span class="date" id="title-date"><i class="fa fa-clock-o"></i> 2019-04-22</span></h1>
+</div>		
+
+<div class="row page">
+  <!-- cols -->	
+  
+  
+
+  
+	<div class="col-md-12">
+	  
+
+	  <!-- content -->
+	  <h4 id="Linux平台下-c文件的编辑和运行命令"><a href="#Linux平台下-c文件的编辑和运行命令" class="headerlink" title="Linux平台下.c文件的编辑和运行命令"></a>Linux平台下.c文件的编辑和运行命令</h4><p><strong>在 Linux 平台下我是用vim文本编辑器编写代码的</strong></p>
+<p><strong>一：在Linux环境下编辑、编译并执行一个 xxx.c 文件步骤</strong></p>
+<p><strong>1.首先要创建一个test.c文件</strong></p>
+<blockquote>
+<p>输入命令:   touch test.c</p>
+</blockquote>
+<p><strong>2. 开始写代码</strong></p>
+<blockquote>
+<p>输入命令 : vim test.c (前提是你已经安装了vim文本编辑器)</p>
+<p>进入编辑器后：按 英文字母”i”进入编辑模式</p>
+</blockquote>
+<p><strong>3. 退出文本文档</strong></p>
+<blockquote>
+<p>按一下Esc ，然后按出”:”冒号</p>
+<p>接着输入对应字母</p>
+<p><strong>输入字母 q 表示退出(既不保存你输入的代码直接退出)</strong></p>
+<p><strong>输入字母 w 和字母 q 表示保存并且退出</strong></p>
+</blockquote>
+<p><strong>4. 编译代码</strong></p>
+<blockquote>
+<p>输入命令: gcc test.c</p>
+<p>完成对test.c 文件的编译工作</p>
+</blockquote>
+<p><strong>5. 执行代码</strong></p>
+<blockquote>
+<p>输入命令： ./a.out test.c </p>
+<p>即可执行你所写的test.c 文件，并输出对应结果</p>
+</blockquote>
+<p><strong>二：在 Linux 环境下编辑、编译并执行一个 xxx.cpp 文件步骤</strong></p>
+<p><strong>1..首先要创建一个test.cpp文件</strong></p>
+<blockquote>
+<p>输入命令:   touch test.cpp</p>
+</blockquote>
+<p><strong>2. 开始写代码</strong></p>
+<blockquote>
+<p>输入命令 : vim test.cpp (前提是你已经安装了vim文本编辑器)</p>
+<p>进入编辑器后：输入英文字母”i”进入编辑模式</p>
+</blockquote>
+<p><strong>3. 退出文本文档</strong></p>
+<blockquote>
+<p>按一下Esc ，然后按出”:”冒号</p>
+<p>接着输入对应字母</p>
+<p><strong>输入字母 q 表示退出(既不保存你输入的代码直接退出)</strong></p>
+<p><strong>输入字母 w 和字母 q 表示保存并且退出</strong></p>
+</blockquote>
+<p><strong>4. 编译代码</strong></p>
+<blockquote>
+<p>输入命令: g++ test.cpp</p>
+<p>完成对 test.cpp 文件的编译工作</p>
+</blockquote>
+<p><strong>5. 执行代码</strong></p>
+<blockquote>
+<p>输入命令： ./a.out test.cpp </p>
+<p>即可执行你所写的test.cpp 文件，并输出对应结果</p>
+</blockquote>
+	  
+
+	  <div>
+  		<center>
+		  <div class="pagination">
+<ul class="pagination">
+	
+	
+	
+	
+	
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+	
+	
+		<li class="prev"><a href="/jun/2019/04/23/Linux/Linux基础/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>prev</a></li>
+	
+	<li><a href="/jun/"><i class="fa fa-archive"></i>Home</a></li>
+	
+		<li class="next disabled"><a>next<i class="fa fa-arrow-circle-o-right"></i></a></li>
+	
+</ul>
+</div>
+
+		</center>
+	  </div>
+	  
+	</div> <!-- col-md-9/col-md-12 -->
+	
+  </div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+	<footer> <p>
+  &copy; 2019 John Doe
+  
+      with help from <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-wixo/">Wixo</a>.    
+</p> </footer>
+  </div> <!-- container-narrow -->
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/jun/js/jquery.imagesloaded.min.js"></script>
+<script src="/jun/js/gallery.js"></script>
+<script src="/jun/js/bootstrap.min.js"></script>
+<script src="/jun/js/jquery.tableofcontents.min.js"></script>
+<script src="/jun/js/tocgenerator.min.js"></script>
+<script src="/jun/js/main.js"></script>
+<script src="/jun/js/search.js"></script> 
+
+
+
+
+<link rel="stylesheet" href="/jun/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/jun/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+</body>
+</html>
