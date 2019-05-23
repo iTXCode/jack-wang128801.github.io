@@ -1,0 +1,271 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>Linux进程信号 | Hexo</title>
+  <meta name="author" content="John Doe">
+  
+  <meta name="description" content="进程信号1.掌握Linux信号的基本概念
+2.掌握信号产生的一般方法
+3.理解信号递达和阻塞的概念
+4.掌握信号捕捉的一般方法
+5.重新了解可重函数的概念">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Linux进程信号">
+  <meta property="og:site_name" content="Hexo">
+
+  
+    <meta property="og:image" content>
+  
+
+  
+    <link rel="alternative" href="/jun/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link href="/jun/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/jun/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/responsive.css" media="screen" type="text/css">  
+  <link rel="stylesheet" href="/jun/css/sidenav.css" media="screen" type="text/css">  
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/jun/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+</head>
+</html>
+<body id="body" data-spy="scroll" data-target=".toc">
+  <div class="container" id="container">
+	<div class="content">
+	  <div class="page-header">		
+  <h1><a class="brand" href="/jun/">Hexo</a><span class="split"></span><span class="title">Linux进程信号</span><span class="date" id="title-date"><i class="fa fa-clock-o"></i> 2019-05-22</span></h1>
+</div>		
+
+<div class="row page">
+  <!-- cols -->	
+  
+  
+
+  
+	<div class="col-md-12">
+	  
+
+	  <!-- content -->
+	  <h3 id="进程信号"><a href="#进程信号" class="headerlink" title="进程信号"></a>进程信号</h3><p><strong>1.掌握Linux信号的基本概念</strong></p>
+<p><strong>2.掌握信号产生的一般方法</strong></p>
+<p><strong>3.理解信号递达和阻塞的概念</strong></p>
+<p><strong>4.掌握信号捕捉的一般方法</strong></p>
+<p><strong>5.重新了解可重函数的概念</strong></p>
+<a id="more"></a>
+<h4 id="信号的特点"><a href="#信号的特点" class="headerlink" title="信号的特点"></a>信号的特点</h4><ul>
+<li style="list-style: none"><input type="checkbox"> 1.信号有很多种</li>
+<li style="list-style: none"><input type="checkbox"> 2.不同的信号有不同的处理方式</li>
+<li style="list-style: none"><input type="checkbox"> 3.在信号发生前,每种信号如何处理，我们都是知道的</li>
+</ul>
+<p><code>kill  -l   #查看所有kill选项</code></p>
+<h4 id="信号的作用"><a href="#信号的作用" class="headerlink" title="信号的作用"></a>信号的作用</h4><blockquote>
+<p>相当于神经系统，帮助操作系统来处理进程运行过程中遇到的各种 <strong>意外</strong> 情况 </p>
+</blockquote>
+<h4 id="信号的产生方式【重点】"><a href="#信号的产生方式【重点】" class="headerlink" title="信号的产生方式【重点】"></a>信号的产生方式【重点】</h4><ul>
+<li style="list-style: none"><input type="checkbox"> 1.键盘按键产生(<strong>Crrl +c  =&gt;2/ Ctrl +z=&gt;19/Ctrl + \  =&gt;3</strong>)</li>
+<li style="list-style: none"><input type="checkbox"> 2.硬件产生</li>
+</ul>
+<p>​     2.1<strong>mmu产生的信号 -&gt; 11</strong></p>
+<p>  <strong>MMU:</strong> 负责虚拟地址于物理地址之间映射</p>
+<p>​         <strong>mmu</strong>  负责把虚拟地址翻译成物理地址，如果发现虚拟地址非法，<strong>mmu</strong> 硬件设备就会告诉操作系统这个情况，由操作系统给指定进程发送一个 11 号信号 ==&gt; 内存访问越界/解引用空指针</p>
+<h5 id="内存访问越界-解引用会引起的后果"><a href="#内存访问越界-解引用会引起的后果" class="headerlink" title="内存访问越界/解引用会引起的后果"></a>内存访问越界/解引用会引起的后果</h5><blockquote>
+<p>1.程序奔溃</p>
+<p>2.进程异常终止</p>
+<p>3.<strong>mmu</strong>  发现问题，告诉操作系统之后发出 <strong>11</strong> 号信号，提示段错误</p>
+</blockquote>
+<p>2.2<strong>cpu</strong> 产生 <strong>8</strong> 号信号(SIGFPE)</p>
+<p>2.3软件条件产生信号    <strong>6</strong> 号信号(SIGABRT)</p>
+<blockquote>
+<p>assert –<strong>条件为假调用函数</strong>-&gt; abort();    —<strong>触发</strong>–&gt;sigabrt 信号</p>
+</blockquote>
+<blockquote>
+<p>PIPE 读端管关闭，尝试写，此时就会触发SIGPIPE信号，管道破裂</p>
+</blockquote>
+<blockquote>
+<p>TCP 中一定条件下也会触发SIGPIPE信号</p>
+</blockquote>
+<blockquote>
+<p>0 –&gt; 嘴 –&gt; 读</p>
+<p>1 –&gt; 笔–&gt; 写</p>
+</blockquote>
+	  
+
+	  <div>
+  		<center>
+		  <div class="pagination">
+<ul class="pagination">
+	
+	
+	
+	
+	
+	
+		
+			
+			
+		
+	
+		
+			
+			
+			
+		
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+	
+	
+		<li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>prev</a></li>
+	
+	<li><a href="/jun/"><i class="fa fa-archive"></i>Home</a></li>
+	
+		<li class="next"><a href="/jun/2019/05/21/Linux/关于fork-函数的那些事/" class="alignright next">next<i class="fa fa-arrow-circle-o-right"></i></a></li>
+	
+</ul>
+</div>
+
+		</center>
+	  </div>
+	  
+	</div> <!-- col-md-9/col-md-12 -->
+	
+  </div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+	<footer> <p>
+  &copy; 2019 John Doe
+  
+      with help from <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-wixo/">Wixo</a>.    
+</p> </footer>
+  </div> <!-- container-narrow -->
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/jun/js/jquery.imagesloaded.min.js"></script>
+<script src="/jun/js/gallery.js"></script>
+<script src="/jun/js/bootstrap.min.js"></script>
+<script src="/jun/js/jquery.tableofcontents.min.js"></script>
+<script src="/jun/js/tocgenerator.min.js"></script>
+<script src="/jun/js/main.js"></script>
+<script src="/jun/js/search.js"></script> 
+
+
+
+
+<link rel="stylesheet" href="/jun/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/jun/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+</body>
+</html>
