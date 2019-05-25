@@ -6,6 +6,16 @@
   <title>关于fork()函数的那些事 | Hexo</title>
   <meta name="author" content="John Doe">
   
+  <meta name="description" content="提到fork()函数就不得不提到父子进程,子进程是以父进程为模板通过fork()函数来创建的.父子进程共享一份代码，各自开辟空间(子进程会把父进程的虚拟地址空间拷贝一份，作为子进程的地址空间)，拥有自己的进程.
+父进程与子进程之间的约定
+
+父进程返回子进程的pid
+
+
+
+
+fork()函数成功子进程">
+  
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -56,7 +66,56 @@
 	  
 
 	  <!-- content -->
-	  	  
+	  <p><code>提到fork()函数就不得不提到父子进程,子进程是以父进程为模板通过fork()函数来创建的.父子进程共享一份代码，各自开辟空间(子进程会把父进程的虚拟地址空间拷贝一份，作为子进程的地址空间)，拥有自己的进程.</code></p>
+<h4 id="父进程与子进程之间的约定"><a href="#父进程与子进程之间的约定" class="headerlink" title="父进程与子进程之间的约定"></a>父进程与子进程之间的约定</h4><blockquote>
+<ul>
+<li>父进程返回子进程的pid</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>fork()函数成功子进程返回0</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li><p>fork()函数执行失败，返回值为-1</p>
+<p>​    <strong>失败的原因有两种:</strong></p>
+<p>​     <strong>1.内存不够，导致子进程无法继续申请地址空间</strong></p>
+<p>​     <strong>2.进程太多,导致申请失败</strong></p>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>【注】:父子进程执行顺序没有先后关系，全靠调度器实现</li>
+</ul>
+</blockquote>
+<h4 id="验证父子进程返回值"><a href="#验证父子进程返回值" class="headerlink" title="验证父子进程返回值"></a>验证父子进程返回值</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line">  <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">     <span class="comment">//__pid_t和pid_t还有int 都是等价的</span></span><br><span class="line">    <span class="keyword">pid_t</span> ret=fork();</span><br><span class="line">    <span class="keyword">if</span>(ret&gt;<span class="number">0</span>)&#123;</span><br><span class="line">      <span class="comment">//father</span></span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">"father:%d\n "</span>,getpid());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(ret== <span class="number">0</span>)&#123;</span><br><span class="line">      <span class="comment">//child</span></span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">"child:%d\n"</span>,getpid());</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">     perror(<span class="string">"fork"</span>);                                                                    </span><br><span class="line">    &#125;</span><br><span class="line">   sleep(<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<h5 id="【小结】-父进程返回子进程的pid-子进程返回0"><a href="#【小结】-父进程返回子进程的pid-子进程返回0" class="headerlink" title="【小结】: 父进程返回子进程的pid,子进程返回0"></a>【小结】: 父进程返回子进程的pid,子进程返回0</h5><h5 id="通常需要让父子进程执行不同的逻辑-就可以借助fork的返回值来进行区分"><a href="#通常需要让父子进程执行不同的逻辑-就可以借助fork的返回值来进行区分" class="headerlink" title="通常需要让父子进程执行不同的逻辑,就可以借助fork的返回值来进行区分"></a>通常需要让父子进程执行不同的逻辑,就可以借助fork的返回值来进行区分</h5><h4 id="神奇的fork-与缓冲区刷新的秘密"><a href="#神奇的fork-与缓冲区刷新的秘密" class="headerlink" title="神奇的fork()与缓冲区刷新的秘密"></a>神奇的fork()与缓冲区刷新的秘密</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unised.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">2</span>;++i)&#123;</span><br><span class="line">        fork();</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"="</span>); <span class="comment">//第一次执行完后没有刷新缓冲区，所以第二次执行子进程缓冲区中还有了第一次的 = </span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>代码的运行结果你猜的出来吗? 其实这里面还是有点东西的.</strong></p>
+<h5 id="程序的运行结果截图"><a href="#程序的运行结果截图" class="headerlink" title="程序的运行结果截图"></a>程序的运行结果截图</h5><p><img src="https://wx3.sinaimg.cn/mw690/0071OE7sly1g3dqn8x85kj30nu04swet.jpg" alt></p>
+<blockquote>
+<p>可以看到运行结果中有8个 <strong>=</strong> ，这是为啥呢？</p>
+</blockquote>
+<p><strong>原理图示</strong></p>
+<p><img src="https://wx1.sinaimg.cn/mw690/0071OE7sly1g3dxz68gh7j31a30lz413.jpg" alt></p>
+<blockquote>
+<p>原因是原函数(父进程)在第一次运行的过程中通过 <strong>fork()</strong>  函数创建了自己的子进程,所以第一次运行完原函数的时候缓冲区就有了原函数和对应子进程的运行结果(既产生了两个 <strong>=</strong> )。</p>
+</blockquote>
+<blockquote>
+<p>原函数执行第二次循环的时候其第一次运行结果还在缓冲区，所以第二次产生子程序的时候会将第一次的结果也拷贝到第二次产生的子程序中(<strong>第二次循环产生的子程序天生就带有一个 = 号</strong>)所以第二次产生的子进程结束时带有两个 <strong>=</strong> 号。加上之前产生的 <strong>= </strong> 一共有 <strong>8</strong>个等于号</p>
+</blockquote>
+<h5 id="例二"><a href="#例二" class="headerlink" title="例二"></a>例二</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unised.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">2</span>;++i)&#123;   <span class="comment">//执行了两次</span></span><br><span class="line">        fork(); <span class="comment">//会创建子进程</span></span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"="</span>);</span><br><span class="line">        fflush(<span class="built_in">stdout</span>);<span class="comment">//第一次刷新完缓冲区后，缓冲区的内容就为空了</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>运行结果</strong></p>
+<p><img src="https://wx4.sinaimg.cn/mw690/0071OE7sly1g3dzo3l491j30ib046q36.jpg" alt></p>
+<p><strong>可以看到屏幕上打印了6个等于号</strong></p>
+<blockquote>
+<p>原因很简单奥，是因为循环第一次执行完后。刷新缓冲区将第一次执行的结果打印到了频幕上，所以缓冲区为空了，第二次循环是产生的子进程是为空的没有继承第一次循环的结果。</p>
+</blockquote>
+<p><strong>原理图示</strong></p>
+<p><img src="https://wx2.sinaimg.cn/mw690/0071OE7sly1g3dzyukgmij319i0lkacl.jpg" alt></p>
+<h5 id="【小结】-在循环过程中子进程是否会继承父进程上一次的运行结果取决于上一次循环结束时缓冲区是否为空。"><a href="#【小结】-在循环过程中子进程是否会继承父进程上一次的运行结果取决于上一次循环结束时缓冲区是否为空。" class="headerlink" title="【小结】: 在循环过程中子进程是否会继承父进程上一次的运行结果取决于上一次循环结束时缓冲区是否为空。"></a>【小结】: 在循环过程中子进程是否会继承父进程上一次的运行结果取决于上一次循环结束时缓冲区是否为空。</h5>	  
 
 	  <div>
   		<center>

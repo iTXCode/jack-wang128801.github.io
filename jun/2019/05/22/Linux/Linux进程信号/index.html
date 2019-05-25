@@ -104,7 +104,81 @@
 <p>0 –&gt; 嘴 –&gt; 读</p>
 <p>1 –&gt; 笔–&gt; 写</p>
 </blockquote>
-	  
+<p>产生信号的方式</p>
+<p>1.键盘按键产生</p>
+<p>2.硬件条件产生</p>
+<p>3.软件条用产生</p>
+<p>4.系统调用产生</p>
+<p>信号的处理方式</p>
+<p>1.忽略</p>
+<p>2.默认处理行为，大部分的信号的默认行为</p>
+<p>3.捕捉信号 ，通过自定制的行为来处理信号</p>
+<p>4.</p>
+<p><strong>完成mykill的</strong></p>
+<hr>
+<hr>
+<p><strong>signal函数 </strong></p>
+<p>//std::function </p>
+<p>typedef std::function&lt;void(int)&gt; myhandler_t;</p>
+<p>//signal 替换了信号原有的处理方式(就会通过signal的返回值来返回）</p>
+<p>signal (信号号,调用的函数)</p>
+<p>/#include&lt;stdio.h&gt;</p>
+<p>void Myheandler(int signo){</p>
+<p>}</p>
+<p>int main(){</p>
+<p>signal(2,MYhandler);</p>
+<p>while(1){</p>
+<p>sleep(1);</p>
+<p>}</p>
+<p>return 0;</p>
+<p>}</p>
+<hr>
+<h4 id="信号的捕捉流程-补充图与过程"><a href="#信号的捕捉流程-补充图与过程" class="headerlink" title="信号的捕捉流程(补充图与过程)"></a>信号的捕捉流程(补充图与过程)</h4><p>signal捕捉某个信号  （信号处理函数MYheandler)</p>
+<p><strong>用户</strong></p>
+<p>执行到某个逻辑</p>
+<p>触发一个信号</p>
+<p><strong>内核</strong></p>
+<p>根据信号的种类</p>
+<p>触发一个信号</p>
+<p><strong>信号处理函数是一个独立的执行流，和原来的用户代码之间没有相互调用关系</strong></p>
+<p><strong>信号处理函数执行过程中，原有的执行流在等待【至关重要】</strong></p>
+<p><strong>信号在工作中用的比较少</strong> </p>
+<p>try—-catch ==》基于操作系统的信号机制来实现</p>
+<hr>
+<h3 id="信号阻塞"><a href="#信号阻塞" class="headerlink" title="信号阻塞"></a>信号阻塞</h3><h4 id="概念：有的时候信号不会立刻被处理，而是等到时机合适再进行处理-作业的布置，学生记录作业课后处理"><a href="#概念：有的时候信号不会立刻被处理，而是等到时机合适再进行处理-作业的布置，学生记录作业课后处理" class="headerlink" title="概念：有的时候信号不会立刻被处理，而是等到时机合适再进行处理(作业的布置，学生记录作业课后处理)"></a>概念：有的时候信号不会立刻被处理，而是等到时机合适再进行处理(作业的布置，学生记录作业课后处理)</h4><p>和信号有关的机制由单个结构</p>
+<p>1.未决信号集(位图)</p>
+<p>2.阻塞信号集(表示那些信号不立即 处理,通过一些函数来操作阻塞信号集)(位图)</p>
+<p>3.信号处理函数集(函数指针数组)</p>
+<p><strong>操作系统给进程发信号本质就是在未决信号集中写一个信息(几号信号)</strong></p>
+<p>同一时刻一个进程同时收到了大量的 2 号信号 极有可能只处理一次(1-31号是这样的)</p>
+<hr>
+<h4 id="可重入函数"><a href="#可重入函数" class="headerlink" title="可重入函数"></a>可重入函数</h4><p><strong>链表</strong></p>
+<p><strong>一个函数在多个执行流中被调用就会出现问题</strong></p>
+<p><strong>可重入函数</strong></p>
+<p>如果一个函数可重入那么在多个执行流中被调用是没问题的</p>
+<p>一个函数如果不可重入在多个执行流中调用就是有问题的</p>
+<p><strong>不可重入：如果一个函数使用了全局或者静态变量，不可重入</strong></p>
+<p><strong>如果一个函数使用了malloc</strong></p>
+<p><strong>如果一个函数调用了不可重入函数，也是不可重入的</strong></p>
+<p><strong>错误的：如果一个函数虽然用了全局变量，但是使用互斥锁，就是可重入函数X</strong></p>
+<p>gcc -O  编译器优化级别</p>
+<hr>
+<h5 id="补充的知识点1"><a href="#补充的知识点1" class="headerlink" title="补充的知识点1"></a>补充的知识点1</h5><p><strong>volatile(c语言中的关键字)</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;signal&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">volatile</span> <span class="keyword">int</span> flag =<span class="number">1</span>;</span><br><span class="line"><span class="comment">//volatile 告诉编译器，这个变量必须每次都从内存中读取，不敢从</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">myhandler</span><span class="params">(<span class="keyword">int</span> sig)</span></span>&#123;</span><br><span class="line">    (<span class="keyword">void</span>) sig;</span><br><span class="line">    flag=<span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    siganl(<span class="number">2</span>,myhandler)</span><br><span class="line">        <span class="keyword">while</span>(flag);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//gcc -O2</span></span><br></pre></td></tr></table></figure>
+<p><strong>由于while循环需要频繁读取flag到寄存器中，编译器就会判定为这是一个比较高的开销，另一方面，编译器没检测到有那个代码要修改flag（Myheadler函数是内核调用的，编辑器不知道)编译器就会出现一个错误的判断，就直接八flag这个值优化到寄存器中</strong></p>
+<p><strong>volatile</strong>：经常要使用在多线程程序中，编译器对于这种多执行执行流的情况是不太会判断的。</p>
+<p><strong>auto(C语言中):表示其能自动释放内存</strong></p>
+<hr>
+<h5 id="补充点2"><a href="#补充点2" class="headerlink" title="补充点2"></a>补充点2</h5><p>wait   阻塞等待</p>
+<p>waitpid 阻塞/非阻塞等待、</p>
+<p>阻塞等待：代码简单，但是效率高</p>
+<p>非阻塞等待: 代码复杂，效率高</p>
+<p>如何才能代码简单且效率高()</p>
+<p>ret&gt;0  已经会=回收到一个子进程，返回值就是子进程的pid</p>
+<p>ret=0 还有子进程在，但是子进程没有结束</p>
+<p>ret&lt;0 没有子进程</p>
+<hr>
+<h4 id="章节总结"><a href="#章节总结" class="headerlink" title="章节总结"></a>章节总结</h4>	  
 
 	  <div>
   		<center>
