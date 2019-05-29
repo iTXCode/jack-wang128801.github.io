@@ -1,0 +1,375 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>Linux线程 | Hexo</title>
+  <meta name="author" content="John Doe">
+  
+  <meta name="description" content="Linux线程本节重点：1.了解线程概念，理解线程与进程区别与联系
+2.学会线程控制，线程创建，线程终止 ，线程等待
+3.了解线程分离与线程安全概念
+4.学会线程同步">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Linux线程">
+  <meta property="og:site_name" content="Hexo">
+
+  
+    <meta property="og:image" content>
+  
+
+  
+    <link rel="alternative" href="/jun/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link href="/jun/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/jun/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/responsive.css" media="screen" type="text/css">  
+  <link rel="stylesheet" href="/jun/css/sidenav.css" media="screen" type="text/css">  
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/jun/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+</head>
+</html>
+<body id="body" data-spy="scroll" data-target=".toc">
+  <div class="container" id="container">
+	<div class="content">
+	  <div class="page-header">		
+  <h1><a class="brand" href="/jun/">Hexo</a><span class="split"></span><span class="title">Linux线程</span><span class="date" id="title-date"><i class="fa fa-clock-o"></i> 2019-05-27</span></h1>
+</div>		
+
+<div class="row page">
+  <!-- cols -->	
+  
+  
+
+  
+	<div class="col-md-12">
+	  
+
+	  <!-- content -->
+	  <h3 id="Linux线程"><a href="#Linux线程" class="headerlink" title="Linux线程"></a>Linux线程</h3><h4 id="本节重点："><a href="#本节重点：" class="headerlink" title="本节重点："></a>本节重点：</h4><p><strong>1.了解线程概念，理解线程与进程区别与联系</strong></p>
+<p><strong>2.学会线程控制，线程创建，线程终止 ，线程等待</strong></p>
+<p><strong>3.了解线程分离与线程安全概念</strong></p>
+<p><strong>4.学会线程同步</strong></p>
+<a id="more"></a>
+<h3 id="Linux线程概念"><a href="#Linux线程概念" class="headerlink" title="Linux线程概念"></a>Linux线程概念</h3><blockquote>
+<p>线程：</p>
+<p>创建一个新的进程就相当于开了一个新的场子(成本高)</p>
+<p>创建一个新的进程，就相当于在原厂子的基础上新增了一个生产线(成本低)</p>
+</blockquote>
+<blockquote>
+<p>每次创建一个新的进程，会分配一个新的虚拟地址空间</p>
+<p>每创建一个新的进程，线程共用原来的虚拟地址空间</p>
+</blockquote>
+<blockquote>
+<p>一个PCB可能是线程也可能是一个进程</p>
+<p>线程是运行在进程之中的(<strong>一个进程包含了若干个线程</strong> )</p>
+</blockquote>
+<h5 id="线程与进程的区别"><a href="#线程与进程的区别" class="headerlink" title="线程与进程的区别"></a>线程与进程的区别</h5><blockquote>
+<p>进程：管理的资源（管理内存，管理打开的文件）</p>
+<p>线程：调度与执行(和进程类似，也是抢占式的调度)</p>
+</blockquote>
+<p><strong>在Linux中也把线程叫做轻量级进程(LMP)</strong></p>
+<hr>
+<h4 id="线程相比于进程的的优点"><a href="#线程相比于进程的的优点" class="headerlink" title="线程相比于进程的的优点"></a>线程相比于进程的的优点</h4><blockquote>
+<p><strong>1.创建/销毁开销更小</strong></p>
+<p><strong>2.切换调度的开销更小</strong></p>
+<p><strong>3.线程占用的资源更小</strong></p>
+<p><strong>本质：线程之间公用一个共同的虚拟地址空间</strong></p>
+</blockquote>
+<h4 id="线程的缺点"><a href="#线程的缺点" class="headerlink" title="线程的缺点"></a>线程的缺点</h4><blockquote>
+</blockquote>
+<h4 id="多线程-多进程的引用场景"><a href="#多线程-多进程的引用场景" class="headerlink" title="多线程/多进程的引用场景"></a>多线程/多进程的引用场景</h4><blockquote>
+<p><strong>1.cpu密集型: while(1);</strong></p>
+<p><strong>2.IO密集型</strong></p>
+<p>​       <strong>a.通过网络输入输出</strong></p>
+<pre><code><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; 一次下载可以理解为两个步骤</span><br><span class="line">&gt;  <span class="number">1.</span>请求网络</span><br><span class="line">&gt;  <span class="number">2.</span>把相应结果写到文件中</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</code></pre></blockquote>
+<blockquote>
+<p>​        <strong>b.相应UI界面</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; (界面显示和数据计算要多线程完成，防止由于数据计算太久导致界面卡死)</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h4 id="线程相较于进程的缺点"><a href="#线程相较于进程的缺点" class="headerlink" title="线程相较于进程的缺点"></a>线程相较于进程的缺点</h4><blockquote>
+<p>1.健壮性降低：一个线程异常终止会导致进程异常终止</p>
+<p>2.编程/调试难度变大</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; a.对线程的可靠性要求更高</span><br><span class="line">&gt; b.线程安全问题</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h4 id="线程之间公用的资源有那些"><a href="#线程之间公用的资源有那些" class="headerlink" title="线程之间公用的资源有那些"></a>线程之间公用的资源有那些</h4><blockquote>
+<p>1.虚拟地址空间</p>
+<p>2.文件描述符表</p>
+</blockquote>
+<h4 id="线程之间不共用的资源-gt"><a href="#线程之间不共用的资源-gt" class="headerlink" title="线程之间不共用的资源&gt;"></a>线程之间不共用的资源&gt;</h4><blockquote>
+<p>1.栈(函数调用栈，局部变更)</p>
+<p>2.上下文信息(CPU中的寄存器)</p>
+<p>3.errno(每个线程有自己的errno)—-&gt;thread local</p>
+<p><strong>以上所有内容一定要掌握!!! </strong></p>
+</blockquote>
+<hr>
+<h4 id="滑稽吃鸡"><a href="#滑稽吃鸡" class="headerlink" title="滑稽吃鸡"></a>滑稽吃鸡</h4><p><strong>同步与互斥</strong></p>
+<blockquote>
+<p>1.线程不是越多越好，达到一定数目的时候效率就没办法提上去了</p>
+<p>2.线程如果多了，多个线程同时访问同一分资源，就会打架(互斥)</p>
+<p>3.某个线程可能一直得不到机会执行，线程饥饿（同步）</p>
+<p>4.如果某个线程异常终止，整个进程都异常终止了</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>线程控制相关函数不是系统调用</p>
+<p>库函数====&gt;posix线程库  pthread 中的p就表示 posix</p>
+<p>C++11/java/python 各种语言都内置了线程库</p>
+<p>线程是一个单独的执行流，需要执行一定的代码。</p>
+<p>pthread_create 第三个参数函数指针就相当于这个新进程的入口函数。指定了新线程执行那个代码</p>
+<p>入口函数的参数就是pthread_create 的第四个参数</p>
+</blockquote>
+<blockquote>
+<p>创建一个线程 ，这个线程的入口和函数需要两个参数</p>
+<p>gcc -l 表示链接一个库，</p>
+<p>ps得到的线程id是站在内核角度给PCB加了一个编号</p>
+</blockquote>
+<blockquote>
+<p><strong>线控制的相关函数</strong></p>
+<p>1.创建线程   </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;pthread.h&gt;</span></span></span><br><span class="line">&gt; <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">&gt;     pthread_create();</span><br><span class="line">&gt;     <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&gt; &#125;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>2.终止线程</p>
+<p><strong>pthread_cancel</strong></p>
+<p>3.等待线程</p>
+<p>4.线程分离</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>ldd &lt;可执行程序&gt;//查看一个函数依赖那些库</p>
+<p>ctrl +s   //锁定当前屏幕</p>
+<p>ctrl+q    //解锁当前屏幕</p>
+<p>ps  - eLf |grep test  //能打印处轻量级id(线程ID)</p>
+<p>pstack [pid]   //查看进程的调用栈</p>
+<p>gdb attach [pid]   //用gdb查看进程信息</p>
+<p>gdb   查看进程的调用栈  bt ,</p>
+<p>thread n //切换到n号线程</p>
+<p>再gdb </p>
+</blockquote>
+<hr>
+<blockquote>
+<p>线程的概要，</p>
+<p>线程和进程结合来看，进程有点重，性能低下。为了提高性能提出了轻量型的进程—-》线程</p>
+<p>进程相互独立，线程一个挂了，进程全奔。</p>
+<p>同一个进程中的线程间有共享的资源，也有独立拥有的。</p>
+<p>进程—&gt; 工厂</p>
+<p>线程—&gt; 流水线</p>
+<hr>
+</blockquote>
+<blockquote>
+<p>线程是抢占式执行的，当前那个线程区执行，那个线程去休眠这件事情否不是程序猿所能左右的，全靠操作系统来定义。</p>
+</blockquote>
+<h5 id="结束线程"><a href="#结束线程" class="headerlink" title="结束线程"></a>结束线程</h5><blockquote>
+<p>1.让进程入口函数执行结束(最主要使用的结束方式)</p>
+<p>2.pthread_exit 让本线程结束，pthread_exit参数是一个void*  表示线程结束的返回结果(很少用到)</p>
+<p>3.pthread_cancel 让任意一个线程结束(本进程中的线程)不太推荐使用, <strong>pthread_cancel</strong> 执行后对应的线程不一定会立刻结束</p>
+</blockquote>
+<hr>
+<h5 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h5><blockquote>
+<p>要求具有 <strong>原子性</strong>  要么就不做，要么就做完。千万别做一般就半途而废，如果半途而废可能会导致数据被破坏。带来的后果非常严重</p>
+</blockquote>
+<h4 id="等待线程"><a href="#等待线程" class="headerlink" title="等待线程"></a>等待线程</h4><blockquote>
+<p>(目的和进程等待类似，防止出现类似僵尸进程的内存泄露的情况)</p>
+<p><strong>pthread_join</strong> : 其实是为了等待对应线程结束然后再继续执行代码</p>
+</blockquote>
+<h4 id="线程分离-类似于-忽略signal信号"><a href="#线程分离-类似于-忽略signal信号" class="headerlink" title="线程分离(类似于 忽略signal信号)"></a>线程分离(类似于 忽略signal信号)</h4><blockquote>
+<p><strong>pthread_join</strong> : 其实是为了等待对应线程结束然后再继续执行代码</p>
+<p>线程回收后，就不需要使用 <strong>pthread_join</strong> 进行回收了</p>
+<p><strong>pthread_detach</strong> </p>
+<p>例如：计算一个很多大的矩阵相乘，可以使用多线程的方式来计算，每个线程计算其中的一本分结果。</p>
+</blockquote>
+<p><strong>1.线程之间能够共享虚拟地址空间</strong></p>
+<p><strong>2.线程异常终止</strong></p>
+<p><strong>一个线程的异常终止，就会导致所有线程后回终止。可能还会导致进程也终止。</strong></p>
+<p><strong>3.多线程是如何利用多核资源的</strong></p>
+<p>(&amp;tid ,NULL,hanshu ,NULL)</p>
+<p><strong>4.通过多线程提高程序的执行效率</strong></p>
+<p><strong>每个线程都有自己独立的地址空间。</strong></p>
+<h5 id="瞬间提高战斗力"><a href="#瞬间提高战斗力" class="headerlink" title="瞬间提高战斗力"></a>瞬间提高战斗力</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">ThreadEnter</span><span class="params">(<span class="keyword">void</span>* arg)</span></span>&#123;</span><br><span class="line">    (<span class="keyword">void</span>) arg;</span><br><span class="line">    <span class="keyword">while</span>(<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">pthread_t</span> tid;</span><br><span class="line">    pthread_create(&amp;tid,<span class="literal">NULL</span>,ThreadEnter);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>线程不是越多越好，达到一定程度，cpu已经全部达到上限，此时线程继续增加，非但不能提高效率，反而降低效率(线程多了，调度的开销也就更大，效率就会受影响)</p>
+</blockquote>
+<blockquote>
+<p>cpu/Io密集</p>
+<p>到底该搞几个线程呢？ 线程数目和工作的任务类型有关，究竟多少合适。要通过测试的方式来判定</p>
+<p>使用时尽量让所有的cpu和IO等都使用起来。</p>
+<p>在节省资源时要尽量多的节省，使用的时候要都能使用的起来。</p>
+</blockquote>
+<h4 id="在Linux上获取精确时间戳"><a href="#在Linux上获取精确时间戳" class="headerlink" title="在Linux上获取精确时间戳"></a>在Linux上获取精确时间戳</h4><p>//us–&gt;微秒</p>
+<p>//ms–&gt;毫秒</p>
+<p><strong>单线程</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> <span class="keyword">64_t</span>  GetUs()&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">timeval</span> <span class="title">tv</span>;</span></span><br><span class="line">gettimeofday(&amp;tv,<span class="literal">NULL</span>);<span class="comment">//man 一下</span></span><br><span class="line">    <span class="keyword">return</span> tv.tv_sec*<span class="number">1000000</span>+tv.tv_usec;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//时间戳之差遇到闰秒可能为负，所以不能使用无符号类型gettimeofday();</span></span><br></pre></td></tr></table></figure>
+<p><strong>多线程版本</strong></p>
+<blockquote>
+<p>int main(){//线程 代码写起来比较麻烦</p>
+<p>}</p>
+</blockquote>
+<blockquote>
+<p><strong>open mpi 库</strong></p>
+</blockquote>
+	  
+
+	  <div>
+  		<center>
+		  <div class="pagination">
+<ul class="pagination">
+	
+	
+	
+	
+	
+	
+		
+			
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+	
+	
+		<li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>prev</a></li>
+	
+	<li><a href="/jun/"><i class="fa fa-archive"></i>Home</a></li>
+	
+		<li class="next disabled"><a>next<i class="fa fa-arrow-circle-o-right"></i></a></li>
+	
+</ul>
+</div>
+
+		</center>
+	  </div>
+	  
+	</div> <!-- col-md-9/col-md-12 -->
+	
+  </div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+	<footer> <p>
+  &copy; 2019 John Doe
+  
+      with help from <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-wixo/">Wixo</a>.    
+</p> </footer>
+  </div> <!-- container-narrow -->
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/jun/js/jquery.imagesloaded.min.js"></script>
+<script src="/jun/js/gallery.js"></script>
+<script src="/jun/js/bootstrap.min.js"></script>
+<script src="/jun/js/jquery.tableofcontents.min.js"></script>
+<script src="/jun/js/tocgenerator.min.js"></script>
+<script src="/jun/js/main.js"></script>
+<script src="/jun/js/search.js"></script> 
+
+
+
+
+<link rel="stylesheet" href="/jun/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/jun/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+</body>
+</html>
