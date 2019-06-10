@@ -1,0 +1,1005 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>实现只能在堆上创建对象的类 | Hexo</title>
+  <meta name="author" content="John Doe">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="Hexo">
+
+  
+    <meta property="og:image" content>
+  
+
+  
+    <link rel="alternative" href="/jun/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link href="/jun/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/jun/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/responsive.css" media="screen" type="text/css">  
+  <link rel="stylesheet" href="/jun/css/sidenav.css" media="screen" type="text/css">  
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/jun/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+</head>
+</html>
+<body id="body" data-spy="scroll" data-target=".toc">
+  <div class="container" id="container">
+	<div class="content">
+	  <div class="page-header">
+  <h1><a class="brand" href="#">Hexo</a></h1>
+</div>
+
+
+
+<div class="row page">
+	<div class="col-md-12">
+        <input type="text" id="local-search-input" name="q" results="0" placeholder="search notes..." class="st-search-input st-default-search-input form-control" style="margin-bottom:1em">
+        <div id="local-search-result"></div>
+		<div class="panel-group" id="notebook">
+			
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<a class="panel-title" data-toggle="collapse" data-parent="#notebook" href="#C">
+						<i class="fa fa-folder"></i> C		  
+				</a></div>
+				
+					<div id="C" class="panel-collapse collapse in">
+				
+						<div class="panel-body">
+							<ul class="post">                                
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								        <li class="post-list-item"><a href="/jun/2019/03/22/C/c语言内存管理/">c语言内存管理</a></li>
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+							</ul>
+						</div>
+					</div>
+			</div>
+			
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<a class="panel-title" data-toggle="collapse" data-parent="#notebook" href="#Cpp">
+						<i class="fa fa-folder"></i> Cpp		  
+				</a></div>
+				
+					<div id="Cpp" class="panel-collapse collapse in">
+				
+						<div class="panel-body">
+							<ul class="post">                                
+								
+								    
+								
+								    
+								        <li class="post-list-item"><a href="/jun/2019/03/14/Cpp/C++ 类与对象/">C ++ 类与对象</a></li>
+								    
+								
+								    
+								        <li class="post-list-item"><a href="/jun/2019/03/17/Cpp/C++ 内存管理/">C++内存管理</a></li>
+								    
+								
+								    
+								
+								    
+								        <li class="post-list-item"><a href="/jun/2019/03/18/Cpp/C ++入门/">C++入门</a></li>
+								    
+								
+								    
+								
+								    
+								        <li class="post-list-item"><a href="/jun/2019/03/20/Cpp/C ++类与对象-中/">c++ 类与对象(中)</a></li>
+								    
+								
+								    
+								
+								    
+								        <li class="post-list-item"><a href="/jun/2019/03/24/Cpp/CPP类与对象下/">c++类与对象(下)</a></li>
+								    
+								
+								    
+								        <li class="post-list-item"><a href="/jun/2019/03/27/Cpp/模板/">模板</a></li>
+								    
+								
+								    
+								        <li class="post-list-item"><a href="/jun/2019/03/30/Cpp/string类/">string类</a></li>
+								    
+								
+								    
+								        <li class="post-list-item"><a href="/jun/2019/04/04/Cpp/vector/">vector</a></li>
+								    
+								
+								    
+								        <li class="post-list-item"><a href="/jun/2019/04/05/Cpp/List/">List</a></li>
+								    
+								
+								    
+								        <li class="post-list-item"><a href="/jun/2019/04/05/Cpp/stack&amp;deque/">stack&amp;deque</a></li>
+								    
+								
+								    
+								
+								    
+								        <li class="post-list-item"><a href="/jun/2019/04/05/Cpp/特殊的一些用法/">特殊的一些用法</a></li>
+								    
+								
+								    
+								
+								    
+								        <li class="post-list-item"><a href="/jun/2019/04/18/Cpp/继承/">继承</a></li>
+								    
+								
+								    
+								        <li class="post-list-item"><a href="/jun/2019/04/20/Cpp/多态/">多态</a></li>
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								        <li class="post-list-item"><a href="/jun/2019/05/12/Cpp/C++进阶多态/">C++进阶多态</a></li>
+								    
+								
+								    
+								        <li class="post-list-item"><a href="/jun/2019/05/12/Cpp/Cpp进阶异常/">Cpp进阶异常</a></li>
+								    
+								
+								    
+								        <li class="post-list-item"><a href="/jun/2019/05/16/Cpp/命名空间/">命名空间</a></li>
+								    
+								
+								    
+								        <li class="post-list-item"><a href="/jun/2019/05/16/Cpp/C++对C语言的加强/">c++对C语言的加强</a></li>
+								    
+								
+								    
+								        <li class="post-list-item"><a href="/jun/2019/05/19/Cpp/关联式容器/">关联式容器</a></li>
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								        <li class="post-list-item"><a href="/jun/2019/06/09/Cpp/STL简介/">STL简介</a></li>
+								    
+								
+								    
+								        <li class="post-list-item"><a href="/jun/2019/06/10/Cpp/实现只能在堆上创建对象的类/">实现只能在堆上创建对象的类</a></li>
+								    
+								
+								    
+								        <li class="post-list-item"><a href="/jun/2019/06/10/Cpp/实现是能在栈上创建对象的类/">实现是能在栈上创建对象的类</a></li>
+								    
+								
+							</ul>
+						</div>
+					</div>
+			</div>
+			
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<a class="panel-title" data-toggle="collapse" data-parent="#notebook" href="#Database">
+						<i class="fa fa-folder"></i> Database		  
+				</a></div>
+				
+					<div id="Database" class="panel-collapse collapse in">
+				
+						<div class="panel-body">
+							<ul class="post">                                
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								        <li class="post-list-item"><a href="/jun/2019/05/09/Database/数据库基础/">数据库基础</a></li>
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+							</ul>
+						</div>
+					</div>
+			</div>
+			
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<a class="panel-title" data-toggle="collapse" data-parent="#notebook" href="#Git">
+						<i class="fa fa-folder"></i> Git		  
+				</a></div>
+				
+					<div id="Git" class="panel-collapse collapse in">
+				
+						<div class="panel-body">
+							<ul class="post">                                
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								        <li class="post-list-item"><a href="/jun/2019/04/23/Git/git指令/">git指令</a></li>
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+							</ul>
+						</div>
+					</div>
+			</div>
+			
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<a class="panel-title" data-toggle="collapse" data-parent="#notebook" href="#LInux">
+						<i class="fa fa-folder"></i> LInux		  
+				</a></div>
+				
+					<div id="LInux" class="panel-collapse collapse in">
+				
+						<div class="panel-body">
+							<ul class="post">                                
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								        <li class="post-list-item"><a href="/jun/2019/05/27/Linux/Linux线程/">Linux线程</a></li>
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+							</ul>
+						</div>
+					</div>
+			</div>
+			
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<a class="panel-title" data-toggle="collapse" data-parent="#notebook" href="#Linux">
+						<i class="fa fa-folder"></i> Linux		  
+				</a></div>
+				
+					<div id="Linux" class="panel-collapse collapse in">
+				
+						<div class="panel-body">
+							<ul class="post">                                
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								        <li class="post-list-item"><a href="/jun/2019/04/22/Linux/Linux下-c文件与-cpp文件的编辑和运行命令/">Linux下.c文件与.cpp文件的编辑和运行命令</a></li>
+								    
+								
+								    
+								
+								    
+								        <li class="post-list-item"><a href="/jun/2019/04/23/Linux/Linux基础/">Linux基础</a></li>
+								    
+								
+								    
+								        <li class="post-list-item"><a href="/jun/2019/04/29/Linux/Linux-系统编程/">系统编程</a></li>
+								    
+								
+								    
+								        <li class="post-list-item"><a href="/jun/2019/04/29/Linux/Linux的开发工具/">Linux的开发工具</a></li>
+								    
+								
+								    
+								
+								    
+								
+								    
+								        <li class="post-list-item"><a href="/jun/2019/05/01/Linux/Linux-Vim使用手册/">Vim使用手册</a></li>
+								    
+								
+								    
+								        <li class="post-list-item"><a href="/jun/2019/05/04/Linux/Linux-系统下cat指令与more指令的异同/">Linux 系统下cat指令与more指令的异同</a></li>
+								    
+								
+								    
+								
+								    
+								        <li class="post-list-item"><a href="/jun/2019/05/11/Linux/Linux进程控制/">Linux进程控制</a></li>
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								        <li class="post-list-item"><a href="/jun/2019/05/20/Linux/Linux-基础IO/">Linux基础IO</a></li>
+								    
+								
+								    
+								        <li class="post-list-item"><a href="/jun/2019/05/21/Linux/关于fork-函数的那些事/">关于fork()函数的那些事</a></li>
+								    
+								
+								    
+								        <li class="post-list-item"><a href="/jun/2019/05/22/Linux/Linux进程信号/">Linux进程信号</a></li>
+								    
+								
+								    
+								
+								    
+								        <li class="post-list-item"><a href="/jun/2019/06/06/Linux/网络基础/">网络基础</a></li>
+								    
+								
+								    
+								        <li class="post-list-item"><a href="/jun/2019/06/07/Linux/网络编程套接字/">网络编程套接字</a></li>
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+							</ul>
+						</div>
+					</div>
+			</div>
+			
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<a class="panel-title" data-toggle="collapse" data-parent="#notebook" href="#数据结构">
+						<i class="fa fa-folder"></i> 数据结构		  
+				</a></div>
+				
+					<div id="数据结构" class="panel-collapse collapse in">
+				
+						<div class="panel-body">
+							<ul class="post">                                
+								
+								    
+								        <li class="post-list-item"><a href="/jun/2019/03/14/Date-structure/c 语言版-数据结构(顺序表)/">数据结构</a></li>
+								    
+								
+								    
+								
+								    
+								
+								    
+								        <li class="post-list-item"><a href="/jun/2019/03/17/Date-structure/数据结构 - 链表/">数据结构-&gt;链表</a></li>
+								    
+								
+								    
+								
+								    
+								        <li class="post-list-item"><a href="/jun/2019/03/19/Date-structure/数据结构-双向链表/">数据结构--双向链表</a></li>
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								        <li class="post-list-item"><a href="/jun/2019/04/05/Date-structure/栈与队列/">栈与队列</a></li>
+								    
+								
+								    
+								
+								    
+								        <li class="post-list-item"><a href="/jun/2019/04/14/Date-structure/二叉树/">二叉树</a></li>
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								        <li class="post-list-item"><a href="/jun/2019/05/01/Date-structure/二叉堆/">二叉堆</a></li>
+								    
+								
+								    
+								        <li class="post-list-item"><a href="/jun/2019/05/01/Date-structure/排序/">排序</a></li>
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+								    
+								
+							</ul>
+						</div>
+					</div>
+			</div>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+		</div><!-- accordion -->
+	</div>
+</div>
+
+	</div>
+  </div>
+  <div class="container-narrow">
+	<footer> <p>
+  &copy; 2019 John Doe
+  
+      with help from <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-wixo/">Wixo</a>.    
+</p> </footer>
+  </div> <!-- container-narrow -->
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/jun/js/jquery.imagesloaded.min.js"></script>
+<script src="/jun/js/gallery.js"></script>
+<script src="/jun/js/bootstrap.min.js"></script>
+<script src="/jun/js/jquery.tableofcontents.min.js"></script>
+<script src="/jun/js/tocgenerator.min.js"></script>
+<script src="/jun/js/main.js"></script>
+<script src="/jun/js/search.js"></script> 
+
+
+
+
+<link rel="stylesheet" href="/jun/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/jun/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+</body>
+</html>

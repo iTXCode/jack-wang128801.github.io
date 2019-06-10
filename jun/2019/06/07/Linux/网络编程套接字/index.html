@@ -1,0 +1,324 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>网络编程套接字 | Hexo</title>
+  <meta name="author" content="John Doe">
+  
+  <meta name="description" content="网络编程套接字认识TCP协议
+
+传输层协议 
+有连接 
+可靠传输 
+面向字节流
+
+
+认识UDP协议
+
+传输层协议 
+无连接 
+不可靠传输 
+面向数据报
+
+
+
+是否有链接: 主要看是否需要双方都同意才能进行通讯
+(打电话需要两个人都同意，发QQ消息不管同意不同意都能发消息)  
+
+可靠传输VS不可靠传">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="网络编程套接字">
+  <meta property="og:site_name" content="Hexo">
+
+  
+    <meta property="og:image" content>
+  
+
+  
+    <link rel="alternative" href="/jun/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link href="/jun/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/jun/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/responsive.css" media="screen" type="text/css">  
+  <link rel="stylesheet" href="/jun/css/sidenav.css" media="screen" type="text/css">  
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/jun/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+</head>
+</html>
+<body id="body" data-spy="scroll" data-target=".toc">
+  <div class="container" id="container">
+	<div class="content">
+	  <div class="page-header">		
+  <h1><a class="brand" href="/jun/">Hexo</a><span class="split"></span><span class="title">网络编程套接字</span><span class="date" id="title-date"><i class="fa fa-clock-o"></i> 2019-06-07</span></h1>
+</div>		
+
+<div class="row page">
+  <!-- cols -->	
+  
+  
+
+  
+	<div class="col-md-12">
+	  
+
+	  <!-- content -->
+	  <h3 id="网络编程套接字"><a href="#网络编程套接字" class="headerlink" title="网络编程套接字"></a>网络编程套接字</h3><h4 id="认识TCP协议"><a href="#认识TCP协议" class="headerlink" title="认识TCP协议"></a>认识TCP协议</h4><blockquote>
+<ul>
+<li>传输层协议 </li>
+<li>有连接 </li>
+<li>可靠传输 </li>
+<li>面向字节流</li>
+</ul>
+</blockquote>
+<h4 id="认识UDP协议"><a href="#认识UDP协议" class="headerlink" title="认识UDP协议"></a>认识UDP协议</h4><blockquote>
+<ul>
+<li>传输层协议 </li>
+<li>无连接 </li>
+<li>不可靠传输 </li>
+<li>面向数据报</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>是否有链接: 主要看是否需要双方都同意才能进行通讯</p>
+<p>(打电话需要两个人都同意，发QQ消息不管同意不同意都能发消息)  </p>
+</blockquote>
+<h5 id="可靠传输VS不可靠传输"><a href="#可靠传输VS不可靠传输" class="headerlink" title="可靠传输VS不可靠传输"></a>可靠传输VS不可靠传输</h5><blockquote>
+<p>可靠传输并不是100%就能发送成功，毕竟如果断网了是不可能发送成功的</p>
+<p>可靠传输指的是发送成功，就会知道自己成功(本质上靠对方的反馈)</p>
+<p>发送失败了，也肯能知道自己失败</p>
+<p>不可靠传输值得是发动成功还是失败，自己不知道</p>
+</blockquote>
+<h4 id="网络字节序-大端序"><a href="#网络字节序-大端序" class="headerlink" title="网络字节序(大端序)"></a>网络字节序(大端序)</h4><blockquote>
+<p>网络中的要求</p>
+</blockquote>
+<h4 id="主机字节序"><a href="#主机字节序" class="headerlink" title="主机字节序"></a>主机字节序</h4><blockquote>
+<p>(不确定和机器相关) <strong>cpu相关</strong></p>
+</blockquote>
+<p><strong>给你一个int，把这个数从小端字节序转换成大端</strong></p>
+<h3 id="socket编程接口"><a href="#socket编程接口" class="headerlink" title="socket编程接口"></a>socket编程接口</h3><figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建 socket 文件描述符 (TCP/UDP, 客户端 + 服务器)</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">socket</span><span class="params">(<span class="keyword">int</span> domain, <span class="keyword">int</span> type, <span class="keyword">int</span> protocol)</span></span>;</span><br><span class="line"><span class="comment">// 绑定端口号 (TCP/UDP, 服务器)      </span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">bind</span><span class="params">(<span class="keyword">int</span> socket, <span class="keyword">const</span> struct sockaddr *address,</span></span></span><br><span class="line"><span class="function"><span class="params">         <span class="keyword">socklen_t</span> address_len)</span></span>;</span><br><span class="line"><span class="comment">// 开始监听socket (TCP, 服务器)</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">listen</span><span class="params">(<span class="keyword">int</span> socket, <span class="keyword">int</span> backlog)</span></span>;</span><br><span class="line"><span class="comment">// 接收请求 (TCP, 服务器)</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">accept</span><span class="params">(<span class="keyword">int</span> socket, struct sockaddr* address,</span></span></span><br><span class="line"><span class="function"><span class="params">         <span class="keyword">socklen_t</span>* address_len)</span></span>;</span><br><span class="line"><span class="comment">// 建立连接 (TCP, 客户端)</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">connect</span><span class="params">(<span class="keyword">int</span> sockfd, <span class="keyword">const</span> struct sockaddr *addr,</span></span></span><br><span class="line"><span class="function"><span class="params">        <span class="keyword">socklen_t</span> addrlen)</span></span>;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>socket 本质是一个文件描述符</p>
+<p>所谓的创建socket本质上就是在打开一个文件(叫做socket类型的文件)(这个文件不是和磁盘上的文件对应，而是和网卡这样的设备对应)</p>
+<p>读文件就是从网卡上读数据，写数据就是往网卡中写数据</p>
+</blockquote>
+<h6 id="文件"><a href="#文件" class="headerlink" title="文件"></a>文件</h6><blockquote>
+<p>1-普通文件</p>
+<p>2.d –&gt;目录文件</p>
+<p>文件描述符是一个数组下标，文件描述符表的数组下标</p>
+<p>socket文件使用完之后也要及时关闭close</p>
+</blockquote>
+<p><strong>socket</strong>是创建一个socket文件<strong>(TCP/UDP客户端/服务器)</strong></p>
+<p><strong>bind</strong> 把一个socket 文件和一个端口号关联在一起。</p>
+<p>确实是能用端口号关联一个进程，更准确地 说是和一个socket关联到一起(一个进程可以关联到多个端口号，反之通过一个端口号只能找到一个进程)(TCP/UD一般有服务器bind ,客户端也能bind 但是几乎不会用)</p>
+<p><strong>listen</strong> （服务器使用）(TCp)</p>
+<blockquote>
+<p>进入监听状态(手机开机，并且信号良好)</p>
+<p>accept(服务器来使用)</p>
+<p>接收链接(别人打来的电话，按下接听键)</p>
+</blockquote>
+<h5 id="啥叫客户端，啥叫服务端？"><a href="#啥叫客户端，啥叫服务端？" class="headerlink" title="啥叫客户端，啥叫服务端？"></a>啥叫客户端，啥叫服务端？</h5><blockquote>
+<p>主动的一方叫做客户端，被动的一方叫做服务端</p>
+</blockquote>
+<p>一个进程到底是客户端后还是服务端，具体情况可能发生角色互换</p>
+<h5 id="发送-接收"><a href="#发送-接收" class="headerlink" title="发送/接收"></a>发送/接收</h5><blockquote>
+<p>1.read/write(TCP,不能针对 UDP的socket)</p>
+<p>2.recv/send(TCP，用法和read/write 和相似，但是功能更丰富)</p>
+<p>3.recvfrom/sendto(UDP)</p>
+</blockquote>
+	  
+
+	  <div>
+  		<center>
+		  <div class="pagination">
+<ul class="pagination">
+	
+	
+	
+	
+	
+	
+		
+	
+		
+	
+		
+	
+		
+			
+			
+		
+	
+		
+			
+			
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+	
+	
+		<li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>prev</a></li>
+	
+	<li><a href="/jun/"><i class="fa fa-archive"></i>Home</a></li>
+	
+		<li class="next"><a href="/jun/2019/06/06/Linux/网络基础/" class="alignright next">next<i class="fa fa-arrow-circle-o-right"></i></a></li>
+	
+</ul>
+</div>
+
+		</center>
+	  </div>
+	  
+	</div> <!-- col-md-9/col-md-12 -->
+	
+  </div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+	<footer> <p>
+  &copy; 2019 John Doe
+  
+      with help from <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-wixo/">Wixo</a>.    
+</p> </footer>
+  </div> <!-- container-narrow -->
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/jun/js/jquery.imagesloaded.min.js"></script>
+<script src="/jun/js/gallery.js"></script>
+<script src="/jun/js/bootstrap.min.js"></script>
+<script src="/jun/js/jquery.tableofcontents.min.js"></script>
+<script src="/jun/js/tocgenerator.min.js"></script>
+<script src="/jun/js/main.js"></script>
+<script src="/jun/js/search.js"></script> 
+
+
+
+
+<link rel="stylesheet" href="/jun/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/jun/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+</body>
+</html>
