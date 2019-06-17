@@ -141,6 +141,24 @@
 <p>2.recv/send(TCP，用法和read/write 和相似，但是功能更丰富)</p>
 <p>3.recvfrom/sendto(UDP)</p>
 </blockquote>
+<h5 id="服务器处理请求的过程"><a href="#服务器处理请求的过程" class="headerlink" title="服务器处理请求的过程"></a>服务器处理请求的过程</h5><blockquote>
+<p>1读取客户端的请求</p>
+<p>2.根据请求，计算响应</p>
+<p>3.把响应写回客户端</p>
+</blockquote>
+<hr>
+<h6 id="客户端一般不需要bind"><a href="#客户端一般不需要bind" class="headerlink" title="客户端一般不需要bind"></a>客户端一般不需要bind</h6><blockquote>
+<p>bind 意味着和某个具体的端口关联在一起</p>
+<p>如果没有bind，操作系统回随机分配一个端口号</p>
+<p>如果是服务器程序不去bind，就会导致系统每次启动服务器的端口</p>
+<p>客户端就没法链接了</p>
+<p>如果是客户端bind的话，可能出现问题</p>
+<p>通常情况下，一个端口号只能被一个进程bind</p>
+</blockquote>
+<hr>
+<blockquote>
+<h6 id="匿名结构体"><a href="#匿名结构体" class="headerlink" title="匿名结构体"></a>匿名结构体</h6><p>[] ()-&gt; int {}</p>
+</blockquote>
 	  
 
 	  <div>
@@ -156,6 +174,12 @@
 		
 	
 		
+			
+		
+	
+		
+	
+		
 	
 		
 	
@@ -219,17 +243,13 @@
 		
 	
 		
-			
-		
-	
-		
 	
 		
 			
 		
 	
 		
-	
+			
 		
 	
 		
@@ -266,9 +286,13 @@
 	
 		
 	
+		
+	
+		
 	
 	
-		<li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>prev</a></li>
+	
+		<li class="prev"><a href="/jun/2019/06/14/Linux/网络基础2/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>prev</a></li>
 	
 	<li><a href="/jun/"><i class="fa fa-archive"></i>Home</a></li>
 	
