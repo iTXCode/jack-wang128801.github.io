@@ -74,6 +74,178 @@
 <p>​    a.包含那些信息(运算结果)</p>
 <p>​    b.这些信息咋组织(也是一个字符串)</p>
 </blockquote>
+<blockquote>
+<p>JSON-&gt;JavaScript—&gt;(升级)TypeScript(MS)    JS的超集</p>
+<p>​                                  Flutter(谷歌)移动端开发框架</p>
+</blockquote>
+<p><strong>键值对</strong></p>
+<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    name:<span class="string">"曹操"</span>,</span><br><span class="line">    skill1:<span class="string">"剑气"</span>,</span><br><span class="line">    skill2:<span class="string">"三连跳"</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>使用Json的方式进行序列化和反序列化</strong></p>
+<blockquote>
+<p>yum list | grep jsoncpp</p>
+<p>root: yun install  jsoncpp-devel.x86_64  </p>
+</blockquote>
+<blockquote>
+<p>如何使用json格式？ 涉及到编译原理中的一些概念</p>
+<p>借助第三方库，直接完成解析操作 </p>
+<p>jsoncpp</p>
+<p>Json::Vlaue 用来表示一个Json数据</p>
+<p>Json::Reader 把字符串转换成 Json::Value</p>
+<p>Json::Writer 把 Json::Value 转换成字符串</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>根据反序列化的结果，进形计算</p>
+<p>需要把结果再序列化会一个字符串</p>
+</blockquote>
+<p><strong>客户端</strong></p>
+<blockquote>
+<p>1.创建一个tcp客户端</p>
+<p>2.循环从标准输入读取数据</p>
+<p>3.根据用户输入的内容，构建一个 Json 对象</p>
+<p>4.把 Json 对象序列化成一个字符串</p>
+<p>5.把字符串发送到服务器端</p>
+<p>6.从服务器读取返回的结果</p>
+<p>7.把服务器返回的结果再进行Json解析</p>
+</blockquote>
+<p>》 </p>
+<blockquote>
+<p>json  是非常重要的序列化/反序列化的方式</p>
+<p>Json 的缺点呢:效率低</p>
+<p>优点：直观,翻遍调试</p>
+</blockquote>
+<h4 id="HTTP协议"><a href="#HTTP协议" class="headerlink" title="HTTP协议"></a>HTTP协议</h4><h5 id="认识URL-我们俗称的”网址“"><a href="#认识URL-我们俗称的”网址“" class="headerlink" title="认识URL(我们俗称的”网址“)"></a>认识URL(我们俗称的”网址“)</h5><p><strong>域名</strong></p>
+<blockquote>
+<p>IP和域名是等价的</p>
+<p>工具：UrlEncode 编码</p>
+<p><strong>fiddler(代理)抓包工具</strong>:浏览器和服务器之间的中介(收费站)</p>
+</blockquote>
+<p><strong>大连暗泉</strong></p>
+<p><strong>HTTP协议格式</strong></p>
+<p><strong>请求</strong></p>
+<blockquote>
+<p><strong>1.首行(使用空格区分)</strong></p>
+<p>a:方法(GET/POST/PUT/DELETE/HEAD)</p>
+<p>b:url</p>
+<p>c: http 版本号.HTTP/1.1(当前最常见的版本)</p>
+<p><strong>2.头部信息(header)</strong></p>
+<p>包含了若干行</p>
+<p>每行是一个键值对，键和值之间用 ：分割</p>
+<p><strong>3：空行</strong></p>
+<p>表示header的结束</p>
+<p><strong>4:请求体(body)</strong></p>
+<p>空格后面的内容都是body</p>
+<hr>
+</blockquote>
+<p><strong>响应</strong></p>
+<blockquote>
+<p><strong>1.首行</strong></p>
+<p>a:版本号</p>
+<p>b:状态码(200)</p>
+<p>c:状态码的描述信息(OK)</p>
+<p><strong>2.header</strong></p>
+<p>a:有若干行，每行有一个header(键值对)</p>
+<p>b:键和值之间以空格分隔</p>
+<p><strong>3:空行</strong></p>
+<p>表示的是header的结束</p>
+<p><strong>4.请求体</strong></p>
+<hr>
+</blockquote>
+<p><strong>出现概率极高的 面试题</strong></p>
+<blockquote>
+<p>1.说说HTTP协议中常见的方法是那些？</p>
+<p>2.GET和POST的区别？</p>
+<p>GET往往把参数放到query_string中</p>
+<p>POST往往把参数放到body中</p>
+<p>3.说说常见的HTTP状态码有哪些，分别是啥含义?</p>
+<p>200 表示 OK</p>
+<p>302 Found 表示重定向 /303 See Other 重定向/Location 字段表示重定向</p>
+<p>403 表示用户没有权限访问</p>
+<p>404 Not Found 没有找到指定的资源</p>
+<p>502 Bad Gateway   服务器挂了</p>
+<p>504 Gateway Timeout 服务器访问超时</p>
+<p><strong>一般情况</strong></p>
+<p>2* 请求成功</p>
+<p>3*重定向</p>
+<p>4*客户端出现错误</p>
+<p>5* 服务器出现错误</p>
+<p>418: 彩蛋</p>
+<hr>
+</blockquote>
+<h4 id="HTTP常见的-Header"><a href="#HTTP常见的-Header" class="headerlink" title="HTTP常见的 Header"></a>HTTP常见的 Header</h4><p><strong>Content-Type:</strong></p>
+<blockquote>
+<p>描述了body的部分数据格式的类型 txt/html</p>
+</blockquote>
+<p><strong>Content-Length:</strong></p>
+<blockquote>
+<p> 描述body 部分的长度(字节) </p>
+</blockquote>
+<p><strong>Host: </strong></p>
+<blockquote>
+<p> 客户端告知服务器, 所请求的资源是在哪个主机的哪个端口上; </p>
+</blockquote>
+<p><strong>User-Agent:</strong> </p>
+<blockquote>
+<p> 描述操作系统和浏览器版本信息; </p>
+</blockquote>
+<p><strong>referer:</strong> </p>
+<blockquote>
+<p>当前页面是从哪个页面跳转过来的; </p>
+</blockquote>
+<p><strong>location:</strong> </p>
+<blockquote>
+<p> 搭配3xx状态码使用, 告诉客户端接下来要去哪里访问; </p>
+</blockquote>
+<p><strong>Cookie:</strong></p>
+<blockquote>
+<p> 是一个保存在浏览器端的字符串，字符串的含义是由程序员内部约定的,外部的用户一般看不懂含义</p>
+<p>Cookie中最常见的内容是用户的身份信息</p>
+<p>当我们登录账号是的时候，服务器就会返回一个身份信息字符串，</p>
+<p>浏览器保存在cookie中</p>
+</blockquote>
+<blockquote>
+<p>用于存储用户登陆网站的信息 (身份，密码，时间等)</p>
+</blockquote>
+<p><strong>localStorage:也可以起到与Cookie相同的作用但是功能更强大</strong></p>
+<p>如果使用虚拟机来搭建服务器要先关闭防火墙</p>
+<p>进入root 用户</p>
+<p>server firewalld stop #centos 7 的关闭方式</p>
+<p>爬虫jish</p>
+<p><strong>一个进程能否绑定多个端口：可以</strong></p>
+<p>​               </p>
+<table>
+<thead>
+<tr>
+<th>字节数</th>
+<th>2</th>
+<th>2</th>
+<th>2</th>
+<th>2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TCP协议段格式</td>
+<td>源端口</td>
+<td>目的端口</td>
+<td>UDP长度</td>
+<td>校验和</td>
+</tr>
+</tbody>
+</table>
+<p>UDP中使用的是比较简单的CRC校验</p>
+<p>unit16_t check——sum;</p>
+<p>遍历数据报的每个字节，就往往check_sum 上+</p>
+<p>发送端会根据数据内容计算一个校验和</p>
+<p>数据到达接收端之后，也会计算一个校验和</p>
+<p>接收端拿着自己计算好 的校验和和发送端发过来的校验和对比。如果不相等，说明数据已经出错了</p>
+<blockquote>
+<p>md5:字符串哈希算法</p>
+<p>1.不管源字符串多长，得到的 hash结果都是固定的长度(64/128位)</p>
+<p>2.原串如果想同，得到的hash一定相同;原串结果不同(哪怕差别很小 )，得到的hash值也会差别很大</p>
+<p>3.根据原串得到的md5很简单，但是根据md5推算原串理论上不可能，md5sum命令特别长用。把md5当作校验和来使用了。</p>
+</blockquote>
+<p>有没有很可能出现不同的原串，md5值碰巧相同？理论上存在，但是在工程上，不考虑这件事情。</p>
 	  
 
 	  <div>
