@@ -246,6 +246,139 @@
 <p>3.根据原串得到的md5很简单，但是根据md5推算原串理论上不可能，md5sum命令特别长用。把md5当作校验和来使用了。</p>
 </blockquote>
 <p>有没有很可能出现不同的原串，md5值碰巧相同？理论上存在，但是在工程上，不考虑这件事情。</p>
+<h3 id="TCP协议"><a href="#TCP协议" class="headerlink" title="TCP协议"></a>TCP协议</h3><h5 id="TCP的协议报头和TCP的数据部分-完整的应用层数据报"><a href="#TCP的协议报头和TCP的数据部分-完整的应用层数据报" class="headerlink" title="TCP的协议报头和TCP的数据部分(完整的应用层数据报)"></a>TCP的协议报头和TCP的数据部分(完整的应用层数据报)</h5><h4 id="TCP协议报头内容"><a href="#TCP协议报头内容" class="headerlink" title="TCP协议报头内容"></a>TCP协议报头内容</h4><h5 id="TCP的作用"><a href="#TCP的作用" class="headerlink" title="TCP的作用"></a>TCP的作用</h5><blockquote>
+<p>保证有效传输</p>
+<p>:能够及时的发现自己发送的数据是成功还是失败</p>
+</blockquote>
+<blockquote>
+<p>尽可能的提高传输效率</p>
+</blockquote>
+<h3 id="TCP的可靠性"><a href="#TCP的可靠性" class="headerlink" title="TCP的可靠性"></a>TCP的可靠性</h3><h5 id="1-确认应答"><a href="#1-确认应答" class="headerlink" title="1.确认应答"></a>1.确认应答</h5><p><strong>需要对数据进行编号</strong></p>
+<p><strong>确认应答数据中要指明的是哪个序号</strong></p>
+<p><strong>确认序号的含义是当前序号之前的数据已经收到，希望收到下一条数据就是从确认序列号开始的</strong></p>
+<h5 id="2-超时重传机制"><a href="#2-超时重传机制" class="headerlink" title="2.超时重传机制"></a>2.超时重传机制</h5><p><strong>1.超时时间会依次变长(悲观的态度去面对丢包的)</strong></p>
+<p><strong>2.</strong></p>
+<p><strong>发送上一条消息后未收到回复，进行重发确保消息被收到</strong></p>
+<blockquote>
+<ul>
+<li><strong>情况一：发送的数据丢失了 </strong></li>
+<li><strong>情况二：发送端没有收到相应端的确认应答</strong></li>
+</ul>
+</blockquote>
+<h5 id="3-连接管理"><a href="#3-连接管理" class="headerlink" title="3.连接管理"></a>3.连接管理</h5><h6 id="1-建立连接-建立三次握手"><a href="#1-建立连接-建立三次握手" class="headerlink" title="1.建立连接(建立三次握手)"></a>1.建立连接(建立三次握手)</h6><p><strong>a.先去检查网络的联通状态</strong></p>
+<p><strong>b.协商一些关键的数据</strong></p>
+<ul>
+<li>三次握手的基本流程</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>客户端</th>
+<th>关系</th>
+<th>服务器端</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>客户端</td>
+<td>—&gt;    1.SYN同步报文段</td>
+<td>服务器端</td>
+</tr>
+<tr>
+<td>客户端</td>
+<td>2.SYN+ACK确认报文段  &lt;—</td>
+<td>服务器端</td>
+</tr>
+<tr>
+<td>客户端</td>
+<td>—-&gt;     3.ACK</td>
+<td>服务器端</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<ul>
+<li>【备注 】 :—-&gt;表示传送方向</li>
+<li>【注意】:SYN和ACK都是内核控制发送的</li>
+</ul>
+</blockquote>
+<p><strong>2.断开连接(四次挥手)</strong></p>
+<p><strong>a.双方各自给对方发送FIN，各自给对方发送ACK</strong></p>
+<p><strong>b.第一个的ACK和第二个的FIN不能合并到一起</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">客户端</th>
+<th style="text-align:center">关系</th>
+<th style="text-align:center">服务器端</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">客户端</td>
+<td style="text-align:center">—&gt;     FIN结束报文段</td>
+<td style="text-align:center">服务器端</td>
+</tr>
+<tr>
+<td style="text-align:center">客户端</td>
+<td style="text-align:center">ACK               &lt;—</td>
+<td style="text-align:center">服务器端</td>
+</tr>
+<tr>
+<td style="text-align:center">客户端</td>
+<td style="text-align:center">FIN结束报文段&lt;—</td>
+<td style="text-align:center">服务器端</td>
+</tr>
+<tr>
+<td style="text-align:center">客户端</td>
+<td style="text-align:center">—&gt;      ACK</td>
+<td style="text-align:center">服务器端</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<ul>
+<li>【触发条件】:调用close函数触发断开连接close发送FIN</li>
+<li>【注意】：内核回复ACK,进入CLOSE_WAIT状态</li>
+</ul>
+</blockquote>
+<h5 id="重要的TCP状态"><a href="#重要的TCP状态" class="headerlink" title="重要的TCP状态"></a>重要的TCP状态</h5><h6 id="1-LISTEN服务器启动完成-手机开机，信号良好"><a href="#1-LISTEN服务器启动完成-手机开机，信号良好" class="headerlink" title="1.LISTEN服务器启动完成(手机开机，信号良好)"></a>1.LISTEN服务器启动完成(手机开机，信号良好)</h6><h6 id="2-ESTABLISHED-建立连接成功-可以进行通信了"><a href="#2-ESTABLISHED-建立连接成功-可以进行通信了" class="headerlink" title="2.ESTABLISHED 建立连接成功,可以进行通信了"></a>2.ESTABLISHED 建立连接成功,可以进行通信了</h6><h6 id="3-CLOSE-WAIT等待调用close函数，对端已经执行过close"><a href="#3-CLOSE-WAIT等待调用close函数，对端已经执行过close" class="headerlink" title="3.CLOSE_WAIT等待调用close函数，对端已经执行过close"></a>3.CLOSE_WAIT等待调用close函数，对端已经执行过close</h6><blockquote>
+<ul>
+<li><strong>如果服务器端出现大量的CLOSE_WAIT状态</strong> </li>
+<li><strong>谁主动调用close谁调TIME_WAIT</strong></li>
+</ul>
+</blockquote>
+<h6 id="4-TIME-WAIT保证-最后一个ACK如果丢包还有机会重传即使客户端的进程已经推虎，TIME-WAIT状态仍然可能存在。如果此时最后一个ACK丢了，对端重传的FIN可以有机会去进行处理-收到对方的FIN开始进入该状态"><a href="#4-TIME-WAIT保证-最后一个ACK如果丢包还有机会重传即使客户端的进程已经推虎，TIME-WAIT状态仍然可能存在。如果此时最后一个ACK丢了，对端重传的FIN可以有机会去进行处理-收到对方的FIN开始进入该状态" class="headerlink" title="4.TIME_WAIT保证 最后一个ACK如果丢包还有机会重传即使客户端的进程已经推虎，TIME_WAIT状态仍然可能存在。如果此时最后一个ACK丢了，对端重传的FIN可以有机会去进行处理(收到对方的FIN开始进入该状态)"></a>4.TIME_WAIT保证 最后一个ACK如果丢包还有机会重传即使客户端的进程已经推虎，TIME_WAIT状态仍然可能存在。如果此时最后一个ACK丢了，对端重传的FIN可以有机会去进行处理(收到对方的FIN开始进入该状态)</h6><blockquote>
+<ul>
+<li><strong>TIME_WAIT  会保持2MSL这样的时间</strong></li>
+<li><strong>MSL表示网络中的两个节点之间，传输一个数据所经历的最大时间</strong></li>
+<li><strong>centos7 MSL默认为 60s</strong></li>
+</ul>
+</blockquote>
+<h6 id="TODO-添加待办事项"><a href="#TODO-添加待办事项" class="headerlink" title="TODO(添加待办事项)"></a>TODO(添加待办事项)</h6><h5 id="4-滑动窗口-提高传输效率"><a href="#4-滑动窗口-提高传输效率" class="headerlink" title="4.滑动窗口(提高传输效率)"></a>4.滑动窗口(提高传输效率)</h5><ul>
+<li><strong>批量发送数据</strong>“”</li>
+<li><strong>批量口大小,</strong></li>
+<li><strong>窗口越大，网络吞吐率就越高</strong></li>
+<li><strong>窗口也不能无限大(要保证可靠性)</strong></li>
+<li><strong>需要有一个发送缓冲区来保存那些数据需要等待ACK，没有收到ACK的数据随时可能触发超市重传</strong></li>
+<li>快速重传 和超时重传本质是一样的,</li>
+</ul>
+<p><strong>ACK丢了没事，只要不是全丢那就没事</strong></p>
+<p><strong>数据包丢了，必须进行重传</strong></p>
+<h4 id="2-c-非"><a href="#2-c-非" class="headerlink" title="2.c;非"></a>2.c;非</h4><h4 id="7-yu"><a href="#7-yu" class="headerlink" title="7.yu"></a>7.yu</h4><h4 id="9-粘包问题"><a href="#9-粘包问题" class="headerlink" title="9.粘包问题"></a>9.粘包问题</h4><ul>
+<li>面向字节流相关，应用程序如何能依次取出一个完整的应用层数据报</li>
+<li>从应用层的角度来解决这个问题，只要能够确定数据报和数据报之间的边界就可以了</li>
+</ul>
+<h4 id="确定边界的方法"><a href="#确定边界的方法" class="headerlink" title="确定边界的方法"></a>确定边界的方法</h4><ul>
+<li><ol>
+<li>分隔符</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>指定长度</li>
+</ol>
+</li>
+</ul>
 	  
 
 	  <div>
@@ -257,6 +390,8 @@
 	
 	
 	
+	
+		
 	
 		
 	
