@@ -342,7 +342,7 @@
 <li>【注意】：内核回复ACK,进入CLOSE_WAIT状态</li>
 </ul>
 </blockquote>
-<h5 id="重要的TCP状态"><a href="#重要的TCP状态" class="headerlink" title="重要的TCP状态"></a>重要的TCP状态</h5><h6 id="1-LISTEN服务器启动完成-手机开机，信号良好"><a href="#1-LISTEN服务器启动完成-手机开机，信号良好" class="headerlink" title="1.LISTEN服务器启动完成(手机开机，信号良好)"></a>1.LISTEN服务器启动完成(手机开机，信号良好)</h6><h6 id="2-ESTABLISHED-建立连接成功-可以进行通信了"><a href="#2-ESTABLISHED-建立连接成功-可以进行通信了" class="headerlink" title="2.ESTABLISHED 建立连接成功,可以进行通信了"></a>2.ESTABLISHED 建立连接成功,可以进行通信了</h6><h6 id="3-CLOSE-WAIT等待调用close函数，对端已经执行过close"><a href="#3-CLOSE-WAIT等待调用close函数，对端已经执行过close" class="headerlink" title="3.CLOSE_WAIT等待调用close函数，对端已经执行过close"></a>3.CLOSE_WAIT等待调用close函数，对端已经执行过close</h6><blockquote>
+<h4 id="重要的TCP状态"><a href="#重要的TCP状态" class="headerlink" title="重要的TCP状态"></a>重要的TCP状态</h4><h6 id="1-LISTEN服务器启动完成-手机开机，信号良好"><a href="#1-LISTEN服务器启动完成-手机开机，信号良好" class="headerlink" title="1.LISTEN服务器启动完成(手机开机，信号良好)"></a>1.LISTEN服务器启动完成(手机开机，信号良好)</h6><h6 id="2-ESTABLISHED-建立连接成功-可以进行通信了"><a href="#2-ESTABLISHED-建立连接成功-可以进行通信了" class="headerlink" title="2.ESTABLISHED 建立连接成功,可以进行通信了"></a>2.ESTABLISHED 建立连接成功,可以进行通信了</h6><h6 id="3-CLOSE-WAIT等待调用close函数，对端已经执行过close"><a href="#3-CLOSE-WAIT等待调用close函数，对端已经执行过close" class="headerlink" title="3.CLOSE_WAIT等待调用close函数，对端已经执行过close"></a>3.CLOSE_WAIT等待调用close函数，对端已经执行过close</h6><blockquote>
 <ul>
 <li><strong>如果服务器端出现大量的CLOSE_WAIT状态</strong> </li>
 <li><strong>谁主动调用close谁调TIME_WAIT</strong></li>
@@ -360,25 +360,100 @@
 <li><strong>批量口大小,</strong></li>
 <li><strong>窗口越大，网络吞吐率就越高</strong></li>
 <li><strong>窗口也不能无限大(要保证可靠性)</strong></li>
+</ul>
+<blockquote>
+<p><strong>1.发送方如果发的太快，接收方可能处理不过来。</strong></p>
+<p><strong>解决办法：流量控制</strong></p>
+<p>发送方发送的数据先到达接收方的网卡，然后放到内核中的接收缓冲区中</p>
+<p>接收方的用户代码从接收缓冲区中取数据(recv/read)</p>
+<p><strong>2.如果当前网络比较拥堵，发送方如果发送的很快。仍然会丢包；</strong></p>
+<p><strong>解决办法:拥塞控制(真实的发送方的窗口大小是流量控制和拥塞控制两者的窗口大小的较小值)</strong></p>
+</blockquote>
+<ul>
 <li><strong>需要有一个发送缓冲区来保存那些数据需要等待ACK，没有收到ACK的数据随时可能触发超市重传</strong></li>
-<li>快速重传 和超时重传本质是一样的,</li>
+<li><strong>快速重传 和超时重传本质是一样的,</strong></li>
 </ul>
 <p><strong>ACK丢了没事，只要不是全丢那就没事</strong></p>
 <p><strong>数据包丢了，必须进行重传</strong></p>
-<h4 id="2-c-非"><a href="#2-c-非" class="headerlink" title="2.c;非"></a>2.c;非</h4><h4 id="7-yu"><a href="#7-yu" class="headerlink" title="7.yu"></a>7.yu</h4><h4 id="9-粘包问题"><a href="#9-粘包问题" class="headerlink" title="9.粘包问题"></a>9.粘包问题</h4><ul>
-<li>面向字节流相关，应用程序如何能依次取出一个完整的应用层数据报</li>
-<li>从应用层的角度来解决这个问题，只要能够确定数据报和数据报之间的边界就可以了</li>
+<h5 id="5-流量控制-解决窗口的问题"><a href="#5-流量控制-解决窗口的问题" class="headerlink" title="5.流量控制(解决窗口的问题)"></a>5.流量控制(解决窗口的问题)</h5><blockquote>
+<p><strong>接收缓冲区的空余空间大小，用这个指标来衡量接收端的处理能力</strong></p>
+<p><strong>TCP协议报头中有一个窗口大小字段，这个字段是和接收缓冲区的空间大小相关联的</strong></p>
+<p><strong>假设接收缓冲区空余空间是1K,此时这个窗口大小字段也就是1K建议发送方按照1K这样的窗口大小来发送数据</strong></p>
+</blockquote>
+<h5 id="6-拥塞控制-网络方面的拥堵情况"><a href="#6-拥塞控制-网络方面的拥堵情况" class="headerlink" title="6.拥塞控制(网络方面的拥堵情况)"></a>6.拥塞控制(网络方面的拥堵情况)</h5><blockquote>
+<p><strong>根据丢包情况作为判定依据</strong></p>
+<p><strong>如果出现丢包,认为网络比较拥堵。如果没丢包，认为网络比较畅通</strong></p>
+<p><strong>慢开始：刚开始的时候按照一个比较小的窗口来发送数据，如果没丢包，就按照指数的形式提升窗口大小。如果窗口大小达到指定的阀值之后，变成线性增长</strong></p>
+<p><strong>当窗口达到一定的大小之后，就会发生丢包，一旦丢包，认为网络拥堵了，就把窗口大小一下就设回一个非常小的值，重复慢开始的过程</strong></p>
+</blockquote>
+<h5 id="7-延时应答-提高传输效率"><a href="#7-延时应答-提高传输效率" class="headerlink" title="7.延时应答(提高传输效率)"></a>7.延时应答(提高传输效率)</h5><blockquote>
+<p><strong>和滑动窗口密切相关。想办法在可靠性的前提下尽量让窗口大</strong></p>
+</blockquote>
+<blockquote>
+<ul>
+<li>数据限制：每隔N个包就应答一次；</li>
+<li>时间限制：超过最大延迟时间就应答一次；</li>
+</ul>
+</blockquote>
+<h5 id="8-捎带应答-提高传输效率"><a href="#8-捎带应答-提高传输效率" class="headerlink" title="8.捎带应答(提高传输效率)"></a>8.捎带应答(提高传输效率)</h5><blockquote>
+<p><strong>延时应答的基础上，引入的一个机制</strong></p>
+<p><strong>TCP挥手有没有可能是三次呢？</strong></p>
+<p><strong>有可能，捎带应答在支持这件事情</strong></p>
+</blockquote>
+<h5 id="面向字节流"><a href="#面向字节流" class="headerlink" title="面向字节流"></a>面向字节流</h5><blockquote>
+<p><strong>创建一个TCP的socket，同时在内核中创建一个发送缓冲区和一个接收缓冲区</strong></p>
+<p><strong>收到的数据先到达接收缓冲区，用户代码从接收缓冲区中读走数据之后才会把数据清掉(recv/read)，接收缓冲区也能帮助我们进行数据的去重</strong></p>
+</blockquote>
+<h5 id="9-粘包问题"><a href="#9-粘包问题" class="headerlink" title="9.粘包问题"></a>9.粘包问题</h5><ul>
+<li><strong>面向字节流相关，应用程序如何能依次取出一个完整的应用层数据报</strong></li>
+<li>TCP无法解决这个问题</li>
+<li><strong>只有从应用层的角度来解决这个问题，只要能够确定数据报和数据报之间的边界就可以了</strong></li>
 </ul>
 <h4 id="确定边界的方法"><a href="#确定边界的方法" class="headerlink" title="确定边界的方法"></a>确定边界的方法</h4><ul>
 <li><ol>
-<li>分隔符</li>
+<li><strong>分隔符</strong></li>
 </ol>
 </li>
 <li><ol start="2">
-<li>指定长度</li>
+<li><strong>指定长度</strong></li>
 </ol>
 </li>
 </ul>
+<h3 id="抓包工具：wrieshark，tcpdump-命令行版本的抓包工具"><a href="#抓包工具：wrieshark，tcpdump-命令行版本的抓包工具" class="headerlink" title="抓包工具：wrieshark，tcpdump(命令行版本的抓包工具)"></a>抓包工具：wrieshark，tcpdump(命令行版本的抓包工具)</h3><h5 id="10-TCP的异常情况"><a href="#10-TCP的异常情况" class="headerlink" title="10.TCP的异常情况"></a>10.TCP的异常情况</h5><blockquote>
+<p>1.进程终止</p>
+<p>2.机器重启</p>
+<p>3.机器掉线/网线断开:</p>
+</blockquote>
+<blockquote>
+<p>先超时重传。</p>
+<p>达到一定情况下，尝试进行复位</p>
+</blockquote>
+<h5 id="TCP小结"><a href="#TCP小结" class="headerlink" title="TCP小结"></a>TCP小结</h5><table>
+<thead>
+<tr>
+<th>可靠性</th>
+<th>传输效率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>确认应答/超时重传</td>
+<td>滑动窗口(流量控制/拥堵控制)</td>
+</tr>
+<tr>
+<td>连接管理</td>
+<td>延时应答（捎带应答）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="TCP-IP协议（三卷）"><a href="#TCP-IP协议（三卷）" class="headerlink" title="TCP/IP协议（三卷）"></a>TCP/IP协议（三卷）</h3><p>卷一主要讲原理</p>
+<p>卷二卷三讲原码实现</p>
+<h3 id="Linux内核源代码"><a href="#Linux内核源代码" class="headerlink" title="Linux内核源代码"></a>Linux内核源代码</h3><h3 id="TCP-UDP对比"><a href="#TCP-UDP对比" class="headerlink" title="TCP/UDP对比"></a>TCP/UDP对比</h3><blockquote>
+<p>1.如果需要可靠性(比如外网复杂的网络环境 )优先考虑TCP</p>
+<p>2.如果网络结构本身比较简单，可靠性比较高(机房内网)，对传输效率要求更高，优先考虑UDP</p>
+<p>3.如果你要传输的数据报比较大，TCP(UDP的包有最大长度64K)</p>
+<p>4.如果需要广播的话，只能用UDP，TCP不能广播</p>
+</blockquote>
 	  
 
 	  <div>
@@ -392,45 +467,6 @@
 	
 	
 		
-	
-		
-	
-		
-	
-		
-	
-		
-	
-		
-			
-			
-		
-	
-		
-	
-		
-	
-		
-	
-		
-			
-			
-			
-		
-			
-		
-	
-		
-	
-		
-			
-		
-	
-		
-			
-		
-	
-		
 			
 		
 	
@@ -446,15 +482,6 @@
 	
 		
 			
-		
-	
-		
-	
-		
-			
-		
-	
-		
 			
 		
 	
@@ -463,13 +490,19 @@
 		
 	
 		
+	
+		
+			
+			
+			
+		
 			
 		
 	
 		
-			
-		
 	
+		
+			
 		
 	
 		
@@ -491,7 +524,39 @@
 		
 	
 		
+			
+		
 	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
 		
 	
 		
@@ -518,9 +583,23 @@
 	
 		
 	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
 	
 	
-		<li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>prev</a></li>
+	
+		<li class="prev"><a href="/jun/2019/07/09/Linux/网络基础3/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>prev</a></li>
 	
 	<li><a href="/jun/"><i class="fa fa-archive"></i>Home</a></li>
 	
