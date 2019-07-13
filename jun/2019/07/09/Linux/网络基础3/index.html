@@ -102,7 +102,47 @@
 <li>帧末尾是CRC校验码;</li>
 </ul>
 </blockquote>
-<h6 id="ARP协议-给你Ip地址查找MAC地址的协议"><a href="#ARP协议-给你Ip地址查找MAC地址的协议" class="headerlink" title="ARP协议:给你Ip地址查找MAC地址的协议"></a>ARP协议:给你Ip地址查找MAC地址的协议</h6>	  
+<h6 id="ARP协议-给你Ip地址查找MAC地址的协议"><a href="#ARP协议-给你Ip地址查找MAC地址的协议" class="headerlink" title="ARP协议:给你Ip地址查找MAC地址的协议"></a>ARP协议:给你Ip地址查找MAC地址的协议</h6><hr>
+<h3 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h3><ul>
+<li>DNS是一整套从域名映射到IP的系统</li>
+</ul>
+<blockquote>
+<p>系统盘中有一个hosts文件中存在域名和IP(历史产物)</p>
+</blockquote>
+<ul>
+<li>DNS域名解析服务器，有这个服务器来统一维护域名和ip的映射关系</li>
+<li>分布式：一台机器 不够，就多搞几台</li>
+<li>DNS服务器挂了，会导致网站打不开　<strong>解决办法：</strong>　手动修改DNS服务器</li>
+<li><strong>８.８.８.８</strong>　　谷歌维护的全球的根域名解析服务器</li>
+<li><strong>１１４．１１４．１１４．１１４</strong>　</li>
+<li>DNS解析的具体过程，<strong>图解TCP＿IP（书名）</strong></li>
+</ul>
+<h3 id="NAT技术"><a href="#NAT技术" class="headerlink" title="NAT技术"></a>NAT技术</h3><ul>
+<li><strong>NAT技术当前解决IP地址不够用的主要手段, 是路由器的一个重要功能</strong> </li>
+</ul>
+<h5 id="一：从操作系统管理键盘硬件设备角度看"><a href="#一：从操作系统管理键盘硬件设备角度看" class="headerlink" title="一：从操作系统管理键盘硬件设备角度看"></a>一：从操作系统管理键盘硬件设备角度看</h5><h5 id="二：从网络通信的角度看"><a href="#二：从网络通信的角度看" class="headerlink" title="二：从网络通信的角度看"></a>二：从网络通信的角度看</h5><ul>
+<li>1.应用层角度来看</li>
+</ul>
+<blockquote>
+<p>a.域名解析</p>
+<p>b.HTTP角度</p>
+<p>c.从自定制协议的角度(query_string,body,cookie…..如何设计)</p>
+</blockquote>
+<ul>
+<li>2.传输层角度来看</li>
+</ul>
+<blockquote>
+<p>a.TCP建立连接的角度</p>
+</blockquote>
+<h5 id="三-通信原理的角度"><a href="#三-通信原理的角度" class="headerlink" title="三:通信原理的角度"></a>三:通信原理的角度</h5><h5 id="四：从工程角度来看"><a href="#四：从工程角度来看" class="headerlink" title="四：从工程角度来看"></a>四：从工程角度来看</h5><h6 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h6><blockquote>
+<ul>
+<li>1.提高效率，降低但台机器的压力</li>
+<li>2.提高可靠性，一旦某个机器挂了</li>
+<li>3.可伸缩性</li>
+</ul>
+<hr>
+</blockquote>
+<h2 id="大型网站技术架构-李智慧"><a href="#大型网站技术架构-李智慧" class="headerlink" title="大型网站技术架构(李智慧)"></a>大型网站技术架构(李智慧)</h2>	  
 
 	  <div>
   		<center>
@@ -115,37 +155,6 @@
 	
 	
 		
-	
-		
-			
-			
-		
-	
-		
-	
-		
-	
-		
-	
-		
-	
-		
-	
-		
-			
-			
-			
-		
-	
-		
-	
-		
-	
-		
-			
-		
-	
-		
 			
 		
 	
@@ -153,13 +162,6 @@
 	
 		
 			
-		
-	
-		
-			
-		
-	
-		
 			
 		
 	
@@ -175,15 +177,7 @@
 	
 		
 			
-		
-	
-		
-	
-		
 			
-		
-	
-		
 			
 		
 	
@@ -210,7 +204,53 @@
 		
 	
 		
+			
+		
 	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
 		
 	
 		
@@ -247,9 +287,13 @@
 	
 		
 	
+		
+	
+		
 	
 	
-		<li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>prev</a></li>
+	
+		<li class="prev"><a href="/jun/2019/07/13/Linux/高级IO/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>prev</a></li>
 	
 	<li><a href="/jun/"><i class="fa fa-archive"></i>Home</a></li>
 	
