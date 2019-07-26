@@ -1,0 +1,320 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>Linux进程 | Hexo</title>
+  <meta name="author" content="John Doe">
+  
+  <meta name="description" content="进程[TOC]">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Linux进程">
+  <meta property="og:site_name" content="Hexo">
+
+  
+    <meta property="og:image" content>
+  
+
+  
+    <link rel="alternative" href="/jun/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link href="/jun/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/jun/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/responsive.css" media="screen" type="text/css">  
+  <link rel="stylesheet" href="/jun/css/sidenav.css" media="screen" type="text/css">  
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/jun/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+</head>
+</html>
+<body id="body" data-spy="scroll" data-target=".toc">
+  <div class="container" id="container">
+	<div class="content">
+	  <div class="page-header">		
+  <h1><a class="brand" href="/jun/">Hexo</a><span class="split"></span><span class="title">Linux进程</span><span class="date" id="title-date"><i class="fa fa-clock-o"></i> 2019-07-19</span></h1>
+</div>		
+
+<div class="row page">
+  <!-- cols -->	
+  
+  
+
+  
+	<div class="col-md-12">
+	  
+
+	  <!-- content -->
+	  <h3 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h3><p>[TOC]</p>
+<a id="more"></a>
+<h3 id="一：程序和进程"><a href="#一：程序和进程" class="headerlink" title="一：程序和进程"></a>一：程序和进程</h3><h4 id="1-程序"><a href="#1-程序" class="headerlink" title="1.程序"></a>1.程序</h4><ul>
+<li>是指编译好的二进制文件，占用磁盘，不占用系统资源(cpu,内存，打开的文件，设备等)</li>
+</ul>
+<h4 id="2-进程"><a href="#2-进程" class="headerlink" title="2.进程"></a>2.进程</h4><ul>
+<li>是一个抽象的概念，与操作系统原理联系紧密，==进程是活跃的程序,占用系统资源==。在内存中执行(程序运行起来形成进程)</li>
+</ul>
+<h3 id="二：并发"><a href="#二：并发" class="headerlink" title="二：并发"></a>二：并发</h3><ul>
+<li>并发：在操作系统中,一个时间断中有多个进程都处于已启动到运行完毕之间的状态。</li>
+</ul>
+<h4 id="1-单道程序设计模式"><a href="#1-单道程序设计模式" class="headerlink" title="1.单道程序设计模式"></a>1.单道程序设计模式</h4><ul>
+<li>多个任务需要排队使用CPU，不能同时使用CPU</li>
+</ul>
+<h4 id="2-多道程序设计模式"><a href="#2-多道程序设计模式" class="headerlink" title="2.多道程序设计模式"></a>2.多道程序设计模式</h4><ul>
+<li>多个任务同时执行的时候，cpu在同一时间段==同时执行==(这里的同时指各自分配一点时间轮换执行)多个任务</li>
+</ul>
+<h4 id="3-cpu"><a href="#3-cpu" class="headerlink" title="3.cpu"></a>3.cpu</h4><p><img src="https://i.loli.net/2019/07/26/5d3a6075de81f70834.png" alt></p>
+<ul>
+<li>计算机中指令的执行过程 </li>
+</ul>
+<h4 id="4-mmu"><a href="#4-mmu" class="headerlink" title="4.mmu"></a>4.mmu</h4><p><img src="https://i.loli.net/2019/07/26/5d3a62643f38423304.png" alt></p>
+<ul>
+<li>1.完成物理内存和虚拟内存映射</li>
+<li>2.修改内存的访问级别</li>
+</ul>
+<p><img src="https://wx2.sinaimg.cn/mw690/0071OE7sly1g2xiwbetxdj314e0gjtc0.jpg" alt></p>
+<ul>
+<li>虚拟内存不是真实存在的东西</li>
+<li>虚拟地址：可用的地址空间为  4G</li>
+</ul>
+	  
+
+	  <div>
+  		<center>
+		  <div class="pagination">
+<ul class="pagination">
+	
+	
+	
+	
+	
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+			
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+			
+			
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+	
+	
+		<li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>prev</a></li>
+	
+	<li><a href="/jun/"><i class="fa fa-archive"></i>Home</a></li>
+	
+		<li class="next"><a href="/jun/2019/07/13/Linux/高级IO/" class="alignright next">next<i class="fa fa-arrow-circle-o-right"></i></a></li>
+	
+</ul>
+</div>
+
+		</center>
+	  </div>
+	  
+	</div> <!-- col-md-9/col-md-12 -->
+	
+  </div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+	<footer> <p>
+  &copy; 2019 John Doe
+  
+      with help from <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-wixo/">Wixo</a>.    
+</p> </footer>
+  </div> <!-- container-narrow -->
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/jun/js/jquery.imagesloaded.min.js"></script>
+<script src="/jun/js/gallery.js"></script>
+<script src="/jun/js/bootstrap.min.js"></script>
+<script src="/jun/js/jquery.tableofcontents.min.js"></script>
+<script src="/jun/js/tocgenerator.min.js"></script>
+<script src="/jun/js/main.js"></script>
+<script src="/jun/js/search.js"></script> 
+
+
+
+
+<link rel="stylesheet" href="/jun/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/jun/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+</body>
+</html>

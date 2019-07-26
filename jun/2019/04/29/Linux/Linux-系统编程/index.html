@@ -6,10 +6,7 @@
   <title>系统编程 | Hexo</title>
   <meta name="author" content="John Doe">
   
-  <meta name="description" content="Linux进程的概念1.冯诺依曼体系
-2. 操作系统
-3.进程
-4.环境变量">
+  <meta name="description" content="Linux进程的概念[TOC]">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -61,21 +58,18 @@
 	  
 
 	  <!-- content -->
-	  <h2 id="Linux进程的概念"><a href="#Linux进程的概念" class="headerlink" title="Linux进程的概念"></a>Linux进程的概念</h2><p><strong>1.冯诺依曼体系</strong></p>
-<p><strong>2. 操作系统</strong></p>
-<p><strong>3.进程</strong></p>
-<p><strong>4.环境变量</strong></p>
+	  <h2 id="Linux进程的概念"><a href="#Linux进程的概念" class="headerlink" title="Linux进程的概念"></a>Linux进程的概念</h2><p>[TOC]</p>
 <a id="more"></a>
-<h3 id="系统编程"><a href="#系统编程" class="headerlink" title="系统编程"></a>系统编程</h3><h4 id="冯诺依曼体系"><a href="#冯诺依曼体系" class="headerlink" title="冯诺依曼体系"></a>冯诺依曼体系</h4><h4 id="1-图示"><a href="#1-图示" class="headerlink" title="1.图示"></a>1.图示</h4><p><img src="https://wx2.sinaimg.cn/mw690/0071OE7sly1g2qw6d7t2yj30v40f1aao.jpg" alt></p>
+<h3 id="系统编程"><a href="#系统编程" class="headerlink" title="系统编程"></a>系统编程</h3><h4 id="一：冯诺依曼体系"><a href="#一：冯诺依曼体系" class="headerlink" title="一：冯诺依曼体系"></a>一：冯诺依曼体系</h4><h4 id="1-图示"><a href="#1-图示" class="headerlink" title="1.图示"></a>1.图示</h4><p><img src="https://wx2.sinaimg.cn/mw690/0071OE7sly1g2qw6d7t2yj30v40f1aao.jpg" alt></p>
 <h4 id="2-计算机的组成分类"><a href="#2-计算机的组成分类" class="headerlink" title="2.计算机的组成分类"></a>2.计算机的组成分类</h4><ul>
 <li style="list-style: none"><input type="checkbox"> 1.输入单元：包括键盘、鼠标、卡片阅读器、扫描仪、手写板、触摸屏等</li>
 <li style="list-style: none"><input type="checkbox"> 中央处理器(CPU):含有算术逻辑、控制、记忆等单元</li>
 <li style="list-style: none"><input type="checkbox"> 输出设备:例如屏幕、打印机等</li>
 </ul>
 <p><strong>CPU: </strong></p>
-<blockquote>
-<p>也可以通过”<strong>寄存器</strong>“存储少量的数据，寄存器的访问速度特别快</p>
-</blockquote>
+<ul>
+<li>也可以通过”<strong>寄存器</strong>“存储少量的数据，寄存器的访问速度特别快</li>
+</ul>
 <p><strong>门电路: </strong></p>
 <table>
 <thead>
@@ -100,43 +94,59 @@
 </tbody>
 </table>
 <p><strong>储存设备:</strong></p>
-<blockquote>
-<p>内存:   空间比较小，访问速度快，成本较高，断电之后数据丢失</p>
-<p>外存：空间较大。访问速度慢成本较低，断电之后数据依然存在</p>
-</blockquote>
+<ul>
+<li><p>内存:   空间比较小，访问速度快，成本较高，断电之后数据丢失</p>
+</li>
+<li><p>外存：空间较大。访问速度慢成本较低，断电之后数据依然存在</p>
+</li>
+</ul>
 <p><strong>强调的点</strong></p>
-<blockquote>
-<p>这里的存储器指的是内存不考虑缓存情况，这里的CPU能且只能对内存进行读写，不能访问外设(输入或输出设备)外设(输入或输出设备)要输入或者输出数据，也只能写入内存或者从内存中读取。<br><strong>一句话，所有设备都只能直接和内存打交道</strong>。</p>
-</blockquote>
-<h3 id="操作系统-os-搞管理的软件"><a href="#操作系统-os-搞管理的软件" class="headerlink" title="操作系统:os(搞管理的软件)"></a>操作系统:os(搞管理的软件)</h3><p><img src="https://wx1.sinaimg.cn/mw690/0071OE7sly1g2qwkplzovj30v20dmdgo.jpg" alt></p>
+<ul>
+<li>这里的存储器指的是内存</li>
+<li>不考虑缓存情况，这里的CPU能且只能对内存进行读写，不能访问外设(输入或输出设备)</li>
+<li>外设(输入或输出设备)要输入或者输出数据，也只能写入内存或者从内存中读取。</li>
+<li>==一句话，所有设备都只能直接和内存打交道==。</li>
+</ul>
+<h4 id="二：操作系统-os-搞管理的软件"><a href="#二：操作系统-os-搞管理的软件" class="headerlink" title="二：操作系统:os(搞管理的软件)"></a>二：操作系统:os(搞管理的软件)</h4><p><img src="https://wx1.sinaimg.cn/mw690/0071OE7sly1g2qwkplzovj30v20dmdgo.jpg" alt></p>
 <ul>
 <li style="list-style: none"><input type="checkbox"> 管理硬件设备</li>
 <li style="list-style: none"><input type="checkbox"> 管理软件资源</li>
 </ul>
-<h4 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h4><blockquote>
+<h5 id="2-1概念"><a href="#2-1概念" class="headerlink" title="2.1概念"></a>2.1概念</h5><ul>
+<li>任何计算机系统都包含一个==基本的程序集合==，称为操作系统(OS)</li>
+</ul>
+<blockquote>
 <ul>
 <li>内核（进程管理，内存管理、文件管理、驱动管理）</li>
 <li>其他程序(例如函数库，shell程序等等)</li>
 </ul>
 </blockquote>
-<h4 id="设计操作系统的目的"><a href="#设计操作系统的目的" class="headerlink" title="设计操作系统的目的"></a>设计操作系统的目的</h4><blockquote>
+<h5 id="2-2设计OS的目的"><a href="#2-2设计OS的目的" class="headerlink" title="2.2设计OS的目的"></a>2.2设计OS的目的</h5><blockquote>
 <ul>
 <li>与硬件交互，管理所有的软硬件资源</li>
 <li>为用户程序(应用程序)提供一个良好的执行环境</li>
 </ul>
 </blockquote>
-<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p><strong>计算机管理硬件</strong></p>
-<blockquote>
-<p>1.描述起来 :用struct结构体</p>
-<p>2.组织起来: 用链表或者其他高效的数据结构</p>
-</blockquote>
-<h3 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h3><h5 id="进程的概念"><a href="#进程的概念" class="headerlink" title="进程的概念"></a>进程的概念</h5><blockquote>
+<p>【总结】</p>
 <ul>
-<li>课本概念：程序的一个执行实例，正在执行的程序等</li>
-<li>内核观点：担当分配系统资源（CPU时间，内存）的实体</li>
+<li>1.描述起来，用struct结构体</li>
+<li>2.组织起来，用链表或其他高效的数据结构</li>
 </ul>
-</blockquote>
-<h4 id="进程查看"><a href="#进程查看" class="headerlink" title="进程查看"></a>进程查看</h4><ul>
+<h5 id="2-3：定位"><a href="#2-3：定位" class="headerlink" title="2.3：定位"></a>2.3：定位</h5><ul>
+<li>在整个计算机软硬件构架中，操作系统的定位为:一款纯正的==搞管理==的软件</li>
+</ul>
+<p><strong>计算机管理硬件</strong></p>
+<ul>
+<li>1.描述起来 :用struct结构体</li>
+<li>2.组织起来: 用链表或者其他高效的数据结构</li>
+</ul>
+<h4 id="三：进程"><a href="#三：进程" class="headerlink" title="三：进程"></a>三：进程</h4><h5 id="3-1进程的概念"><a href="#3-1进程的概念" class="headerlink" title="3.1进程的概念"></a>3.1进程的概念</h5><ul>
+<li><p>课本概念：程序的一个执行实例，正在执行的程序等</p>
+</li>
+<li><p>内核观点：担当分配系统资源（CPU时间，内存）的实体</p>
+</li>
+</ul>
+<h5 id="3-2进程查看"><a href="#3-2进程查看" class="headerlink" title="3.2进程查看"></a>3.2进程查看</h5><ul>
 <li style="list-style: none"><input type="checkbox"> <strong>ps</strong> 相当于任务管理器，能够查看系统都有哪些进程</li>
 <li style="list-style: none"><input type="checkbox"> <strong>ps   aux</strong>  查看所有进程</li>
 <li style="list-style: none"><input type="checkbox"> <strong>ps   aux  | less</strong>  配合<strong>less</strong> 对查看结果进行翻页和其他操作</li>
@@ -149,90 +159,140 @@
 <p>敲下的命令，在命令执行的过程中也是一个进程</p>
 </blockquote>
 <p><img src="https://wx2.sinaimg.cn/mw690/0071OE7sly1g2stgtf6i7j316206g0th.jpg" alt></p>
-<h5 id="进程的管理"><a href="#进程的管理" class="headerlink" title="进程的管理"></a>进程的管理</h5><h5 id="1-描述进程-PCB进程控制块-–-gt-就是一个结构-task-struct"><a href="#1-描述进程-PCB进程控制块-–-gt-就是一个结构-task-struct" class="headerlink" title="1.描述进程(PCB进程控制块 –&gt; 就是一个结构(task_struct))"></a>1.描述进程(PCB进程控制块 –&gt; 就是一个结构(task_struct))</h5><p><strong>PCB：针对通常情况</strong></p>
-<p><strong>task_struct：只针对Linux</strong></p>
+<h5 id="3-3进程的管理"><a href="#3-3进程的管理" class="headerlink" title="3.3进程的管理"></a>3.3进程的管理</h5><h6 id="1-描述进程-PCB进程控制块-–-gt-就是一个结构-task-struct"><a href="#1-描述进程-PCB进程控制块-–-gt-就是一个结构-task-struct" class="headerlink" title="1.描述进程(PCB进程控制块 –&gt; 就是一个结构(task_struct))"></a>1.描述进程(PCB进程控制块 –&gt; 就是一个结构(task_struct))</h6><p><strong>PCB：针对通常情况</strong></p>
+<h6 id="2-task-struct：-PCB的一种-只针对Linux"><a href="#2-task-struct：-PCB的一种-只针对Linux" class="headerlink" title="2.task_struct：(PCB的一种,)只针对Linux"></a>2.task_struct：(PCB的一种,)只针对Linux</h6><ul>
+<li>在Linux中描述进程的结构体叫做 ==task_struct==</li>
+<li>task_struct 是Linux内核的一种数据结构，它会被装载到RMB(内存里并且包含着进程的信息)</li>
+</ul>
+<h6 id="3-task-struck内容分类"><a href="#3-task-struck内容分类" class="headerlink" title="3.task_struck内容分类"></a>3.task_struck内容分类</h6><ul>
+<li>==标示符==: 描述本进程的唯一标示符，用来区别其他进程。 </li>
+<li>==进程状态==: 任务状态，退出代码，退出信号等。 </li>
+<li>==优先级(PR)==: 相对于其他进程的优先级。 </li>
+</ul>
 <blockquote>
-<p>​      task_struct 是一个很大的结构体，包含很多的内容</p>
-<p>​       <strong>a.进程标识符(pid)</strong>：同一台电脑不可能存在相同的两个pid </p>
-<p>​        <strong>b.内存指针(告诉 进程代码/数据都存在内存的那个部分)</strong></p>
-<hr>
-<p>​       <strong>c.进程状态</strong></p>
-<p>​       <strong>d.优先级:数字，表示这个进程是先被调度还是后被调度执行</strong> 数字越小，优先级别越高</p>
-<p>​       <strong>PR:(优先级)</strong>      </p>
-<p>​        <strong>NI(nice):</strong>      优先级的修正值，<strong>PR+NI =&gt; 最终的PR</strong></p>
+<p>NI(nice):     优先级的修正值，<strong>PR+NI =&gt; 最终的PR</strong></p>
 <p>通过指令可以调整nice，宏观上往往看不出效果</p>
-<p>​    <strong>e:上下文(寄存器)</strong></p>
-<p>   cpu 可能有几十个寄存器</p>
-<p>​    作用：<strong>保存上下文</strong>，cpu寄存器的内容保存到内存中</p>
-<p>​               <strong>恢复向下文</strong>，内存中的寄存器值恢复到cpu中</p>
-<p>   <strong>f:记账信息;每个进程已经在C</strong>PU上执行<strong>多久统计数据</strong></p>
+<p>数字，表示这个进程是先被调度还是后被调度执行==数字越小，优先级别越高==</p>
 </blockquote>
-<p><strong>pc指针(寄存器):接下来要干的事情</strong></p>
-<h5 id="进程的状态"><a href="#进程的状态" class="headerlink" title="进程的状态"></a>进程的状态</h5><blockquote>
-<p>R 就绪状态，进程在就绪队列中(谈恋爱 ,或者马上轮到)，就会处于这个状态</p>
-<p>S   睡眠状态，单身状态，暂时还轮不到他</p>
-<p>D   深度睡眠状态，密集地进行IO操作的时候(吐coredump)</p>
-<p>T    暂停stop</p>
-<p>t    跟踪trace</p>
-<p>X    进程已经结束，只是在Linux 源代码中存在，真实是看不到的</p>
-<p>Z     <strong>僵尸进程</strong>  和父进程子进程这些有关联</p>
-</blockquote>
-<h4 id="父进程-ppid-与子进程-pid"><a href="#父进程-ppid-与子进程-pid" class="headerlink" title="父进程(ppid)与子进程(pid)"></a>父进程(ppid)与子进程(pid)</h4><p><strong>使用代码来创建子进程</strong></p>
+<ul>
+<li>==程序计数器==: 程序中即将被执行的下一条指令的地址。</li>
+<li>==内存指针==: 包括程序代码和进程相关数据的指针，还有和其他进程共享的内存块的指针 </li>
+<li>==上下文数据==: 进程执行时处理器的寄存器中的数据[休学例子，要加图CPU，寄存器]。</li>
+</ul>
 <blockquote>
-<p>fork ()       //系统调用，一个函数</p>
-<p>fork 有两个返回值</p>
-<p>父子进程代码共享，数据各自开辟空间，私有一份（采用写时拷贝）</p>
+<p>cpu 可能有几十个寄存器</p>
+<p>​    作用：<strong>保存上下文</strong>，==cpu寄存器的内容保存到内存中==</p>
+<p>​               <strong>恢复向下文</strong>，==内存中的寄存器值恢复到cpu中==</p>
 </blockquote>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line">  <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">      fork();</span><br><span class="line">    <span class="comment">//gitpid 获取进程的进程</span></span><br><span class="line">    <span class="comment">//gitppid 获取夫进程</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d  %d\n"</span>,getpid(),getppid());</span><br><span class="line">    sleep(<span class="number">1</span>);                                                                           </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>==I/O状态信==: 包括显示的I/O请求,分配给进程的I／O设备和被进程使用的文件列表。</p>
+</li>
+<li><p>==记账信息==: 可能包括处理器时间总和，使用的时钟数总和，时间限制，记账号等。</p>
+</li>
+</ul>
+<blockquote>
+<ul>
+<li>每个进程已经在C<strong>PU上执行</strong>多久统计数据</li>
+</ul>
+</blockquote>
+<ul>
+<li>其他信息</li>
+</ul>
+<blockquote>
+<hr>
+</blockquote>
+<h6 id="4：pc指针-寄存器-接下来要干的事情"><a href="#4：pc指针-寄存器-接下来要干的事情" class="headerlink" title="4：pc指针(寄存器):接下来要干的事情"></a>4：pc指针(寄存器):接下来要干的事情</h6><ul>
+<li><p>[ ] 进程的状态</p>
+</li>
+<li><p>R 就绪状态，进程在就绪队列中(谈恋爱 ,或者马上轮到)，就会处于这个状态</p>
+</li>
+<li>S   睡眠状态，单身状态，暂时还轮不到他</li>
+<li>D   深度睡眠状态，==密集地进行IO操作的时候==(吐coredump)</li>
+<li>T    暂停stop</li>
+<li>t    跟踪trace</li>
+<li>X    进程已经结束，只是在Linux 源代码中存在，真实是看不到的</li>
+<li>Z     <strong>僵尸进程</strong>  和==父进程子进程这些有关联==</li>
+</ul>
+<h4 id="四：父进程-ppid-与子进程-pid"><a href="#四：父进程-ppid-与子进程-pid" class="headerlink" title="四：父进程(ppid)与子进程(pid)"></a>四：父进程(ppid)与子进程(pid)</h4><h5 id="4-1：子进程的创建"><a href="#4-1：子进程的创建" class="headerlink" title="4.1：子进程的创建"></a>4.1：子进程的创建</h5><p><strong>使用代码来创建子进程</strong></p>
+<ul>
+<li>fork ()    系统调用，一个函数</li>
+<li>fork 有两个返回值</li>
+<li>父子进程代码共享，数据各自开辟空间，私有一份（采用写时拷贝）</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line">  <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">      fork();</span><br><span class="line">    <span class="comment">//gitpid 获取进程的进程</span></span><br><span class="line">    <span class="comment">//gitppid 获取夫进程</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d  %d\n"</span>,getpid(),getppid());</span><br><span class="line">    sleep(<span class="number">1</span>);                                                                 </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
 <p><strong>fork 之后通常要用 if 进行分流</strong></p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"> <span class="keyword">int</span> ret = fork();</span><br><span class="line"> <span class="keyword">if</span>(ret &lt; <span class="number">0</span>)&#123;</span><br><span class="line"> perror(<span class="string">"fork"</span>);</span><br><span class="line"> <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="keyword">else</span> <span class="keyword">if</span>(ret == <span class="number">0</span>)&#123; <span class="comment">//child</span></span><br><span class="line"> <span class="built_in">printf</span>(<span class="string">"I am child : %d!, ret: %d\n"</span>, getpid(), ret);</span><br><span class="line"> &#125;<span class="keyword">else</span>&#123; <span class="comment">//father</span></span><br><span class="line"> <span class="built_in">printf</span>(<span class="string">"I am father : %d!, ret: %d\n"</span>, getpid(), ret);</span><br><span class="line"> &#125;</span><br><span class="line"> sleep(<span class="number">1</span>);</span><br><span class="line"> <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="fork"><a href="#fork" class="headerlink" title="fork ()"></a>fork ()</h5><p><strong>1.返回值：一次调用两个返回值</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="keyword">pid_t</span> ret = fork();</span><br><span class="line"> <span class="keyword">if</span>(ret &lt; <span class="number">0</span>)&#123;</span><br><span class="line"> perror(<span class="string">"fork"</span>);</span><br><span class="line"> <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="keyword">else</span> <span class="keyword">if</span>(ret == <span class="number">0</span>)&#123; <span class="comment">//child</span></span><br><span class="line"> <span class="built_in">printf</span>(<span class="string">"I am child : %d!, ret: %d\n"</span>, getpid(), ret);</span><br><span class="line"> &#125;<span class="keyword">else</span>&#123; <span class="comment">//father</span></span><br><span class="line"> <span class="built_in">printf</span>(<span class="string">"I am father : %d!, ret: %d\n"</span>, getpid(), ret);</span><br><span class="line"> &#125;</span><br><span class="line"> sleep(<span class="number">1</span>);</span><br><span class="line"> <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="4-2：fork-函数用运"><a href="#4-2：fork-函数用运" class="headerlink" title="4.2：fork ()函数用运"></a>4.2：fork ()函数用运</h5><p><strong>1.返回值：一次调用两个返回值</strong></p>
 <blockquote>
 <p>  父进程返回子进程的pid，子进程返回 0</p>
-<p>  ​     通常需要让父子进程执行不同的逻辑，就可以借助<strong>fork</strong>的返回值来进行区分</p>
+<p>  通常需要让父子进程执行不同的逻辑，就可以借助<strong>fork</strong>的返回值来进行区分</p>
 </blockquote>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line">  <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">     <span class="comment">//__pid_t和pid_t还有int 都是等价的</span></span><br><span class="line">    <span class="keyword">pid_t</span> ret=fork();</span><br><span class="line">    <span class="keyword">if</span>(ret&gt;<span class="number">0</span>)&#123;</span><br><span class="line">      <span class="comment">//父进程</span></span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">"father:%d\n "</span>,getpid());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(ret== <span class="number">0</span>)&#123;</span><br><span class="line">      <span class="comment">//子进程</span></span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">"child:%d\n"</span>,getpid());</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">     perror(<span class="string">"fork"</span>);                                                                             </span><br><span class="line">    &#125;</span><br><span class="line">   sleep(<span class="number">1</span>);</span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>  <strong>如果失败  返回&lt; 0 的结果(可能原因如下)</strong></p>
-<p>   a. 内存不够</p>
-<p>  ​ b. 进程太多达到上限 上线即为： <strong>RLIMIT_NPROC</strong></p>
-</blockquote>
+<p><strong>如果失败  返回&lt; 0 的结果(可能原因如下)</strong></p>
+<ul>
+<li><p>a. 内存不够</p>
+</li>
+<li><p>b. 进程太多达到上限 上线即为： <strong>RLIMIT_NPROC</strong></p>
+</li>
+</ul>
 <p><strong>2. 执行过程</strong></p>
-<blockquote>
-<p>父子进程都是紧接着fork继续执行</p>
-</blockquote>
+<ul>
+<li>父子进程都是紧接着fork继续执行</li>
+</ul>
 <p><strong>3. 先后顺序</strong></p>
-<blockquote>
-<p>不确定，取决于操作系统的调度器</p>
-</blockquote>
-<h5 id="进程的调度"><a href="#进程的调度" class="headerlink" title="进程的调度"></a>进程的调度</h5><p><strong>让少量的CPU能够满足大量的进程同时执行的需求</strong></p>
-<p><strong>并行：两个CPU分别执行两个进程</strong></p>
-<p><strong>并发:一个CPU”同时”执行两个进程，切换执行，并非同时进行</strong></p>
-<h4 id="僵尸进程"><a href="#僵尸进程" class="headerlink" title="僵尸进程"></a>僵尸进程</h4><p><strong>成因:子进程结束之后，父进程没有回收子进程的资源，为了解决子进程向父进程汇报工作的问题</strong></p>
-<p><strong>危害：处理不当会造成内存泄漏</strong></p>
-<p><strong>处理：直kill 僵尸进程是kill 不掉的，可以kill 僵尸进程的父进程。更科学的处理办法是: 进程等待</strong></p>
-<p><strong>为什么 kill 父进程僵尸进程没了？</strong></p>
-<h4 id="孤儿进程"><a href="#孤儿进程" class="headerlink" title="孤儿进程"></a>孤儿进程</h4><blockquote>
-<p>当kill 掉父进程之后，<strong>子进程就被称为孤儿进程</strong>，孤儿进程会<strong>被 1 号进程(init进程)收养</strong>，从而释放资源</p>
-<p><strong>孤儿进程不是一种状态</strong></p>
-<p><strong>指父进程先结束了，但是子进程还在，子进程的父亲变成了1号进程</strong></p>
-</blockquote>
-<p><strong>init进程：开机时运行的第一个进程</strong></p>
-<h5 id="2-组织进程"><a href="#2-组织进程" class="headerlink" title="2.组织进程"></a>2.组织进程</h5><blockquote>
-<p>双向链表进行组织，每个结点就是一个task_ struct   (只针对Linux)</p>
-</blockquote>
-<h5 id="除了ps-之外top也可以查看进程的状态"><a href="#除了ps-之外top也可以查看进程的状态" class="headerlink" title="除了ps 之外top也可以查看进程的状态"></a>除了ps 之外top也可以查看进程的状态</h5><blockquote>
-<p><strong>PR:</strong>数字越小，优先级别越高</p>
-<p><strong>NI(nice):</strong>优先级的修正值，<strong>PR+NI =&gt; 最终的PR</strong></p>
-<p>通过指令可以调整nice，宏观上往往看不出效果</p>
-</blockquote>
-<h3 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h3><h5 id="概念-1"><a href="#概念-1" class="headerlink" title="概念"></a>概念</h5><blockquote>
-<p> 环境变量(environment variables)一般是指在操作系统中用来指定操作系统运行环境的一些参数</p>
-<p>环境<a href="https://baike.baidu.com/item/%E5%8F%98%E9%87%8F" target="_blank" rel="noopener">变量</a>是在操作系统中一个具有特定名字的对象，它包含了一个或者多个应用<a href="https://baike.baidu.com/item/%E7%A8%8B%E5%BA%8F" target="_blank" rel="noopener">程序</a>所将使用到的信息。例如Windows和DOS操作系统中的path环境变量，当要求系统运行一个<a href="https://baike.baidu.com/item/%E7%A8%8B%E5%BA%8F/71525" target="_blank" rel="noopener">程序</a>而没有告诉它程序所在的完整路径时，系统除了在<a href="https://baike.baidu.com/item/%E5%BD%93%E5%89%8D%E7%9B%AE%E5%BD%95/7205107" target="_blank" rel="noopener">当前目录</a>下面寻找此程序外，还应到path中指定的路径去找。用户通过设置环境<a href="https://baike.baidu.com/item/%E5%8F%98%E9%87%8F" target="_blank" rel="noopener">变量</a>，来更好的运行进程。 </p>
-<p>环境变量通常具有某些特殊用途，还有在系统当中通常具有全局特性</p>
-</blockquote>
-<h5 id="常见环境变量"><a href="#常见环境变量" class="headerlink" title="常见环境变量"></a>常见环境变量</h5><p><strong>PATH : 指定命令的搜索路径</strong><br><strong>HOME : 指定用户的主工作目录(即用户登陆到Linux系统中时,默认的目录)</strong><br><strong>SHELL : 当前Shell,它的值通常是/bin/bash</strong>。</p>
-<h5 id="查看环境变量的命令"><a href="#查看环境变量的命令" class="headerlink" title="查看环境变量的命令"></a>查看环境变量的命令</h5><p><strong>echo $NAME //NAME:你的环境变量名称</strong></p>
+<ul>
+<li>不确定，取决于操作系统的调度器</li>
+</ul>
+<h5 id="4-2进程的调度"><a href="#4-2进程的调度" class="headerlink" title="4.2进程的调度"></a>4.2进程的调度</h5><ul>
+<li><p>让少量的CPU能够满足大量的进程同时执行的需求</p>
+</li>
+<li><p>并行：两个CPU分别执行两个进程</p>
+</li>
+<li><p>并发:一个CPU”同时”执行两个进程，切换执行，并非同时进行</p>
+</li>
+</ul>
+<h4 id="五-僵尸进程"><a href="#五-僵尸进程" class="headerlink" title="五:僵尸进程"></a>五:僵尸进程</h4><h5 id="5-1-成因"><a href="#5-1-成因" class="headerlink" title="5.1:成因:"></a>5.1:成因:</h5><ul>
+<li>子进程结束之后，父进程没有回收子进程的资源，为了解决子进程向父进程汇报工作的问题</li>
+</ul>
+<h5 id="5-2：危害："><a href="#5-2：危害：" class="headerlink" title="5.2：危害："></a>5.2：危害：</h5><ul>
+<li>处理不当会造成==内存泄漏==</li>
+</ul>
+<h5 id="5-3：处理方式"><a href="#5-3：处理方式" class="headerlink" title="5.3：处理方式"></a>5.3：处理方式</h5><ul>
+<li>直接kill 僵尸进程是kill 不掉的，可以kill 掉僵尸进程的父进程。更科学的处理办法是: 进程等待</li>
+</ul>
+<h5 id="5-4：为什么-kill-父进程僵尸进程没了？"><a href="#5-4：为什么-kill-父进程僵尸进程没了？" class="headerlink" title="5.4：为什么 kill 父进程僵尸进程没了？"></a>5.4：为什么 kill 父进程僵尸进程没了？</h5><h4 id="六：孤儿进程"><a href="#六：孤儿进程" class="headerlink" title="六：孤儿进程"></a>六：孤儿进程</h4><h5 id="6-1-进程的状态"><a href="#6-1-进程的状态" class="headerlink" title="6.1:进程的状态"></a>6.1:进程的状态</h5><ul>
+<li><p>当kill 掉父进程之后，<strong>子进程就被称为孤儿进程</strong>，孤儿进程会<strong>被 1 号进程(init进程)收养</strong>，从而释放资源</p>
+</li>
+<li><p>孤儿进程不是一种状态</p>
+</li>
+<li><p>指父进程先结束了，但是子进程还在，子进程的父亲变成了1号进程</p>
+</li>
+<li><p>init进程：开机时运行的第一个进程</p>
+</li>
+</ul>
+<h5 id="6-2：组织进程"><a href="#6-2：组织进程" class="headerlink" title="6.2：组织进程"></a>6.2：组织进程</h5><ul>
+<li>双向链表进行组织，每个结点就是一个task_ struct   (只针对Linux)</li>
+</ul>
+<h5 id="6-3：除了ps-之外top也可以查看进程的状态"><a href="#6-3：除了ps-之外top也可以查看进程的状态" class="headerlink" title="6.3：除了ps 之外top也可以查看进程的状态"></a>6.3：除了ps 之外top也可以查看进程的状态</h5><ul>
+<li><p>PR:数字越小，优先级别越高</p>
+</li>
+<li><p>NI(nice):<strong>优先级的修正值，</strong>PR+NI =&gt; 最终的PR</p>
+</li>
+<li>通过指令可以调整nice，宏观上往往看不出效果</li>
+</ul>
+<h4 id="七：环境变量"><a href="#七：环境变量" class="headerlink" title="七：环境变量"></a>七：环境变量</h4><h5 id="7-1概念"><a href="#7-1概念" class="headerlink" title="7.1概念"></a>7.1概念</h5><ul>
+<li>环境变量(environment variables)一般是指在操作系统中用来指定操作系统运行环境的一些参数</li>
+</ul>
+<p>==环境<a href="https://baike.baidu.com/item/%E5%8F%98%E9%87%8F" target="_blank" rel="noopener">变量</a>是在操作系统中一个具有特定名字的对象，它包含了一个或者多个应用<a href="https://baike.baidu.com/item/%E7%A8%8B%E5%BA%8F" target="_blank" rel="noopener">程序</a>所将使用到的信息==。</p>
+<ul>
+<li>环境变量通常具有某些特殊用途，还有在系统当中通常具有全局特性</li>
+</ul>
+<h5 id="7-2：常见环境变量"><a href="#7-2：常见环境变量" class="headerlink" title="7.2：常见环境变量"></a>7.2：常见环境变量</h5><ul>
+<li>PATH : 指定命令的搜索路径</li>
+<li>HOME : 指定用户的主工作目录(即用户登陆到Linux系统中时,默认的目录)</li>
+<li>SHELL : 当前Shell,它的值通常是/bin/bash</li>
+</ul>
+<h5 id="7-3：查看环境变量的命令"><a href="#7-3：查看环境变量的命令" class="headerlink" title="7.3：查看环境变量的命令"></a>7.3：查看环境变量的命令</h5><p><strong>echo $NAME //NAME:你的环境变量名称</strong></p>
 <blockquote>
 <p><strong>例如: echo $ PATH</strong> ：查看PATH路径</p>
 </blockquote>
@@ -240,7 +300,7 @@
 <blockquote>
 <p><strong>或者echo  $ HOME</strong>：普通模式下查看到的时用户的家目录，root模式下查看到的是 <strong>root</strong></p>
 </blockquote>
-<h4 id="键值对-key-value-：通过key找到对应的value"><a href="#键值对-key-value-：通过key找到对应的value" class="headerlink" title="键值对(key_value)：通过key找到对应的value"></a>键值对(key_value)：通过key找到对应的value</h4><p><strong>环境变量是一个键值对结构</strong></p>
+<h4 id="八：键值对-key-value-：通过key找到对应的value"><a href="#八：键值对-key-value-：通过key找到对应的value" class="headerlink" title="八：键值对(key_value)：通过key找到对应的value"></a>八：键值对(key_value)：通过key找到对应的value</h4><p><strong>环境变量是一个键值对结构</strong></p>
 <blockquote>
 <p>键：变量名</p>
 <p>值：变量内容</p>
@@ -309,7 +369,9 @@
 </ul>
 </blockquote>
 <h4 id="分页-amp-虚拟地址空间"><a href="#分页-amp-虚拟地址空间" class="headerlink" title="分页&amp;虚拟地址空间"></a>分页&amp;虚拟地址空间</h4><p><img src="https://wx2.sinaimg.cn/mw690/0071OE7sly1g2xiwbetxdj314e0gjtc0.jpg" alt></p>
-	  
+<p><img src="https://i.loli.net/2019/07/26/5d3a62643f38423304.png" alt></p>
+<hr>
+<h3 id="进程控制块PCB"><a href="#进程控制块PCB" class="headerlink" title="进程控制块PCB"></a>进程控制块PCB</h3>	  
 
 	  <div>
   		<center>
@@ -330,6 +392,20 @@
 		
 	
 		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
 			
 		
 	
@@ -468,11 +544,9 @@
 	
 		
 	
-		
 	
 	
-	
-		<li class="prev"><a href="/jun/2019/04/29/Centos虚拟机的安装教程/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>prev</a></li>
+		<li class="prev"><a href="/jun/2019/04/29/Linux/Centos虚拟机的安装教程/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>prev</a></li>
 	
 	<li><a href="/jun/"><i class="fa fa-archive"></i>Home</a></li>
 	

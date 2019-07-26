@@ -6,7 +6,7 @@
   <title>数据库基础 | Hexo</title>
   <meta name="author" content="John Doe">
   
-  <meta name="description" content="数据库1.数据库的建立2.新建数据库对应表的建立3.删除表的操作4.简单的查询语句5.建立对应表的索引6.删除建立的索引">
+  <meta name="description" content="数据库[TOC]">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -58,8 +58,9 @@
 	  
 
 	  <!-- content -->
-	  <h3 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h3><h5 id="1-数据库的建立"><a href="#1-数据库的建立" class="headerlink" title="1.数据库的建立"></a><strong>1.数据库的建立</strong></h5><h5 id="2-新建数据库对应表的建立"><a href="#2-新建数据库对应表的建立" class="headerlink" title="2.新建数据库对应表的建立"></a><strong>2.新建数据库对应表的建立</strong></h5><h5 id="3-删除表的操作"><a href="#3-删除表的操作" class="headerlink" title="3.删除表的操作"></a><strong>3.删除表的操作</strong></h5><h5 id="4-简单的查询语句"><a href="#4-简单的查询语句" class="headerlink" title="4.简单的查询语句"></a><strong>4.简单的查询语句</strong></h5><h5 id="5-建立对应表的索引"><a href="#5-建立对应表的索引" class="headerlink" title="5.建立对应表的索引"></a><strong>5.建立对应表的索引</strong></h5><h5 id="6-删除建立的索引"><a href="#6-删除建立的索引" class="headerlink" title="6.删除建立的索引"></a>6.删除建立的索引</h5><a id="more"></a>
-<h4 id="1-数据库的建立-1"><a href="#1-数据库的建立-1" class="headerlink" title="1.数据库的建立"></a>1.数据库的建立</h4><h5 id="1-建库指令"><a href="#1-建库指令" class="headerlink" title="1.建库指令"></a>1.建库指令</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create database &lt;数据库名&gt;</span><br></pre></td></tr></table></figure>
+	  <h3 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h3><p>[TOC]</p>
+<a id="more"></a>
+<h4 id="1-数据库的建立"><a href="#1-数据库的建立" class="headerlink" title="1.数据库的建立"></a>1.数据库的建立</h4><h5 id="1-建库指令"><a href="#1-建库指令" class="headerlink" title="1.建库指令"></a>1.建库指令</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create database &lt;数据库名&gt;</span><br></pre></td></tr></table></figure>
 <p><strong>如下:建立一个叫 jack 的数据库</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create database jack</span><br></pre></td></tr></table></figure>
 <h4 id="2-在新建的数据库下创建新表"><a href="#2-在新建的数据库下创建新表" class="headerlink" title="2.在新建的数据库下创建新表"></a>2.在新建的数据库下创建新表</h4><p><strong>1.建表指令</strong></p>
@@ -73,17 +74,17 @@
 <p>SQL server 在创建主码时会自动生成聚簇索引，如果表中还需要给别的字段创建聚簇，则可以通过 <strong>nonclustered</strong> 关键字来取消</p>
 </blockquote>
 <p><strong>好像不加那个use&lt;库名&gt;也可以创建新表 ，但是你要保证你只打开了这一个表</strong></p>
-<h4 id="3-删除表的操作-1"><a href="#3-删除表的操作-1" class="headerlink" title="3.删除表的操作"></a>3.删除表的操作</h4><p><strong>1.删表命令</strong></p>
+<h4 id="3-删除表的操作"><a href="#3-删除表的操作" class="headerlink" title="3.删除表的操作"></a>3.删除表的操作</h4><p><strong>1.删表命令</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">drop table &lt;要删除的表名&gt;</span><br></pre></td></tr></table></figure>
 <p><strong>如下：删除表 ss</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">drop table  ss</span><br></pre></td></tr></table></figure>
-<h4 id="4-简单的查询语句-1"><a href="#4-简单的查询语句-1" class="headerlink" title="4.简单的查询语句"></a>4.简单的查询语句</h4><p><strong>1.查询指令</strong></p>
+<h4 id="4-简单的查询语句"><a href="#4-简单的查询语句" class="headerlink" title="4.简单的查询语句"></a>4.简单的查询语句</h4><p><strong>1.查询指令</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select &lt;所查属性1&gt;，&lt;所查属性n&gt;</span><br><span class="line">from &lt;标名/视图名&gt;</span><br><span class="line">where &lt;所查的对象&gt;</span><br></pre></td></tr></table></figure>
 <p><strong>如下: 在jack库下的student表中查找sdept(系别)为is 的学生的学号和姓名及年龄</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select sno,sname,sage</span><br><span class="line">from student </span><br><span class="line">where sdept = &apos;is&apos;</span><br></pre></td></tr></table></figure>
 <p><strong>查询结果如下</strong></p>
 <p><img src="https://wx2.sinaimg.cn/mw690/0071OE7sly1g2vdbwc67aj30rs0f4t98.jpg" alt></p>
-<h4 id="5-建立对应表的索引-1"><a href="#5-建立对应表的索引-1" class="headerlink" title="5.建立对应表的索引"></a>5.建立对应表的索引</h4><p><strong>建立指令</strong></p>
+<h4 id="5-建立对应表的索引"><a href="#5-建立对应表的索引" class="headerlink" title="5.建立对应表的索引"></a>5.建立对应表的索引</h4><p><strong>建立指令</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create [unique][clustered] index &lt;索引名&gt;</span><br></pre></td></tr></table></figure>
 <p><strong>如下:为student表的sno 建立唯一索引</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create unique index stusno on student(sno)</span><br></pre></td></tr></table></figure>
@@ -94,7 +95,7 @@
 <p><strong>执行结果</strong></p>
 <p><img src="https://wx3.sinaimg.cn/mw690/0071OE7sly1g2vdrsisshj30rn0f374s.jpg" alt></p>
 <p><strong>此处需要强调的是如果在建表是没有取消表默认的聚簇索引，则此时建立聚簇索引会报错</strong></p>
-<h4 id="6-删除建立的索引-1"><a href="#6-删除建立的索引-1" class="headerlink" title="6.删除建立的索引"></a>6.删除建立的索引</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">drop index &lt;建立的索引名&gt; on &lt;指定表名&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="6-删除建立的索引"><a href="#6-删除建立的索引" class="headerlink" title="6.删除建立的索引"></a>6.删除建立的索引</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">drop index &lt;建立的索引名&gt; on &lt;指定表名&gt;</span><br></pre></td></tr></table></figure>
 <p><strong>删除建立的stusname 的聚簇索引</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">drop index stusname  on student</span><br></pre></td></tr></table></figure>
 	  
@@ -110,52 +111,6 @@
 	
 	
 		
-			
-		
-	
-		
-	
-		
-	
-		
-	
-		
-	
-		
-	
-		
-	
-		
-	
-		
-	
-		
-	
-		
-	
-		
-	
-		
-	
-		
-	
-		
-	
-		
-	
-		
-	
-		
-	
-		
-	
-		
-	
-		
-	
-		
-	
-		
 	
 		
 	
@@ -169,9 +124,65 @@
 	
 		
 			
-			
 		
 	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+			
+			
 		
 	
 		

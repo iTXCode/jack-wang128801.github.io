@@ -1,0 +1,396 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>虚拟继承 | Hexo</title>
+  <meta name="author" content="John Doe">
+  
+  <meta name="description" content="虚拟继承[TOC]">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="虚拟继承">
+  <meta property="og:site_name" content="Hexo">
+
+  
+    <meta property="og:image" content>
+  
+
+  
+    <link rel="alternative" href="/jun/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link href="/jun/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/jun/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/responsive.css" media="screen" type="text/css">  
+  <link rel="stylesheet" href="/jun/css/sidenav.css" media="screen" type="text/css">  
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/jun/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+</head>
+</html>
+<body id="body" data-spy="scroll" data-target=".toc">
+  <div class="container" id="container">
+	<div class="content">
+	  <div class="page-header">		
+  <h1><a class="brand" href="/jun/">Hexo</a><span class="split"></span><span class="title">虚拟继承</span><span class="date" id="title-date"><i class="fa fa-clock-o"></i> 2019-07-22</span></h1>
+</div>		
+
+<div class="row page">
+  <!-- cols -->	
+  
+  
+
+  
+	<div class="col-md-12">
+	  
+
+	  <!-- content -->
+	  <h3 id="虚拟继承"><a href="#虚拟继承" class="headerlink" title="虚拟继承"></a>虚拟继承</h3><p>[TOC]</p>
+<a id="more"></a>
+<hr>
+<h4 id="一-复杂的菱形继承及菱形虚拟继承"><a href="#一-复杂的菱形继承及菱形虚拟继承" class="headerlink" title="一:复杂的菱形继承及菱形虚拟继承"></a>一:复杂的菱形继承及菱形虚拟继承</h4><h6 id="三种继承方式"><a href="#三种继承方式" class="headerlink" title="三种继承方式"></a>三种继承方式</h6><ul>
+<li><kbd>单继承：一个子类只有一个直接父类时称这个继承关系为单继承</kbd></li>
+</ul>
+<p><img src="https://i.loli.net/2019/07/22/5d34ffed9a9c466900.png" alt></p>
+<ul>
+<li><kbd>多继承：一个子类有两个或以上直接父类时称这个继承关系为多继承</kbd></li>
+</ul>
+<p><img src="https://i.loli.net/2019/07/22/5d3500c70014044588.png" alt></p>
+<ul>
+<li><kbd>菱形继承的问题：从下面的对象成员模型构造，可以看出菱形继承有数</kbd></li>
+</ul>
+<p><kbd>可以看出菱形继承有数据冗余和二义性的问题。在Assistant</kbd><br><kbd>的对象中Person成员会有两份 </kbd></p>
+<p><img src="https://i.loli.net/2019/07/22/5d3501e11e70c42210.png" alt></p>
+<ul>
+<li>可以看到该种继承方式中Assistant类继承了来自Student 类和Teacher 类继承自Person 类的两份资源？</li>
+</ul>
+<p>==这样就造成了继承的二义性和数据冗余的问题==</p>
+<p><kbd>该如何解决这个问题呢？</kbd></p>
+<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="keyword">int</span> _id=<span class="number">123</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span>:</span><span class="keyword">public</span> Person   <span class="comment">//单继承</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="keyword">char</span>* name=<span class="string">"peter"</span>;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Teacher</span> :</span> <span class="keyword">public</span> Person  <span class="comment">//单继承</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">public</span>:</span><br><span class="line">		<span class="keyword">char</span>* sex=<span class="string">"男"</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Assistant</span>:</span><span class="keyword">public</span> Student,<span class="keyword">public</span> Teacher   <span class="comment">//多继承</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="keyword">int</span> age=<span class="number">20</span>;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//以上的所有继承关系构成了菱形继承</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">     Person</span></span><br><span class="line"><span class="comment">	 /   \</span></span><br><span class="line"><span class="comment">	/     \</span></span><br><span class="line"><span class="comment"> Student  Teacher</span></span><br><span class="line"><span class="comment">    \      /</span></span><br><span class="line"><span class="comment">	 \    /</span></span><br><span class="line"><span class="comment">	Assistant</span></span><br><span class="line"><span class="comment">    菱形继承的二义性:Assistant类既继承自Student,又继承自Teacher</span></span><br><span class="line"><span class="comment">	当访问Student和Teacher共同的基类Person中的成员是产生二义性</span></span><br><span class="line"><span class="comment">	菱形继承的数据冗余:Assistant类既继承自Student,又继承自Teacher</span></span><br><span class="line"><span class="comment">	则Assistant中就有两份来自Person类中的资源 </span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span>&#123;</span><br><span class="line">	Assistant ast;</span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; ast.name &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; ast.sex &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; ast.age &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">	<span class="comment">//std::cout &lt;&lt; ast._id &lt;&lt; std::endl;//提示_id访问不明确</span></span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt;ast.Student::_id &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; ast.Teacher::_id &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">	<span class="comment">// 需要显示指定访问哪个父类的成员可以解决二义性问题，但是数据冗余问题无法解决</span></span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	Assistant ast;</span><br><span class="line">	test();</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>==虚拟继承可以解决菱形继承的二义性和数据冗余的问题==。如上面的继承关系，在Student和Teacher的继承Person时使用虚拟继承，即可解决问题。需要注意的是，虚拟继承不要在其他地方去使用。</li>
+</ul>
+<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="keyword">int</span> _id = <span class="number">123</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span> :</span><span class="keyword">virtual</span> <span class="keyword">public</span> Person</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="keyword">char</span>* name = <span class="string">"peter"</span>;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Teacher</span> :</span><span class="keyword">virtual</span>  <span class="keyword">public</span> Person</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="keyword">char</span>* sex = <span class="string">"男"</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Assistant</span> :</span><span class="keyword">public</span> Student, <span class="keyword">public</span> Teacher</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="keyword">int</span> age = <span class="number">20</span>;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">     Person</span></span><br><span class="line"><span class="comment">	 /   \</span></span><br><span class="line"><span class="comment">	/     \</span></span><br><span class="line"><span class="comment"> Student  Teacher</span></span><br><span class="line"><span class="comment">    \      /</span></span><br><span class="line"><span class="comment">	 \    /</span></span><br><span class="line"><span class="comment">	Assistant</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span>&#123;</span><br><span class="line">	Assistant ast;</span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; ast.name &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; ast.sex &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; ast.age &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; ast._id &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"><span class="comment">//利用虚拟继承解决了访问不明确的问题(菱形继承的二义性和数据冗余问题)</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	test();</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="虚拟继承解决数据冗余和二义性的原理"><a href="#虚拟继承解决数据冗余和二义性的原理" class="headerlink" title="虚拟继承解决数据冗余和二义性的原理"></a>虚拟继承解决数据冗余和二义性的原理</h5><ul>
+<li>借助虚基表和虚基表指针实现，其中虚基表中存在当前对象相对于基类部分的偏移量，从而通过偏移量准确的找到基类的内容。</li>
+</ul>
+<p><kbd>虚基表：当前对象相对于基类部分的偏移量</kbd></p>
+<p><img src="https://i.loli.net/2019/07/22/5d352304a794172930.png" alt></p>
+<p>==虚拟继承的顶部首先存储的是虚基表指针,接着存储的关于基类的偏移量==</p>
+<ul>
+<li>虚拟对象的访问步骤</li>
+</ul>
+<blockquote>
+<ul>
+<li>1.取对象前4个字节的内容(虚基表的指针)</li>
+<li>2.通过虚基表的指针从偏移量表格中取基类起始位置相对于派生类对象的起始位置的偏移量</li>
+<li>3.通过偏移量在派生类对象中找到基类成员并访问</li>
+</ul>
+</blockquote>
+<ul>
+<li>派生类中内部成员的访问</li>
+</ul>
+<blockquote>
+<ul>
+<li>直接访问</li>
+</ul>
+</blockquote>
+<h4 id="二：普通继承与虚拟继承的区别"><a href="#二：普通继承与虚拟继承的区别" class="headerlink" title="二：普通继承与虚拟继承的区别"></a>二：普通继承与虚拟继承的区别</h4><ul>
+<li style="list-style: none"><input type="checkbox" checked> 普通继承</li>
+</ul>
+<p><img src="https://i.loli.net/2019/07/22/5d351eabe178d38618.png" alt></p>
+<ul>
+<li style="list-style: none"><input type="checkbox" checked> 虚拟继承</li>
+</ul>
+<p><img src="https://i.loli.net/2019/07/22/5d351f5c2ee6672461.png" alt></p>
+<ul>
+<li>1.在继承同样内容的时候,虚拟继承比普通继承方式的内存多四个字节</li>
+<li>2.虚拟继承中基类部分在下,子类部分在上。普通继承与其相反。</li>
+<li><p>3.编译器会给派生类生成默认的构造函数—&gt; 要在对象的前四个字节里放一些内容</p>
+</li>
+<li><p>4.虚拟课程对象前4个字节中内容指向一块内存空间</p>
+</li>
+</ul>
+<h5 id="继承的总结与反思"><a href="#继承的总结与反思" class="headerlink" title="继承的总结与反思"></a>继承的总结与反思</h5><ul>
+<li><kbd>有了多继承，就存在菱形继承，有了菱形继承就有菱形虚拟继承，</kbd></li>
+<li><kbd>底层实现就很复杂。所以一般不建议设计出多继承，一定不要设计出菱形继承。</kbd></li>
+<li><kbd>否则在复杂度及性能上都有问题。</kbd></li>
+</ul>
+<h4 id="多继承中指针偏移问题"><a href="#多继承中指针偏移问题" class="headerlink" title="多继承中指针偏移问题"></a>多继承中指针偏移问题</h4><figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Base1</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"><span class="keyword">int</span> _b1;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Base2</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"><span class="keyword">int</span> _b2;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Derive</span> :</span> <span class="keyword">public</span> Base1, <span class="keyword">public</span> Base2 &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"><span class="keyword">int</span> _d;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="comment">// A. p1 == p2 == p3</span></span><br><span class="line"><span class="comment">// B. p1 &lt; p2 &lt; p3</span></span><br><span class="line"><span class="comment">// C. p1 == p3 != p2</span></span><br><span class="line"><span class="comment">// D. p1 != p2 != p3</span></span><br><span class="line">Derive d;</span><br><span class="line">Base1* p1 = &amp;d;</span><br><span class="line">Base2* p2 = &amp;d;</span><br><span class="line">Derive* p3 = &amp;d;</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2019/07/22/5d352d54dbde760815.png" alt></p>
+<ul>
+<li>将派生类 Derive 的对象地址赋给其基类的指针的时候先会发生==切片操作== 原因是:基类的指针只能访问到自己类型大小的空间</li>
+<li>因而Base1类型和Base2类型的指针将多余的内容切除了</li>
+<li>从而p1和p3都指向了p3对象的首地址</li>
+<li>而p2指向了自己能访问到的地址(发生偏移)</li>
+</ul>
+	  
+
+	  <div>
+  		<center>
+		  <div class="pagination">
+<ul class="pagination">
+	
+	
+	
+	
+	
+	
+		
+			
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
+			
+			
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+	
+	
+		<li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>prev</a></li>
+	
+	<li><a href="/jun/"><i class="fa fa-archive"></i>Home</a></li>
+	
+		<li class="next"><a href="/jun/2019/07/19/Cpp/Cpp的IO流/" class="alignright next">next<i class="fa fa-arrow-circle-o-right"></i></a></li>
+	
+</ul>
+</div>
+
+		</center>
+	  </div>
+	  
+	</div> <!-- col-md-9/col-md-12 -->
+	
+  </div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+	<footer> <p>
+  &copy; 2019 John Doe
+  
+      with help from <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-wixo/">Wixo</a>.    
+</p> </footer>
+  </div> <!-- container-narrow -->
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/jun/js/jquery.imagesloaded.min.js"></script>
+<script src="/jun/js/gallery.js"></script>
+<script src="/jun/js/bootstrap.min.js"></script>
+<script src="/jun/js/jquery.tableofcontents.min.js"></script>
+<script src="/jun/js/tocgenerator.min.js"></script>
+<script src="/jun/js/main.js"></script>
+<script src="/jun/js/search.js"></script> 
+
+
+
+
+<link rel="stylesheet" href="/jun/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/jun/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+</body>
+</html>
