@@ -159,7 +159,12 @@
 <p>敲下的命令，在命令执行的过程中也是一个进程</p>
 </blockquote>
 <p><img src="https://wx2.sinaimg.cn/mw690/0071OE7sly1g2stgtf6i7j316206g0th.jpg" alt></p>
-<h5 id="3-3进程的管理"><a href="#3-3进程的管理" class="headerlink" title="3.3进程的管理"></a>3.3进程的管理</h5><h6 id="1-描述进程-PCB进程控制块-–-gt-就是一个结构-task-struct"><a href="#1-描述进程-PCB进程控制块-–-gt-就是一个结构-task-struct" class="headerlink" title="1.描述进程(PCB进程控制块 –&gt; 就是一个结构(task_struct))"></a>1.描述进程(PCB进程控制块 –&gt; 就是一个结构(task_struct))</h6><p><strong>PCB：针对通常情况</strong></p>
+<h5 id="3-3进程的管理"><a href="#3-3进程的管理" class="headerlink" title="3.3进程的管理"></a>3.3进程的管理</h5><h6 id="1-描述进程-PCB进程控制块-–-gt-就是一个结构-task-struct"><a href="#1-描述进程-PCB进程控制块-–-gt-就是一个结构-task-struct" class="headerlink" title="1.描述进程(PCB进程控制块 –&gt; 就是一个结构(task_struct))"></a>1.描述进程(PCB进程控制块 –&gt; 就是一个结构(task_struct))</h6><ul>
+<li>以结构体(task_struct)的形式存在于内核中</li>
+<li>grep -r “task_struct”</li>
+<li>头文件一般存放在/usr/include/</li>
+</ul>
+<p><strong>PCB：针对通常情况</strong></p>
 <h6 id="2-task-struct：-PCB的一种-只针对Linux"><a href="#2-task-struct：-PCB的一种-只针对Linux" class="headerlink" title="2.task_struct：(PCB的一种,)只针对Linux"></a>2.task_struct：(PCB的一种,)只针对Linux</h6><ul>
 <li>在Linux中描述进程的结构体叫做 ==task_struct==</li>
 <li>task_struct 是Linux内核的一种数据结构，它会被装载到RMB(内存里并且包含着进程的信息)</li>
@@ -196,13 +201,13 @@
 </ul>
 </blockquote>
 <ul>
-<li>其他信息</li>
+<li>其他 信息</li>
 </ul>
 <blockquote>
 <hr>
 </blockquote>
 <h6 id="4：pc指针-寄存器-接下来要干的事情"><a href="#4：pc指针-寄存器-接下来要干的事情" class="headerlink" title="4：pc指针(寄存器):接下来要干的事情"></a>4：pc指针(寄存器):接下来要干的事情</h6><ul>
-<li><p>[ ] 进程的状态</p>
+<li><p>[ ] 进程的状态(保存在PCB)</p>
 </li>
 <li><p>R 就绪状态，进程在就绪队列中(谈恋爱 ,或者马上轮到)，就会处于这个状态</p>
 </li>
@@ -216,39 +221,72 @@
 <h4 id="四：父进程-ppid-与子进程-pid"><a href="#四：父进程-ppid-与子进程-pid" class="headerlink" title="四：父进程(ppid)与子进程(pid)"></a>四：父进程(ppid)与子进程(pid)</h4><h5 id="4-1：子进程的创建"><a href="#4-1：子进程的创建" class="headerlink" title="4.1：子进程的创建"></a>4.1：子进程的创建</h5><p><strong>使用代码来创建子进程</strong></p>
 <ul>
 <li>fork ()    系统调用，一个函数</li>
-<li>fork 有两个返回值</li>
+<li>fork 有两个返回值(1.子进程的pid(非负整数&gt;0),2.返回0)</li>
 <li>父子进程代码共享，数据各自开辟空间，私有一份（采用写时拷贝）</li>
 </ul>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line">  <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">      fork();</span><br><span class="line">    <span class="comment">//gitpid 获取进程的进程</span></span><br><span class="line">    <span class="comment">//gitppid 获取夫进程</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d  %d\n"</span>,getpid(),getppid());</span><br><span class="line">    sleep(<span class="number">1</span>);                                                                 </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"> <span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt; </span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line">  <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">      fork();</span><br><span class="line">    <span class="comment">//gitpid 获取进程的进程</span></span><br><span class="line">    <span class="comment">//gitppid 获取夫进程</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d  %d\n"</span>,getpid(),getppid());</span><br><span class="line">    sleep(<span class="number">1</span>);                                                                 </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
 <p><strong>fork 之后通常要用 if 进行分流</strong></p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="keyword">pid_t</span> ret = fork();</span><br><span class="line"> <span class="keyword">if</span>(ret &lt; <span class="number">0</span>)&#123;</span><br><span class="line"> perror(<span class="string">"fork"</span>);</span><br><span class="line"> <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="keyword">else</span> <span class="keyword">if</span>(ret == <span class="number">0</span>)&#123; <span class="comment">//child</span></span><br><span class="line"> <span class="built_in">printf</span>(<span class="string">"I am child : %d!, ret: %d\n"</span>, getpid(), ret);</span><br><span class="line"> &#125;<span class="keyword">else</span>&#123; <span class="comment">//father</span></span><br><span class="line"> <span class="built_in">printf</span>(<span class="string">"I am father : %d!, ret: %d\n"</span>, getpid(), ret);</span><br><span class="line"> &#125;</span><br><span class="line"> sleep(<span class="number">1</span>);</span><br><span class="line"> <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h5 id="4-2：fork-函数用运"><a href="#4-2：fork-函数用运" class="headerlink" title="4.2：fork ()函数用运"></a>4.2：fork ()函数用运</h5><p><strong>1.返回值：一次调用两个返回值</strong></p>
 <blockquote>
-<p>  父进程返回子进程的pid，子进程返回 0</p>
+<p>  ==父进程返回子进程的pid，子进程返回 0==</p>
 <p>  通常需要让父子进程执行不同的逻辑，就可以借助<strong>fork</strong>的返回值来进行区分</p>
 </blockquote>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line">  <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">     <span class="comment">//__pid_t和pid_t还有int 都是等价的</span></span><br><span class="line">    <span class="keyword">pid_t</span> ret=fork();</span><br><span class="line">    <span class="keyword">if</span>(ret&gt;<span class="number">0</span>)&#123;</span><br><span class="line">      <span class="comment">//父进程</span></span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">"father:%d\n "</span>,getpid());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(ret== <span class="number">0</span>)&#123;</span><br><span class="line">      <span class="comment">//子进程</span></span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">"child:%d\n"</span>,getpid());</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">     perror(<span class="string">"fork"</span>);                                                                             </span><br><span class="line">    &#125;</span><br><span class="line">   sleep(<span class="number">1</span>);</span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>示例代码</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">"这一句printf只有父进程执行\n"</span>);     </span><br><span class="line">    <span class="keyword">pid_t</span> ret=fork();</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"下面的代码父子进程都执行:\n"</span>);</span><br><span class="line">    <span class="keyword">if</span>(ret&gt;<span class="number">0</span>)&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"father pid:%d,ppid:%d\n"</span>,getpid(),getppid());</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(ret==<span class="number">0</span>)&#123;</span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">"son pid:%d,ppid:%d\n"</span>,getpid(),getppid());</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      perror(<span class="string">"fork"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    sleep(<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>运行结果</li>
+</ul>
+<p><img src="https://i.loli.net/2019/07/27/5d3bca391270d60871.png" alt></p>
+<ul>
+<li>可以看到子进程的ppid(父进程的pid)与父进程的pid是相同的</li>
+</ul>
+<h5 id="4-3-循环创建N个进程"><a href="#4-3-循环创建N个进程" class="headerlink" title="4.3:循环创建N个进程"></a>4.3:循环创建N个进程</h5><ul>
+<li>示例代码</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">2</span>;i++)&#123;</span><br><span class="line">    <span class="keyword">pid_t</span> ret=fork();</span><br><span class="line">    <span class="keyword">if</span>(ret&gt;<span class="number">0</span>)&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%c"</span>,<span class="string">'='</span>);</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(ret==<span class="number">0</span>)&#123;</span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">"%c"</span>,<span class="string">'='</span>);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      perror(<span class="string">"fork"</span>);</span><br><span class="line">    &#125;    </span><br><span class="line">    &#125; </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>运行结果</li>
+</ul>
+<p><img src="https://i.loli.net/2019/07/27/5d3c06951b4ec35482.png" alt></p>
+<ul>
+<li>调用关系</li>
+</ul>
+<p><img src="https://i.loli.net/2019/07/27/5d3bf84f46d5339476.png" alt></p>
+<ul>
+<li><p>上图可以看你出运行结果与预期的不吻合<kbd>该怎么解决?</kbd></p>
+</li>
+<li><p>[ ] 如下例：</p>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(;i&lt;<span class="number">5</span>;i++)&#123;</span><br><span class="line">     <span class="keyword">pid_t</span> ret=fork();</span><br><span class="line">     <span class="keyword">if</span>(ret==<span class="number">0</span>)&#123;</span><br><span class="line">     <span class="keyword">break</span>;</span><br><span class="line">    &#125;elseif(ret==<span class="number">-1</span>)&#123;</span><br><span class="line">      perror(<span class="string">"fork"</span>);</span><br><span class="line">    &#125;      </span><br><span class="line">   &#125; </span><br><span class="line">    <span class="keyword">if</span>(i&lt;<span class="number">5</span>)&#123;</span><br><span class="line">    sleep(i);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"child[i]:%d\n"</span>,i,getpid());</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        sleep(i);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"father[i]:%d\n"</span>,i,getpid());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>运行结果</li>
+</ul>
+<p><img src="https://i.loli.net/2019/07/27/5d3c1bbc126c590941.png" alt></p>
 <p><strong>如果失败  返回&lt; 0 的结果(可能原因如下)</strong></p>
 <ul>
 <li><p>a. 内存不够</p>
 </li>
-<li><p>b. 进程太多达到上限 上线即为： <strong>RLIMIT_NPROC</strong></p>
+<li><p>b. 进程太多达到上限 ，上线即为： <strong>RLIMIT_NPROC</strong></p>
 </li>
 </ul>
-<p><strong>2. 执行过程</strong></p>
-<ul>
-<li>父子进程都是紧接着fork继续执行</li>
+<h5 id="4-4：执行过程"><a href="#4-4：执行过程" class="headerlink" title="4.4：执行过程"></a>4.4：执行过程</h5><ul>
+<li>1.首先执行父进程</li>
+<li>2.当遇到fork()函数的时候父进程创建子进程</li>
+<li>3.接着父进程继续执行剩余代码，并且子进程同时开始执行自己的代码</li>
 </ul>
-<p><strong>3. 先后顺序</strong></p>
-<ul>
-<li>不确定，取决于操作系统的调度器</li>
+<h5 id="4-5：先后顺序"><a href="#4-5：先后顺序" class="headerlink" title="4.5：先后顺序"></a>4.5：先后顺序</h5><ul>
+<li>不确定，==取决于操作系统的调度器==</li>
 </ul>
-<h5 id="4-2进程的调度"><a href="#4-2进程的调度" class="headerlink" title="4.2进程的调度"></a>4.2进程的调度</h5><ul>
+<h5 id="4-6-进程的调度"><a href="#4-6-进程的调度" class="headerlink" title="4.6:进程的调度"></a>4.6:进程的调度</h5><ul>
 <li><p>让少量的CPU能够满足大量的进程同时执行的需求</p>
 </li>
-<li><p>并行：两个CPU分别执行两个进程</p>
+<li><p>==并行==：两个CPU分别执行两个进程</p>
 </li>
-<li><p>并发:一个CPU”同时”执行两个进程，切换执行，并非同时进行</p>
+<li><p>==并发==:一个CPU”同时”执行两个进程，==切换执行==，并非同时进行</p>
 </li>
 </ul>
 <h4 id="五-僵尸进程"><a href="#五-僵尸进程" class="headerlink" title="五:僵尸进程"></a>五:僵尸进程</h4><h5 id="5-1-成因"><a href="#5-1-成因" class="headerlink" title="5.1:成因:"></a>5.1:成因:</h5><ul>
@@ -285,18 +323,51 @@
 </ul>
 <p>==环境<a href="https://baike.baidu.com/item/%E5%8F%98%E9%87%8F" target="_blank" rel="noopener">变量</a>是在操作系统中一个具有特定名字的对象，它包含了一个或者多个应用<a href="https://baike.baidu.com/item/%E7%A8%8B%E5%BA%8F" target="_blank" rel="noopener">程序</a>所将使用到的信息==。</p>
 <ul>
-<li>环境变量通常具有某些特殊用途，还有在系统当中通常具有全局特性</li>
+<li><p>还有在系统当中通常具有全局特性</p>
+</li>
+<li><p>[ ] 特征</p>
+</li>
+<li><p>1.字符串(本质)</p>
+</li>
+<li>2.有统一的格式==名=(值)==</li>
+<li><p>3.值用来描述进程环境信息</p>
+</li>
+<li><p>[ ] </p>
+</li>
 </ul>
 <h5 id="7-2：常见环境变量"><a href="#7-2：常见环境变量" class="headerlink" title="7.2：常见环境变量"></a>7.2：常见环境变量</h5><ul>
 <li>PATH : 指定命令的搜索路径</li>
+</ul>
+<blockquote>
+<p>使用格式:echo $PATH</p>
+</blockquote>
+<ul>
 <li>HOME : 指定用户的主工作目录(即用户登陆到Linux系统中时,默认的目录)</li>
+</ul>
+<blockquote>
+<p>使用格式: echo $HOME</p>
+</blockquote>
+<ul>
 <li>SHELL : 当前Shell,它的值通常是/bin/bash</li>
 </ul>
-<h5 id="7-3：查看环境变量的命令"><a href="#7-3：查看环境变量的命令" class="headerlink" title="7.3：查看环境变量的命令"></a>7.3：查看环境变量的命令</h5><p><strong>echo $NAME //NAME:你的环境变量名称</strong></p>
+<blockquote>
+<p>使用格式: echo $ SHELL</p>
+</blockquote>
+<ul>
+<li>LANG ：当前使用的语言</li>
+</ul>
+<blockquote>
+<p>使用格式： echo $LANG</p>
+</blockquote>
+<h5 id="7-3：查看环境变量的命令"><a href="#7-3：查看环境变量的命令" class="headerlink" title="7.3：查看环境变量的命令"></a>7.3：查看环境变量的命令</h5><ul>
+<li>打印环境变量表</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line">extera <span class="keyword">char</span>** environ;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(;environ[i];i++)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%s\n"</span>,environ[i]);</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>echo $NAME //NAME:你的环境变量名称</strong></p>
 <blockquote>
 <p><strong>例如: echo $ PATH</strong> ：查看PATH路径</p>
 </blockquote>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"> <span class="comment">//env 也是一个字符串数组</span></span><br><span class="line">  <span class="comment">//查看当前环境变量都有啥</span></span><br><span class="line">  <span class="comment">//env 数组中也有一个结束标记NULL</span></span><br><span class="line">  <span class="comment">//main 函数有三种形式</span></span><br><span class="line">  <span class="comment">//1.没有参数</span></span><br><span class="line">  <span class="comment">//2.int argc, char *argv[]</span></span><br><span class="line">  <span class="comment">//3.int argc,char *argv[],char *env[]                                                                           </span></span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc,<span class="keyword">char</span> *argv[],<span class="keyword">char</span> *env[])</span></span>&#123;</span><br><span class="line">      (<span class="keyword">void</span>)argc;</span><br><span class="line">      (<span class="keyword">void</span>)argv;</span><br><span class="line">      (<span class="keyword">void</span>)env;</span><br><span class="line">      <span class="keyword">char</span>* result = getenv(<span class="string">"PATH"</span>);</span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">"%s \n"</span>,result);</span><br><span class="line"> </span><br><span class="line">   <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line"><span class="comment">//也可以获得与echo $PATH 相同的结果</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"> <span class="comment">//env 也是一个字符串数组</span></span><br><span class="line">  <span class="comment">//查看当前环境变量都有啥</span></span><br><span class="line">  <span class="comment">//env 数组中也有一个结束标记NULL</span></span><br><span class="line">  <span class="comment">//main 函数有三种形式</span></span><br><span class="line">  <span class="comment">//1.没有参数</span></span><br><span class="line">  <span class="comment">//2.main(int argc, char *argv[])</span></span><br><span class="line">  <span class="comment">//3.main(int argc,char *argv[],char *env[])                                                                            </span></span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc,<span class="keyword">char</span> *argv[],<span class="keyword">char</span> *env[])</span></span>&#123;</span><br><span class="line">      (<span class="keyword">void</span>)argc;</span><br><span class="line">      (<span class="keyword">void</span>)argv;</span><br><span class="line">      (<span class="keyword">void</span>)env;</span><br><span class="line">      <span class="keyword">char</span>* result = getenv(<span class="string">"PATH"</span>);</span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">"%s \n"</span>,result);</span><br><span class="line"> </span><br><span class="line">   <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line"><span class="comment">//也可以获得与echo $PATH 相同的结果</span></span><br></pre></td></tr></table></figure>
 <blockquote>
 <p><strong>或者echo  $ HOME</strong>：普通模式下查看到的时用户的家目录，root模式下查看到的是 <strong>root</strong></p>
 </blockquote>
