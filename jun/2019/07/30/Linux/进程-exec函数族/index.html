@@ -1,0 +1,321 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>进程-&gt;exec函数族 | Hexo</title>
+  <meta name="author" content="John Doe">
+  
+  <meta name="description" content="[TOC]">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="进程-&gt;exec函数族">
+  <meta property="og:site_name" content="Hexo">
+
+  
+    <meta property="og:image" content>
+  
+
+  
+    <link rel="alternative" href="/jun/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link href="/jun/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/jun/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/responsive.css" media="screen" type="text/css">  
+  <link rel="stylesheet" href="/jun/css/sidenav.css" media="screen" type="text/css">  
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/jun/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+</head>
+</html>
+<body id="body" data-spy="scroll" data-target=".toc">
+  <div class="container" id="container">
+	<div class="content">
+	  <div class="page-header">		
+  <h1><a class="brand" href="/jun/">Hexo</a><span class="split"></span><span class="title">进程-&gt;exec函数族</span><span class="date" id="title-date"><i class="fa fa-clock-o"></i> 2019-07-30</span></h1>
+</div>		
+
+<div class="row page">
+  <!-- cols -->	
+  
+  
+
+  
+	<div class="col-md-12">
+	  
+
+	  <!-- content -->
+	  <p>[TOC]</p>
+<a id="more"></a>
+<h3 id="exec函数族"><a href="#exec函数族" class="headerlink" title="exec函数族"></a>exec函数族</h3><h4 id="一：exec的简介"><a href="#一：exec的简介" class="headerlink" title="一：exec的简介"></a>一：exec的简介</h4><h5 id="1-来源"><a href="#1-来源" class="headerlink" title="1.来源"></a>1.来源</h5><blockquote>
+<p>fork创建进程后执行的是和父进程相同的程序(但有可能执行不同的代码分支 ),子进程往往要调用一种 <strong>exec</strong> 函数执行另一种程序。当进程调用一种 <strong>exec</strong> 函数时，该进程的用户空间代码和数据完全被新程序替换,从新程序的启动例程开始执行。调用 <strong>exec</strong> 并不创建新进程，所以调用 <strong>exec</strong> 前后该进程的id并未改变</p>
+</blockquote>
+<blockquote>
+<p>将当前进程的 <strong>.text、.data</strong> 替换为所要加载的程序 <strong>.text、.data</strong> ,然后让进程从新的 <strong>.text</strong> 第一条指令开始执行。但进程ID不变。</p>
+</blockquote>
+<h5 id="2-种类"><a href="#2-种类" class="headerlink" title="2.种类"></a>2.种类</h5><p>==execlp函数==: 其中l代表list,p指代PATH</p>
+<blockquote>
+<p>加载一个进程，借助PATH环境变量</p>
+</blockquote>
+<p><code>int execlp(const char*file,const char *arg,...);</code></p>
+<ul>
+<li style="list-style: none"><input type="checkbox"> 参数1：表示可执行文件的文件名</li>
+<li style="list-style: none"><input type="checkbox"> 参数2：表示给函数传递的是 <strong>arg为0(可执行程序名)</strong>  的参数</li>
+<li><p>[ ] …：表示命令行参数(以NULL结尾)</p>
+</li>
+<li><p>成功：无返回值</p>
+</li>
+<li>失败返回： -1</li>
+</ul>
+<blockquote>
+</blockquote>
+	  
+
+	  <div>
+  		<center>
+		  <div class="pagination">
+<ul class="pagination">
+	
+	
+	
+	
+	
+	
+		
+			
+			
+		
+	
+		
+			
+			
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+	
+	
+		<li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>prev</a></li>
+	
+	<li><a href="/jun/"><i class="fa fa-archive"></i>Home</a></li>
+	
+		<li class="next"><a href="/jun/2019/07/28/Linux/Linux中readonly的解决办法/" class="alignright next">next<i class="fa fa-arrow-circle-o-right"></i></a></li>
+	
+</ul>
+</div>
+
+		</center>
+	  </div>
+	  
+	</div> <!-- col-md-9/col-md-12 -->
+	
+  </div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+	<footer> <p>
+  &copy; 2019 John Doe
+  
+      with help from <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-wixo/">Wixo</a>.    
+</p> </footer>
+  </div> <!-- container-narrow -->
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/jun/js/jquery.imagesloaded.min.js"></script>
+<script src="/jun/js/gallery.js"></script>
+<script src="/jun/js/bootstrap.min.js"></script>
+<script src="/jun/js/jquery.tableofcontents.min.js"></script>
+<script src="/jun/js/tocgenerator.min.js"></script>
+<script src="/jun/js/main.js"></script>
+<script src="/jun/js/search.js"></script> 
+
+
+
+
+<link rel="stylesheet" href="/jun/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/jun/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+</body>
+</html>
