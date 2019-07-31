@@ -66,22 +66,114 @@
 <blockquote>
 <p>将当前进程的 <strong>.text、.data</strong> 替换为所要加载的程序 <strong>.text、.data</strong> ,然后让进程从新的 <strong>.text</strong> 第一条指令开始执行。但进程ID不变。</p>
 </blockquote>
-<h5 id="2-种类"><a href="#2-种类" class="headerlink" title="2.种类"></a>2.种类</h5><p>==execlp函数==: 其中l代表list,p指代PATH</p>
-<blockquote>
+<h5 id="2-种类"><a href="#2-种类" class="headerlink" title="2.种类"></a>2.种类</h5><h6 id="2-1：execlp函数-其中l代表list-p指代PATH"><a href="#2-1：execlp函数-其中l代表list-p指代PATH" class="headerlink" title="2.1：execlp函数:( 其中l代表list,p指代PATH)"></a>2.1：execlp函数:( 其中l代表list,p指代PATH)</h6><blockquote>
 <p>加载一个进程，借助PATH环境变量</p>
 </blockquote>
 <p><code>int execlp(const char*file,const char *arg,...);</code></p>
 <ul>
 <li style="list-style: none"><input type="checkbox"> 参数1：表示可执行文件的文件名</li>
 <li style="list-style: none"><input type="checkbox"> 参数2：表示给函数传递的是 <strong>arg为0(可执行程序名)</strong>  的参数</li>
-<li><p>[ ] …：表示命令行参数(以NULL结尾)</p>
+<li><p>[ ] …：表示变参,==参数列表必须以NULL结尾==</p>
 </li>
-<li><p>成功：无返回值</p>
+<li><p>函数执行结果</p>
 </li>
-<li>失败返回： -1</li>
 </ul>
-<blockquote>
+<table>
+<thead>
+<tr>
+<th>函数状态</th>
+<th>返回值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>成功</td>
+<td>无返回值</td>
+</tr>
+<tr>
+<td>失败</td>
+<td>-1</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li style="list-style: none"><input type="checkbox" checked> 用execlp函数实现<code>ls -l</code></li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line">   <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">     <span class="keyword">pid_t</span> pid=fork(); <span class="comment">//进程不同的话，fork函数的返回值不同</span></span><br><span class="line">     <span class="keyword">if</span>(pid==<span class="number">-1</span>)&#123;</span><br><span class="line">       perror(<span class="string">"fork"</span>);</span><br><span class="line">       <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">   &#125;<span class="keyword">else</span> <span class="keyword">if</span>(pid&gt;<span class="number">0</span>)&#123;</span><br><span class="line">     sleep(<span class="number">1</span>);</span><br><span class="line">     <span class="built_in">printf</span>(<span class="string">"parent_pid:%d\n"</span>,getpid());</span><br><span class="line">   &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">     execlp(<span class="string">"ls"</span>,<span class="string">"ls"</span>,<span class="string">"-l"</span>,<span class="literal">NULL</span>);</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>运行结果对比</li>
+</ul>
+<p><img src="https://i.loli.net/2019/07/31/5d416828a828534119.png" alt></p>
+<ul>
+<li style="list-style: none"><input type="checkbox" checked> 用execlp函数实现<code>ls -a</code></li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line">   <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">     <span class="keyword">pid_t</span> pid=fork(); <span class="comment">//进程不同的话，fork函数的返回值不同</span></span><br><span class="line">     <span class="keyword">if</span>(pid==<span class="number">-1</span>)&#123;</span><br><span class="line">       perror(<span class="string">"fork"</span>);</span><br><span class="line">       <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">   &#125;<span class="keyword">else</span> <span class="keyword">if</span>(pid&gt;<span class="number">0</span>)&#123;</span><br><span class="line">     sleep(<span class="number">1</span>);</span><br><span class="line">     <span class="built_in">printf</span>(<span class="string">"parent_pid:%d\n"</span>,getpid());</span><br><span class="line">   &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">     execlp(<span class="string">"ls"</span>,<span class="string">"-l"</span>,<span class="string">"-a"</span>,<span class="literal">NULL</span>);  </span><br><span class="line">     <span class="comment">//第二个参数可以随便传值，不会对程序功能造成影响</span></span><br><span class="line">     <span class="comment">//之后的参数不可随意改动</span></span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>运行结果比对</li>
+</ul>
+<p><img src="https://i.loli.net/2019/07/31/5d4167de0d87662401.png" alt></p>
+<h6 id="2-2-execl-函数"><a href="#2-2-execl-函数" class="headerlink" title="2.2:execl 函数"></a>2.2:execl 函数</h6><blockquote>
+<p>加载一个进程，通过 ==进程+程序名== 来加载</p>
 </blockquote>
+<p><code>int execl(const char* path,const char* arg,...);</code></p>
+<ul>
+<li>函数执行结果</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>函数状态</th>
+<th>返回值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>成功</td>
+<td>无返回值</td>
+</tr>
+<tr>
+<td>失败</td>
+<td>-1</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>对比 <strong>execlp</strong> ，如加载 <strong>“ls”</strong> 命令带有 <strong>-l，-F</strong> 参数</li>
+</ul>
+<p><code>execlp(&quot;ls&quot;,&quot;ls&quot;,&quot;-l&quot;,&quot;-F&quot;,NULL);</code> </p>
+<blockquote>
+<p>使用程序名在PATH 中搜索</p>
+</blockquote>
+<p><code>execl(&quot;/bin/ls&quot;,&quot;ls&quot;,&quot;-l&quot;,&quot;-F&quot;,NULL);</code></p>
+<blockquote>
+<p>使用参数1给出的绝对路径搜索</p>
+</blockquote>
+<ul>
+<li>用execl函数实现<code>ls -l</code></li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line">   <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">     <span class="keyword">pid_t</span> pid=fork(); <span class="comment">//进程不同的话，fork函数的返回值不同</span></span><br><span class="line">     <span class="keyword">if</span>(pid==<span class="number">-1</span>)&#123;</span><br><span class="line">       perror(<span class="string">"fork"</span>);</span><br><span class="line">       <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">   &#125;<span class="keyword">else</span> <span class="keyword">if</span>(pid&gt;<span class="number">0</span>)&#123;</span><br><span class="line">     sleep(<span class="number">1</span>);</span><br><span class="line">     <span class="built_in">printf</span>(<span class="string">"parent_pid:%d\n"</span>,getpid());</span><br><span class="line">   &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">     execlp(<span class="string">"/bin/ls"</span>,<span class="string">"ls"</span>,<span class="string">"-l"</span>,<span class="string">"-a"</span>,<span class="literal">NULL</span>);  </span><br><span class="line">     <span class="comment">//第二个参数可以随便传值，不会对程序功能造成影响</span></span><br><span class="line">     <span class="comment">//之后的参数不可随意改动</span></span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>运行结果对比</li>
+</ul>
+<p><img src="https://i.loli.net/2019/07/31/5d41a08a958b435998.png" alt></p>
+<h5 id="其他exec-函数"><a href="#其他exec-函数" class="headerlink" title="其他exec 函数"></a>其他exec 函数</h5><h6 id="2-3：execle函数-l-list-e-表示环境变量表"><a href="#2-3：execle函数-l-list-e-表示环境变量表" class="headerlink" title="2.3：execle函数(l:list,e:表示环境变量表)"></a>2.3：execle函数(l:list,e:表示环境变量表)</h6><p><code>int execle(const char *path,const char *arg,...,char *const envp[]);</code></p>
+<h6 id="2-4-execv-v-命令行参数的argv"><a href="#2-4-execv-v-命令行参数的argv" class="headerlink" title="2.4:execv(v:命令行参数的argv)"></a>2.4:execv(v:命令行参数的argv)</h6><p><code>int execv(const *path,char *const argv[]);</code></p>
+<ul>
+<li>函数的用运</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line">   <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">     <span class="keyword">pid_t</span> pid=fork(); <span class="comment">//进程不同的话，fork函数的返回值不同</span></span><br><span class="line">     <span class="keyword">if</span>(pid==<span class="number">-1</span>)&#123;</span><br><span class="line">       perror(<span class="string">"fork"</span>);</span><br><span class="line">       <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">   &#125;<span class="keyword">else</span> <span class="keyword">if</span>(pid&gt;<span class="number">0</span>)&#123;</span><br><span class="line">     sleep(<span class="number">1</span>);</span><br><span class="line">     <span class="built_in">printf</span>(<span class="string">"parent_pid:%d\n"</span>,getpid());</span><br><span class="line">   &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">         <span class="keyword">char</span> *argv[]=&#123;<span class="string">"ls"</span>,<span class="string">"-l"</span>,<span class="string">"-a"</span>,<span class="string">"-h"</span>,<span class="literal">NULL</span>&#125;;</span><br><span class="line">     execv(<span class="string">"/bin/ls"</span>,argv);  </span><br><span class="line">     <span class="comment">//第二个参数可以随便传值，不会对程序功能造成影响</span></span><br><span class="line">     <span class="comment">//之后的参数不可随意改动</span></span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>运行结果对比</li>
+</ul>
+<p><img src="https://i.loli.net/2019/07/31/5d41ad90895ae55709.png" alt></p>
+<h6 id="2-5-execvp"><a href="#2-5-execvp" class="headerlink" title="2.5:execvp"></a>2.5:execvp</h6><ul>
+<li>使用格式</li>
+</ul>
+<p><code>int execvp(const char *file,char *const argv[]);</code></p>
+<h6 id="2-6-execve"><a href="#2-6-execve" class="headerlink" title="2.6:execve"></a>2.6:execve</h6><ul>
+<li>使用格式</li>
+</ul>
+<p><code>int execve(const char *path,char *const argv[],char *const envp[]);</code></p>
 	  
 
 	  <div>
