@@ -343,6 +343,7 @@
 <h6 id="2：设置gdb在fork之后跟踪父进程"><a href="#2：设置gdb在fork之后跟踪父进程" class="headerlink" title="2：设置gdb在fork之后跟踪父进程"></a>2：设置gdb在fork之后跟踪父进程</h6><p><code>set follow-fork-mode  parent</code><br>【注意】<br>==一定要在fork函数调用之前设置才有效==</p>
 <h4 id="五-僵尸进程"><a href="#五-僵尸进程" class="headerlink" title="五:僵尸进程"></a>五:僵尸进程</h4><h5 id="5-1-成因"><a href="#5-1-成因" class="headerlink" title="5.1:成因:"></a>5.1:成因:</h5><ul>
 <li>子进程结束之后，父进程没有回收子进程的资源，为了解决子进程向父进程汇报工作的问题</li>
+<li>进程 终止，父进程尚未回收，子进程残留资源(PCB)存放于内核中，变成僵尸进程。</li>
 </ul>
 <h5 id="5-2：危害："><a href="#5-2：危害：" class="headerlink" title="5.2：危害："></a>5.2：危害：</h5><ul>
 <li>处理不当会造成==内存泄漏==</li>
@@ -351,13 +352,16 @@
 <li>直接kill 僵尸进程是kill 不掉的，可以kill 掉僵尸进程的父进程。更科学的处理办法是: 进程等待</li>
 </ul>
 <h5 id="5-4：为什么-kill-父进程僵尸进程没了？"><a href="#5-4：为什么-kill-父进程僵尸进程没了？" class="headerlink" title="5.4：为什么 kill 父进程僵尸进程没了？"></a>5.4：为什么 kill 父进程僵尸进程没了？</h5><h4 id="六：孤儿进程"><a href="#六：孤儿进程" class="headerlink" title="六：孤儿进程"></a>六：孤儿进程</h4><h5 id="6-1-进程的状态"><a href="#6-1-进程的状态" class="headerlink" title="6.1:进程的状态"></a>6.1:进程的状态</h5><ul>
-<li><p>当kill 掉父进程之后，<strong>子进程就被称为孤儿进程</strong>，孤儿进程会<strong>被 1 号进程(init进程)收养</strong>，从而释放资源</p>
-</li>
-<li><p>孤儿进程不是一种状态，是指父进程先结束了，但是子进程还在，子进程的父亲变成了1号进程</p>
-</li>
-<li><p>init进程：开机时运行的第一个进程</p>
-</li>
+<li>当kill 掉父进程之后，<strong>子进程就被称为孤儿进程</strong>，孤儿进程会<strong>被 1 号进程(init进程)收养</strong>，从而释放资源</li>
+<li>孤儿进程不是一种状态，是指父进程先结束了，但是子进程还在，子进程的父进程变成了1号进程</li>
+<li>init进程：开机时运行的第一个进程</li>
 </ul>
+<h6 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例"></a>代码示例</h6><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;                                       </span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;sys/wait.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line"><span class="keyword">pid_t</span> pid=fork();</span><br><span class="line"><span class="keyword">if</span>(pid&gt;<span class="number">0</span>)&#123;</span><br><span class="line">	 <span class="built_in">printf</span>(<span class="string">"father pid:%d,ppid=%d\n"</span>,getpid(),getppid())    ;</span><br><span class="line">	sleep(<span class="number">9</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"------parent going to die------------\n"</span>);</span><br><span class="line">   &#125;<span class="keyword">else</span> <span class="keyword">if</span>(pid==<span class="number">0</span>)&#123;</span><br><span class="line">     <span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">       <span class="built_in">printf</span>(<span class="string">"child pid:%d,ppid=%d\n"</span>,getpid(),getppid()    );</span><br><span class="line">       sleep(<span class="number">1</span>);</span><br><span class="line">     &#125;</span><br><span class="line">   &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">     perror(<span class="string">"fork"</span>);                                     </span><br><span class="line">     <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>运行结果</li>
+</ul>
+<p><img src="https://img-blog.csdnimg.cn/20190802222818131.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY2tfd2FuZzEyODgwMQ==,size_16,color_FFFFFF,t_70" alt></p>
+<p>==因为有死循环的存在，所以子进程不能结束。需要另外打开一个终端,从新打开的终端 <strong>kill</strong> 掉子进程才可以==</p>
 <h5 id="6-2：组织进程"><a href="#6-2：组织进程" class="headerlink" title="6.2：组织进程"></a>6.2：组织进程</h5><ul>
 <li>双向链表进行组织，每个结点就是一个task_ struct   (只针对Linux)</li>
 </ul>

@@ -66,7 +66,39 @@
 <blockquote>
 <p>将当前进程的 <strong>.text、.data</strong> 替换为所要加载的程序 <strong>.text、.data</strong> ,然后让进程从新的 <strong>.text</strong> 第一条指令开始执行。但进程ID不变。</p>
 </blockquote>
-<h5 id="2-种类"><a href="#2-种类" class="headerlink" title="2.种类"></a>2.种类</h5><h6 id="2-1：execlp函数-其中l代表list-p指代PATH"><a href="#2-1：execlp函数-其中l代表list-p指代PATH" class="headerlink" title="2.1：execlp函数:( 其中l代表list,p指代PATH)"></a>2.1：execlp函数:( 其中l代表list,p指代PATH)</h6><blockquote>
+<h5 id="2-种类"><a href="#2-种类" class="headerlink" title="2.种类"></a>2.种类</h5><p>【函数名中字母含义小结】</p>
+<table>
+<thead>
+<tr>
+<th>字母</th>
+<th>全写</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>l</td>
+<td>list</td>
+<td>命令行参数列表</td>
+</tr>
+<tr>
+<td>p</td>
+<td>path</td>
+<td>搜索file时使用 path 变量</td>
+</tr>
+<tr>
+<td>v</td>
+<td>vector</td>
+<td>使用命令行参数数组</td>
+</tr>
+<tr>
+<td>e</td>
+<td>envrionment</td>
+<td>使用环境变量数组,不使用进程原有的环境变量,设置新加载程序运行的环境变量</td>
+</tr>
+</tbody>
+</table>
+<h6 id="2-1：execlp函数-其中l代表list-p指代PATH"><a href="#2-1：execlp函数-其中l代表list-p指代PATH" class="headerlink" title="2.1：execlp函数:( 其中l代表list,p指代PATH)"></a>2.1：execlp函数:( 其中l代表list,p指代PATH)</h6><blockquote>
 <p>加载一个进程，借助PATH环境变量</p>
 </blockquote>
 <p><code>int execlp(const char*file,const char *arg,...);</code></p>
@@ -174,6 +206,37 @@
 <li>使用格式</li>
 </ul>
 <p><code>int execve(const char *path,char *const argv[],char *const envp[]);</code></p>
+<h5 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h5><ul>
+<li>题目描述 : 将当前系统中的进程信息，打印到文件中</li>
+</ul>
+<h6 id="1-示例1"><a href="#1-示例1" class="headerlink" title="1.示例1"></a>1.示例1</h6><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps aux &gt; out.txt</span><br></pre></td></tr></table></figure>
+<ul>
+<li>查看out.txt 内容</li>
+</ul>
+<p><img src="https://i.loli.net/2019/08/02/5d43acc0e676646324.png" alt></p>
+<h6 id="拓展dup2-dup-to-函数"><a href="#拓展dup2-dup-to-函数" class="headerlink" title="拓展dup2(dup to)函数"></a>拓展dup2(dup to)函数</h6><ul>
+<li>使用格式</li>
+</ul>
+<p><code>int dup2(int oldfd,int newfd);</code></p>
+<ul>
+<li>如下例</li>
+</ul>
+<p><code>dup2(2,3)</code></p>
+<blockquote>
+<p>把2这个文件描述符拷贝到3中</p>
+</blockquote>
+<h6 id="dup2函数与exec函数的结合使用"><a href="#dup2函数与exec函数的结合使用" class="headerlink" title="dup2函数与exec函数的结合使用"></a>dup2函数与exec函数的结合使用</h6><ul>
+<li>示例代码</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">size_t</span> fd;</span><br><span class="line">    fd=open(<span class="string">"ps.out"</span>,O_WRONLY|O_CREAT|O_TRUNC,<span class="number">0644</span>);</span><br><span class="line">   <span class="comment">//参数含义:文件名为ps.out,以只写方式打开，文件不存在</span></span><br><span class="line">   <span class="comment">//就创建，如果存在就指定为0，指定以0644权限打开</span></span><br><span class="line">    <span class="keyword">if</span>(fd&lt;<span class="number">0</span>)&#123;</span><br><span class="line">      perror(<span class="string">"open ps.out error"</span>);</span><br><span class="line">      <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    dup2(fd,STDOUT_FILENO);</span><br><span class="line">    execlp(<span class="string">"ps"</span>,<span class="string">"ps"</span>,<span class="string">"ax"</span>,<span class="literal">NULL</span>); </span><br><span class="line">    <span class="comment">//execlp函数成功不返回值，失败返回-1；</span></span><br><span class="line">   <span class="comment">// close(fd);</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>exec函数的出错处理方式</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">size_t</span> fd;</span><br><span class="line">    fd=open(<span class="string">"ps.out"</span>,O_WRONLY|O_CREAT|O_TRUNC,<span class="number">0644</span>);</span><br><span class="line">   <span class="comment">//参数含义:文件名为ps.out,以只写方式打开，文件不存在</span></span><br><span class="line">   <span class="comment">//就创建，如果存在就指定为0，指定以0644权限打开</span></span><br><span class="line">    <span class="keyword">if</span>(fd&lt;<span class="number">0</span>)&#123;</span><br><span class="line">      perror(<span class="string">"open ps.out error"</span>);</span><br><span class="line">      <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    dup2(fd,STDOUT_FILENO);</span><br><span class="line">	execlp(<span class="string">"ps"</span>,<span class="string">"ps"</span>,<span class="string">"ax"</span>,<span class="literal">NULL</span>);</span><br><span class="line">	perror(<span class="string">"execlp error"</span>);</span><br><span class="line">	<span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>运行结果</li>
+</ul>
+<p><img src="https://i.loli.net/2019/08/02/5d43fa5610c9b40128.png" alt></p>
 	  
 
 	  <div>
