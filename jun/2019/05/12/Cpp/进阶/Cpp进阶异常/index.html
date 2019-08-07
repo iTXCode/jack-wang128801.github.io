@@ -1,0 +1,523 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>Cpp进阶异常 | Hexo</title>
+  <meta name="author" content="John Doe">
+  
+  <meta name="description" content="C++进阶–&amp;gt;异常[TOC]">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Cpp进阶异常">
+  <meta property="og:site_name" content="Hexo">
+
+  
+    <meta property="og:image" content>
+  
+
+  
+    <link rel="alternative" href="/jun/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link href="/jun/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/jun/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/responsive.css" media="screen" type="text/css">  
+  <link rel="stylesheet" href="/jun/css/sidenav.css" media="screen" type="text/css">  
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/jun/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+</head>
+</html>
+<body id="body" data-spy="scroll" data-target=".toc">
+  <div class="container" id="container">
+	<div class="content">
+	  <div class="page-header">		
+  <h1><a class="brand" href="/jun/">Hexo</a><span class="split"></span><span class="title">Cpp进阶异常</span><span class="date" id="title-date"><i class="fa fa-clock-o"></i> 2019-05-12</span></h1>
+</div>		
+
+<div class="row page">
+  <!-- cols -->	
+  
+  
+
+  
+	<div class="col-md-12">
+	  
+
+	  <!-- content -->
+	  <h3 id="C-进阶–-gt-异常"><a href="#C-进阶–-gt-异常" class="headerlink" title="C++进阶–&gt;异常"></a>C++进阶–&gt;异常</h3><p>[TOC]</p>
+<a id="more"></a>
+<h4 id="一：C-异常的概念"><a href="#一：C-异常的概念" class="headerlink" title="一：C++异常的概念"></a>一：C++异常的概念</h4><h5 id="1-异常"><a href="#1-异常" class="headerlink" title="1.异常"></a>1.异常</h5><p>==异常是一种处理错误的方式==, <strong>当一个函数发现自己无法处理的错误时就可以抛出异常，让函数的直接或间接的调用者处理这个错误</strong></p>
+<ul>
+<li><strong>throw:</strong> 当问题出现的时，程序会通过使用throw关键字抛出一个异常</li>
+<li><strong>catch:</strong> 在你先要处理问题地方，通过异常处理程序捕捉异常，catch关键字用于捕捉异常，可以有多个catch进行捕捉</li>
+<li><strong>try: </strong> try块中的代码标识将被激活的特定异常，它后面通常跟着一个或者多个catch块</li>
+</ul>
+<p><code>如果有一个块抛出一个异常，捕获异常的方法会使用 try 和 catch 关键字。try 块中放置可能抛出异常的代码，</code>try 块中的代码被称为==保护代码==</p>
+<ul>
+<li>使用格式</li>
+</ul>
+<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;  </span><br><span class="line">    <span class="comment">// 保护的标识代码 </span></span><br><span class="line">&#125;<span class="keyword">catch</span>( ExceptionName e1 ) </span><br><span class="line">&#123;  </span><br><span class="line">    <span class="comment">// catch 块 </span></span><br><span class="line">&#125;<span class="keyword">catch</span>( ExceptionName e2 ) </span><br><span class="line">&#123;  </span><br><span class="line">    <span class="comment">// catch 块 </span></span><br><span class="line">&#125;<span class="keyword">catch</span>( ExceptionName eN )</span><br><span class="line">&#123; </span><br><span class="line">    <span class="comment">// catch 块 </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>使用实例</li>
+</ul>
+<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Division</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">int</span> b)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (b == <span class="number">0</span>)</span><br><span class="line">		<span class="keyword">throw</span>(<span class="string">"Division by zero!"</span>);</span><br><span class="line">	<span class="keyword">return</span> a / b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a, b;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; a&gt;&gt;b;</span><br><span class="line">	<span class="keyword">try</span>&#123;</span><br><span class="line">		Division(a, b);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">catch</span> (<span class="keyword">const</span> <span class="keyword">int</span> a)&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; a &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">catch</span> (<span class="keyword">const</span> <span class="keyword">char</span> c)&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; c &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">catch</span> (<span class="keyword">const</span> <span class="keyword">char</span>* str)&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; str &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>【过程】</p>
+<ul>
+<li>通过执行try块中的代码,发现异常后将异常抛出</li>
+<li>异常被 <strong>catch</strong>  块捕捉到，做出对应的处理</li>
+</ul>
+<h4 id="二：异常的使用"><a href="#二：异常的使用" class="headerlink" title="二：异常的使用"></a>二：异常的使用</h4><h5 id="1-异常的抛出和捕获"><a href="#1-异常的抛出和捕获" class="headerlink" title="1.异常的抛出和捕获"></a>1.异常的抛出和捕获</h5><h6 id="1-1-异常的抛出和匹配原则"><a href="#1-1-异常的抛出和匹配原则" class="headerlink" title="1.1:异常的抛出和匹配原则"></a>1.1:异常的抛出和匹配原则</h6><ul>
+<li>1.异常是通过抛出对象而引发的，该==对象的类型决定了应该激活哪个catch的处理代码==。 </li>
+<li>2.被选中的处理代码是调用链中==与该对象类型匹配且离抛出异常位置最近==的那一个。 </li>
+<li>3.抛出异常对象后，会生成一个异常对象的拷贝，==因为抛出的异常对象可能是一个临时对象，所以会生成 一个拷贝对象==，这个拷贝的临时对象会在被catch以后销毁。（这里的处理类似于函数的传值返回）</li>
+<li>4.catch(…)可以捕获任意类型的异常，问题是不知道异常错误是什么。</li>
+<li>5.实际中抛出和捕获的匹配原则有例外，并不都是类型完全匹配，可以抛出派生类对象，使用基类捕获，这个在实际中非常实用，</li>
+</ul>
+<h6 id="1-2-在函数调用链中异常栈展开匹配原则"><a href="#1-2-在函数调用链中异常栈展开匹配原则" class="headerlink" title="1.2:在函数调用链中异常栈展开匹配原则"></a>1.2:在函数调用链中异常栈展开匹配原则</h6><ul>
+<li>1.首先检查throw本身是否在try块内部，如果是，再查找匹配的catch语句。如果有匹配的，则调到catch 的地方进行处理。 </li>
+<li>2.没有匹配的catch则退出当前函数栈，继续在调用函数的栈中进行查找匹配的catch。 </li>
+<li>3.如果到达main函数的栈，依旧没有匹配的，则终止程序。上述这个沿着调用链查找匹配的catch子句的 过程称为栈展开。所以实际中我们最后都要加一个catch(…)捕获任意类型的异常，否则当有异常没捕 获，程序就会直接终止。 </li>
+<li>4.找到匹配的catch子句并处理以后，会继续沿着catch子句后面继续执行。</li>
+</ul>
+<p><img src="https://i.loli.net/2019/08/04/zuWaYoTV48nHAfB.png" alt></p>
+<ul>
+<li>实例</li>
+</ul>
+<figure class="highlight c"><figcaption><span>+</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">Division</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="comment">// 当b == 0时抛出异常</span></span><br><span class="line"><span class="keyword">if</span> (b == <span class="number">0</span>)</span><br><span class="line"><span class="keyword">throw</span> <span class="string">"Division by zero condition!"</span>;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line"><span class="keyword">return</span> ((<span class="keyword">double</span>)a / (<span class="keyword">double</span>)b);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Func</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="keyword">int</span> len, time;</span><br><span class="line"><span class="built_in">cin</span> &gt;&gt; len &gt;&gt; time;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; Division(len, time) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">        Func();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">catch</span>(<span class="keyword">const</span> <span class="keyword">char</span>* errmsg)&#123;</span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;errmsg&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">catch</span>(...)&#123;</span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="string">"unkown exception"</span>&lt;&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>该程序中 <strong>函数Division</strong> 抛出异常但是没有对应的 <strong>catch</strong> 进行捕捉，进而退出 Division 的函数栈帧到<strong>Func函数的栈帧</strong>，仍然没有对应的<strong>catch</strong>则直接出退到main函数的函数栈帧进行捕捉</li>
+</ul>
+<h5 id="2-异常的重新抛出"><a href="#2-异常的重新抛出" class="headerlink" title="2.异常的重新抛出"></a>2.异常的重新抛出</h5><ul>
+<li>有可能单个的catch不能完全处理一个异常，在进行一些校正处理以后，希望再交给更外层的调用链函数来处理，catch则可以通过重新抛出将异常传递给更上层的函数进行处理。</li>
+</ul>
+<h6 id="2-1：异常重抛的实例"><a href="#2-1：异常重抛的实例" class="headerlink" title="2.1：异常重抛的实例"></a>2.1：异常重抛的实例</h6><figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">Division</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="comment">// 当b == 0时抛出异常</span></span><br><span class="line">    <span class="keyword">if</span> (b == <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">		<span class="keyword">throw</span> <span class="string">"Division by zero condition!"</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> (<span class="keyword">double</span>)a / (<span class="keyword">double</span>)b;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Func</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="comment">// 这里可以看到如果发生除0错误抛出异常，另外下面的array</span></span><br><span class="line"><span class="comment">//没有得到释放。</span></span><br><span class="line"><span class="comment">// 所以这里捕获异常后并不处理异常，异常还是交给外面处理，</span></span><br><span class="line"><span class="comment">//这里捕获了再重新抛出去。</span></span><br><span class="line">	<span class="keyword">int</span>* <span class="built_in">array</span> = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">10</span>];</span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">int</span> len, time;</span><br><span class="line">    	<span class="built_in">cin</span> &gt;&gt; len &gt;&gt; time;</span><br><span class="line">    	<span class="built_in">cout</span> &lt;&lt; Division(len, time) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">    <span class="keyword">catch</span> (...)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"delete []"</span> &lt;&lt; <span class="built_in">array</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">//先将空间释放再将异常重新抛出，避免其他接口捕捉到后不释放空间导致内存泄漏</span><br><span class="line">		<span class="keyword">delete</span>[] <span class="built_in">array</span>;</span><br><span class="line">		<span class="keyword">throw</span>;</span><br><span class="line">	&#125;</span><br><span class="line">// ...</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; "<span class="keyword">delete</span> []" &lt;&lt; <span class="built_in">array</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">delete</span>[] <span class="built_in">array</span>;</span><br><span class="line">    //若为将异常重新抛出，会导致</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">int</span> main()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">try</span></span><br><span class="line">    &#123;</span><br><span class="line">        Func();</span><br><span class="line">	&#125;</span><br><span class="line">    <span class="keyword">catch</span> (<span class="keyword">const</span> <span class="keyword">char</span>* errmsg)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; errmsg &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">return</span> 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="2-2：异常安全"><a href="#2-2：异常安全" class="headerlink" title="2.2：异常安全"></a>2.2：异常安全</h6><ul>
+<li>==构造函数完成对象的构造和初始化，最好不要在构造函数中抛出异常==，否则可能导致对象不完整或没有完全初始化</li>
+<li>==析构函数主要完成资源的清理，最好不要在析构函数内抛出异常==，否则可能导致资源泄漏(内存泄漏、句柄未关闭等)</li>
+<li>C++中异常经常会导致资源泄漏的问题，</li>
+</ul>
+<blockquote>
+<ul>
+<li>比如在<strong>new和delete</strong>中抛出了异常，导致内存泄漏，</li>
+<li>在<strong>lock和unlock</strong>之间抛出了异常导致死锁，</li>
+</ul>
+</blockquote>
+<h6 id="2-3：异常规范"><a href="#2-3：异常规范" class="headerlink" title="2.3：异常规范"></a>2.3：异常规范</h6><ul>
+<li><p>1.==异常规格说明的目的是为了让函数使用者知道该函数可能抛出的异常有哪些==。 可以在函数的后面接throw(类型)，列出这个函数可能抛掷的所有异常类型。</p>
+</li>
+<li><p>2.==函数的后面接throw()，表示函数不抛异常==。</p>
+</li>
+<li><p>3.==若无异常接口声明，则此函数可以抛掷任何类型的异常==。</p>
+</li>
+</ul>
+<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 这里表示这个函数会抛出A/B/C/D中的某种类型的异常</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fun</span><span class="params">()</span></span>&#123;</span><br><span class="line">     <span class="keyword">throw</span>(A，B，C，D);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 这里表示这个函数只会抛出bad_alloc的异常</span></span><br><span class="line"><span class="function"><span class="keyword">void</span>* <span class="keyword">operator</span> <span class="title">new</span> <span class="params">(<span class="built_in">std</span>::<span class="keyword">size_t</span> size)</span></span>&#123;</span><br><span class="line">     <span class="keyword">throw</span> (<span class="built_in">std</span>::bad_alloc);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 这里表示这个函数不会抛出异常</span></span><br><span class="line"><span class="function"><span class="keyword">void</span>* <span class="keyword">operator</span> <span class="title">new</span> <span class="params">(<span class="built_in">std</span>::<span class="keyword">size_t</span> size, <span class="keyword">void</span>* ptr)</span> <span class="title">throw</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
+<h4 id="三-自定义异常体系"><a href="#三-自定义异常体系" class="headerlink" title="三:自定义异常体系"></a>三:自定义异常体系</h4><ul>
+<li>如果一个项目由好多人一块合作完成，每个人都负责一块。各自都随意的抛异常,那么当外层的调用者调用的时候抛出的各种异常会使调用者非常棘手。</li>
+<li><p>所以为了高效的完成每一项任务,许多地方都定义了自己的异常体系进行规范的异常管理</p>
+</li>
+<li><p>大家可以抛出继承的派生类对象，捕获一个基类就可以了</p>
+</li>
+</ul>
+<p>==如下图中所示==</p>
+<p><img src="https://i.loli.net/2019/08/06/g5KafRbd4IYZHrW.png" alt></p>
+<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 服务器开发中通常使用的异常继承体系</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Exception</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">	<span class="built_in">string</span> _errmsg;</span><br><span class="line">	<span class="keyword">int</span> _id;</span><br><span class="line"><span class="comment">//list&lt;StackInfo&gt; _traceStack;</span></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SqlException</span> :</span> <span class="keyword">public</span> Exception</span><br><span class="line">&#123;&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CacheException</span> :</span> <span class="keyword">public</span> Exception</span><br><span class="line">&#123;&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HttpServerException</span> :</span> <span class="keyword">public</span> Exception</span><br><span class="line">&#123;&#125;;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">try</span>&#123;</span><br><span class="line">		<span class="comment">// server.Start();</span></span><br><span class="line">		<span class="comment">// 抛出对象都是派生类对象</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">catch</span> (<span class="keyword">const</span> Exception&amp; e) <span class="comment">// 这里捕获父类对象就可以</span></span><br><span class="line">	&#123;&#125;</span><br><span class="line">	<span class="keyword">catch</span> (...)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"Unkown Exception"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><kbd>难道C++就没有自己的异常体系吗？</kbd></p>
+<ul>
+<li>当时不是啦，C++ 有自己的标准库异常</li>
+</ul>
+<p>┗|｀O′|┛ 嗷~~</p>
+<h4 id="四-C-标准可的异常体系"><a href="#四-C-标准可的异常体系" class="headerlink" title="四:C++标准可的异常体系"></a>四:C++标准可的异常体系</h4><ul>
+<li style="list-style: none"><input type="checkbox"> 他们是靠继承(父子)结构组织起来的，r如下图所示</li>
+</ul>
+<p><img src="https://i.loli.net/2019/08/06/rdo5f16wmTnaSlb.png" alt></p>
+<ul>
+<li>下表中对上图层次结构中出现的每个异常的说明</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">异常</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">std::exception</td>
+<td>该异常是所有标准C++异常的父类</td>
+</tr>
+<tr>
+<td style="text-align:left">std::bad_alloc</td>
+<td>该异常通过new抛出</td>
+</tr>
+<tr>
+<td style="text-align:left">std::bad_cast</td>
+<td>该异常可以通过dynamic_cast抛出</td>
+</tr>
+<tr>
+<td style="text-align:left">std::bad_exception</td>
+<td>这里处理C++程序中无法预期的异常是非常有用</td>
+</tr>
+<tr>
+<td style="text-align:left">std::bad_typied</td>
+<td>该异常通过typid抛出</td>
+</tr>
+<tr>
+<td style="text-align:left">std::logic_error</td>
+<td>理论上可以通过读取代码来检测到异常</td>
+</tr>
+<tr>
+<td style="text-align:left">std::domain_error</td>
+<td>当使用了一个无效的数学域时，会抛出的异常</td>
+</tr>
+<tr>
+<td style="text-align:left">std::invalid_argument</td>
+<td>当时使用无效参数时，会抛出的异常</td>
+</tr>
+<tr>
+<td style="text-align:left">std::length_error</td>
+<td>当创建了太长的std::string时，会抛出该异常</td>
+</tr>
+<tr>
+<td style="text-align:left">std::out_of_range</td>
+<td>该异常可以通过方法抛出,例如std::vector和std::bitset&lt;&gt;::operator [] ()</td>
+</tr>
+<tr>
+<td style="text-align:left">std::runtime_error</td>
+<td>理论上不可以通过读取代码 来检测到的异常</td>
+</tr>
+<tr>
+<td style="text-align:left">std::overflow_error</td>
+<td>当发生数学上溢时，会抛出该异常</td>
+</tr>
+<tr>
+<td style="text-align:left">std::range_error</td>
+<td>当尝试存储超出范围的值时，会抛出的异常</td>
+</tr>
+<tr>
+<td style="text-align:left">std::underflow_error</td>
+<td>当发生数学下溢时,会抛出的异常</td>
+</tr>
+</tbody>
+</table>
+<p>【说明】</p>
+<p>实际中我们可以去==继承exception类实现自己的异常类==。但是实际中很多公司像上面一样自己定义一套异常继承体系。因为C++标准库设计的不够好用。</p>
+<h4 id="五：异常的优缺点"><a href="#五：异常的优缺点" class="headerlink" title="五：异常的优缺点"></a>五：异常的优缺点</h4><p><kbd>人有悲欢离合,月有阴晴圆缺</kbd></p>
+<ul>
+<li>世上没有绝对的对于错，当然啥都有优与缺</li>
+</ul>
+<h5 id="5-1：异常的优点"><a href="#5-1：异常的优点" class="headerlink" title="5.1：异常的优点"></a>5.1：异常的优点</h5><ul>
+<li>异常对象定义好了，相比错误码的方式可以清晰准确的展示出错误的各种信息，甚至可以包含堆栈调用的信息，这样可以帮助更好的定位程序的bug。</li>
+<li>返回错误码的传统方式有个很大的问题就是，在函数调用链中，深层的函数返回了错误，那么我们得层层返回错误，最外层才能拿到错误，具体看下面的详细解释</li>
+</ul>
+<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1.下面这段伪代码我们可以看到ConnnectSql中出错了，先返回给ServerStart，ServerStart再返回给main函数，main函数再针对问题处理具体的错误。</span></span><br><span class="line"><span class="comment">// 2.如果是异常体系，不管是ConnnectSql还是ServerStart及调用函数出错，都不用检查，因为抛出的异常异常会直接跳到main函数中catch捕获的地方，main函数直接处理错误。</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">ConnnectSql</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="comment">// 用户名密码错误</span></span><br><span class="line">	<span class="keyword">if</span> (...)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line"><span class="comment">// 权限不足</span></span><br><span class="line">	<span class="keyword">if</span> (...)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">2</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">ServerStart</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (<span class="keyword">int</span> ret = ConnnectSql() &lt; <span class="number">0</span>)</span><br><span class="line">		<span class="keyword">return</span> ret;</span><br><span class="line">	<span class="keyword">int</span> fd = socket()</span><br><span class="line">	<span class="keyword">if</span>（fd &lt; <span class="number">0</span>）</span><br><span class="line">		<span class="keyword">return</span> errno;</span><br><span class="line">	&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(ServerStart()&lt;<span class="number">0</span>)</span><br><span class="line">	...</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>很多的第三方库都包含异常，比如boost、gtest、gmock等等常用的库，那么我们使用它们也需要使用异常。</li>
+</ul>
+<ol start="4">
+<li>很多测试框架都使用异常，这样能更好的使用单元测试等进行白盒的测试。</li>
+</ol>
+<ul>
+<li>部分函数使用异常更好处理，比如构造函数没有返回值，不方便使用错误码方式处理。比如T&amp;operator这样的函数，如果pos越界了只能使用异常或者终止程序处理，没办法通过返回值表示错误。</li>
+</ul>
+<h5 id="5-2：异常的缺点"><a href="#5-2：异常的缺点" class="headerlink" title="5.2：异常的缺点"></a>5.2：异常的缺点</h5><ul>
+<li>1.异常会导致程序的执行流乱跳，并且非常的混乱，并且是运行时出错抛异常就会乱跳。这会导致我们跟踪调试时以及分析程序时，比较困难。</li>
+<li>2.异常会有一些性能的开销。当然在现代硬件速度很快的情况下，这个影响基本忽略不计。</li>
+<li>3.C++没有垃圾回收机制，资源需要自己管理。有了异常非常容易导致内存泄漏、死锁等异常安全问题。这个需要使用RAII来处理资源的管理问题。学习成本较高。</li>
+<li>3.C++标准库的异常体系定义得不好，导致大家各自定义各自的异常体系，非常的混乱。</li>
+<li>4.异常尽量规范使用，否则后果不堪设想，随意抛异常，外层捕获的用户苦不堪言。所以异常规范有两点：</li>
+</ul>
+<blockquote>
+<ul>
+<li>一、抛出异常类型都继承自一个基类。</li>
+<li>二、函数是否抛异常、抛什么异常，都使用 func（）throw();的方式规范化。</li>
+</ul>
+</blockquote>
+<p>【总结】：</p>
+<p>异常总体而言，利大于弊，所以工程中我们还是鼓励使用异常的。</p>
+	  
+
+	  <div>
+  		<center>
+		  <div class="pagination">
+<ul class="pagination">
+	
+	
+	
+	
+	
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+			
+		
+	
+		
+			
+			
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+	
+	
+		<li class="prev"><a href="/jun/2019/05/16/Cpp/初阶/命名空间/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>prev</a></li>
+	
+	<li><a href="/jun/"><i class="fa fa-archive"></i>Home</a></li>
+	
+		<li class="next"><a href="/jun/2019/05/12/Cpp/进阶/C++进阶多态/" class="alignright next">next<i class="fa fa-arrow-circle-o-right"></i></a></li>
+	
+</ul>
+</div>
+
+		</center>
+	  </div>
+	  
+	</div> <!-- col-md-9/col-md-12 -->
+	
+  </div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+	<footer> <p>
+  &copy; 2019 John Doe
+  
+      with help from <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-wixo/">Wixo</a>.    
+</p> </footer>
+  </div> <!-- container-narrow -->
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/jun/js/jquery.imagesloaded.min.js"></script>
+<script src="/jun/js/gallery.js"></script>
+<script src="/jun/js/bootstrap.min.js"></script>
+<script src="/jun/js/jquery.tableofcontents.min.js"></script>
+<script src="/jun/js/tocgenerator.min.js"></script>
+<script src="/jun/js/main.js"></script>
+<script src="/jun/js/search.js"></script> 
+
+
+
+
+<link rel="stylesheet" href="/jun/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/jun/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+</body>
+</html>

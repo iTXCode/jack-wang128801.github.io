@@ -1,0 +1,352 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>命名空间 | Hexo</title>
+  <meta name="author" content="John Doe">
+  
+  <meta name="description" content="命名空间一:命名空间的特点">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="命名空间">
+  <meta property="og:site_name" content="Hexo">
+
+  
+    <meta property="og:image" content>
+  
+
+  
+    <link rel="alternative" href="/jun/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link href="/jun/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/jun/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/responsive.css" media="screen" type="text/css">  
+  <link rel="stylesheet" href="/jun/css/sidenav.css" media="screen" type="text/css">  
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/jun/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+</head>
+</html>
+<body id="body" data-spy="scroll" data-target=".toc">
+  <div class="container" id="container">
+	<div class="content">
+	  <div class="page-header">		
+  <h1><a class="brand" href="/jun/">Hexo</a><span class="split"></span><span class="title">命名空间</span><span class="date" id="title-date"><i class="fa fa-clock-o"></i> 2019-05-16</span></h1>
+</div>		
+
+<div class="row page">
+  <!-- cols -->	
+  
+  
+
+  
+	<div class="col-md-12">
+	  
+
+	  <!-- content -->
+	  <h3 id="命名空间"><a href="#命名空间" class="headerlink" title="命名空间"></a>命名空间</h3><h4 id="一-命名空间的特点"><a href="#一-命名空间的特点" class="headerlink" title="一:命名空间的特点"></a>一:命名空间的特点</h4><a id="more"></a>
+<h4 id="一-命名空间的特点-1"><a href="#一-命名空间的特点-1" class="headerlink" title="一:命名空间的特点"></a>一:命名空间的特点</h4><h5 id="用途-解决命名冲突问题"><a href="#用途-解决命名冲突问题" class="headerlink" title="用途:解决命名冲突问题"></a>用途:解决命名冲突问题</h5><p><strong>1.命名空间下可以放函数、变量、结构体、类</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> A&#123;</span><br><span class="line">	<span class="keyword">int</span> a = <span class="number">10</span>;  <span class="comment">//定义了变量</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">b</span><span class="params">()</span></span>&#123;     <span class="comment">//定义了函数</span></span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">test_struct</span> &#123;</span>   <span class="comment">//定义了结构体</span></span><br><span class="line"></span><br><span class="line">	&#125;;</span><br><span class="line">	<span class="class"><span class="keyword">class</span> <span class="title">Person</span>&#123;</span>   <span class="comment">//定义了类</span></span><br><span class="line"></span><br><span class="line">	&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>2.命名空间必须定义在全局的作用域下</strong></p>
+<p><strong>3.命名空间可以嵌套命名空间</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> A&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">namespace</span> B&#123;   <span class="comment">//嵌套的命名空间</span></span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>4.命名空间是开放的，随时可以往原先的命名空间中添加内容</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span>  A&#123;  </span><br><span class="line">	<span class="keyword">int</span> c = <span class="number">10</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>往之前的命名空间中添加内容时无需滑动鼠标找到之前的命名空间后再添加内容，只需要重写一个同名的命名空间并往其中添加内容即可。</p>
+</blockquote>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//可以通过这个test函数测试其正确性</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"命名空间A中的A="</span>&lt;&lt;A::a &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"命名空间A中的A="</span>&lt;&lt;A::B::a &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; A::a &lt;&lt; A::c &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>5.命名可以是无名的</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> &#123;</span><br><span class="line">    <span class="keyword">int</span> d=<span class="number">10</span>;</span><br><span class="line">    <span class="keyword">int</span> e=<span class="number">20</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//相当于定义了static int d=10 和 static int e=20;</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>当写了无名的命名空间时相当于写了静态的全局变量</p>
+</blockquote>
+<p><strong>6.命名空间可以起别名</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> C&#123;</span><br><span class="line">	<span class="keyword">int</span> a = <span class="number">520</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">namespace</span> D = C;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"命名空间C下的a="</span> &lt;&lt; C::a &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"命名空间D下的a="</span> &lt;&lt; D::a &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+	  
+
+	  <div>
+  		<center>
+		  <div class="pagination">
+<ul class="pagination">
+	
+	
+	
+	
+	
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+			
+		
+	
+		
+			
+			
+			
+		
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+	
+	
+		<li class="prev"><a href="/jun/2019/05/16/Cpp/初阶/C++对C语言的加强/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>prev</a></li>
+	
+	<li><a href="/jun/"><i class="fa fa-archive"></i>Home</a></li>
+	
+		<li class="next"><a href="/jun/2019/05/12/Cpp/进阶/Cpp进阶异常/" class="alignright next">next<i class="fa fa-arrow-circle-o-right"></i></a></li>
+	
+</ul>
+</div>
+
+		</center>
+	  </div>
+	  
+	</div> <!-- col-md-9/col-md-12 -->
+	
+  </div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+	<footer> <p>
+  &copy; 2019 John Doe
+  
+      with help from <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-wixo/">Wixo</a>.    
+</p> </footer>
+  </div> <!-- container-narrow -->
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/jun/js/jquery.imagesloaded.min.js"></script>
+<script src="/jun/js/gallery.js"></script>
+<script src="/jun/js/bootstrap.min.js"></script>
+<script src="/jun/js/jquery.tableofcontents.min.js"></script>
+<script src="/jun/js/tocgenerator.min.js"></script>
+<script src="/jun/js/main.js"></script>
+<script src="/jun/js/search.js"></script> 
+
+
+
+
+<link rel="stylesheet" href="/jun/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/jun/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+</body>
+</html>

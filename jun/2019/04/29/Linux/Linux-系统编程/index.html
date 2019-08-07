@@ -146,23 +146,28 @@
 <li><p>内核观点：担当分配系统资源（CPU时间，内存）的实体</p>
 </li>
 </ul>
-<h5 id="3-2进程查看"><a href="#3-2进程查看" class="headerlink" title="3.2进程查看"></a>3.2进程查看</h5><ul>
+<h5 id="3-2进程查看-PID进程的身份标识"><a href="#3-2进程查看-PID进程的身份标识" class="headerlink" title="3.2进程查看(PID进程的身份标识)"></a>3.2进程查看(PID进程的身份标识)</h5><ul>
 <li style="list-style: none"><input type="checkbox"> <strong>ps</strong> 相当于任务管理器，能够查看系统都有哪些进程</li>
 <li style="list-style: none"><input type="checkbox"> <strong>ps   aux</strong>  查看所有进程</li>
-<li style="list-style: none"><input type="checkbox"> <strong>ps   aux  | less</strong>  配合<strong>less</strong> 对查看结果进行翻页和其他操作</li>
-<li style="list-style: none"><input type="checkbox"> <strong>ps   aux   | grep [进程名]</strong>   查看匹配的结果</li>
+<li style="list-style: none"><input type="checkbox"> <strong>ps   aux  | less</strong>   配合<strong>less</strong> 对查看结果进行翻页和其他操作</li>
+<li style="list-style: none"><input type="checkbox"> <strong>top</strong> 也可查看进程</li>
+<li style="list-style: none"><input type="checkbox"> <strong>ps   aux   | grep [进程名]</strong>   查看匹配的进程</li>
+<li>该命令下会捕捉到两个进程信息:1.你所查找的程序2.你敲下的命令进程</li>
+<li>==敲下的命令在执行过程中也是一个进程==</li>
 <li style="list-style: none"><input type="checkbox"> <strong>Ctrl   +   z</strong>  将一个程序放到后台，但是不退出程序(程序处于未执行状态)</li>
 <li style="list-style: none"><input type="checkbox"> 按下  <strong>fg</strong>   将后台的程序调到前台继续执行</li>
 <li style="list-style: none"><input type="checkbox"> <strong>Ctrl     +  c</strong>    关闭一个正在执行的进程</li>
 </ul>
-<blockquote>
-<p>敲下的命令，在命令执行的过程中也是一个进程</p>
-</blockquote>
 <p><img src="https://wx2.sinaimg.cn/mw690/0071OE7sly1g2stgtf6i7j316206g0th.jpg" alt></p>
-<h5 id="3-3进程的管理"><a href="#3-3进程的管理" class="headerlink" title="3.3进程的管理"></a>3.3进程的管理</h5><h6 id="1-描述进程-PCB进程控制块-–-gt-就是一个结构-task-struct"><a href="#1-描述进程-PCB进程控制块-–-gt-就是一个结构-task-struct" class="headerlink" title="1.描述进程(PCB进程控制块 –&gt; 就是一个结构(task_struct))"></a>1.描述进程(PCB进程控制块 –&gt; 就是一个结构(task_struct))</h6><ul>
-<li>以结构体(task_struct)的形式存在于内核中</li>
-<li>grep -r “task_struct”</li>
-<li>头文件一般存放在/usr/include/</li>
+<h5 id="3-3进程的管理"><a href="#3-3进程的管理" class="headerlink" title="3.3进程的管理"></a>3.3进程的管理</h5><h6 id="1-描述进程-PCB进程控制块-–-gt-就是一个结构-task-struct"><a href="#1-描述进程-PCB进程控制块-–-gt-就是一个结构-task-struct" class="headerlink" title="1.描述进程(PCB进程控制块 –&gt; 就是一个结构(task_struct))"></a>1.描述进程(PCB进程控制块 –&gt; 就是一个结构(task_struct))</h6><blockquote>
+<p>进程信息被放在一个叫做进程控制块的数据结构中</p>
+</blockquote>
+<ul>
+<li>进程标识符(pid)</li>
+<li><p>内存指针(告诉进程代码/数据都在内存的哪个部分)</p>
+</li>
+<li><p>以结构体(task_struct)的形式存在于内核中</p>
+</li>
 </ul>
 <p><strong>PCB：针对通常情况</strong></p>
 <h6 id="2-task-struct：-PCB的一种-只针对Linux"><a href="#2-task-struct：-PCB的一种-只针对Linux" class="headerlink" title="2.task_struct：(PCB的一种,)只针对Linux"></a>2.task_struct：(PCB的一种,)只针对Linux</h6><ul>
@@ -170,47 +175,26 @@
 <li>task_struct 是Linux内核的一种数据结构，它会被装载到RMB(内存里并且包含着进程的信息)</li>
 </ul>
 <h6 id="3-task-struck内容分类"><a href="#3-task-struck内容分类" class="headerlink" title="3.task_struck内容分类"></a>3.task_struck内容分类</h6><ul>
-<li>==标示符==: 描述本进程的唯一标示符，用来区别其他进程。 </li>
-<li>==进程状态==: 任务状态，退出代码，退出信号等。 </li>
-<li>==优先级(PR)==: 相对于其他进程的优先级。 </li>
-</ul>
-<blockquote>
-<p>NI(nice):     优先级的修正值，<strong>PR+NI =&gt; 最终的PR</strong></p>
-<p>通过指令可以调整nice，宏观上往往看不出效果</p>
-<p>数字，表示这个进程是先被调度还是后被调度执行==数字越小，优先级别越高==</p>
+<li>1.==标示符==: 描述本进程的唯一标示符，用来区别其他进程</li>
+<li>2.==内存指针==:  包括程序代码和进程相关数据的指针，还有和其他进程共享的内存块的指针</li>
+<li>3.==进程状态==:任务状态，退出代码，退出信号等。      </li>
+<li>4.==优先级(PR)==:  相对于其他进程的优先级.(top查看) <blockquote>
+<p>NI(nice):     优先级的修正值，PR(优先级)+NI(优先级的修正值) =&gt; 最终的PR<br>通过指令可以调整nice，宏观上往往看不出效果<br>数字，表示这个进程是先被调度还是后被调度执行数字越小，优先级别越高</p>
 </blockquote>
-<ul>
-<li>==程序计数器==: 程序中即将被执行的下一条指令的地址。</li>
-<li>==内存指针==: 包括程序代码和进程相关数据的指针，还有和其他进程共享的内存块的指针 </li>
-<li>==上下文数据==: 进程执行时处理器的寄存器中的数据[休学例子，要加图CPU，寄存器]。</li>
-</ul>
-<blockquote>
-<p>cpu 可能有几十个寄存器</p>
-<p>​    作用：<strong>保存上下文</strong>，==cpu寄存器的内容保存到内存中==</p>
-<p>​               <strong>恢复向下文</strong>，==内存中的寄存器值恢复到cpu中==</p>
-</blockquote>
-<ul>
-<li><p>==I/O状态信==: 包括显示的I/O请求,分配给进程的I／O设备和被进程使用的文件列表。</p>
 </li>
-<li><p>==记账信息==: 可能包括处理器时间总和，使用的时钟数总和，时间限制，记账号等。</p>
-</li>
-</ul>
-<blockquote>
+<li>5.==上下文数据==:【寄存器】<blockquote>
+<p><strong>保存上下文</strong>，cpu寄存器的内容保存到内存中<br><strong>恢复向下文</strong>，内存中的寄存器值恢复到cpu中</p>
 <ul>
-<li>每个进程已经在C<strong>PU上执行</strong>多久统计数据</li>
+<li>6.==记账信息==: 每个进程已经在cpu上执行了多久的统计数据</li>
 </ul>
 </blockquote>
-<ul>
-<li>其他 信息</li>
+</li>
 </ul>
 <blockquote>
 <hr>
 </blockquote>
-<h6 id="4：pc指针-寄存器-接下来要干的事情"><a href="#4：pc指针-寄存器-接下来要干的事情" class="headerlink" title="4：pc指针(寄存器):接下来要干的事情"></a>4：pc指针(寄存器):接下来要干的事情</h6><ul>
-<li><p>[ ] 进程的状态(保存在PCB)</p>
-</li>
-<li><p>R 就绪状态，进程在就绪队列中(谈恋爱 ,或者马上轮到)，就会处于这个状态</p>
-</li>
+<h6 id="4：进程的状态-保存在PCB"><a href="#4：进程的状态-保存在PCB" class="headerlink" title="4：进程的状态(保存在PCB)"></a>4：进程的状态(保存在PCB)</h6><ul>
+<li>R 就绪状态，进程在就绪队列中(谈恋爱 ,或者马上轮到)，就会处于这个状态</li>
 <li>S   睡眠状态，单身状态，暂时还轮不到他</li>
 <li>D   深度睡眠状态，==密集地进行IO操作的时候==(吐coredump)</li>
 <li>T    暂停stop</li>
@@ -235,12 +219,12 @@
 <h4 id="四：父进程-ppid-与子进程-pid"><a href="#四：父进程-ppid-与子进程-pid" class="headerlink" title="四：父进程(ppid)与子进程(pid)"></a>四：父进程(ppid)与子进程(pid)</h4><h5 id="4-1：子进程的创建"><a href="#4-1：子进程的创建" class="headerlink" title="4.1：子进程的创建"></a>4.1：子进程的创建</h5><p><strong>使用代码来创建子进程</strong></p>
 <ul>
 <li>fork ()    系统调用，一个函数</li>
-<li>fork 有两个返回值(1.子进程的pid(非负整数&gt;0),2.返回0)</li>
+<li>fork 有两个返回值(==1.父进程返回子进程的pid(非负整数&gt;0),2.子进程返回0==)</li>
 <li>父子进程代码共享，数据各自开辟空间，私有一份（采用写时拷贝）</li>
 </ul>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"> <span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt; </span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line">  <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">      fork();</span><br><span class="line">    <span class="comment">//gitpid 获取进程的进程</span></span><br><span class="line">    <span class="comment">//gitppid 获取父 进程</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d  %d\n"</span>,getpid(),getppid());</span><br><span class="line">    sleep(<span class="number">1</span>);                                                                 </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
 <p><strong>fork 之后通常要用 if 进行分流</strong></p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="keyword">pid_t</span> ret = fork();</span><br><span class="line"> <span class="keyword">if</span>(ret &lt; <span class="number">0</span>)&#123;</span><br><span class="line"> perror(<span class="string">"fork"</span>);</span><br><span class="line"> <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="keyword">else</span> <span class="keyword">if</span>(ret == <span class="number">0</span>)&#123; <span class="comment">//child</span></span><br><span class="line"> <span class="built_in">printf</span>(<span class="string">"I am child : %d!, ret: %d\n"</span>, getpid(), ret);</span><br><span class="line"> &#125;<span class="keyword">else</span>&#123; <span class="comment">//father</span></span><br><span class="line"> <span class="built_in">printf</span>(<span class="string">"I am father : %d!, ret: %d\n"</span>, getpid(), ret);</span><br><span class="line"> &#125;</span><br><span class="line"> sleep(<span class="number">1</span>);</span><br><span class="line"> <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="keyword">pid_t</span> ret = fork();</span><br><span class="line"> <span class="keyword">if</span>(ret &lt; <span class="number">0</span>)&#123;</span><br><span class="line"> perror(<span class="string">"fork"</span>);</span><br><span class="line"> <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="keyword">else</span> <span class="keyword">if</span>(ret == <span class="number">0</span>)&#123; <span class="comment">//child</span></span><br><span class="line"> <span class="built_in">printf</span>(<span class="string">"I am child : %d!, my father's pid: %d\n"</span>, getpid(), getppid());</span><br><span class="line"> &#125;<span class="keyword">else</span>&#123; <span class="comment">//father</span></span><br><span class="line"> <span class="built_in">printf</span>(<span class="string">"I am father : %d!, my father's pid: %d\n"</span>, getpid(), getppid());</span><br><span class="line"> &#125;</span><br><span class="line"> sleep(<span class="number">1</span>);</span><br><span class="line"> <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h5 id="4-2：fork-函数用运"><a href="#4-2：fork-函数用运" class="headerlink" title="4.2：fork ()函数用运"></a>4.2：fork ()函数用运</h5><p><strong>1.返回值：一次调用两个返回值</strong></p>
 <blockquote>
 <p>  ==父进程返回子进程的pid，子进程返回 0==</p>
@@ -342,16 +326,23 @@
 <h5 id="4-8-gdb调试☞跟踪一个进程"><a href="#4-8-gdb调试☞跟踪一个进程" class="headerlink" title="4.8: gdb调试☞跟踪一个进程"></a>4.8: gdb调试☞跟踪一个进程</h5><h6 id="1-设置gdb在fork之后跟踪子进程"><a href="#1-设置gdb在fork之后跟踪子进程" class="headerlink" title="1:设置gdb在fork之后跟踪子进程"></a>1:设置gdb在fork之后跟踪子进程</h6><p><code>set follow-fork-mode child</code></p>
 <h6 id="2：设置gdb在fork之后跟踪父进程"><a href="#2：设置gdb在fork之后跟踪父进程" class="headerlink" title="2：设置gdb在fork之后跟踪父进程"></a>2：设置gdb在fork之后跟踪父进程</h6><p><code>set follow-fork-mode  parent</code><br>【注意】<br>==一定要在fork函数调用之前设置才有效==</p>
 <h4 id="五-僵尸进程"><a href="#五-僵尸进程" class="headerlink" title="五:僵尸进程"></a>五:僵尸进程</h4><h5 id="5-1-成因"><a href="#5-1-成因" class="headerlink" title="5.1:成因:"></a>5.1:成因:</h5><ul>
-<li>子进程结束之后，父进程没有回收子进程的资源，为了解决子进程向父进程汇报工作的问题</li>
-<li>进程 终止，父进程尚未回收，子进程残留资源(PCB)存放于内核中，变成僵尸进程。</li>
+<li>子进程结束之后，父进程没有回收子进程的资源，为了解决子进程向父进程汇报工作的问题<ul>
+<li style="list-style: none"><input type="checkbox"> 示例代码</li>
 </ul>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">   <span class="keyword">pid_t</span> pid=fork();</span><br><span class="line">   <span class="keyword">if</span>(pid&gt;<span class="number">0</span>)&#123;</span><br><span class="line">     <span class="built_in">printf</span>(<span class="string">"father:%d,ppid:%d\n"</span>,getpid(),getppid());</span><br><span class="line">     <span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">       sleep(<span class="number">1</span>);</span><br><span class="line">     &#125;</span><br><span class="line">   &#125;<span class="keyword">else</span> <span class="keyword">if</span>(pid==<span class="number">0</span>)&#123;</span><br><span class="line">     <span class="built_in">printf</span>(<span class="string">"child:%d,ppid:%d\n"</span>,getpid(),getppid());</span><br><span class="line">    <span class="keyword">int</span> count=<span class="number">3</span>;</span><br><span class="line">     <span class="keyword">while</span>(count&gt;<span class="number">0</span>)&#123;</span><br><span class="line">         sleep(<span class="number">1</span>);</span><br><span class="line">       count--;</span><br><span class="line">    &#125;</span><br><span class="line">   &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">     perror(<span class="string">"fork"</span>);</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/20190806173946301.png" alt="在这里插入图片描述"></p>
 <h5 id="5-2：危害："><a href="#5-2：危害：" class="headerlink" title="5.2：危害："></a>5.2：危害：</h5><ul>
 <li>处理不当会造成==内存泄漏==</li>
 </ul>
 <h5 id="5-3：处理方式"><a href="#5-3：处理方式" class="headerlink" title="5.3：处理方式"></a>5.3：处理方式</h5><ul>
-<li>直接kill 僵尸进程是kill 不掉的，可以kill 掉僵尸进程的父进程。更科学的处理办法是: 进程等待</li>
+<li>==直接kill 僵尸进程是kill 不掉的，可以kill 掉僵尸进程的父进程==。更科学的处理办法是: 进程等待</li>
 </ul>
-<h5 id="5-4：为什么-kill-父进程僵尸进程没了？"><a href="#5-4：为什么-kill-父进程僵尸进程没了？" class="headerlink" title="5.4：为什么 kill 父进程僵尸进程没了？"></a>5.4：为什么 kill 父进程僵尸进程没了？</h5><h4 id="六：孤儿进程"><a href="#六：孤儿进程" class="headerlink" title="六：孤儿进程"></a>六：孤儿进程</h4><h5 id="6-1-进程的状态"><a href="#6-1-进程的状态" class="headerlink" title="6.1:进程的状态"></a>6.1:进程的状态</h5><ul>
+<h5 id="5-4：为什么-kill-父进程僵尸进程没了？"><a href="#5-4：为什么-kill-父进程僵尸进程没了？" class="headerlink" title="5.4：为什么 kill 父进程僵尸进程没了？"></a>5.4：为什么 kill 父进程僵尸进程没了？</h5><ul>
+<li>当 kill掉父进程之后，子进程就称为孤儿进程，孤儿进程会被1号进程收养，从而回收资源</li>
+</ul>
+<h4 id="六：孤儿进程"><a href="#六：孤儿进程" class="headerlink" title="六：孤儿进程"></a>六：孤儿进程</h4><h5 id="6-1-进程的状态"><a href="#6-1-进程的状态" class="headerlink" title="6.1:进程的状态"></a>6.1:进程的状态</h5><ul>
 <li>当kill 掉父进程之后，<strong>子进程就被称为孤儿进程</strong>，孤儿进程会<strong>被 1 号进程(init进程)收养</strong>，从而释放资源</li>
 <li>孤儿进程不是一种状态，是指父进程先结束了，但是子进程还在，子进程的父进程变成了1号进程</li>
 <li>init进程：开机时运行的第一个进程</li>
@@ -377,24 +368,26 @@
 </ul>
 <p>==环境<a href="https://baike.baidu.com/item/%E5%8F%98%E9%87%8F" target="_blank" rel="noopener">变量</a>是在操作系统中一个具有特定名字的对象，它包含了一个或者多个应用<a href="https://baike.baidu.com/item/%E7%A8%8B%E5%BA%8F" target="_blank" rel="noopener">程序</a>所将使用到的信息==。</p>
 <ul>
-<li><p>还有在系统当中通常具有全局特性</p>
-</li>
-<li><p>[ ] 特征</p>
-</li>
-<li><p>1.字符串(本质)</p>
-</li>
+<li>还有在系统当中通常具有全局特性</li>
+<li style="list-style: none"><input type="checkbox"> 特征</li>
+<li>1.字符串(本质)</li>
 <li>2.有统一的格式==名=(值)==</li>
-<li><p>3.值用来描述进程环境信息</p>
-</li>
-<li><p>[ ] </p>
-</li>
+<li>3.值用来描述进程环境信息</li>
+</ul>
+<p>环境变量是一个键值对结构： 键：变量  值：变量内容</p>
+<ul>
+<li>env 查看到系统上所有的环境变量</li>
 </ul>
 <h5 id="7-2：常见环境变量"><a href="#7-2：常见环境变量" class="headerlink" title="7.2：常见环境变量"></a>7.2：常见环境变量</h5><ul>
-<li>PATH : 指定命令的搜索路径</li>
+<li>PATH : shell 中</li>
 </ul>
 <blockquote>
 <p>使用格式:echo $PATH</p>
 </blockquote>
+<ul>
+<li>与其作用相似</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"> <span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"> <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">   <span class="keyword">char</span> *result =getenv(<span class="string">"PATH"</span>);</span><br><span class="line">   <span class="built_in">printf</span>(<span class="string">"%s\n"</span>,result);</span><br><span class="line">   <span class="keyword">return</span> <span class="number">0</span>; </span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
 <ul>
 <li>HOME : 指定用户的主工作目录(即用户登陆到Linux系统中时,默认的目录)</li>
 </ul>
@@ -413,10 +406,16 @@
 <blockquote>
 <p>使用格式： echo $LANG</p>
 </blockquote>
+<ul>
+<li>main函数的形式</li>
+</ul>
+<p>==通过main函数的第三个参数就能够获取到当前的环境变量==</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line">                                                         </span><br><span class="line"> <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span>  argc,<span class="keyword">char</span>* argv[]，<span class="keyword">char</span> *env[])</span></span>&#123;           </span><br><span class="line">    <span class="comment">//参数1：参数个数                            </span></span><br><span class="line">    <span class="comment">//参数2：参数                                </span></span><br><span class="line">    <span class="comment">//env也是一种字符串数组，当前的环境变量都有啥</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"argc:%d\n"</span>,argc);</span><br><span class="line">    <span class="keyword">int</span> i=<span class="number">0</span>;                 </span><br><span class="line">    <span class="keyword">for</span>(;env[i]!=<span class="literal">NULL</span>;i++)&#123;        </span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">"%s\n"</span>,env[i]);</span><br><span class="line">    &#125;                    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;       </span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
 <h5 id="7-3：查看环境变量的命令"><a href="#7-3：查看环境变量的命令" class="headerlink" title="7.3：查看环境变量的命令"></a>7.3：查看环境变量的命令</h5><ul>
 <li>打印环境变量表</li>
 </ul>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line">extera <span class="keyword">char</span>** environ;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(;environ[i];i++)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%s\n"</span>,environ[i]);</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2019/08/06/NAqKTCmBhedYsbk.png" alt></p>
 <p><strong>echo $NAME //NAME:你的环境变量名称</strong></p>
 <blockquote>
 <p><strong>例如: echo $ PATH</strong> ：查看PATH路径</p>
@@ -425,20 +424,26 @@
 <blockquote>
 <p><strong>或者echo  $ HOME</strong>：普通模式下查看到的时用户的家目录，root模式下查看到的是 <strong>root</strong></p>
 </blockquote>
-<h4 id="八：键值对-key-value-：通过key找到对应的value"><a href="#八：键值对-key-value-：通过key找到对应的value" class="headerlink" title="八：键值对(key_value)：通过key找到对应的value"></a>八：键值对(key_value)：通过key找到对应的value</h4><h5 id="8-1：环境变量是一个键值对结构"><a href="#8-1：环境变量是一个键值对结构" class="headerlink" title="8.1：环境变量是一个键值对结构"></a>8.1：环境变量是一个键值对结构</h5><blockquote>
-<p>键：变量名</p>
-<p>值：变量内容</p>
-</blockquote>
-<h5 id="8-2：和环境变量相关的命令"><a href="#8-2：和环境变量相关的命令" class="headerlink" title="8.2：和环境变量相关的命令"></a>8.2：和环境变量相关的命令</h5><ul>
+<h5 id="7-4-Linux上修改环境变量"><a href="#7-4-Linux上修改环境变量" class="headerlink" title="7.4:Linux上修改环境变量"></a>7.4:Linux上修改环境变量</h5><p><code>pwd</code></p>
+<ul>
+<li>查看当前目录的绝对路径</li>
+</ul>
+<p><code>echo ${PATH}</code></p>
+<p><code>export PATH=$PATH:+pwd的结果</code></p>
+<p><code>echo $PATH</code></p>
+<ul>
+<li>此时所看到的结果为你设置后的结果</li>
+</ul>
+<h5 id="7-5：和环境变量相关的命令"><a href="#7-5：和环境变量相关的命令" class="headerlink" title="7.5：和环境变量相关的命令"></a>7.5：和环境变量相关的命令</h5><ul>
 <li>1.echo: 显示某个环境变量值［重点］</li>
 <li>2.export: 设置一个新的环境变量［重点］</li>
 <li>3.env: 显示所有环境变量［重点］</li>
 <li>4.unset: 清除环境变量</li>
 <li>5.set: 显示本地定义的shell变量和环境变量</li>
 </ul>
-<h5 id="8-3：Linux-上查看环境变量的命令-env"><a href="#8-3：Linux-上查看环境变量的命令-env" class="headerlink" title="8.3：Linux 上查看环境变量的命令:env"></a>8.3：Linux 上查看环境变量的命令:env</h5><ul>
+<h5 id="7-6：Linux-上查看环境变量的命令-env"><a href="#7-6：Linux-上查看环境变量的命令-env" class="headerlink" title="7.6：Linux 上查看环境变量的命令:env"></a>7.6：Linux 上查看环境变量的命令:env</h5><ul>
 <li>env : 查看系统上所有的环境变量</li>
-<li>2.echo $ (环境变量名)  查看某个环境变量</li>
+<li>2.echo $ {环境变量名} 查看某个环境变量</li>
 <li>3.export  修改环境变量，对于PATH 修改一般只是进行追加，不会把原来内容(路径)去掉</li>
 </ul>
 <p><strong>指令格式:export PATH=$PATH:/home/jack/a(将PATH路径与/home/jack/a进行了拼接)</strong></p>
@@ -447,17 +452,33 @@
 <blockquote>
 <p>修改这个文件 ~ /.  bashrc 能够让环境变量持久生效(rc:运行时控制)</p>
 </blockquote>
+<p>【操作步骤】</p>
+<ul>
+<li>1.vim  ~/.banshrc</li>
+<li>2.添加==export PATH=$PATH:+所要添加的目录==</li>
+<li>3.重连终端，就会生效</li>
+</ul>
 <p><img src="https://wx2.sinaimg.cn/mw690/0071OE7sly1g2uwedpisyj30lt06nwg6.jpg" alt></p>
+<h4 id="八：键值对-key-value-：通过key找到对应的value"><a href="#八：键值对-key-value-：通过key找到对应的value" class="headerlink" title="八：键值对(key_value)：通过key找到对应的value"></a>八：键值对(key_value)：通过key找到对应的value</h4><h5 id="8-1：环境变量是一个键值对结构"><a href="#8-1：环境变量是一个键值对结构" class="headerlink" title="8.1：环境变量是一个键值对结构"></a>8.1：环境变量是一个键值对结构</h5><blockquote>
+<p>键：变量名</p>
+<p>值：变量内容</p>
+</blockquote>
 <h4 id="九：-程序地址空间"><a href="#九：-程序地址空间" class="headerlink" title="九： 程序地址空间"></a>九： 程序地址空间</h4><h5 id="9-1：栈"><a href="#9-1：栈" class="headerlink" title="9.1：栈"></a>9.1：栈</h5><ul>
 <li>保存局部变量</li>
 <li>==在(centors 上大小约为8M)栈的大小可以配置(要看平台)==</li>
 </ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> arr[<span class="number">1024</span>*<span class="number">1000</span>*<span class="number">8</span>]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>==栈的大小可以配置,不能答出具体数字==</li>
+</ul>
 <p><code>ulimit -a</code></p>
 <p>查看所有 <strong>ulimit</strong> 的内容</p>
+<p><img src="https://i.loli.net/2019/08/07/tQc6PFICuTHaOKL.png" alt></p>
 <p><code>ulimit -s 10240 （配置10M空间)</code></p>
 <blockquote>
 <p>如果是小对象，并且需要频繁创建和销毁，推荐在栈上分配栈上空间内存更高效</p>
 </blockquote>
+<p><img src="https://i.loli.net/2019/08/07/PfwqOLDY6knENyb.png" alt></p>
 <h5 id="9-2：共享内存区"><a href="#9-2：共享内存区" class="headerlink" title="9.2：共享内存区"></a>9.2：共享内存区</h5><ul>
 <li>1.动态库</li>
 <li>2.共享内存机制</li>
@@ -466,7 +487,7 @@
 <h5 id="9-3：堆"><a href="#9-3：堆" class="headerlink" title="9.3：堆"></a>9.3：堆</h5><p><strong>32位平台下 ：4G</strong></p>
 <p><strong>64位下平台特别大</strong></p>
 <ul>
-<li><p>动态申请的空间<strong>malloc</strong> 底层实现</p>
+<li><p>动态申请的空间</p>
 </li>
 <li><p>如果是大对象，必须在堆上分配</p>
 </li>
@@ -479,15 +500,38 @@
 <h5 id="9-5：代码段-只读"><a href="#9-5：代码段-只读" class="headerlink" title="9.5：代码段(只读)"></a>9.5：代码段(只读)</h5><blockquote>
 <p>存放二进制代码/字符串的字面常量</p>
 </blockquote>
-<h5 id="9-6-内存池"><a href="#9-6-内存池" class="headerlink" title="9.6:内存池"></a>9.6:内存池</h5><blockquote>
+<h5 id="9-6-内存池"><a href="#9-6-内存池" class="headerlink" title="9.6:内存池"></a>9.6:内存池</h5><ul>
+<li>提前申请好一批内存，需要时直接拿来用</li>
+</ul>
+<blockquote>
 <p>需要比较大的内存又需要频繁的申请和释放的就用内存池比较好</p>
 </blockquote>
-<h5 id="9-7-性能优化-：先性能测试，再确定能否优化。具体优化方向"><a href="#9-7-性能优化-：先性能测试，再确定能否优化。具体优化方向" class="headerlink" title="9.7:性能优化**：先性能测试，再确定能否优化。具体优化方向"></a>9.7:性能优化**：先性能测试，再确定能否优化。具体优化方向</h5><ul>
-<li>缓存区</li>
+<h5 id="9-7-性能优化：先性能测试，再确定能否优化。"><a href="#9-7-性能优化：先性能测试，再确定能否优化。" class="headerlink" title="9.7:性能优化：先性能测试，再确定能否优化。"></a>9.7:性能优化：先性能测试，再确定能否优化。</h5><ul>
+<li><p>[ ] 具体优化方向</p>
+</li>
+<li><p>缓存区</p>
+</li>
 <li>缓冲区</li>
 <li>池</li>
 </ul>
-<h4 id="分页-amp-虚拟地址空间"><a href="#分页-amp-虚拟地址空间" class="headerlink" title="分页&amp;虚拟地址空间"></a>分页&amp;虚拟地址空间</h4><p><img src="https://wx2.sinaimg.cn/mw690/0071OE7sly1g2xiwbetxdj314e0gjtc0.jpg" alt></p>
+<h4 id="分页-amp-虚拟地址空间"><a href="#分页-amp-虚拟地址空间" class="headerlink" title="分页&amp;虚拟地址空间"></a>分页&amp;虚拟地址空间</h4><p><img src="https://i.loli.net/2019/08/07/uxCKXqsjgnPNkWo.png" alt></p>
+<ul>
+<li>（花名册）虚拟地址＝》物理地址(虚拟地址和物理地址之间的映射关系)</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"> </span><br><span class="line"> <span class="keyword">int</span> count=<span class="number">0</span>;</span><br><span class="line"> <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">   <span class="keyword">pid_t</span> pid=fork();</span><br><span class="line">   <span class="keyword">if</span>(pid&gt;<span class="number">0</span>)&#123;</span><br><span class="line">     <span class="built_in">printf</span>(<span class="string">"father:%d,%d,%p\n"</span>,getpid(),count,&amp;count);</span><br><span class="line">   &#125;<span class="keyword">else</span> <span class="keyword">if</span>(pid==<span class="number">0</span>)&#123;</span><br><span class="line">     count=<span class="number">100</span>;</span><br><span class="line">     <span class="built_in">printf</span>(<span class="string">"child:%d,%d,%p\n"</span>,getpid(),count,&amp;count);</span><br><span class="line">   &#125;</span><br><span class="line">   sleep(<span class="number">1</span>);</span><br><span class="line">   <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>运行结果</li>
+</ul>
+<p><img src="https://i.loli.net/2019/08/07/e5hj3pgXwCasvPA.png" alt></p>
+<blockquote>
+<p>虽然两者的虚拟地址是相同的，但是他们映射到物理地址的结果是不同的</p>
+</blockquote>
+<ul>
+<li>虚拟地址的好处</li>
+</ul>
+<blockquote>
+<p>可以使程序与程序之间相互独立</p>
+</blockquote>
 <p><img src="https://i.loli.net/2019/07/26/5d3a62643f38423304.png" alt></p>
 	  
 
@@ -502,16 +546,6 @@
 	
 	
 		
-			
-		
-	
-		
-			
-		
-	
-		
-	
-		
 	
 		
 	
@@ -521,20 +555,6 @@
 	
 		
 			
-		
-	
-		
-	
-		
-	
-		
-	
-		
-	
-		
-			
-		
-	
 		
 	
 		
@@ -562,6 +582,38 @@
 		
 	
 		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
 			
 		
 	
@@ -632,8 +684,6 @@
 	
 		
 			
-		
-	
 		
 	
 		

@@ -1,0 +1,357 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>实现只能在堆上创建对象的类 | Hexo</title>
+  <meta name="author" content="John Doe">
+  
+  <meta name="description" content="设计一个只能在堆上创建对象的类">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="实现只能在堆上创建对象的类">
+  <meta property="og:site_name" content="Hexo">
+
+  
+    <meta property="og:image" content>
+  
+
+  
+    <link rel="alternative" href="/jun/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link href="/jun/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/jun/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/responsive.css" media="screen" type="text/css">  
+  <link rel="stylesheet" href="/jun/css/sidenav.css" media="screen" type="text/css">  
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/jun/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+</head>
+</html>
+<body id="body" data-spy="scroll" data-target=".toc">
+  <div class="container" id="container">
+	<div class="content">
+	  <div class="page-header">		
+  <h1><a class="brand" href="/jun/">Hexo</a><span class="split"></span><span class="title">实现只能在堆上创建对象的类</span><span class="date" id="title-date"><i class="fa fa-clock-o"></i> 2019-06-10</span></h1>
+</div>		
+
+<div class="row page">
+  <!-- cols -->	
+  
+  
+
+  
+	<div class="col-md-12">
+	  
+
+	  <!-- content -->
+	  <h4 id="设计一个只能在堆上创建对象的类"><a href="#设计一个只能在堆上创建对象的类" class="headerlink" title="设计一个只能在堆上创建对象的类"></a>设计一个只能在堆上创建对象的类</h4><a id="more"></a>
+<h4 id="设计一个只能在堆上创建对象的类-1"><a href="#设计一个只能在堆上创建对象的类-1" class="headerlink" title="设计一个只能在堆上创建对象的类"></a>设计一个只能在堆上创建对象的类</h4><h6 id="实现类的条件"><a href="#实现类的条件" class="headerlink" title="实现类的条件"></a>实现类的条件</h6><blockquote>
+<p>  <strong>1.构造函数私有化</strong><br>  <strong>2.提供公共接口:在堆上创建对象</strong><br>  <strong>3.在类外面无法创建对象，函数用类名调用，公共接口必须为static接口</strong><br>  <strong>4.防止拷贝:</strong><br>  <strong><1>:拷贝构造私有化，只声明不实现</1></strong><br>  <strong><2>：拷贝构造声明成delete函数(C++11的特性)</2></strong></p>
+</blockquote>
+<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="comment">//设计一个只能在堆上申请对象的类</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HeapOnly</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">static</span> HeapOnly* <span class="title">creatHeapOnly</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> HeapOnly;</span><br><span class="line">	&#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	HeapOnly()&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"HeapOnly"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	HeapOnly(<span class="keyword">const</span> HeapOnly&amp; h)&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"HeapOnly(const HeapOnly&amp;)"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	HeapOnly* h=HeapOnly::creatHeapOnly();</span><br><span class="line">	<span class="comment">//此时不能用HeapOnly h的方式申请对象，因为</span></span><br><span class="line">	<span class="comment">//该类的构造函数已经被私有化了。</span></span><br><span class="line">	<span class="function">HeapOnly <span class="title">h1</span><span class="params">(*h)</span></span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>如果只是将拷贝构造函数私有化的话阻止在栈上创建对象是否有用？<br>这种方式只是阻止了在主函数中使用拷贝构造函数创建对像。并不能完全将拷贝构造函数的调用路径完全 <strong>“堵住”</strong></p>
+</blockquote>
+<p><strong>再看下面的程序</strong></p>
+<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="comment">//设计一个只能在堆上申请对象的类</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HeapOnly</span>&#123;</span></span><br><span class="line">	<span class="function"><span class="keyword">friend</span> <span class="keyword">void</span> <span class="title">fun</span><span class="params">()</span></span>;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">static</span> HeapOnly* <span class="title">creatHeapOnly</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> HeapOnly;</span><br><span class="line">	&#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	HeapOnly()&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"HeapOnly"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//如果不将拷贝构造也"堵住"的话，还是可以将对象创建在栈上</span></span><br><span class="line">	<span class="comment">//也可以将拷贝构造函数只声明不实现</span></span><br><span class="line">	HeapOnly(<span class="keyword">const</span> HeapOnly&amp; h)&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"HeapOnly(const HeapOnly&amp;)"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fun</span><span class="params">()</span></span>&#123;</span><br><span class="line">	HeapOnly *h=HeapOnly::creatHeapOnly();</span><br><span class="line">	<span class="function">HeapOnly <span class="title">h1</span><span class="params">(*h)</span></span>;</span><br><span class="line">	<span class="comment">//如果不将拷贝构造函数delete,这种方式就可以调用拷贝构造</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	fun();</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>可以看到只是简单的将拷贝构造函数私有化是阻止不了拷贝构造函数的调用的。我们可以通过友元函数的方法来实现对象的创建，<br><strong>如下图</strong><br><img src="https://img-blog.csdnimg.cn/20190609090624204.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY2tfd2FuZzEyODgwMQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>通过上图可以看到,就算拷贝构造函数私有化了我们也可以通过友元函数的方式调用，而且不影响函数的使用。那到底怎样才能真真的将拷贝构造函数 <strong>“堵死”</strong> 呢？</p>
+</blockquote>
+<p><strong>看下例</strong></p>
+<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="comment">//设计一个只能在堆上申请对象的类</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HeapOnly</span>&#123;</span></span><br><span class="line">	<span class="function"><span class="keyword">friend</span> <span class="keyword">void</span> <span class="title">fun</span><span class="params">()</span></span>;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">static</span> HeapOnly* <span class="title">creatHeapOnly</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> HeapOnly;</span><br><span class="line">	&#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	HeapOnly()&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"HeapOnly"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	HeapOnly(<span class="keyword">const</span> HeapOnly&amp; h) = <span class="keyword">delete</span>;</span><br><span class="line">	<span class="comment">//如果不将拷贝构造也"堵住"的话，还是可以将对象创建在栈上</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fun</span><span class="params">()</span></span>&#123;</span><br><span class="line">	HeapOnly *h=HeapOnly::creatHeapOnly();</span><br><span class="line">	<span class="function">HeapOnly <span class="title">h1</span><span class="params">(*h)</span></span>;</span><br><span class="line">	<span class="comment">//如果不将拷贝构造函数delete,这种方式就可以调用拷贝构造</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	fun();</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>我们可以直接将拷贝构造函数给 <strong>delete</strong> 掉。这样就彻底的将拷贝构造函数 <strong>堵死</strong> 了，我们只能在对象创建对象了。</p>
+</blockquote>
+<p><img src="https://img-blog.csdnimg.cn/20190609091514977.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY2tfd2FuZzEyODgwMQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<blockquote>
+<p>也可以将拷贝构造的 <strong>delete</strong> 函数公有化，<strong>因为不管私有还是公有都没办法访问到已经删除的函数。也可以通过只声明不实现的方式实现该功能</strong></p>
+</blockquote>
+<p>【<strong>注意</strong>】</p>
+<p><strong>在实现该类的过程中，千万不能以为只是将构造函数和拷贝构造函数私有化就可以阻止在栈上创建对象.</strong></p>
+	  
+
+	  <div>
+  		<center>
+		  <div class="pagination">
+<ul class="pagination">
+	
+	
+	
+	
+	
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+			
+		
+	
+		
+			
+			
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+	
+	
+		<li class="prev"><a href="/jun/2019/06/10/Cpp/初阶/实现是能在栈上创建对象的类/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>prev</a></li>
+	
+	<li><a href="/jun/"><i class="fa fa-archive"></i>Home</a></li>
+	
+		<li class="next"><a href="/jun/2019/06/09/Cpp/初阶/STL简介/" class="alignright next">next<i class="fa fa-arrow-circle-o-right"></i></a></li>
+	
+</ul>
+</div>
+
+		</center>
+	  </div>
+	  
+	</div> <!-- col-md-9/col-md-12 -->
+	
+  </div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+	<footer> <p>
+  &copy; 2019 John Doe
+  
+      with help from <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-wixo/">Wixo</a>.    
+</p> </footer>
+  </div> <!-- container-narrow -->
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/jun/js/jquery.imagesloaded.min.js"></script>
+<script src="/jun/js/gallery.js"></script>
+<script src="/jun/js/bootstrap.min.js"></script>
+<script src="/jun/js/jquery.tableofcontents.min.js"></script>
+<script src="/jun/js/tocgenerator.min.js"></script>
+<script src="/jun/js/main.js"></script>
+<script src="/jun/js/search.js"></script> 
+
+
+
+
+<link rel="stylesheet" href="/jun/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/jun/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+</body>
+</html>

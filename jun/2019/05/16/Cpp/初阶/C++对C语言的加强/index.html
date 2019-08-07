@@ -1,0 +1,391 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>c++对C语言的加强 | Hexo</title>
+  <meta name="author" content="John Doe">
+  
+  <meta name="description" content="c++对C语言的加强1.c++中全局变量的检测增强12int a;int a = 10;
+
+在 C++ 中编译成功，但是在C语言中提示重定义错误
+
+2.函数检测增强,参数类型增强，返回值类型增强，函数调用的参数检测增强2.1 参数的类型检测增强
+1234int Add(num_1,num_2)&amp;#1">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="c++对C语言的加强">
+  <meta property="og:site_name" content="Hexo">
+
+  
+    <meta property="og:image" content>
+  
+
+  
+    <link rel="alternative" href="/jun/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link href="/jun/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/jun/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/responsive.css" media="screen" type="text/css">  
+  <link rel="stylesheet" href="/jun/css/sidenav.css" media="screen" type="text/css">  
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/jun/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+</head>
+</html>
+<body id="body" data-spy="scroll" data-target=".toc">
+  <div class="container" id="container">
+	<div class="content">
+	  <div class="page-header">		
+  <h1><a class="brand" href="/jun/">Hexo</a><span class="split"></span><span class="title">c++对C语言的加强</span><span class="date" id="title-date"><i class="fa fa-clock-o"></i> 2019-05-16</span></h1>
+</div>		
+
+<div class="row page">
+  <!-- cols -->	
+  
+  
+
+  
+	<div class="col-md-12">
+	  
+
+	  <!-- content -->
+	  <h3 id="c-对C语言的加强"><a href="#c-对C语言的加强" class="headerlink" title="c++对C语言的加强"></a>c++对C语言的加强</h3><h5 id="1-c-中全局变量的检测增强"><a href="#1-c-中全局变量的检测增强" class="headerlink" title="1.c++中全局变量的检测增强"></a>1.c++中全局变量的检测增强</h5><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a;</span><br><span class="line"><span class="keyword">int</span> a = <span class="number">10</span>;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>在 C++ 中编译成功，但是在C语言中提示重定义错误</p>
+</blockquote>
+<h5 id="2-函数检测增强-参数类型增强，返回值类型增强，函数调用的参数检测增强"><a href="#2-函数检测增强-参数类型增强，返回值类型增强，函数调用的参数检测增强" class="headerlink" title="2.函数检测增强,参数类型增强，返回值类型增强，函数调用的参数检测增强"></a>2.函数检测增强,参数类型增强，返回值类型增强，函数调用的参数检测增强</h5><p><strong>2.1 参数的类型检测增强</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Add</span><span class="params">(num_1,num_2)</span></span>&#123; </span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//c++中显示错误未定义的标识符，C语言编译成功并未显示错误</span></span><br></pre></td></tr></table></figure>
+<p><strong>2.2 返回值类型增强</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Add</span><span class="params">(<span class="keyword">int</span> num_1,<span class="keyword">int</span> num_2)</span></span>&#123; </span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//c++中显示函数必须返回一个值，C语言编译成功并未显示错误</span></span><br></pre></td></tr></table></figure>
+<p><strong>2.3 函数调用的参数检测增强</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Add</span><span class="params">(<span class="keyword">int</span> num_1,<span class="keyword">int</span> num_2)</span></span>&#123; </span><br><span class="line">  <span class="keyword">return</span> num_1+num_2;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span>&#123;</span><br><span class="line">    Add(<span class="number">10</span>,<span class="number">20</span>,<span class="number">30</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//c++中提示函数调用中参数太多，C语言编译成功并未显示错误</span></span><br></pre></td></tr></table></figure>
+<h5 id="3-类型转换增强"><a href="#3-类型转换增强" class="headerlink" title="3.类型转换增强"></a>3.类型转换增强</h5><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">char</span> *piont = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">int</span>); </span><br><span class="line">    <span class="comment">//malloc 返回的值是void*</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>在C++中提示错误，在C语言中编译通过</p>
+</blockquote>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//c++中需要完成强制类型转换，错误才会消失。C语言中不需要强制类型转换</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">char</span> *piont = (<span class="keyword">char</span>*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">int</span>);</span><br><span class="line">&#125;<span class="keyword">void</span> test1()&#123;</span><br></pre></td></tr></table></figure>
+<h5 id="4-struct-增强"><a href="#4-struct-增强" class="headerlink" title="4.struct 增强"></a>4.struct 增强</h5><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Student</span>&#123;</span></span><br><span class="line">	<span class="keyword">int</span> p_age;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">avgGrade</span><span class="params">()</span></span>&#123;  </span><br><span class="line">    <span class="comment">//C语言中struct 中不可以声明函数</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>c++中增加了可在struct中声明函数</p>
+</blockquote>
+<p><strong>用struct声明结构体类型的变量</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Student</span>&#123;</span></span><br><span class="line">	<span class="keyword">int</span> p_age;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">avgGrade</span><span class="params">()</span></span>&#123;  </span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span></span>&#123;</span><br><span class="line">	Student S;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//c++中可以用结构体名直接定义变量，而C语言中需要加上关键字static 来修饰Student</span></span><br></pre></td></tr></table></figure>
+<h5 id="5-bool类型的增强-C语言中没有bool类型"><a href="#5-bool类型的增强-C语言中没有bool类型" class="headerlink" title="5.bool类型的增强(C语言中没有bool类型)"></a>5.bool类型的增强(C语言中没有bool类型)</h5><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">bool</span> Flag=<span class="literal">true</span>;</span><br><span class="line"><span class="comment">//bool值为非0即为真(true)，bool值为0即为假(false)</span></span><br></pre></td></tr></table></figure>
+<h5 id="6-三目运算符增强"><a href="#6-三目运算符增强" class="headerlink" title="6.三目运算符增强"></a>6.三目运算符增强</h5><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test4</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line">	<span class="keyword">int</span> b = <span class="number">20</span>;</span><br><span class="line">	<span class="built_in">cout</span>&lt;<span class="string">"结果:"</span>&lt;&lt;(ab?a:b)&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	a &gt; b ? a : b = <span class="number">100</span>;</span><br><span class="line">    <span class="comment">//c++中返回的为变量(既三目运算符所确定的那个为真的变量)，c语言返回的是值</span></span><br><span class="line">	<span class="comment">//C语言中想模范c++写格式：*(a&gt;b?&amp;a:&amp;b)=100</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//c++中三目运算符结可以做左值</span></span><br></pre></td></tr></table></figure>
+<h5 id="const增强-（用const修饰后不可以修改）"><a href="#const增强-（用const修饰后不可以修改）" class="headerlink" title="const增强:（用const修饰后不可以修改）"></a>const增强:（用const修饰后不可以修改）</h5><figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//在C语言中</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> a;&lt;==&gt; <span class="keyword">int</span> <span class="keyword">const</span> a;<span class="comment">//两着等价</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> * b;</span><br><span class="line"><span class="comment">//指针所指向的那块空间不可修改</span></span><br><span class="line"><span class="comment">//b是一个指针,const int修饰 *</span></span><br><span class="line"><span class="keyword">int</span> *<span class="keyword">const</span> c;</span><br><span class="line"><span class="comment">//指针不可更改 </span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> * <span class="keyword">const</span> d;</span><br><span class="line"><span class="comment">//指针和其所指向的空间都不可改变</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>const 在”*”的左边修饰的是变量，在右边修饰的是指针</strong></p>
+</blockquote>
+<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//c++中用const修饰的变量是真真的常量,是只读的不可修改的</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> a=<span class="number">10</span>;</span><br><span class="line"><span class="comment">//a在符号表中以键值对的形式存在,当调用a时直接将10赋给调用对象</span></span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>key</th>
+<th>value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>a</td>
+<td>10</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>如果对一个常量去取地址,编译器会临时开辟一个空间temp,让这个指针存放这个临时的地址,看下例</strong></p>
+</blockquote>
+<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> a=<span class="number">10</span>;</span><br><span class="line"><span class="keyword">int</span> *p=(<span class="keyword">int</span> *)&amp;a;</span><br><span class="line">*p=<span class="number">20</span>;</span><br><span class="line"><span class="comment">//输出的结果是a的结果为10，*p的值为20</span></span><br><span class="line"><span class="comment">//原因为*p改变的是临时开辟的temp变量</span></span><br></pre></td></tr></table></figure>
+<p>【总结】</p>
+<blockquote>
+<p>C语言中的const修饰的变量仍然可以改变</p>
+<p>C++中用const修饰的变量是真真的常量不可以再做改变</p>
+</blockquote>
+<h5 id="枚举-enum"><a href="#枚举-enum" class="headerlink" title="枚举(enum)"></a>枚举(enum)</h5><blockquote>
+</blockquote>
+	  
+
+	  <div>
+  		<center>
+		  <div class="pagination">
+<ul class="pagination">
+	
+	
+	
+	
+	
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+			
+		
+	
+		
+			
+			
+			
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+	
+	
+		<li class="prev"><a href="/jun/2019/05/19/Cpp/初阶/关联式容器/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>prev</a></li>
+	
+	<li><a href="/jun/"><i class="fa fa-archive"></i>Home</a></li>
+	
+		<li class="next"><a href="/jun/2019/05/16/Cpp/初阶/命名空间/" class="alignright next">next<i class="fa fa-arrow-circle-o-right"></i></a></li>
+	
+</ul>
+</div>
+
+		</center>
+	  </div>
+	  
+	</div> <!-- col-md-9/col-md-12 -->
+	
+  </div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+	<footer> <p>
+  &copy; 2019 John Doe
+  
+      with help from <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-wixo/">Wixo</a>.    
+</p> </footer>
+  </div> <!-- container-narrow -->
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/jun/js/jquery.imagesloaded.min.js"></script>
+<script src="/jun/js/gallery.js"></script>
+<script src="/jun/js/bootstrap.min.js"></script>
+<script src="/jun/js/jquery.tableofcontents.min.js"></script>
+<script src="/jun/js/tocgenerator.min.js"></script>
+<script src="/jun/js/main.js"></script>
+<script src="/jun/js/search.js"></script> 
+
+
+
+
+<link rel="stylesheet" href="/jun/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/jun/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+</body>
+</html>

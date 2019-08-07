@@ -1,0 +1,355 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>特殊的一些用法 | Hexo</title>
+  <meta name="author" content="John Doe">
+  
+  <meta name="description" content="逆波兰表达式12341.操作数入栈2.遇到操作符，从栈中取出操作数需要的操作数，取出的操作数的位置应该为从右到左，进行运算，运算结果继续压栈3.重复1，24：返回栈顶元素，即为表达式的最终运行结果
+++1234567891011121314151617181920212223242526272829">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="特殊的一些用法">
+  <meta property="og:site_name" content="Hexo">
+
+  
+    <meta property="og:image" content>
+  
+
+  
+    <link rel="alternative" href="/jun/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link href="/jun/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/jun/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/responsive.css" media="screen" type="text/css">  
+  <link rel="stylesheet" href="/jun/css/sidenav.css" media="screen" type="text/css">  
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/jun/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+</head>
+</html>
+<body id="body" data-spy="scroll" data-target=".toc">
+  <div class="container" id="container">
+	<div class="content">
+	  <div class="page-header">		
+  <h1><a class="brand" href="/jun/">Hexo</a><span class="split"></span><span class="title">特殊的一些用法</span><span class="date" id="title-date"><i class="fa fa-clock-o"></i> 2019-04-05</span></h1>
+</div>		
+
+<div class="row page">
+  <!-- cols -->	
+  
+  
+
+  
+	<div class="col-md-12">
+	  
+
+	  <!-- content -->
+	  <h4 id="逆波兰表达式"><a href="#逆波兰表达式" class="headerlink" title="逆波兰表达式"></a>逆波兰表达式</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>操作数入栈</span><br><span class="line"><span class="number">2.</span>遇到操作符，从栈中取出操作数需要的操作数，取出的操作数的位置应该为从右到左，进行运算，运算结果继续压栈</span><br><span class="line"><span class="number">3.</span>重复<span class="number">1</span>，<span class="number">2</span></span><br><span class="line"><span class="number">4</span>：返回栈顶元素，即为表达式的最终运行结果</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">evalRPN</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&amp; tokens)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; s;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;tokens.size();i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(tokens[i]==<span class="string">"+"</span>||tokens[i]==<span class="string">"."</span>||tokens[i]==<span class="string">"*"</span>||tokens[i]==<span class="string">"/"</span>)&#123;</span><br><span class="line">                <span class="comment">//最先取出的是右操作数</span></span><br><span class="line">                <span class="keyword">int</span>  right = s.top();</span><br><span class="line">                s.pop();</span><br><span class="line">                <span class="keyword">int</span> left=s.top();</span><br><span class="line">                <span class="keyword">switch</span>(tokens[i][<span class="number">0</span>])&#123; <span class="comment">//string 中第零个位置的元素</span></span><br><span class="line">                    <span class="keyword">case</span> <span class="string">'+'</span>:</span><br><span class="line">                        s.push(left+right);</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    <span class="keyword">case</span> <span class="string">'-'</span>:</span><br><span class="line">                        s.push(left-right);</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                     <span class="keyword">case</span> <span class="string">'*'</span>:</span><br><span class="line">                        s.push(left*right);</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                      <span class="keyword">case</span> <span class="string">'/'</span>:</span><br><span class="line">                        s.push(left/right);</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                s.push(atoi(tokens[i].c_str()));</span><br><span class="line">                <span class="comment">//将当前的字符串转换成整数形式，atof(x)将字符串x转换成浮点型的数</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//最后的运算结果放到栈顶</span></span><br><span class="line">        <span class="keyword">return</span> s.top();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h4 id="二叉树的前序遍历"><a href="#二叉树的前序遍历" class="headerlink" title="二叉树的前序遍历"></a>二叉树的前序遍历</h4><figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">preorder</span><span class="params">(TreeNode *root,<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; v)</span></span>&#123;</span><br><span class="line">         <span class="keyword">if</span>(root==<span class="literal">nullptr</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        v.push_back(root-&gt;val);</span><br><span class="line">        preorder(root-&gt;left,v);</span><br><span class="line">        preorder(root-&gt;right,v);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; preorderTraversal(TreeNode* root) &#123;</span><br><span class="line">       <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v;</span><br><span class="line">        preorder(root,v);</span><br><span class="line">        <span class="keyword">return</span> v;</span><br><span class="line">    &#125; </span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//1.先遍历左节点，将左节点全部压栈，左节点遍历完成</span></span><br><span class="line"><span class="comment">//2.按照栈的顺序后进先出，取出每一个压栈的结点，从下向上遍历右结点，</span></span><br><span class="line"><span class="comment">//3.借助栈的后进先出完成结点向上回溯的过程</span></span><br></pre></td></tr></table></figure>
+<p><strong>非递归实现</strong></p>
+<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; preorderTraversal(TreeNode* root) &#123;</span><br><span class="line">		<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v;</span><br><span class="line">		<span class="built_in">stack</span>&lt;TreeNode*&gt;  st;</span><br><span class="line">		TreeNode* cur = root;</span><br><span class="line">		<span class="keyword">while</span> (cur || !st.empty())</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="comment">//先遍历左边的节点</span></span><br><span class="line">			<span class="keyword">while</span> (cur)</span><br><span class="line">			&#123;</span><br><span class="line">				st.push(cur);</span><br><span class="line">				v.push_back(cur-&gt;val);</span><br><span class="line">				cur = cur-&gt;left;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="comment">//自底向上遍历右节点</span></span><br><span class="line">			cur = st.top();</span><br><span class="line">			st.pop();</span><br><span class="line">			cur = cur-&gt;right;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> v;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h4 id="二叉树的中序遍历"><a href="#二叉树的中序遍历" class="headerlink" title="二叉树的中序遍历"></a>二叉树的中序遍历</h4><figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">midorder</span><span class="params">(TreeNode* root,<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;v)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(root==<span class="literal">nullptr</span>)</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        midorder(root-&gt;left,v);</span><br><span class="line">        v.push_back(root-&gt;val);</span><br><span class="line">        midorder(root-&gt;right,v);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; inorderTraversal(TreeNode* root) &#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v;</span><br><span class="line">        midorder(root,v);</span><br><span class="line">        <span class="keyword">return</span> v;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h4 id="二叉树的后续遍历"><a href="#二叉树的后续遍历" class="headerlink" title="二叉树的后续遍历"></a>二叉树的后续遍历</h4><figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">postorder</span><span class="params">(TreeNode* root,<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; v)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(root==<span class="literal">nullptr</span>)</span><br><span class="line">            <span class="keyword">return</span> ;</span><br><span class="line">        postorder(root-&gt;left,v);</span><br><span class="line">        postorder(root-&gt;right,v);</span><br><span class="line">        v.push_back(root-&gt;val);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; postorderTraversal(TreeNode* root) &#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v;</span><br><span class="line">        postorder(root,v);</span><br><span class="line">        <span class="keyword">return</span> v;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><strong>二叉树的镜像</strong></p>
+<blockquote>
+<p>1.递归做法</p>
+</blockquote>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Mirror</span><span class="params">(TreeNode *pRoot)</span> </span>&#123;</span><br><span class="line">     <span class="keyword">if</span>(pRoot==<span class="literal">nullptr</span>)</span><br><span class="line">         <span class="keyword">return</span> ;</span><br><span class="line">        swap(pRoot-&gt;left,pRoot-&gt;right);</span><br><span class="line">        Mirror(pRoot-&gt;left);</span><br><span class="line">        Mirror(pRoot-&gt;right);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>2.非递归</p>
+</blockquote>
+<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Mirror</span><span class="params">(TreeNode *pRoot)</span> </span>&#123;</span><br><span class="line">     <span class="built_in">queue</span>&lt;TreeNode*&gt; q;</span><br><span class="line">        <span class="keyword">if</span>(pRoot)&#123;</span><br><span class="line">            q.push(pRoot);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span>(!q.empty())&#123;</span><br><span class="line">            q.push();</span><br><span class="line">            <span class="keyword">if</span>()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;     <span class="comment">//需要补充</span></span><br></pre></td></tr></table></figure>
+<p><strong>第k大个元素</strong></p>
+<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">findKthLargest</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><strong>利用适配器模拟实现deque</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;windows.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;deque&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>,<span class="title">class</span> <span class="title">container</span> = <span class="title">deque</span>&lt;T&gt;&gt;</span></span><br><span class="line"><span class="class"><span class="title">class</span> <span class="title">Queue</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Push</span><span class="params">(<span class="keyword">const</span> T&amp; x)</span></span>&#123;</span><br><span class="line">		_con.push_back(x);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Pop</span><span class="params">()</span></span>&#123;</span><br><span class="line">		_con.pop_front();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function">T&amp; <span class="title">Front</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> _con.front();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">size_t</span> size()&#123;</span><br><span class="line">		<span class="keyword">return</span> _con.size();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">Empty</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> _con.empty();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function">T&amp; <span class="title">Back</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> _con.back();</span><br><span class="line">	&#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	container _con;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	Queue&lt;<span class="keyword">int</span>&gt; q;</span><br><span class="line">	q.Push(<span class="number">1</span>);</span><br><span class="line">	q.Push(<span class="number">2</span>);</span><br><span class="line">	q.Push(<span class="number">3</span>);</span><br><span class="line">	q.Push(<span class="number">4</span>);</span><br><span class="line">	q.Push(<span class="number">5</span>);</span><br><span class="line">	<span class="keyword">while</span> (!q.Empty())&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; q.Front() &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">		q.Pop();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	system(<span class="string">"pause"</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="程序执行时间的计算"><a href="#程序执行时间的计算" class="headerlink" title="程序执行时间的计算"></a><strong>程序执行时间的计算</strong></h5><figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;time.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> begin=clock();</span><br><span class="line"><span class="keyword">int</span> end=clock();</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"%d"</span>,(begin-end)/CLOCKS_PER_SEC);</span><br></pre></td></tr></table></figure>
+<h5 id="c-中-typeid-变量名-name-返回的时变量的类型"><a href="#c-中-typeid-变量名-name-返回的时变量的类型" class="headerlink" title="c++中 typeid(变量名).name()返回的时变量的类型"></a>c++中 typeid(变量名).name()返回的时变量的类型</h5>	  
+
+	  <div>
+  		<center>
+		  <div class="pagination">
+<ul class="pagination">
+	
+	
+	
+	
+	
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+			
+			
+		
+	
+		
+	
+		
+			
+			
+			
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+	
+	
+		<li class="prev"><a href="/jun/2019/05/12/Cpp/进阶/C++进阶多态/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>prev</a></li>
+	
+	<li><a href="/jun/"><i class="fa fa-archive"></i>Home</a></li>
+	
+		<li class="next"><a href="/jun/2019/04/05/Cpp/初阶/stack&deque/" class="alignright next">next<i class="fa fa-arrow-circle-o-right"></i></a></li>
+	
+</ul>
+</div>
+
+		</center>
+	  </div>
+	  
+	</div> <!-- col-md-9/col-md-12 -->
+	
+  </div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+	<footer> <p>
+  &copy; 2019 John Doe
+  
+      with help from <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-wixo/">Wixo</a>.    
+</p> </footer>
+  </div> <!-- container-narrow -->
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/jun/js/jquery.imagesloaded.min.js"></script>
+<script src="/jun/js/gallery.js"></script>
+<script src="/jun/js/bootstrap.min.js"></script>
+<script src="/jun/js/jquery.tableofcontents.min.js"></script>
+<script src="/jun/js/tocgenerator.min.js"></script>
+<script src="/jun/js/main.js"></script>
+<script src="/jun/js/search.js"></script> 
+
+
+
+
+<link rel="stylesheet" href="/jun/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/jun/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+</body>
+</html>

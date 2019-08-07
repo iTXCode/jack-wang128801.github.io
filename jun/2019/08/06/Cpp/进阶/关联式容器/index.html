@@ -1,0 +1,356 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>关联式容器 | Hexo</title>
+  <meta name="author" content="John Doe">
+  
+  <meta name="description" content="关联式容器[TOC]">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="关联式容器">
+  <meta property="og:site_name" content="Hexo">
+
+  
+    <meta property="og:image" content>
+  
+
+  
+    <link rel="alternative" href="/jun/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link href="/jun/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/jun/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/responsive.css" media="screen" type="text/css">  
+  <link rel="stylesheet" href="/jun/css/sidenav.css" media="screen" type="text/css">  
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/jun/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+</head>
+</html>
+<body id="body" data-spy="scroll" data-target=".toc">
+  <div class="container" id="container">
+	<div class="content">
+	  <div class="page-header">		
+  <h1><a class="brand" href="/jun/">Hexo</a><span class="split"></span><span class="title">关联式容器</span><span class="date" id="title-date"><i class="fa fa-clock-o"></i> 2019-08-06</span></h1>
+</div>		
+
+<div class="row page">
+  <!-- cols -->	
+  
+  
+
+  
+	<div class="col-md-12">
+	  
+
+	  <!-- content -->
+	  <h3 id="关联式容器"><a href="#关联式容器" class="headerlink" title="关联式容器"></a>关联式容器</h3><p>[TOC]</p>
+<a id="more"></a>
+<h5 id="键值对"><a href="#键值对" class="headerlink" title="键值对"></a>键值对</h5><ul>
+<li>用来表示具有一一对应关系的一种结构，该结构中一般只包含两个成员变量key和value，key代表键值，value表示与key对</li>
+</ul>
+<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T1</span>, <span class="title">class</span> <span class="title">T2</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">struct</span> <span class="title">pair</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">typedef</span> T1 first_type;</span><br><span class="line">	<span class="keyword">typedef</span> T2 second_type;</span><br><span class="line">	T1 first;</span><br><span class="line">	T2 second;</span><br><span class="line">	pair()</span><br><span class="line">		: first(T1())</span><br><span class="line">		, second(T2())</span><br><span class="line">	&#123;&#125;</span><br><span class="line">	pair(<span class="keyword">const</span> T1&amp; a, <span class="keyword">const</span> T2&amp; b)</span><br><span class="line">		: first(a)</span><br><span class="line">   		,second(b)</span><br><span class="line">	&#123;&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h4 id="1-树形结构的关联式容器"><a href="#1-树形结构的关联式容器" class="headerlink" title="1:树形结构的关联式容器"></a>1:树形结构的关联式容器</h4><h5 id="1-map"><a href="#1-map" class="headerlink" title="1.map"></a>1.map</h5><ul>
+<li>使用实例</li>
+</ul>
+<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;map&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="built_in">map</span>&lt;<span class="built_in">string</span>, <span class="built_in">string</span>&gt; dictMap;</span><br><span class="line">    <span class="comment">//两种不同的插入方式</span></span><br><span class="line">	dictMap.insert(make_pair(<span class="string">"中国"</span>, <span class="string">"China"</span>));</span><br><span class="line">	dictMap.insert(make_pair(<span class="string">"日本"</span>, <span class="string">"Japanese"</span>));</span><br><span class="line">	dictMap[<span class="string">"西安"</span>] = <span class="string">"xi,an"</span>;</span><br><span class="line">	<span class="keyword">auto</span> dit = dictMap.begin();</span><br><span class="line">	<span class="keyword">while</span> (dit != dictMap.end())&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; dit-&gt;first &lt;&lt; <span class="string">" "</span> &lt;&lt; dit-&gt;second &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		++dit;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	test();</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>运行结果</li>
+</ul>
+<p><img src="https://i.loli.net/2019/08/06/YL8w6Af5iZKSzPe.png" alt></p>
+<p>【总结】</p>
+<ol>
+<li>map中的的元素是键值对</li>
+<li>map中的key是唯一的，并且不能修改</li>
+<li>默认按照小于的方式对key进行比较</li>
+<li>map中的元素如果用迭代器去遍历，可以得到一个有序的序列</li>
+<li>map的底层为平衡搜索树(红黑树)，查找效率比较高</li>
+<li>支持[]操作符，operator[]中实际进行插入查找。</li>
+</ol>
+<h5 id="2-multimap"><a href="#2-multimap" class="headerlink" title="2.multimap"></a>2.multimap</h5><h5 id="3-set"><a href="#3-set" class="headerlink" title="3.set"></a>3.set</h5>	  
+
+	  <div>
+  		<center>
+		  <div class="pagination">
+<ul class="pagination">
+	
+	
+	
+	
+	
+	
+		
+			
+			
+		
+	
+		
+			
+			
+			
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+	
+	
+		<li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>prev</a></li>
+	
+	<li><a href="/jun/"><i class="fa fa-archive"></i>Home</a></li>
+	
+		<li class="next"><a href="/jun/2019/08/06/Cpp/进阶/Cpp类型转换/" class="alignright next">next<i class="fa fa-arrow-circle-o-right"></i></a></li>
+	
+</ul>
+</div>
+
+		</center>
+	  </div>
+	  
+	</div> <!-- col-md-9/col-md-12 -->
+	
+  </div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+	<footer> <p>
+  &copy; 2019 John Doe
+  
+      with help from <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-wixo/">Wixo</a>.    
+</p> </footer>
+  </div> <!-- container-narrow -->
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/jun/js/jquery.imagesloaded.min.js"></script>
+<script src="/jun/js/gallery.js"></script>
+<script src="/jun/js/bootstrap.min.js"></script>
+<script src="/jun/js/jquery.tableofcontents.min.js"></script>
+<script src="/jun/js/tocgenerator.min.js"></script>
+<script src="/jun/js/main.js"></script>
+<script src="/jun/js/search.js"></script> 
+
+
+
+
+<link rel="stylesheet" href="/jun/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/jun/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+</body>
+</html>

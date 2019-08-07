@@ -1,0 +1,404 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>stack&amp;deque | Hexo</title>
+  <meta name="author" content="John Doe">
+  
+  <meta name="description" content="deque的使用1.队列12345template&amp;lt;class T,class &amp;gt;    class Deque&amp;#123;        public :        iterator    &amp;#125;
+栈的压入、弹出序列
+输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="stack&amp;deque">
+  <meta property="og:site_name" content="Hexo">
+
+  
+    <meta property="og:image" content>
+  
+
+  
+    <link rel="alternative" href="/jun/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link href="/jun/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/jun/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/responsive.css" media="screen" type="text/css">  
+  <link rel="stylesheet" href="/jun/css/sidenav.css" media="screen" type="text/css">  
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/jun/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+</head>
+</html>
+<body id="body" data-spy="scroll" data-target=".toc">
+  <div class="container" id="container">
+	<div class="content">
+	  <div class="page-header">		
+  <h1><a class="brand" href="/jun/">Hexo</a><span class="split"></span><span class="title">stack&amp;deque</span><span class="date" id="title-date"><i class="fa fa-clock-o"></i> 2019-04-05</span></h1>
+</div>		
+
+<div class="row page">
+  <!-- cols -->	
+  
+  
+
+  
+	<div class="col-md-12">
+	  
+
+	  <!-- content -->
+	  <h3 id="deque的使用"><a href="#deque的使用" class="headerlink" title="deque的使用"></a>deque的使用</h3><h4 id="1-队列"><a href="#1-队列" class="headerlink" title="1.队列"></a>1.队列</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>,<span class="title">class</span> &gt;</span></span><br><span class="line"><span class="class">    <span class="title">class</span> <span class="title">Deque</span>&#123;</span></span><br><span class="line">        <span class="keyword">public</span> :</span><br><span class="line">        iterator</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h4 id="栈的压入、弹出序列"><a href="#栈的压入、弹出序列" class="headerlink" title="栈的压入、弹出序列"></a>栈的压入、弹出序列</h4><blockquote>
+<p>输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否可能为该栈的弹出顺序。假设压入栈的所有数字均不相等。例如序列1,2,3,4,5是某栈的压入顺序，序列4,5,3,2,1是该压栈序列对应的一个弹出序列，但4,3,5,1,2就不可能是该压栈序列的弹出序列。（注意：这两个序列的长度是相等的）</p>
+</blockquote>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">IsPopOrder</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; pushV,<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; popV)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">size_t</span> psz=pushV.size();</span><br><span class="line">        <span class="keyword">size_t</span> popsz=popV.size();</span><br><span class="line">        <span class="keyword">if</span>(psz!=popsz)</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>; <span class="comment">//两者的长度都不一样的话肯定是错的</span></span><br><span class="line">        <span class="comment">//模拟压栈，出栈的过程</span></span><br><span class="line">        <span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; s;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">size_t</span> pushIndex=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">size_t</span> popIndex=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>(pushIndex&lt;psz)&#123;</span><br><span class="line">            s.push(pushV[pushIndex++]);</span><br><span class="line">            <span class="keyword">while</span>(!s.empty()&amp;&amp;s.top()==popV[popIndex])&#123;</span><br><span class="line">                s.pop();</span><br><span class="line">                popIndex++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> s.empty();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><strong>二叉树的遍历</strong></p>
+<blockquote>
+<p>用非得递归的方法来前序遍历二叉树</p>
+<p>1.先遍历左节点，左节点全部压栈，左节点遍历完成</p>
+<p>2.按照栈 的顺序后进先出，取出每一个压栈的结点，从下向上遍历右结点]</p>
+</blockquote>
+<p><strong>找最近公共祖先</strong></p>
+<p><img src="https://assets.leetcode-cn.com/aliyun-lc-upload/uploads/2018/12/15/binarytree.png" alt></p>
+<p><strong>寻找结点路径</strong></p>
+<p><strong>用栈记录路径，并且辅助向上回溯路径</strong></p>
+<blockquote>
+<ul>
+<li>1.从根结点开始搜索，每一个结点，先入站</li>
+<li>2.如果当前结点不是要找的结点，再去看左右子树是否存在要找的结点</li>
+<li>3.如果当前节点的左右子树都不包含要搜索的结点，说明当前结点不在目标结点的路径中，排除此节点，出栈</li>
+</ul>
+</blockquote>
+<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">getpath</span><span class="params">(TreeNode* cur ,TreeNode * node,<span class="built_in">stack</span> &lt;TreeNode*&gt;&amp; s)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(cur==<span class="literal">nullptr</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//先入栈</span></span><br><span class="line">        s.push(cur);</span><br><span class="line">        <span class="comment">//当前结点是要找的结点，说明路径搜索完毕</span></span><br><span class="line">        <span class="keyword">if</span>(cur==node)</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        <span class="comment">//当前结点不是要找的结点，再去看左右节点</span></span><br><span class="line">        <span class="keyword">if</span>(getpath(cur-&gt;left,node,s))</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">if</span>(getpath(cur-&gt;right,node,s))</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        <span class="comment">//当前结点不存在要寻找的路径上，出栈；</span></span><br><span class="line">        s.pop();</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function">TreeNode* <span class="title">lowestCommonAncestor</span><span class="params">(TreeNode* root, TreeNode* p, TreeNode* q)</span> </span>&#123;</span><br><span class="line">         <span class="built_in">stack</span>&lt;TreeNode*&gt; path1;</span><br><span class="line">         <span class="built_in">stack</span>&lt;TreeNode*&gt; path2;</span><br><span class="line">         getpath(root,p,path1);</span><br><span class="line">         getpath(root,q,path2);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span>(path1.size()!=path2.size())&#123;</span><br><span class="line">            <span class="keyword">if</span>(path1.size()&gt;path2.size())&#123;</span><br><span class="line">               path1.pop(); </span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span>&#123;</span><br><span class="line">                path2.pop();  </span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">while</span>(!path1.empty())&#123;</span><br><span class="line">                <span class="keyword">if</span>(path1.top()==path2.top())</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                     path1.pop(); </span><br><span class="line">                     path2.pop();  </span><br><span class="line">            &#125; </span><br><span class="line">             <span class="keyword">return</span> path1.top();</span><br><span class="line">        &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">getPath</span><span class="params">(TreeNode* cur, TreeNode* node, <span class="built_in">stack</span>&lt;TreeNode*&gt;&amp; s)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (cur == <span class="literal">nullptr</span>)</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">		<span class="comment">//先入栈</span></span><br><span class="line">		s.push(cur);</span><br><span class="line">		<span class="comment">//当前节点是要找的节点，说明路径搜索完成</span></span><br><span class="line">		<span class="keyword">if</span> (cur == node)</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">		<span class="comment">//当前节点不是要找的节点，再去看左右节点</span></span><br><span class="line">		<span class="keyword">if</span> (getPath(cur-&gt;left, node, s))</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">		<span class="keyword">if</span> (getPath(cur-&gt;right, node, s))</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">		<span class="comment">//当前节点不存在于要寻找的节点的路径上， 出栈</span></span><br><span class="line">		s.pop();</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function">TreeNode* <span class="title">lowestCommonAncestor</span><span class="params">(TreeNode* root, TreeNode* p, TreeNode* q)</span> </span>&#123;</span><br><span class="line">		<span class="built_in">stack</span>&lt;TreeNode*&gt; path1;</span><br><span class="line">		<span class="built_in">stack</span>&lt;TreeNode*&gt; path2;</span><br><span class="line">		<span class="comment">//获取路经</span></span><br><span class="line">		getPath(root, p, path1);</span><br><span class="line">		getPath(root, q, path2);</span><br><span class="line">		<span class="comment">//路径裁剪，使两个路径的长度一致</span></span><br><span class="line">		<span class="keyword">while</span> (path1.size() != path2.size())</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span> (path1.size() &gt; path2.size())</span><br><span class="line">			&#123;</span><br><span class="line">				path1.pop();</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">			&#123;</span><br><span class="line">				path2.pop();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">//寻找第一个相同的节点，即为公共祖先</span></span><br><span class="line">		<span class="keyword">while</span> (!path1.empty())</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span> (path1.top() == path2.top())</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			path1.pop();</span><br><span class="line">			path2.pop();</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> path1.top();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h5 id="【总结】自底向上对比两个路径的结点："><a href="#【总结】自底向上对比两个路径的结点：" class="headerlink" title="【总结】自底向上对比两个路径的结点："></a>【总结】<strong>自底向上对比两个路径的结点：</strong></h5><ul>
+<li>1.首先确保两个路径的长度相等(因为根节点到最近公共祖先的路径是一致的，长度肯定相等)，如果不相等，裁掉长路经的栈顶结点</li>
+<li>2.第一个相等的结点就是公共祖先</li>
+</ul>
+<h4 id="栈实现队列"><a href="#栈实现队列" class="headerlink" title="栈实现队列"></a>栈实现队列</h4><figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyQueue</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">/** Initialize your data structure here. */</span></span><br><span class="line">    MyQueue() &#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/** Push element x to the back of queue. */</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">push</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">        left.push(x);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/** Removes the element from in front of queue and returns that element. */</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">pop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">       <span class="keyword">if</span>(right.empty())&#123;</span><br><span class="line">          <span class="keyword">while</span>(!left.empty())&#123;</span><br><span class="line">              <span class="keyword">int</span> top=left.top();</span><br><span class="line">              left.pop();</span><br><span class="line">              right.push(top);</span><br><span class="line">          &#125;  </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> top=right.top();</span><br><span class="line">        right.pop();</span><br><span class="line">        <span class="keyword">return</span> top;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/** Get the front element. */</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">peek</span><span class="params">()</span> </span>&#123;<span class="comment">//拿到出队栈的栈顶元素</span></span><br><span class="line">        <span class="keyword">if</span>(right.empty())&#123;</span><br><span class="line">          <span class="keyword">while</span>(!left.empty())&#123;</span><br><span class="line">              <span class="keyword">int</span> top=left.top();</span><br><span class="line">              left.pop();</span><br><span class="line">              right.push(top);</span><br><span class="line">          &#125;  </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> top=right.top();</span><br><span class="line">        <span class="keyword">return</span> top;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/** Returns whether the queue is empty. */</span></span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">empty</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> left.empty()&amp;&amp;right.empty();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">    <span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt;  left;</span><br><span class="line">    <span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt;   right;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h5 id="方法2"><a href="#方法2" class="headerlink" title="方法2"></a>方法2</h5><figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyQueue</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="comment">/** Initialize your data structure here. */</span></span><br><span class="line">	MyQueue() &#123;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/** Push element x to the back of queue. */</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">push</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">		_pushS.push(x);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/** Removes the element from in front of queue and returns that element. */</span></span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">pop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (_popS.empty())</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="comment">//到入队栈的元素到出队栈</span></span><br><span class="line">			<span class="keyword">while</span> (!_pushS.empty())</span><br><span class="line">			&#123;</span><br><span class="line">				_popS.push(_pushS.top());</span><br><span class="line">				_pushS.pop();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">int</span> val = _popS.top();</span><br><span class="line">		_popS.pop();</span><br><span class="line">		<span class="keyword">return</span> val;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/** Get the front element. */</span></span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">peek</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (_popS.empty())</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="comment">//到入队栈的元素到出队栈</span></span><br><span class="line">			<span class="keyword">while</span> (!_pushS.empty())</span><br><span class="line">			&#123;</span><br><span class="line">				_popS.push(_pushS.top());</span><br><span class="line">				_pushS.pop();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> _popS.top();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/** Returns whether the queue is empty. */</span></span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">empty</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> _popS.empty() &amp;&amp; _pushS.empty();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; _pushS;</span><br><span class="line">	<span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; _popS;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>【总结】</p>
+<p><strong>队列：先进先出</strong></p>
+<p><strong>栈：后进先出</strong></p>
+<ul>
+<li>1.入队栈：只负责入数据</li>
+<li>2.出队栈: 只负责出数据</li>
+<li>push:给入队栈push</li>
+<li>pop 如果出队栈为空,把入队栈的元素全部倒过来，出栈顶元素</li>
+<li>如果不为空，直接出栈顶元素</li>
+</ul>
+<h3 id="deque使用"><a href="#deque使用" class="headerlink" title="deque使用"></a>deque使用</h3><h4 id="用两个队列实现栈"><a href="#用两个队列实现栈" class="headerlink" title="用两个队列实现栈"></a>用两个队列实现栈</h4><p><strong>栈：后进先出</strong></p>
+<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyStack</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="comment">/** Initialize your data structure here. */</span></span><br><span class="line">	MyStack() &#123;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/** Push element x onto stack. */</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">push</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">		<span class="comment">//元素存放到非空的队列中</span></span><br><span class="line">		<span class="keyword">if</span> (!_a.empty()) &#123;</span><br><span class="line">			_a.push(x);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> &#123;</span><br><span class="line">			_b.push(x);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/** Removes the element on top of the stack and returns that element. */</span></span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">pop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> ret;</span><br><span class="line">		<span class="keyword">if</span> (_a.empty()) &#123;</span><br><span class="line">			<span class="comment">//非空队列中的元素导入到空队中，最后一个元素不需要导入，直接pop</span></span><br><span class="line">			<span class="keyword">while</span> (_b.size() &gt; <span class="number">1</span>) &#123;</span><br><span class="line">				_a.push(_b.front());</span><br><span class="line">				_b.pop();</span><br><span class="line">			&#125;</span><br><span class="line">			ret = _b.front();</span><br><span class="line">			_b.pop();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="keyword">while</span> (_a.size() &gt; <span class="number">1</span>) &#123;</span><br><span class="line">				_b.push(_a.front());</span><br><span class="line">				_a.pop();</span><br><span class="line">			&#125;</span><br><span class="line">			ret = _a.front();</span><br><span class="line">			_a.pop();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> ret;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/** Get the top element. */</span></span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">top</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> ret;</span><br><span class="line">		<span class="keyword">if</span> (!_a.empty()) &#123;</span><br><span class="line">			ret = _a.back();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> &#123;</span><br><span class="line">			ret = _b.back();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> ret;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/** Returns whether the stack is empty. */</span></span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">empty</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> _a.empty() &amp;&amp; _b.empty();</span><br><span class="line">	&#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="built_in">queue</span>&lt;<span class="keyword">int</span>&gt; _a;</span><br><span class="line">	<span class="built_in">queue</span>&lt;<span class="keyword">int</span>&gt; _b;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>【总结】</p>
+<ul>
+<li>1.始终保持一个队列是空的</li>
+<li>2.入栈时，元素向非空队列入队</li>
+<li>3.出栈时，元素先导入空队列，出非空队列的最后一个元素</li>
+</ul>
+<h4 id="二叉树的层序遍历"><a href="#二叉树的层序遍历" class="headerlink" title="二叉树的层序遍历"></a>二叉树的层序遍历</h4><figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">getHeight</span><span class="params">(TreeNode* root)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (root == <span class="literal">nullptr</span>)</span><br><span class="line">			<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">int</span> left = getHeight(root-&gt;left);</span><br><span class="line">		<span class="keyword">int</span> right = getHeight(root-&gt;right);</span><br><span class="line">		<span class="keyword">return</span> left &gt; right ? left + <span class="number">1</span> : right + <span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; levelOrder(TreeNode* root) &#123;</span><br><span class="line">		<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;  treeVec;</span><br><span class="line">		<span class="comment">//二维数组的行数和树的高度一致</span></span><br><span class="line">		treeVec.resize(getHeight(root));</span><br><span class="line">		<span class="comment">//存放节点</span></span><br><span class="line">		<span class="built_in">queue</span>&lt;TreeNode*&gt; node;</span><br><span class="line">		<span class="comment">//存放节点对应的层号</span></span><br><span class="line">		<span class="built_in">queue</span>&lt;<span class="keyword">int</span>&gt; index;</span><br><span class="line">		<span class="comment">//入队根节点</span></span><br><span class="line">		<span class="keyword">if</span> (root)</span><br><span class="line">		&#123;</span><br><span class="line">			node.push(root);</span><br><span class="line">			index.push(<span class="number">0</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">//遍历队列</span></span><br><span class="line">		<span class="keyword">while</span> (!node.empty())</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="comment">//对头节点出队</span></span><br><span class="line">			TreeNode* cur = node.front();</span><br><span class="line">			node.pop();</span><br><span class="line">			<span class="keyword">int</span>  curIndex = index.front();</span><br><span class="line">			index.pop();</span><br><span class="line">			<span class="comment">//按层号存放当前节点</span></span><br><span class="line">			treeVec[curIndex].push_back(cur-&gt;val); <span class="comment">//当容器为空时，使用[]访问会出现访问越界的问题</span></span><br><span class="line">			<span class="comment">//带出下一层的字节点</span></span><br><span class="line">			<span class="keyword">if</span> (cur-&gt;left)</span><br><span class="line">			&#123;</span><br><span class="line">				node.push(cur-&gt;left);</span><br><span class="line">				index.push(curIndex + <span class="number">1</span>);</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span> (cur-&gt;right)</span><br><span class="line">			&#123;</span><br><span class="line">				node.push(cur-&gt;right);</span><br><span class="line">				index.push(curIndex + <span class="number">1</span>);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> treeVec;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>【层序遍历】</p>
+<ul>
+<li>用两个队列，一个二维数组</li>
+<li>队列1：存放结点</li>
+<li>队列2：存放每个结点对应的层号</li>
+<li>1.每一出队的节点，对应的层号也出队，按层号放入对应的二维数组的行中</li>
+<li>2.把出队结点的孩子结点入队，对应的孩子节点的层号+1，同样的孩子结点的层号也入另一个队列</li>
+<li>3.结束：队列为空</li>
+</ul>
+<h5 id="二叉树的镜像"><a href="#二叉树的镜像" class="headerlink" title="二叉树的镜像"></a>二叉树的镜像</h5><h6 id="递归实现"><a href="#递归实现" class="headerlink" title="递归实现"></a>递归实现</h6><figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>&#123;</span></span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Mirror</span><span class="params">(TreeNode* pRoot)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(pRoot==<span class="literal">nullptr</span>)</span><br><span class="line">            <span class="keyword">return</span> ;</span><br><span class="line">        swap(pRoot-&gt;left,pRoot-&gt;right);</span><br><span class="line">        Mirror(pRoot-&gt;left);</span><br><span class="line">        Mirror(pRoot-&gt;right);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="非递归实现"><a href="#非递归实现" class="headerlink" title="非递归实现"></a>非递归实现</h6><figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>&#123;</span></span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Mirror</span><span class="params">(TreeNode* pRoot)</span></span>&#123;</span><br><span class="line">        <span class="built_in">queue</span>&lt;TreeNode*&gt; q;</span><br><span class="line">        <span class="keyword">if</span>(pRoot)</span><br><span class="line">            q.push(pRoot);</span><br><span class="line">        <span class="keyword">while</span>(!q.empty())&#123;</span><br><span class="line">            TreeNode* cur=q.front();</span><br><span class="line">            q.pop();</span><br><span class="line">            swap(pRoot-&gt;left,pRoot-&gt;right);</span><br><span class="line">            <span class="keyword">if</span>(cur-&gt;left)</span><br><span class="line">                q.push(cur-&gt;left);</span><br><span class="line">            <span class="keyword">if</span>(cur-&gt;right)</span><br><span class="line">                q.push(cur-&gt;right);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="优先队列-底层用堆实现"><a href="#优先队列-底层用堆实现" class="headerlink" title="优先队列(底层用堆实现)"></a>优先队列(底层用堆实现)</h5><h6 id="堆的性质"><a href="#堆的性质" class="headerlink" title="堆的性质"></a>堆的性质</h6><ul>
+<li><strong>parent=[child-1]/2;</strong></li>
+<li><strong>left=2*parent +1;</strong></li>
+<li><strong>right=2*parent+2;</strong></li>
+</ul>
+<h6 id="找第K大的元素"><a href="#找第K大的元素" class="headerlink" title="找第K大的元素"></a>找第K大的元素</h6><figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">findKthLargest</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        priority_queue&lt;<span class="keyword">int</span>&gt; q;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span>&amp; e:nums)</span><br><span class="line">            q.push(e);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span>  i=<span class="number">0</span>;i&lt;k<span class="number">-1</span>;i++)</span><br><span class="line">            q.pop();</span><br><span class="line">        <span class="keyword">return</span> q.top();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>在优先队列中push自定义类型的时候需要重载大于和小于函数</li>
+</ul>
+	  
+
+	  <div>
+  		<center>
+		  <div class="pagination">
+<ul class="pagination">
+	
+	
+	
+	
+	
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+			
+		
+	
+		
+			
+			
+			
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+	
+	
+		<li class="prev"><a href="/jun/2019/04/05/Cpp/初阶/特殊的一些用法/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>prev</a></li>
+	
+	<li><a href="/jun/"><i class="fa fa-archive"></i>Home</a></li>
+	
+		<li class="next"><a href="/jun/2019/04/05/Cpp/初阶/List/" class="alignright next">next<i class="fa fa-arrow-circle-o-right"></i></a></li>
+	
+</ul>
+</div>
+
+		</center>
+	  </div>
+	  
+	</div> <!-- col-md-9/col-md-12 -->
+	
+  </div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+	<footer> <p>
+  &copy; 2019 John Doe
+  
+      with help from <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-wixo/">Wixo</a>.    
+</p> </footer>
+  </div> <!-- container-narrow -->
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/jun/js/jquery.imagesloaded.min.js"></script>
+<script src="/jun/js/gallery.js"></script>
+<script src="/jun/js/bootstrap.min.js"></script>
+<script src="/jun/js/jquery.tableofcontents.min.js"></script>
+<script src="/jun/js/tocgenerator.min.js"></script>
+<script src="/jun/js/main.js"></script>
+<script src="/jun/js/search.js"></script> 
+
+
+
+
+<link rel="stylesheet" href="/jun/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/jun/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+</body>
+</html>

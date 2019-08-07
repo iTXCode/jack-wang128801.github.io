@@ -1,0 +1,360 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>Strstr | Hexo</title>
+  <meta name="author" content="John Doe">
+  
+  <meta name="description" content="串中找串">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Strstr">
+  <meta property="og:site_name" content="Hexo">
+
+  
+    <meta property="og:image" content>
+  
+
+  
+    <link rel="alternative" href="/jun/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link href="/jun/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/jun/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/responsive.css" media="screen" type="text/css">  
+  <link rel="stylesheet" href="/jun/css/sidenav.css" media="screen" type="text/css">  
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/jun/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+</head>
+</html>
+<body id="body" data-spy="scroll" data-target=".toc">
+  <div class="container" id="container">
+	<div class="content">
+	  <div class="page-header">		
+  <h1><a class="brand" href="/jun/">Hexo</a><span class="split"></span><span class="title">Strstr</span><span class="date" id="title-date"><i class="fa fa-clock-o"></i> 2019-06-26</span></h1>
+</div>		
+
+<div class="row page">
+  <!-- cols -->	
+  
+  
+
+  
+	<div class="col-md-12">
+	  
+
+	  <!-- content -->
+	  <h3 id="串中找串"><a href="#串中找串" class="headerlink" title="串中找串"></a>串中找串</h3><a id="more"></a>
+<h5 id="这个串可不是羊肉串奥，喜欢撸串的盆有别失望啊。来看看我们的串吧。"><a href="#这个串可不是羊肉串奥，喜欢撸串的盆有别失望啊。来看看我们的串吧。" class="headerlink" title="这个串可不是羊肉串奥，喜欢撸串的盆有别失望啊。来看看我们的串吧。"></a>这个串可不是羊肉串奥，喜欢撸串的盆有别失望啊。来看看我们的串吧。</h5><p><img src="https://img-blog.csdnimg.cn/2019062700280433.png" alt></p>
+<p><strong>所谓的串中找串是指在一个字符串中查找另外一个字符串(所谓的子串)。</strong></p>
+<h1 id="想啥呢？当然不是羊肉串了。"><a href="#想啥呢？当然不是羊肉串了。" class="headerlink" title="想啥呢？当然不是羊肉串了。"></a>想啥呢？当然不是羊肉串了。</h1><h3 id="需求："><a href="#需求：" class="headerlink" title="需求："></a>需求：</h3><p><strong>1.我们的需求是当找到我们所找的子串的时候，返回父串中与子串相等元素在父串中的位置下标</strong></p>
+<p><strong>2.若没有找到对应的字符串则返回0 </strong></p>
+<h3 id="No1-创建两个指针的方式"><a href="#No1-创建两个指针的方式" class="headerlink" title="No1:创建两个指针的方式"></a>No1:创建两个指针的方式</h3><figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">StrStr</span><span class="params">(<span class="keyword">char</span>*s1, <span class="keyword">char</span> * s2)</span></span>&#123;</span><br><span class="line">	<span class="keyword">while</span> (*s1)&#123;<span class="comment">//遍历字符串s1</span></span><br><span class="line">		<span class="keyword">if</span> (*s1 == *s2)&#123; <span class="comment">//判断两个字符串相应的字符是否相等</span></span><br><span class="line">			<span class="keyword">char</span> *str=s1;</span><br><span class="line">			<span class="keyword">char</span> *ret = s2;</span><br><span class="line">			<span class="keyword">while</span> (*str&amp;&amp;*ret)&#123;</span><br><span class="line">                <span class="comment">//当两个字符串中有一个遍历结束的时候，循环结束</span></span><br><span class="line">				<span class="keyword">if</span> (*str != *ret)</span><br><span class="line">                    <span class="comment">//当遇到不同的字符时跳出循环</span></span><br><span class="line">					<span class="keyword">break</span>;</span><br><span class="line">				str++;</span><br><span class="line">				ret++;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span> (*ret == <span class="string">'\0'</span>)</span><br><span class="line">				<span class="keyword">return</span> (str-s1);</span><br><span class="line">		&#125;</span><br><span class="line">		s1++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">char</span> *s=<span class="string">"hello  world!"</span>;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;StrStr(s, <span class="string">"world!"</span>)&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>该程序中的两个指针起到了的作用</strong></p>
+<blockquote>
+<p>1.遍历两个字符串</p>
+<p>2.确定字符串的对应字符的值是否相等</p>
+</blockquote>
+<h3 id="No2-四指针遍历法"><a href="#No2-四指针遍历法" class="headerlink" title="No2:四指针遍历法"></a>No2:四指针遍历法</h3><figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">StrStr</span><span class="params">( <span class="keyword">char</span>*s1,  <span class="keyword">char</span> * s2)</span></span>&#123;</span><br><span class="line">	<span class="keyword">char</span> *ret = s1;</span><br><span class="line">	<span class="keyword">char</span> *jun = s1;</span><br><span class="line">	<span class="keyword">char</span> *str = s2;</span><br><span class="line">	<span class="keyword">char</span> *ptr = s2;</span><br><span class="line">	<span class="keyword">while</span> (*ret)&#123;</span><br><span class="line">		<span class="keyword">if</span> (*ret == *str)&#123;</span><br><span class="line">			<span class="keyword">while</span> (*ret&amp;&amp;*str)&#123;</span><br><span class="line">				<span class="keyword">if</span> (*ret != *str)</span><br><span class="line">					<span class="keyword">break</span>;</span><br><span class="line">				ret++;</span><br><span class="line">				str++;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span> (*str == <span class="string">'\0'</span>)</span><br><span class="line">				<span class="keyword">return</span> (jun - s1);</span><br><span class="line">			str = ptr;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (jun != ret)&#123;</span><br><span class="line">			ret = jun;</span><br><span class="line">		&#125;</span><br><span class="line">		ret++;</span><br><span class="line">		jun++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">char</span> *s = <span class="string">"hell hello  world!"</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; s &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; StrStr(s, <span class="string">"hello"</span>) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>该程序中的四个指针的作用</strong></p>
+<blockquote>
+<p>1.ret和str<strong>指针负责遍历两个字符串</strong>还有 <strong>确定字符串的对应字符是否相等</strong></p>
+<p>2.指针jun作用是 <strong>负责在遍历的过程中储存父串遍历指针的地址信息</strong> ,在匹配成功的时候jun记录的是开始匹配的位置(与字符串首地址相减得到首个匹配元素的位置下标)，在匹配失败时将父串指针指向与子串开始配匹的位置继续向后遍历(指针ret和指针jun指向同一片空间)<br>3.指针ptr的使用是在与父串匹配失败的时候将子串指针指向子串的首地址与父串重新进行匹配。</p>
+</blockquote>
+<h3 id="该程序设计过程中必须考虑的问题"><a href="#该程序设计过程中必须考虑的问题" class="headerlink" title="该程序设计过程中必须考虑的问题"></a>该程序设计过程中必须考虑的问题</h3><p><strong>1.父串中有几个字符与子串的几个字符匹配(相同)，但是并不完全匹配</strong></p>
+<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//父串</span></span><br><span class="line"><span class="keyword">char</span> *s=<span class="string">"hel hell0 world!"</span>；</span><br><span class="line"><span class="comment">//子串</span></span><br><span class="line"><span class="keyword">char</span> *s1=<span class="string">"hello"</span></span><br></pre></td></tr></table></figure>
+<p><strong>当父串指针遍历的过程中进行了挪动但是没有完全与子串匹配成功时，父串遍历指针就需要指回原来和子串开始比较的位置</strong></p>
+<p><strong>2.返回值的计算</strong></p>
+<p><strong>返回的是父串指针开始匹配的地址与首地址的差值</strong></p>
+<p>【注意】</p>
+<blockquote>
+<p>1.首先要进行父串的遍历,在遍历的过程中判断父串元素和子串的首元素是否相等，若相等则接着比较后面的字符，若不相等则父串指针往后移动一位。</p>
+<p>2.在比较父串和子串的元素的过程中,若遇到只匹配成功一半的情况，需要把子串遍历指针指向子串首地址。</p>
+</blockquote>
+	  
+
+	  <div>
+  		<center>
+		  <div class="pagination">
+<ul class="pagination">
+	
+	
+	
+	
+	
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+			
+		
+	
+		
+			
+			
+			
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+	
+	
+		<li class="prev"><a href="/jun/2019/07/02/Cpp/初阶/Vector实现/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>prev</a></li>
+	
+	<li><a href="/jun/"><i class="fa fa-archive"></i>Home</a></li>
+	
+		<li class="next"><a href="/jun/2019/06/19/Cpp/初阶/string类实现/" class="alignright next">next<i class="fa fa-arrow-circle-o-right"></i></a></li>
+	
+</ul>
+</div>
+
+		</center>
+	  </div>
+	  
+	</div> <!-- col-md-9/col-md-12 -->
+	
+  </div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+	<footer> <p>
+  &copy; 2019 John Doe
+  
+      with help from <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-wixo/">Wixo</a>.    
+</p> </footer>
+  </div> <!-- container-narrow -->
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/jun/js/jquery.imagesloaded.min.js"></script>
+<script src="/jun/js/gallery.js"></script>
+<script src="/jun/js/bootstrap.min.js"></script>
+<script src="/jun/js/jquery.tableofcontents.min.js"></script>
+<script src="/jun/js/tocgenerator.min.js"></script>
+<script src="/jun/js/main.js"></script>
+<script src="/jun/js/search.js"></script> 
+
+
+
+
+<link rel="stylesheet" href="/jun/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/jun/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+</body>
+</html>

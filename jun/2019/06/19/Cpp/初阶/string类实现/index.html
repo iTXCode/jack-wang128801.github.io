@@ -1,0 +1,356 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>string类实现 | Hexo</title>
+  <meta name="author" content="John Doe">
+  
+  <meta name="description" content="string类中的传统与现代实现方式">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="string类实现">
+  <meta property="og:site_name" content="Hexo">
+
+  
+    <meta property="og:image" content>
+  
+
+  
+    <link rel="alternative" href="/jun/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link href="/jun/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/jun/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/responsive.css" media="screen" type="text/css">  
+  <link rel="stylesheet" href="/jun/css/sidenav.css" media="screen" type="text/css">  
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/jun/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+</head>
+</html>
+<body id="body" data-spy="scroll" data-target=".toc">
+  <div class="container" id="container">
+	<div class="content">
+	  <div class="page-header">		
+  <h1><a class="brand" href="/jun/">Hexo</a><span class="split"></span><span class="title">string类实现</span><span class="date" id="title-date"><i class="fa fa-clock-o"></i> 2019-06-19</span></h1>
+</div>		
+
+<div class="row page">
+  <!-- cols -->	
+  
+  
+
+  
+	<div class="col-md-12">
+	  
+
+	  <!-- content -->
+	  <h3 id="string类中的传统与现代实现方式"><a href="#string类中的传统与现代实现方式" class="headerlink" title="string类中的传统与现代实现方式"></a>string类中的传统与现代实现方式</h3><a id="more"></a>
+<p><strong>传统写法:</strong></p>
+<blockquote>
+<p>【原则】：</p>
+<p>1.通过自己申请资源，拷贝内容</p>
+<p>2.不会创建临时对象</p>
+</blockquote>
+<p><strong>现在写法:</strong></p>
+<blockquote>
+<p>【原则】:<br>    1.自己不申请空间,不拷贝内容<br>    2.通过调用构造函数(申请空间,拷贝内容)生成一个新的对象<br>    3.直接获取临时对象的全部内容(通过交换指针完成),完成当前对象<br>    的拷贝构造<br>    4.不检查是否为自己给自己赋值因为在赋值之前无空间的释放操作</p>
+</blockquote>
+<p><img src="https://img-blog.csdnimg.cn/20190620125548956.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY2tfd2FuZzEyODgwMQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p>【注意】</p>
+<blockquote>
+<p>字符串指针输出会解引用,对空指针解引用会引起程序奔溃</p>
+</blockquote>
+<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _CRT_SECURE_NO_WARNINGS 1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">String</span>&#123;</span></span><br><span class="line">	<span class="keyword">friend</span> ostream&amp; <span class="keyword">operator</span>&lt;&lt;(ostream &amp;_cout, <span class="keyword">const</span> String &amp;s);</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	String(<span class="keyword">char</span> *<span class="built_in">sin</span>=<span class="string">""</span>)</span><br><span class="line">		:_sin(<span class="keyword">new</span> <span class="keyword">char</span>[<span class="built_in">strlen</span>(<span class="built_in">sin</span>)+<span class="number">1</span>] )</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">strcpy</span>(_sin, <span class="built_in">sin</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//析构函数</span></span><br><span class="line">	~String()</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (_sin)&#123;</span><br><span class="line">			<span class="comment">//判断对象指针是否为有效指针</span></span><br><span class="line">			<span class="keyword">delete</span>[] _sin;<span class="comment">//释放堆上面的空间</span></span><br><span class="line">			_sin = <span class="literal">nullptr</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//【拷贝构造】:传统写法</span></span><br><span class="line">	<span class="comment">/*String(const String&amp; s)</span></span><br><span class="line"><span class="comment">		:_sin(new char[strlen(s._sin)+1])</span></span><br><span class="line"><span class="comment">		&#123;</span></span><br><span class="line"><span class="comment">		strcpy(_sin, s._sin);</span></span><br><span class="line"><span class="comment">		&#125;*/</span></span><br><span class="line">	<span class="comment">//现代写法</span></span><br><span class="line">	String(<span class="keyword">const</span> String&amp; s)</span><br><span class="line">		:_sin(<span class="literal">nullptr</span>)</span><br><span class="line">         <span class="comment">//若不置空的话,*this刚开始指向随机值</span></span><br><span class="line">		<span class="comment">//当其把内容交还给tmp._sin后，tmp._sin调用析构函数释放的</span></span><br><span class="line">		<span class="comment">//是随机指针(程序奔溃)</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="function">String <span class="title">tmp</span><span class="params">(s._sin)</span></span>;</span><br><span class="line">         <span class="comment">//调用构造函数生成同样的一份资源,使得指针交换之后</span></span><br><span class="line">		<span class="comment">//两个指针指向的内容是一样的</span></span><br><span class="line">		swap(_sin, tmp._sin);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//【赋值运算符重载】[传统写法]</span></span><br><span class="line">	<span class="comment">/*String &amp;operator=(const String&amp;s)&#123;</span></span><br><span class="line"><span class="comment">		if (this != &amp;s)&#123;</span></span><br><span class="line"><span class="comment">//检查是否为自己给自己赋值</span></span><br><span class="line"><span class="comment">//要拷贝的字符串长度不一定和当前对象的字符串长度一致</span></span><br><span class="line"><span class="comment">//如果直接拷贝,空间不足的时候,会导致数据丢失</span></span><br><span class="line"><span class="comment">//所以直接释放原来的空间,申请一个和当前要拷贝的字符串一样大的空间</span></span><br><span class="line"><span class="comment">//_str至少有一个字节的空间,由构造函数保证的</span></span><br><span class="line"><span class="comment">		delete[] _sin;</span></span><br><span class="line"><span class="comment">		_sin = new char[strlen(s._sin) + 1];</span></span><br><span class="line"><span class="comment">		strcpy(_sin, s._sin);</span></span><br><span class="line"><span class="comment">		&#125;</span></span><br><span class="line"><span class="comment">		return *this;</span></span><br><span class="line"><span class="comment">		&#125;</span></span><br><span class="line"><span class="comment">		*/</span></span><br><span class="line">	<span class="comment">//【现代写法】:赋值运算符重载</span></span><br><span class="line">	<span class="comment">//传入参数:传值调用拷贝构造,不会调用赋值运算符重载</span></span><br><span class="line">	<span class="comment">//不会引发赋值运算符无穷递归，通过调用拷贝构造完成拷贝</span></span><br><span class="line">	<span class="comment">//传值相当于在函数栈帧中生成一个临时对象</span></span><br><span class="line">	<span class="comment">//和拷贝构造相比,生成临时对象的时机不同,</span></span><br><span class="line">     <span class="comment">//拷贝构造:函数内部生成</span></span><br><span class="line">	<span class="comment">//赋值:传值的时候生成</span></span><br><span class="line">	String&amp; <span class="keyword">operator</span>=(String s)&#123;</span><br><span class="line">		String tmp(s);</span><br><span class="line">		swap(_sin,tmp._sin);</span><br><span class="line">		<span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">char</span> *<span class="title">c_str</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> _sin;</span><br><span class="line">	&#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="keyword">char</span>* _sin;</span><br><span class="line">	</span><br><span class="line">&#125;;</span><br><span class="line">ostream&amp; <span class="keyword">operator</span>&lt;&lt;(ostream &amp;_cout, <span class="keyword">const</span> String &amp;s)&#123;</span><br><span class="line">	_cout &lt;&lt; s._sin;</span><br><span class="line">	<span class="keyword">return</span> _cout;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	String s=<span class="string">"hello world"</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; s &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="function">String <span class="title">s1</span><span class="params">(s)</span></span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; s1 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	String s2;</span><br><span class="line">	s2 = s1;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; s2&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>【总结】</p>
+<blockquote>
+<p><strong>1.传统写法是按照正常的套路完成资源的拷贝和释放</strong></p>
+<p><strong>2.现代写法是通过掉用构造函数和析构函数，以及交换对象指针的方式进行资源的拷贝和释放.</strong></p>
+<p><strong>3.两种相比较而言现代写法充分的发挥了构造函数和析构函数的特点，合理高效的将现有资源进行了利用。</strong></p>
+</blockquote>
+	  
+
+	  <div>
+  		<center>
+		  <div class="pagination">
+<ul class="pagination">
+	
+	
+	
+	
+	
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+			
+		
+	
+		
+			
+			
+			
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+	
+	
+		<li class="prev"><a href="/jun/2019/06/26/Cpp/初阶/Strstr/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>prev</a></li>
+	
+	<li><a href="/jun/"><i class="fa fa-archive"></i>Home</a></li>
+	
+		<li class="next"><a href="/jun/2019/06/18/Cpp/初阶/迭代器/" class="alignright next">next<i class="fa fa-arrow-circle-o-right"></i></a></li>
+	
+</ul>
+</div>
+
+		</center>
+	  </div>
+	  
+	</div> <!-- col-md-9/col-md-12 -->
+	
+  </div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+	<footer> <p>
+  &copy; 2019 John Doe
+  
+      with help from <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-wixo/">Wixo</a>.    
+</p> </footer>
+  </div> <!-- container-narrow -->
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/jun/js/jquery.imagesloaded.min.js"></script>
+<script src="/jun/js/gallery.js"></script>
+<script src="/jun/js/bootstrap.min.js"></script>
+<script src="/jun/js/jquery.tableofcontents.min.js"></script>
+<script src="/jun/js/tocgenerator.min.js"></script>
+<script src="/jun/js/main.js"></script>
+<script src="/jun/js/search.js"></script> 
+
+
+
+
+<link rel="stylesheet" href="/jun/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/jun/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+</body>
+</html>
