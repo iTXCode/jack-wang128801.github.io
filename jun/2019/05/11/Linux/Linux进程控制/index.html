@@ -60,88 +60,108 @@
 	  <!-- content -->
 	  <h3 id="一：Linux进程控制"><a href="#一：Linux进程控制" class="headerlink" title="一：Linux进程控制"></a>一：Linux进程控制</h3><p>[TOC]</p>
 <a id="more"></a>
-<h3 id="1-进程的创建"><a href="#1-进程的创建" class="headerlink" title="1.进程的创建"></a>1.进程的创建</h3><p><strong>1.fork的运行规则:以父进程为模板,创建子进程</strong></p>
-<blockquote>
-<ul>
-<li><p>[ ] 1.会把父进程PCB拷贝一份,稍加修改，成为子进程的PCB</p>
-</li>
-<li><p>[ ] 2.会把父进程的虚拟地址空间拷贝一份，作为子进程的地址空间。</p>
-</li>
+<h4 id="一：进程的创建"><a href="#一：进程的创建" class="headerlink" title="一：进程的创建"></a>一：进程的创建</h4><h5 id="1-【fork的运行规则-】以父进程为模板-创建子进程"><a href="#1-【fork的运行规则-】以父进程为模板-创建子进程" class="headerlink" title="1:【fork的运行规则:】以父进程为模板,创建子进程"></a>1:【fork的运行规则:】以父进程为模板,创建子进程</h5><ul>
+<li>1.子进程会把父进程的PCB拷贝一份，稍加修饰,做为子进程的PCB</li>
+<li>2.子进程会把进程的虚拟地址空间拷贝一份,做为子进程的地址空间</li>
 </ul>
-<p>​      写时拷贝=&gt;父子进程共用一份代码，各自有一份数据</p>
-<p>​    由于大部分的内存空间可能被拷贝，创建进程开销仍然比较高(和线程相比)</p>
-<p>​      在有些场景下，线程的创建也会被认为开销比较高(和协程(Golang))</p>
-<p>了解协程—-&gt;去go语言</p>
-<ul>
-<li style="list-style: none"><input type="checkbox"> 3.fork返回会在父子进程中分别返回</li>
-</ul>
-<p>​            父进程中返回父子进程的pid</p>
-<p>​            fork成功子进程返回0            </p>
-<p>​            fork失败返回-1(失败原因:1.内存不够 2.进程太多)</p>
-<p>​            两个进程都成功了在fork后面继续往下执行。</p>
-<ul>
-<li style="list-style: none"><input type="checkbox"> 4.父子进程执行顺序没有先后关系，全靠调度器实现</li>
-</ul>
-</blockquote>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unised.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">2</span>;++i)&#123;</span><br><span class="line">        fork();</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"="</span>); <span class="comment">//第一次执行完后没有刷新缓冲区，所以第二次执行子进程缓冲区中还有了第一次的 = </span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//一共打印出8个   =</span></span><br><span class="line"><span class="comment">//不刷新缓冲区，不打印 = </span></span><br><span class="line"><span class="comment">//第一次执行完fork 创建了新的子进程，父子进程中都有了一个 = 。第二次执行fork 第一次的两个进程又产生出对应的子进程。进而一共有四个进程，两个父进程执行printf语句后缓冲区中有6 个 =(含子进程的两个等号)，之后子进程执行printf语句，又产生2个=。共计 8个=</span></span><br></pre></td></tr></table></figure>
-<p><strong>当执行fork语句后父子进程中拥有了相同的内容(相同的代码和相同的进度(缓冲区也要被拷贝下来))，从而执行相同了的代码，会得到相同的代码</strong></p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unised.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">2</span>;++i)&#123;   <span class="comment">//执行了两次</span></span><br><span class="line">        fork(); <span class="comment">//会创建子进程</span></span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"="</span>);</span><br><span class="line">        fflush(<span class="built_in">stdout</span>);<span class="comment">//第一次刷新完缓冲区后，缓冲区的内容就为空了</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//一共打印出6个  =</span></span><br><span class="line"><span class="comment">//第一次刷新缓冲区，将进程中的两个 = 给打印出去了,既第二次执行fork时缓冲区是空的。两个父进程执行完在缓冲区中有两个 = ，子进程执行完缓冲区中多两个 = ，一共是六个 =</span></span><br></pre></td></tr></table></figure>
-<p><strong>创建图形化界面</strong></p>
-<blockquote>
-<p>C#</p>
-<p>MFC(C++)</p>
-<p>GTK(C)</p>
-<p>wxWidget(C++)</p>
-<p>QT</p>
-</blockquote>
-<p><strong>2.进程调用fork，当控制转移到内核中的fork代码后，内核做:</strong></p>
-<blockquote>
-<ul>
+<h5 id="2-【进程调用fork】-当控制转移到内核中的fork代码后，内核做"><a href="#2-【进程调用fork】-当控制转移到内核中的fork代码后，内核做" class="headerlink" title="2:【进程调用fork】:当控制转移到内核中的fork代码后，内核做"></a>2:【进程调用fork】:当控制转移到内核中的fork代码后，内核做</h5><ul>
 <li>分配新的内存块和内核数据结构给子进程</li>
 <li>将父进程部分数据结构内容拷贝至子进程</li>
 <li>添加子进程到系统进程列表当中fork返回，开始调度器调度</li>
 </ul>
-</blockquote>
-<h4 id="进程终止"><a href="#进程终止" class="headerlink" title="进程终止"></a>进程终止</h4><ul>
-<li style="list-style: none"><input type="checkbox"> 1.代码执行完结果正确</li>
-<li style="list-style: none"><input type="checkbox"> 2.代码执行完,结果不正确</li>
-<li style="list-style: none"><input type="checkbox"> 3.代码没执行完，异常终止</li>
-</ul>
-<h5 id="代码执行完的情况"><a href="#代码执行完的情况" class="headerlink" title="代码执行完的情况"></a>代码执行完的情况</h5><ul>
-<li style="list-style: none"><input type="checkbox"> ​    1.main 函数返回值，返回值叫做进程的退出码，通过这个退出码表示运行结果是否正确(也能刷新缓冲区)</li>
-</ul>
-<p>​        退出码为 0 表示结果正确</p>
-<p>​         退出码非 0 表示结果不正确</p>
-<p>​     $?  这是bash中的一个特殊标量，这个变量表示上个命令对应的进程的退出码</p>
-<h5 id="exit-函数"><a href="#exit-函数" class="headerlink" title="exit 函数"></a>exit 函数</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">exit</span><span class="params">(<span class="keyword">int</span> status)</span></span>;</span><br></pre></td></tr></table></figure>
-<p>2.exit 进程退出(库函数)exit 本质也是调用_exit</p>
-<blockquote>
-<p>a.  exit 关闭流并刷新缓冲区</p>
-<p>b.  exit 还多调用了结束函数</p>
-</blockquote>
+<p>【写时拷贝】按浅拷贝拷贝内容,为了提高效率.===&gt;父子进程公用一份代码,各自有一份数据</p>
 <ul>
-<li style="list-style: none"><input type="checkbox"> 3._exit 进程退出(系统调用)</li>
+<li>3.fork返回是在父进程总分别 返回</li>
 </ul>
-<h5 id="进程等待-进程等待-父进程对子进程进行进程等待-为了读取子进程的运行结果。"><a href="#进程等待-进程等待-父进程对子进程进行进程等待-为了读取子进程的运行结果。" class="headerlink" title="进程等待:进程等待:父进程对子进程进行进程等待,为了读取子进程的运行结果。"></a>进程等待:进程等待:父进程对子进程进行进程等待,为了读取子进程的运行结果。</h5><p><strong>进程等待的必要性</strong></p>
+<p>父进程返回子进程的pid</p>
 <ul>
-<li><p>[ ] 1.<strong>子进程退出，父进程如果不管不顾，就可能造成‘僵尸进程’的问题，进而造成内存泄漏</strong>。</p>
-</li>
-<li><p>[ ] 2.<strong>另外，进程一旦变成僵尸状态，那就刀枪不入，“杀人不眨眼”的kill -9 也无能为力，因为谁也没有办法杀死一个已经死去的进程</strong>。</p>
-</li>
-<li style="list-style: none"><input type="checkbox"> 3.<strong>最后，父进程派给子进程的任务完成的如何，我们需要知道。如，子进程运行完成，结果对还是不对，或者是否正常退出。</strong></li>
-<li style="list-style: none"><input type="checkbox"> 4.<strong>父进程通过进程等待的方式，回收子进程资源，获取子进程退出信息</strong></li>
+<li>4.父子进程执行顺序f</li>
 </ul>
-<h5 id="进程等待的方法-wait方法-返回的是子进程的pid"><a href="#进程等待的方法-wait方法-返回的是子进程的pid" class="headerlink" title="进程等待的方法:wait方法:返回的是子进程的pid"></a>进程等待的方法:wait方法:返回的是子进程的pid</h5><p>1.参数是输出型参数  表示退出码  + 正常/异常退出</p>
-<p>2.返回值是子进程的pid</p>
-<p>3.阻塞式等待,一直等到子进程结束才返回</p>
-<p>wait(NULL) 父进程 不关注子进程的具体退出状态</p>
-<p><strong>注意事项</strong></p>
-<blockquote>
-<p>1.wait的调用次数</p>
-</blockquote>
-<p>wait 调用的次数比较多，多出来的wait  </p>
-<p><strong><em>非阻塞轮询式的wait</em></strong></p>
-<h5 id="进程程序替换"><a href="#进程程序替换" class="headerlink" title="进程程序替换"></a>进程程序替换</h5>	  
+<h5 id="代码执行完的情况"><a href="#代码执行完的情况" class="headerlink" title="代码执行完的情况"></a>代码执行完的情况</h5><p>1.main函数返回,返回值叫做进程的推出码,通过这个退出码表示运行结果是否正确</p>
+<p>退出码为0表示结果正确</p>
+<p>退出码非0表示结果不正确</p>
+<p>$?这是bash中一个特殊变量,可以查看上个命令对应进程的退出码</p>
+<p>2.exit进程退出(库函数),本质上是调用 __exit</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;                                      </span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">   	<span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">  	<span class="built_in">printf</span>(<span class="string">"hehe"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>不会打印出任何结果,在打印语句之前程序就已经结束了</li>
+</ul>
+<p>使用<code>echo $?</code></p>
+<ul>
+<li>查看到退出码为 1 ;</li>
+</ul>
+<p>1.exit关闭流并刷新缓冲区</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//假设 c 语言执行过程，这个过程会写一个文件(临时文件)</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Func</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"goodbye!\n"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    atexit(Func);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>3._ exit进程退出(系统调用)</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"haha"</span>);</span><br><span class="line">    _exit(<span class="number">1</span>);</span><br><span class="line">    <span class="comment">//系统调用,并没有刷新缓冲区</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>_ eixt还调用了结束函数</p>
+<h4 id="进程等待"><a href="#进程等待" class="headerlink" title="进程等待"></a>进程等待</h4><ul>
+<li>父进程对子进程进行进程等待,是为了读取子进程的运行结果</li>
+</ul>
+<h5 id="wait方法"><a href="#wait方法" class="headerlink" title="wait方法"></a>wait方法</h5><p>1.参数为输出型参数(表示退出码+ 正常/异常退出)</p>
+<p>2.返回值是子进程</p>
+<p>【注意事项】</p>
+<ul>
+<li>1.wait的次数必须和子进程 的个数一致</li>
+<li>wait的调用次数比较少,导致僵尸进程</li>
+<li>wait的调用次数比较多,多出来的 wait 就会调用出错</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">//两次调用fork函数只有一个wait,死循环 </span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">pid_t</span> ret=fork();</span><br><span class="line">   <span class="keyword">if</span>(ret&lt;<span class="number">0</span>)&#123;</span><br><span class="line">     perror(<span class="string">"fork"</span>);</span><br><span class="line">     <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">if</span>(ret==<span class="number">0</span>)&#123;</span><br><span class="line">     <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">   &#125;</span><br><span class="line">   ret=fork();</span><br><span class="line">   <span class="keyword">if</span>(ret==<span class="number">0</span>)&#123;</span><br><span class="line">     <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="comment">//父进程如果不关注子进程具体的退出状态              </span></span><br><span class="line">   wait(<span class="literal">NULL</span>);</span><br><span class="line">   <span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">    sleep(<span class="number">1</span>);</span><br><span class="line">   &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>2.如果有多个子进程,任何一个子进程结束都会触发wait的 返回</li>
+</ul>
+<p>kill -l</p>
+<p>显示所有信号,其中32.33两个不存在</p>
+<h5 id="waitpid"><a href="#waitpid" class="headerlink" title="waitpid"></a>waitpid</h5><p>【功能简介】</p>
+<ul>
+<li>1.waitpid能够等待某个指定的子进程的退出.行为和wait非常相似(返回值规则,status参数)</li>
+<li>waitpid（-1,NULL,0)和wait(NULL)是等价的</li>
+<li>WNOHANG加上之后，waitpid就变成了非阻塞(一般搭配循环使用)</li>
+</ul>
+<p>【非阻塞轮询式的wait】</p>
+<p>好处:能够更加灵活的控制代码,充分利用等待时间去做其他事情</p>
+<p>坏处:代码写起来更复杂</p>
+<h4 id="四-进程程序替换"><a href="#四-进程程序替换" class="headerlink" title="四: 进程程序替换"></a>四: 进程程序替换</h4><h5 id="替换原理"><a href="#替换原理" class="headerlink" title="替换原理"></a>替换原理</h5><ul>
+<li>fork创建出的子进程和父进程是共用同一套代码,而事实上我们更需要的是创建处的子进程能够执行一份单独的代码</li>
+<li>1.程序替换不会创建新进程,也不会销毁进程</li>
+<li>2.替换代码和数据(从一个可执行文件中来)</li>
+<li><p>3.原有的栈和堆中的数据就全都不要了,根据新的代码的执行过程重新构建堆和栈的内容</p>
+</li>
+<li><p>[ ] 类似于 双击 exe  执行一个程序的过程(操作系统的加载器模块)</p>
+</li>
+<li style="list-style: none"><input type="checkbox"> exec函数族,参数有差异,底层原理完全相同</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"before execl\n"</span>);</span><br><span class="line">    <span class="keyword">int</span> ret=execl(<span class="string">"/usr/bin/ls"</span>,<span class="string">"/usr/bin/ls"</span>,<span class="string">"/"</span>,<span class="literal">NULL</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"after execk%d \n"</span>,ret);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>【注意】</p>
+<ul>
+<li>程序替换经常搭配fork使用</li>
+<li>一旦替换之后,就会把原来进程的代码和数据都干掉.无法继续执行原来的代码</li>
+</ul>
+<p>execlp：p表示PATH,自动从PATH的目录中查找可执行程序</p>
+<p>execle:用户进行程序替换的时候手动执行环境变量(参数中的数组必须也要用NULL结尾)</p>
+<h4 id="借助进程控制实现shell程序"><a href="#借助进程控制实现shell程序" class="headerlink" title="借助进程控制实现shell程序"></a>借助进程控制实现shell程序</h4><p><strong>开发<em>mini版的 shell</em></strong></p>
+<ul>
+<li>1.打印一个提示符,并且让用户输入一个指令</li>
+<li>2.解析输入的命令,找到对应的可执行程序</li>
+<li>3.创建子进程,子进程程序替换,来加载可执行程序</li>
+<li>4.父进程进行程序等待,等待子进程结束</li>
+<li>5.子进程结束,父进程从wait中返回,循环执行1</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//函数名相同,但是函数签名不同</span></span><br><span class="line"><span class="comment">//函数签名:参数列表+cv限定符(const,colatile)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;sys/wait.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">c++ 标准库的做法</span></span><br><span class="line"><span class="comment">#include&lt;sstream&gt;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">基于 boost 的方案是比较科学的方案</span></span><br><span class="line"><span class="comment">boost algotithm/string.hpp</span></span><br><span class="line"><span class="comment">boost::split</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//input 表示待切分命令</span></span><br><span class="line"><span class="comment">//output 表示切分结果(字符串数组)</span></span><br><span class="line"><span class="comment">//返回值表示 output 中包含了几个有效元素</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Split</span><span class="params">(<span class="keyword">char</span>  input[], <span class="keyword">char</span> *output[])</span></span>&#123;</span><br><span class="line">	<span class="comment">//借助 strtok 来实现</span></span><br><span class="line">	<span class="keyword">char</span> *p = strtok(input, <span class="string">" "</span>);</span><br><span class="line">	<span class="comment">//返回值指向第一个 l 的指针</span></span><br><span class="line">	<span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span> (p != <span class="literal">NULL</span>)&#123;</span><br><span class="line">		<span class="comment">//printf("%s\n",p);</span></span><br><span class="line">		output[i] = p;</span><br><span class="line">		++i;</span><br><span class="line">		p = strtok(<span class="literal">NULL</span>, <span class="string">" "</span>);</span><br><span class="line">		<span class="comment">//第二次返回值指向 - 的指针</span></span><br><span class="line">		<span class="comment">//第三次返回值指向/的指针</span></span><br><span class="line">		<span class="comment">//第四次返回值为NULL</span></span><br><span class="line">	&#125;</span><br><span class="line">    output[i]=<span class="literal">NULL</span>;</span><br><span class="line">    <span class="comment">//这个操作是很容易被遗忘的</span></span><br><span class="line">	<span class="keyword">return</span> i;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">CreateProcess</span><span class="params">(<span class="keyword">char</span> *argv[],<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">    (<span class="keyword">void</span>) n;</span><br><span class="line">    <span class="comment">//1.创建子进程</span></span><br><span class="line">    <span class="keyword">pid_t</span> ret=fork();</span><br><span class="line">    <span class="comment">//2.父进程进行进程等待,子进程进行程序替换</span></span><br><span class="line">    <span class="keyword">if</span>(ret&gt;<span class="number">0</span>)&#123;</span><br><span class="line">        <span class="comment">//father</span></span><br><span class="line">        wait(<span class="literal">NULL</span>);</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(ret==<span class="number">0</span>)&#123;</span><br><span class="line">        <span class="comment">//child</span></span><br><span class="line">        ret=execvp(argv[<span class="number">0</span>],argv);</span><br><span class="line">        <span class="keyword">if</span>(ret&lt;<span class="number">0</span>)&#123;</span><br><span class="line">            perror(<span class="string">"exec"</span>);</span><br><span class="line">            <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//此处的if条件可以省略,如果exec成功了,</span></span><br><span class="line">        <span class="comment">//程序肯定执行不到这里</span></span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        perror(<span class="string">"fork"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">while</span> (<span class="number">1</span>)&#123;</span><br><span class="line">		<span class="comment">//1.打印提示符</span></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"[myshell@localhot ~]$"</span>);</span><br><span class="line">		fflush(<span class="built_in">stdout</span>);</span><br><span class="line">		<span class="comment">//2.让用户输入指令</span></span><br><span class="line">		<span class="keyword">char</span> command[<span class="number">1024</span>] = &#123; <span class="number">0</span> &#125;;</span><br><span class="line">		<span class="comment">//scanf("%s",command);</span></span><br><span class="line">		<span class="comment">//scanf中遇到空格打印一行命令的时候就会出错</span></span><br><span class="line">		<span class="comment">//用gets，一个参数，一次读入一行数据</span></span><br><span class="line">		gets(command);</span><br><span class="line">		<span class="comment">//TODO测试下 scanf 能否读入一行数据</span></span><br><span class="line">		<span class="comment">//printf("%s\n", command);</span></span><br><span class="line">		<span class="comment">//3.解析指令,把我们要执行那个程序识别出来,</span></span><br><span class="line">		<span class="comment">//那些是命令行参数识别出来(字符串切分)</span></span><br><span class="line">		<span class="comment">//切分结果应该是一个字符串数组</span></span><br><span class="line">		<span class="keyword">char</span> *argv[<span class="number">1024</span>] = &#123; <span class="number">0</span> &#125;;</span><br><span class="line">		<span class="keyword">int</span> n = Split(command,argv);</span><br><span class="line"></span><br><span class="line">		<span class="comment">//4.创建子进程并且进行程序替换</span></span><br><span class="line">		CreateProcess(argv,n);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="【strtok-执行过程】"><a href="#【strtok-执行过程】" class="headerlink" title="【strtok 执行过程】"></a>【strtok 执行过程】</h5><ul>
+<li>破坏原始的字符串</li>
+<li>内部保存上次的切分结果</li>
+<li>strtok必须循环调用,并且第一次的参数和后续的参数不一样</li>
+</ul>
+<h5 id="【myshell】的改进"><a href="#【myshell】的改进" class="headerlink" title="【myshell】的改进"></a>【myshell】的改进</h5><ul>
+<li>1.自动获取到用户名,主机名,当前路径</li>
+<li>2.需要支持 cd命令(cd 修改的是子进程的路径,对父进程没有影响)</li>
+<li>需要让父进程直接支持cd(而不是创建子进程/程序替换),内建命令(父进程直接完成动作)</li>
+<li>3.支持定义别名(需要在程序中维护一个键值对数据结构) std::map</li>
+<li>4.支持管道</li>
+<li>5.支持重定向</li>
+</ul>
+	  
 
 	  <div>
   		<center>
