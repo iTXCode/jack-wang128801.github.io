@@ -6,10 +6,7 @@
   <title>Linux线程 | Hexo</title>
   <meta name="author" content="John Doe">
   
-  <meta name="description" content="Linux线程本节重点：1.了解线程概念，理解线程与进程区别与联系
-2.学会线程控制，线程创建，线程终止 ，线程等待
-3.了解线程分离与线程安全概念
-4.学会线程同步">
+  <meta name="description" content="Linux线程[TOC]">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -61,69 +58,87 @@
 	  
 
 	  <!-- content -->
-	  <h3 id="Linux线程"><a href="#Linux线程" class="headerlink" title="Linux线程"></a>Linux线程</h3><h4 id="本节重点："><a href="#本节重点：" class="headerlink" title="本节重点："></a>本节重点：</h4><p><strong>1.了解线程概念，理解线程与进程区别与联系</strong></p>
-<p><strong>2.学会线程控制，线程创建，线程终止 ，线程等待</strong></p>
-<p><strong>3.了解线程分离与线程安全概念</strong></p>
-<p><strong>4.学会线程同步</strong></p>
+	  <h3 id="Linux线程"><a href="#Linux线程" class="headerlink" title="Linux线程"></a>Linux线程</h3><p>[TOC]</p>
 <a id="more"></a>
-<h3 id="Linux线程概念"><a href="#Linux线程概念" class="headerlink" title="Linux线程概念"></a>Linux线程概念</h3><blockquote>
-<p>线程：</p>
-<p>创建一个新的进程就相当于开了一个新的场子(成本高)</p>
-<p>创建一个新的进程，就相当于在原厂子的基础上新增了一个生产线(成本低)</p>
-</blockquote>
+<h3 id="Linux线程概念"><a href="#Linux线程概念" class="headerlink" title="Linux线程概念"></a>Linux线程概念</h3><ul>
+<li><p>线程:在一个程序里的一个执行路线就叫做线程(thread).更准确的定义是:线程是“一个进程内部的控制序列”</p>
+</li>
+<li><p>目的:能够更高效的利用CPU资源</p>
+</li>
+<li><p>创建一个新的进程就相当于开了一个新的场子(成本高)</p>
+</li>
+<li><p>创建一个新的线程,就相当于在原厂子的基础上新增了一个生产线(成本低)</p>
+</li>
+</ul>
 <blockquote>
-<p>每次创建一个新的进程，会分配一个新的虚拟地址空间</p>
-<p>每创建一个新的进程，线程共用原来的虚拟地址空间</p>
+<p>每次创建一个新的进程,会分配一个新的虚拟地址空间</p>
+<p>每创建一个新的进程,线程共用原来的虚拟地址空间</p>
 </blockquote>
 <blockquote>
 <p>一个PCB可能是线程也可能是一个进程</p>
 <p>线程是运行在进程之中的(<strong>一个进程包含了若干个线程</strong> )</p>
 </blockquote>
+<ul>
+<li>线程是运行在进程之中的(一个进程包含了若干个线程)</li>
+</ul>
+<p>一个进程对应一块虚拟地址空间,线程的作用是复制了一个指向该虚拟地址空间的PCB,使得多个PCB指向同一块虚拟地址空间</p>
+<p><img src="https://i.loli.net/2019/08/21/8CyopqrNDETIKLJ.png" alt></p>
 <h5 id="线程与进程的区别"><a href="#线程与进程的区别" class="headerlink" title="线程与进程的区别"></a>线程与进程的区别</h5><blockquote>
 <p>进程：管理的资源（管理内存，管理打开的文件）</p>
 <p>线程：调度与执行(和进程类似，也是抢占式的调度)</p>
 </blockquote>
-<p><strong>在Linux中也把线程叫做轻量级进程(LMP)</strong></p>
+<p>一个进程中包含多个线程的时候,CPU是以线程为单位来调用.</p>
+<ul>
+<li>在Linux中也把线程叫做==轻量级进程==(LWP)</li>
+</ul>
 <hr>
-<h4 id="线程相比于进程的的优点"><a href="#线程相比于进程的的优点" class="headerlink" title="线程相比于进程的的优点"></a>线程相比于进程的的优点</h4><blockquote>
-<p><strong>1.创建/销毁开销更小</strong></p>
-<p><strong>2.切换调度的开销更小</strong></p>
-<p><strong>3.线程占用的资源更小</strong></p>
-<p><strong>本质：线程之间公用一个共同的虚拟地址空间</strong></p>
+<h4 id="线程相比于进程的优点"><a href="#线程相比于进程的优点" class="headerlink" title="线程相比于进程的优点"></a>线程相比于进程的优点</h4><ul>
+<li>1.创建/销毁开销更小</li>
+<li>2.切换/调度的开销更小</li>
+<li>3.线程占用的资源更小</li>
+</ul>
+<blockquote>
+<p><strong>本质：同一个进程间的线程之间使用同一个的虚拟地址空间</strong></p>
 </blockquote>
-<h4 id="线程的缺点"><a href="#线程的缺点" class="headerlink" title="线程的缺点"></a>线程的缺点</h4><blockquote>
+<h4 id="线程相比于进程的缺点"><a href="#线程相比于进程的缺点" class="headerlink" title="线程相比于进程的缺点"></a>线程相比于进程的缺点</h4><blockquote>
+<ul>
+<li>健壮性降低:一个线程异常终止,会导致整个进程异常终止</li>
+<li>编程/调试难度变大:</li>
+</ul>
+<p>​                     1.对线程的可靠性要求更高</p>
+<p>​                       2.线程安全问题</p>
 </blockquote>
 <h4 id="多线程-多进程的引用场景"><a href="#多线程-多进程的引用场景" class="headerlink" title="多线程/多进程的引用场景"></a>多线程/多进程的引用场景</h4><blockquote>
 <p><strong>1.cpu密集型: while(1);</strong></p>
 <p><strong>2.IO密集型</strong></p>
 <p>​       <strong>a.通过网络输入输出</strong></p>
-<pre><code><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; 一次下载可以理解为两个步骤</span><br><span class="line">&gt;  <span class="number">1.</span>请求网络</span><br><span class="line">&gt;  <span class="number">2.</span>把相应结果写到文件中</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-</code></pre></blockquote>
-<blockquote>
-<p>​        <strong>b.相应UI界面</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; (界面显示和数据计算要多线程完成，防止由于数据计算太久导致界面卡死)</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+<p>一次下载可以理解为两个步骤<br>1.请求网络<br>2.把相应结果写到文件中</p>
+<p>   <strong>b.相应UI界面</strong></p>
+<ul>
+<li>界面显示和数据计算要多线程完成，防止由于数据计算太久导致界面卡死</li>
+</ul>
 </blockquote>
-<h4 id="线程相较于进程的缺点"><a href="#线程相较于进程的缺点" class="headerlink" title="线程相较于进程的缺点"></a>线程相较于进程的缺点</h4><blockquote>
-<p>1.健壮性降低：一个线程异常终止会导致进程异常终止</p>
-<p>2.编程/调试难度变大</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; a.对线程的可靠性要求更高</span><br><span class="line">&gt; b.线程安全问题</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
-<h4 id="线程之间公用的资源有那些"><a href="#线程之间公用的资源有那些" class="headerlink" title="线程之间公用的资源有那些"></a>线程之间公用的资源有那些</h4><blockquote>
-<p>1.虚拟地址空间</p>
-<p>2.文件描述符表</p>
-</blockquote>
-<h4 id="线程之间不共用的资源-gt"><a href="#线程之间不共用的资源-gt" class="headerlink" title="线程之间不共用的资源&gt;"></a>线程之间不共用的资源&gt;</h4><blockquote>
-<p>1.栈(函数调用栈，局部变更)</p>
+<h4 id="线程之间共用的资源"><a href="#线程之间共用的资源" class="headerlink" title="线程之间共用的资源"></a>线程之间共用的资源</h4><ul>
+<li><p>1.虚拟地址空间</p>
+</li>
+<li><p>2.文件描述符表</p>
+</li>
+</ul>
+<h4 id="线程之间不共用的资源"><a href="#线程之间不共用的资源" class="headerlink" title="线程之间不共用的资源"></a>线程之间不共用的资源</h4><blockquote>
+<p>1.栈(函数调用栈，局部变量)</p>
 <p>2.上下文信息(CPU中的寄存器)</p>
-<p>3.errno(每个线程有自己的errno)—-&gt;thread local</p>
-<p><strong>以上所有内容一定要掌握!!! </strong></p>
+<p>3.错误码(每个线程有自己的errno)—-&gt;</p>
+<p>​       thread local</p>
+<p><strong>以上所有内容一定要掌握!!! </strong>==线程和进程的区别==</p>
 </blockquote>
 <hr>
-<h4 id="滑稽吃鸡"><a href="#滑稽吃鸡" class="headerlink" title="滑稽吃鸡"></a>滑稽吃鸡</h4><p><strong>同步与互斥</strong></p>
+<h4 id="滑稽吃鸡"><a href="#滑稽吃鸡" class="headerlink" title="滑稽吃鸡"></a>滑稽吃鸡</h4><p>多进程吃鸡</p>
+<p>多线程吃鸡</p>
+<p><strong>同步与互斥</strong></p>
 <blockquote>
-<p>1.线程不是越多越好，达到一定数目的时候效率就没办法提上去了</p>
-<p>2.线程如果多了，多个线程同时访问同一分资源，就会打架(互斥)</p>
-<p>3.某个线程可能一直得不到机会执行，线程饥饿（同步）</p>
+<p>1.线程不是越多越好，达到一定数目的时候效率就不能提升了 </p>
+<p>2.线程如果多了，多个线程同时访问同一分资源，就会打架(互斥方式解决)</p>
+<p>3.某个线程可能一直得不到机会执行，线程饥饿（同步方式解决）</p>
 <p>4.如果某个线程异常终止，整个进程都异常终止了</p>
 </blockquote>
 <hr>
@@ -131,37 +146,45 @@
 <p>线程控制相关函数不是系统调用</p>
 <p>库函数====&gt;posix线程库  pthread 中的p就表示 posix</p>
 <p>C++11/java/python 各种语言都内置了线程库</p>
-<p>线程是一个单独的执行流，需要执行一定的代码。</p>
-<p>pthread_create 第三个参数函数指针就相当于这个新进程的入口函数。指定了新线程执行那个代码</p>
-<p>入口函数的参数就是pthread_create 的第四个参数</p>
 </blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//线程控制的相关函数</span></span><br><span class="line"><span class="comment">//1.创建线程</span></span><br><span class="line"><span class="comment">//2.终止线程</span></span><br><span class="line"><span class="comment">//3.等待线程</span></span><br><span class="line"><span class="comment">//4.线程等待</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;pthread.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> * <span class="title">ThreadEntry</span><span class="params">(<span class="keyword">void</span> *arg)</span></span>&#123;</span><br><span class="line">    (<span class="keyword">void</span>) arg;</span><br><span class="line">   <span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">       <span class="built_in">printf</span>(<span class="string">"In ThreadEntry %lu\n"</span>,</span><br><span class="line">              pthread_self());</span><br><span class="line">       sleep(<span class="number">1</span>);</span><br><span class="line">   &#125; </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">pthread_t</span> tid;</span><br><span class="line">    pthread_create(&amp;tid,<span class="literal">NULL</span>,ThreadEntry,<span class="literal">NULL</span>);</span><br><span class="line">    <span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"In mian Thread%lu\n"</span>,</span><br><span class="line">               pthread_self());</span><br><span class="line">        sleep(<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">int pthread_create(pthread_t *thread, const pthread_attr_t *attr, void *(*start_routine) (void *), void *arg);</span></span><br><span class="line"><span class="comment">参数1:输出型参数</span></span><br><span class="line"><span class="comment">参数3:函数指针就相当于这个新进程的入口函数,指定了新线程执行那个代码</span></span><br><span class="line"><span class="comment">入口函数的参数就是pthread_create的第四个参数</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>ldd [可执行程序名]</code></p>
 <blockquote>
-<p>创建一个线程 ，这个线程的入口和函数需要两个参数</p>
-<p>gcc -l 表示链接一个库，</p>
+<p>查看它依赖那些 库</p>
+</blockquote>
+<p>【查看线程信息】</p>
+<ul>
+<li>1.<code>ps  -eLf |  grep [进程名]</code></li>
+</ul>
+<blockquote>
+<p>可以打印出轻量级的进程(线程)</p>
+<p>查看所有的线程信息(LWP这一列表示线程)</p>
 <p>ps得到的线程id是站在内核角度给PCB加了一个编号</p>
 </blockquote>
 <blockquote>
-<p><strong>线控制的相关函数</strong></p>
-<p>1.创建线程   </p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;pthread.h&gt;</span></span></span><br><span class="line">&gt; <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">&gt;     pthread_create();</span><br><span class="line">&gt;     <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&gt; &#125;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+<p>pthread_self 得到的是线程id 是站在posix线程库的角度</p>
+</blockquote>
+<ul>
+<li>2.<code>pstack [pid]</code></li>
+</ul>
+<blockquote>
+<p>打印出线程的信息和调用栈,看到的线程pid是16进制的和程序运行的结果是匹配的,LWP是内核角度看到的pid</p>
+</blockquote>
+<p><img src="https://i.loli.net/2019/08/21/XCI6dew5Gg2VDuW.png" alt></p>
+<ul>
+<li>3.gdb</li>
+</ul>
+<p><code>gdb attach [pid]</code></p>
+<p><code>info thead</code></p>
+<p><img src="https://i.loli.net/2019/08/21/AQGetcH1XzpZ6VB.png" alt></p>
+<p><code>thread n</code></p>
+<blockquote>
+<p>切换到n号线程</p>
+<p>再bt就能查看指定线程的调用栈</p>
 </blockquote>
 <blockquote>
-<p>2.终止线程</p>
-<p><strong>pthread_cancel</strong></p>
-<p>3.等待线程</p>
-<p>4.线程分离</p>
-</blockquote>
-<hr>
-<blockquote>
-<p>ldd &lt;可执行程序&gt;//查看一个函数依赖那些库</p>
 <p>ctrl +s   //锁定当前屏幕</p>
 <p>ctrl+q    //解锁当前屏幕</p>
-<p>ps  - eLf |grep test  //能打印处轻量级id(线程ID)</p>
-<p>pstack [pid]   //查看进程的调用栈</p>
-<p>gdb attach [pid]   //用gdb查看进程信息</p>
-<p>gdb   查看进程的调用栈  bt ,</p>
-<p>thread n //切换到n号线程</p>
-<p>再gdb </p>
 </blockquote>
 <hr>
 <blockquote>
@@ -173,11 +196,9 @@
 <p>线程—&gt; 流水线</p>
 <hr>
 </blockquote>
-<blockquote>
-<p>线程是抢占式执行的，当前那个线程区执行，那个线程去休眠这件事情否不是程序猿所能左右的，全靠操作系统来定义。</p>
-</blockquote>
+<p>==线程是抢占式执行的,线程执行的先后顺序,靠操作系统来决定.==</p>
 <h5 id="结束线程"><a href="#结束线程" class="headerlink" title="结束线程"></a>结束线程</h5><blockquote>
-<p>1.让进程入口函数执行结束(最主要使用的结束方式)</p>
+<p>1.让线程入口函数执行结束(最主要使用的结束方式)</p>
 <p>2.pthread_exit 让本线程结束，pthread_exit参数是一个void*  表示线程结束的返回结果(很少用到)</p>
 <p>3.pthread_cancel 让任意一个线程结束(本进程中的线程)不太推荐使用, <strong>pthread_cancel</strong> 执行后对应的线程不一定会立刻结束</p>
 </blockquote>
@@ -189,11 +210,14 @@
 <p>(目的和进程等待类似，防止出现类似僵尸进程的内存泄露的情况)</p>
 <p><strong>pthread_join</strong> : 其实是为了等待对应线程结束然后再继续执行代码</p>
 </blockquote>
-<h4 id="线程分离-类似于-忽略signal信号"><a href="#线程分离-类似于-忽略signal信号" class="headerlink" title="线程分离(类似于 忽略signal信号)"></a>线程分离(类似于 忽略signal信号)</h4><blockquote>
-<p><strong>pthread_join</strong> : 其实是为了等待对应线程结束然后再继续执行代码</p>
-<p>线程回收后，就不需要使用 <strong>pthread_join</strong> 进行回收了</p>
+<p><img src="https://i.loli.net/2019/08/21/5plCceT9wgWUYmQ.png" alt></p>
+<h4 id="线程分离-类似于-忽略SIGCHLD信号"><a href="#线程分离-类似于-忽略SIGCHLD信号" class="headerlink" title="线程分离(类似于 忽略SIGCHLD信号)"></a>线程分离(类似于 忽略SIGCHLD信号)</h4><blockquote>
+<p><strong>pthread_join</strong> : 其实是为了等待对应线程结束然后再继续执行代码.</p>
+<p>线程回收后,就不需要使用 <strong>pthread_join</strong> 来显示回收了</p>
+</blockquote>
+<blockquote>
 <p><strong>pthread_detach</strong> </p>
-<p>例如：计算一个很多大的矩阵相乘，可以使用多线程的方式来计算，每个线程计算其中的一本分结果。</p>
+<p>例如：计算一个很多大的矩阵相乘，可以使用多线程的方式来计算，每个线程计算其中的一部分结果。最后所有的线程执行完成之后由主线程汇总最终结果 ,主线程就需要pthread_join 来保证所有的线程都算完了,主线程才继续执行</p>
 </blockquote>
 <p><strong>1.线程之间能够共享虚拟地址空间</strong></p>
 <p><strong>2.线程异常终止</strong></p>
@@ -207,14 +231,17 @@
 <p>线程不是越多越好，达到一定程度，cpu已经全部达到上限，此时线程继续增加，非但不能提高效率，反而降低效率(线程多了，调度的开销也就更大，效率就会受影响)</p>
 </blockquote>
 <blockquote>
-<p>cpu/Io密集</p>
+<p>cpu密集/Io密集</p>
 <p>到底该搞几个线程呢？ 线程数目和工作的任务类型有关，究竟多少合适。要通过测试的方式来判定</p>
 <p>使用时尽量让所有的cpu和IO等都使用起来。</p>
 <p>在节省资源时要尽量多的节省，使用的时候要都能使用的起来。</p>
 </blockquote>
+<blockquote>
+<p>通过多线程提到程序执行效率</p>
+</blockquote>
 <h4 id="在Linux上获取精确时间戳"><a href="#在Linux上获取精确时间戳" class="headerlink" title="在Linux上获取精确时间戳"></a>在Linux上获取精确时间戳</h4><p>//us–&gt;微秒</p>
 <p>//ms–&gt;毫秒</p>
-<p><strong>单线程</strong></p>
+<p><strong>单线程版本</strong></p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> <span class="keyword">64_t</span>  GetUs()&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">timeval</span> <span class="title">tv</span>;</span></span><br><span class="line">gettimeofday(&amp;tv,<span class="literal">NULL</span>);<span class="comment">//man 一下</span></span><br><span class="line">    <span class="keyword">return</span> tv.tv_sec*<span class="number">1000000</span>+tv.tv_usec;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//时间戳之差遇到闰秒可能为负，所以不能使用无符号类型gettimeofday();</span></span><br></pre></td></tr></table></figure>
 <p><strong>多线程版本</strong></p>
 <blockquote>
