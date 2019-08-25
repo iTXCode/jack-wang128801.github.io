@@ -60,16 +60,14 @@
 	  <!-- content -->
 	  <h3 id="Linux线程"><a href="#Linux线程" class="headerlink" title="Linux线程"></a>Linux线程</h3><p>[TOC]</p>
 <a id="more"></a>
-<h3 id="Linux线程概念"><a href="#Linux线程概念" class="headerlink" title="Linux线程概念"></a>Linux线程概念</h3><ul>
-<li><p>线程:在一个程序里的一个执行路线就叫做线程(thread).更准确的定义是:线程是“一个进程内部的控制序列”</p>
-</li>
-<li><p>目的:能够更高效的利用CPU资源</p>
-</li>
-<li><p>创建一个新的进程就相当于开了一个新的场子(成本高)</p>
-</li>
-<li><p>创建一个新的线程,就相当于在原厂子的基础上新增了一个生产线(成本低)</p>
-</li>
+<h3 id="Linux线程介绍"><a href="#Linux线程介绍" class="headerlink" title="Linux线程介绍"></a>Linux线程介绍</h3><ul>
+<li>线程:一个程序中的一条执行路线就叫做线程(thread).更准确的定义是:==线程是“一个进程内部的控制序列”==</li>
+<li>线程运用的目的:能够更高效的利用CPU资源</li>
+<li>创建一个新的进程就相当于开了一个新的场子(成本高)</li>
+<li>创建一个新的线程,就相当于在原厂子的基础上新增了一个生产线(成本低)</li>
 </ul>
+<p>【对线程和进程的理解】</p>
+<p><img src="D:\画板图片\images.jpg" alt></p>
 <blockquote>
 <p>每次创建一个新的进程,会分配一个新的虚拟地址空间</p>
 <p>每创建一个新的进程,线程共用原来的虚拟地址空间</p>
@@ -209,6 +207,7 @@
 <h4 id="等待线程"><a href="#等待线程" class="headerlink" title="等待线程"></a>等待线程</h4><blockquote>
 <p>(目的和进程等待类似，防止出现类似僵尸进程的内存泄露的情况)</p>
 <p><strong>pthread_join</strong> : 其实是为了等待对应线程结束然后再继续执行代码</p>
+<p>(输出型参数void**)</p>
 </blockquote>
 <p><img src="https://i.loli.net/2019/08/21/5plCceT9wgWUYmQ.png" alt></p>
 <h4 id="线程分离-类似于-忽略SIGCHLD信号"><a href="#线程分离-类似于-忽略SIGCHLD信号" class="headerlink" title="线程分离(类似于 忽略SIGCHLD信号)"></a>线程分离(类似于 忽略SIGCHLD信号)</h4><blockquote>
@@ -282,11 +281,11 @@
 </blockquote>
 <hr>
 <h4 id="互斥量的接口"><a href="#互斥量的接口" class="headerlink" title="互斥量的接口"></a>互斥量的接口</h4><blockquote>
-<p>互斥锁 pthread_mutex <strong>挂起等待锁</strong>， 一但线程获取锁失败，就会挂起(进入到操作系统提供的一个等待队列中)</p>
+<p>互斥锁 pthread_mutex <strong>挂起等待锁</strong>，,一旦线程获取锁失败,就会挂起(进入到操作系统提供的一个等待队列中)</p>
 </blockquote>
 <blockquote>
 <p>互斥锁能够保证线程安全，最终的程序效率会受到影响</p>
-<p>除此之外，还有一个严重的问题–》<strong>死锁</strong></p>
+<p>除此之外，还有一个严重的问题–&gt;<strong>死锁</strong></p>
 </blockquote>
 <h5 id="死锁的两个场景"><a href="#死锁的两个场景" class="headerlink" title="死锁的两个场景"></a>死锁的两个场景</h5><blockquote>
 <p><strong>1.一个线程加锁后再尝试加锁</strong></p>
@@ -305,8 +304,13 @@
 <blockquote>
 <p><strong>死锁的解决办法</strong></p>
 <p>1.先给每根筷子编号，约定先拿编号小的筷子</p>
+<ul>
+<li>这样的约定是破除死锁的常见办法,破除死锁中的==环路条件==</li>
+</ul>
 <p>2.搞一个信号量(计数器),</p>
-<p>申请资源的时候搞一个信号量</p>
+<p>申请资源的时候搞一个信号量,信号量记录的是当前可用资源的个数</p>
+<p>如果当前数值为0了，申请资源操作就会等待</p>
+<p>每个哲学家拿筷子的时候先进性P操作</p>
 </blockquote>
 <hr>
 <h5 id="可重入函数"><a href="#可重入函数" class="headerlink" title="可重入函数"></a>可重入函数</h5><p>一个函数在任意的执行流中调用都能不会出问题。</p>
@@ -318,10 +322,17 @@
 </blockquote>
 <hr>
 <p>信号处理函数很少用到，因为一旦进入信号处理函数，原来不管有多少个信号都要等待</p>
-<h4 id="线程—–-gt-同步"><a href="#线程—–-gt-同步" class="headerlink" title="线程—–&gt;同步"></a>线程—–&gt;同步</h4><p><strong>同步: 线程是抢占式执行的,所以没有办法控制次序，因此同步控制着线程与线程之间执行顺序(主要还是抢占式), </strong></p>
-<h4 id="pthread-cond-wait做的工作"><a href="#pthread-cond-wait做的工作" class="headerlink" title="pthread_cond_wait做的工作"></a>pthread_cond_wait做的工作</h4><blockquote>
-<p>1.先释放锁       (1、2两步操作必须是原子的，否则就会错过其他线程的通知消息，导致还在傻等)</p>
-<p>2.等待条件就绪</p>
+<h4 id="线程—–-gt-同步"><a href="#线程—–-gt-同步" class="headerlink" title="线程—–&gt;同步"></a>线程—–&gt;同步</h4><p><strong>同步: 线程是抢占式执行的,所以没有办法控制次序，因此同步控制着线程与线程之间执行顺序(主要还是抢占式执行的结果,有时需要线程和线程之间按照一定的顺序来执行),</strong></p>
+<p>【滑稽取钱】</p>
+<ul>
+<li>来回取钱，一直占用ATM机,让外面的人一直等待着(线程饿死)</li>
+</ul>
+<h4 id="pthread-cond-wait做的工作"><a href="#pthread-cond-wait做的工作" class="headerlink" title="pthread_cond_wait做的工作"></a>pthread_cond_wait做的工作</h4><ul>
+<li>ATM取钱</li>
+</ul>
+<blockquote>
+<p>1.先释放锁      </p>
+<p>2.等待条件就绪(1、2两步操作必须是原子的,否则就会错过其他线程的通知消息,导致还在傻等)</p>
 <p>3.重新获取锁，准备执行后续的操作</p>
 </blockquote>
 <p><strong>大部分的情况下，条件变量要搭配互斥锁来使用</strong></p>
@@ -412,6 +423,8 @@
 	
 	
 	
+	
+		
 	
 		
 	
