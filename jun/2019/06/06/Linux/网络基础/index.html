@@ -6,16 +6,14 @@
   <title>网络基础 | Hexo</title>
   <meta name="author" content="John Doe">
   
-  <meta name="description" content="网络协程/迁程(用户自己实现)—》轻量级线程
-线程不再是抢占式执行了，用户主放弃执行权。需要用户代码手动维护上下文
+  <meta name="description" content="网络(跨主机的”进程间”通信)网络发展背景协议
+一种约定
 
 
-写多线程的本质是为了解决“并发问题”
+​      计算机之间的传输媒介是光信号和电信号. 通过 “频率” 和 “强弱” 来表示 0 和 1 这样的信息. 要想传递各种不同的信息, 就需要约定好双方的数据格式.
 
-
-1.函数式编程(lisp)=&amp;gt;摒弃“可变”(有些语言中没有变量)
-2.actor编程模型(erlang)
-3.scp模型(go语言)">
+协议分层1.为啥要分层
+网络协议比较复杂,如果不拆分,很难研究">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -67,21 +65,36 @@
 	  
 
 	  <!-- content -->
-	  <h3 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h3><h4 id="协程-迁程-用户自己实现-—》轻量级线程"><a href="#协程-迁程-用户自己实现-—》轻量级线程" class="headerlink" title="协程/迁程(用户自己实现)—》轻量级线程"></a>协程/迁程(用户自己实现)—》轻量级线程</h4><blockquote>
-<p><strong>线程不再是抢占式执行了，用户主放弃执行权。需要用户代码手动维护上下文</strong></p>
-</blockquote>
+	  <h3 id="网络-跨主机的”进程间”通信"><a href="#网络-跨主机的”进程间”通信" class="headerlink" title="网络(跨主机的”进程间”通信)"></a>网络(跨主机的”进程间”通信)</h3><h4 id="网络发展背景"><a href="#网络发展背景" class="headerlink" title="网络发展背景"></a>网络发展背景</h4><h3 id="协议"><a href="#协议" class="headerlink" title="协议"></a>协议</h3><ul>
+<li>一种约定</li>
+</ul>
 <blockquote>
-<p>写多线程的本质是为了解决<strong>“并发问题”</strong></p>
+<p>​      计算机之间的传输媒介是光信号和电信号. 通过 “频率” 和 “强弱” 来表示 0 和 1 这样的信息. 要想传递各种不同的信息, 就需要约定好双方的数据格式.</p>
 </blockquote>
-<blockquote>
-<p>1.函数式编程(lisp)=&gt;摒弃“可变”(有些语言中没有变量)</p>
-<p>2.actor编程模型(erlang)</p>
-<p><strong>3.scp模型(go语言)</strong>    【推荐语言】【头条】</p>
+<h4 id="协议分层"><a href="#协议分层" class="headerlink" title="协议分层"></a>协议分层</h4><h5 id="1-为啥要分层"><a href="#1-为啥要分层" class="headerlink" title="1.为啥要分层"></a>1.为啥要分层</h5><blockquote>
+<p>网络协议比较复杂,如果不拆分,很难研究清楚</p>
 </blockquote>
-<h3 id="网络-跨主机的”进程间”通信"><a href="#网络-跨主机的”进程间”通信" class="headerlink" title="网络(跨主机的”进程间”通信)"></a>网络(跨主机的”进程间”通信)</h3><h4 id="网络发展背景"><a href="#网络发展背景" class="headerlink" title="网络发展背景"></a>网络发展背景</h4><h4 id="协议分层"><a href="#协议分层" class="headerlink" title="协议分层"></a>协议分层</h4><h5 id="1-为啥要分层"><a href="#1-为啥要分层" class="headerlink" title="1.为啥要分层"></a>1.为啥要分层</h5><blockquote>
-<p>网络协议比较复杂，如果不拆分，那就太复杂了</p>
-</blockquote>
-<h5 id="2-分层之后有啥好处"><a href="#2-分层之后有啥好处" class="headerlink" title="2.分层之后有啥好处"></a>2.分层之后有啥好处</h5><h4 id="OSI七层模型"><a href="#OSI七层模型" class="headerlink" title="OSI七层模型"></a>OSI七层模型</h4><h5 id="1-物理层-传输"><a href="#1-物理层-传输" class="headerlink" title="1.物理层;传输"></a>1.物理层;传输</h5><h5 id="2-数据链路层"><a href="#2-数据链路层" class="headerlink" title="2.数据链路层"></a>2.数据链路层</h5><h5 id="3-网络层"><a href="#3-网络层" class="headerlink" title="3.网络层"></a>3.网络层</h5><h5 id="4-传输层"><a href="#4-传输层" class="headerlink" title="4.传输层"></a>4.传输层</h5><h5 id="5-会话层"><a href="#5-会话层" class="headerlink" title="5.会话层"></a>5.会话层</h5><h5 id="6-表示层"><a href="#6-表示层" class="headerlink" title="6.表示层"></a>6.表示层</h5><h5 id="7-应用层"><a href="#7-应用层" class="headerlink" title="7.应用层"></a>7.应用层</h5><blockquote>
+<h5 id="2-分层之后有啥好处"><a href="#2-分层之后有啥好处" class="headerlink" title="2.分层之后有啥好处"></a>2.分层之后有啥好处</h5><ul>
+<li>1.拆分成多个层相当于拆分成对个模块,同时降低了整个系统的耦合程度</li>
+<li>2.根据实际需要,随时可以替换其中的某一层协议</li>
+</ul>
+<h4 id="OSI七层模型"><a href="#OSI七层模型" class="headerlink" title="OSI七层模型"></a>OSI七层模型</h4><ul>
+<li>OSI（Open System Interconnection，开放系统互连）七层网络模型称为开放式系统互联参考模型，是一个逻辑上的定义和规范;</li>
+<li>把网络从逻辑上分为了7层. 每一层都有相关、相对应的物理设备，比如路由器，交换机;</li>
+<li>OSI 七层模型是一种框架性的设计方法，其最主要的功能使就是帮助不同类型的主机实现数据传输;</li>
+<li>它的最大优点是将服务、接口和协议这三个概念明确地区分开来，概念清楚，理论也比较完整. 通过七个层次化的结构模型使不同的系统不同的网络之间实现可靠的通讯;</li>
+<li>但是, 它既复杂又不实用; 所以我们按照TCP/IP四层模型来讲解.</li>
+</ul>
+<h5 id="1-物理层-传输"><a href="#1-物理层-传输" class="headerlink" title="1.物理层:传输"></a>1.物理层:传输</h5><ul>
+<li>网络上的物理连接&lt;传输光信号和电信号</li>
+</ul>
+<h5 id="2-数据链路层"><a href="#2-数据链路层" class="headerlink" title="2.数据链路层"></a>2.数据链路层</h5><ul>
+<li>软硬件结合完成</li>
+</ul>
+<h5 id="3-网络层"><a href="#3-网络层" class="headerlink" title="3.网络层"></a>3.网络层</h5><ul>
+<li><h5 id="4-传输层"><a href="#4-传输层" class="headerlink" title="4.传输层"></a>4.传输层</h5></li>
+</ul>
+<h5 id="5-会话层"><a href="#5-会话层" class="headerlink" title="5.会话层"></a>5.会话层</h5><h5 id="6-表示层"><a href="#6-表示层" class="headerlink" title="6.表示层"></a>6.表示层</h5><h5 id="7-应用层"><a href="#7-应用层" class="headerlink" title="7.应用层"></a>7.应用层</h5><blockquote>
 <p>网咯层和传输层都是由操作系统内核实现的，内核提供了一组系统调用，供程序员你来使用</p>
 <p>程序员写的所谓的”网络程序”其中就是再调用这些内核提供的传输层系统调用(socket api )，来完成应用层的程序</p>
 </blockquote>

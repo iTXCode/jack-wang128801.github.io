@@ -327,6 +327,10 @@
 <ul>
 <li>来回取钱，一直占用ATM机,让外面的人一直等待着(线程饿死)</li>
 </ul>
+<p>【同步】</p>
+<ul>
+<li>取钱得时候ATM机没钱了,只能等押炒员将钱拿过来再继续取钱</li>
+</ul>
 <h4 id="pthread-cond-wait做的工作"><a href="#pthread-cond-wait做的工作" class="headerlink" title="pthread_cond_wait做的工作"></a>pthread_cond_wait做的工作</h4><ul>
 <li>ATM取钱</li>
 </ul>
@@ -341,7 +345,7 @@
 </blockquote>
 <blockquote>
 <p>分工协作，提高效率</p>
-<p>生产者==》饺子皮==》消费者</p>
+<p>【包饺子】</p>
 </blockquote>
 <blockquote>
 <p>完成某些操作时，需要一些数据</p>
@@ -351,9 +355,9 @@
 <p>消费者负责消费数据，把数据从交易厂所中取走</p>
 </blockquote>
 <blockquote>
-<p>消费者之间为互斥关系(抢购一份东西)</p>
-<p>生产者之间也为互斥关系(提供一份商品)</p>
-<p>生产者与消费者之间互斥同步关系</p>
+<p>消费者之间为==互斥关系==(抢购一份东西)</p>
+<p>生产者之间也为==互斥关系==(提供一份商品)</p>
+<p>生产者与消费者之间==互斥同步==关系(买东西时遇到进货,(同步):在买方便面的时候货架上没有了,只能等老板去从仓库中将方便面拿过来)</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <h4 id="c-提供的用法"><a href="#c-提供的用法" class="headerlink" title="c++提供的用法"></a>c++提供的用法</h4><p><strong>c++STL中所提供的容器和算法都是线程不安全的</strong></p>
@@ -363,7 +367,7 @@
 <blockquote>
 <p>通过互斥锁只是实现了生产者与消费者之间的互斥关系</p>
 <p>这个代码中效率不是很高，消费者做了很多的无用功(执行速度较快)</p>
-<p>应该使用同步的</p>
+<p>应该使用同步的方式，进一步改进.如果vector中没有数据消费者啥都不做,直到有数据了,才去真正进行消费</p>
 </blockquote>
 <blockquote>
 <p>先释放锁</p>
@@ -378,16 +382,21 @@
 <p>提前把线程创建好</p>
 </blockquote>
 <hr>
-<h4 id="读者写者模型"><a href="#读者写者模型" class="headerlink" title="读者写者模型"></a>读者写者模型</h4><p>一个交易场所：有一块存储区域来保存数据(也可以是队列。。各种数据结构)</p>
+<h4 id="读者写者模型"><a href="#读者写者模型" class="headerlink" title="读者写者模型"></a>读者写者模型</h4><blockquote>
+<p>一：一个交易场所</p>
+<p>二：两种角色</p>
+<p>三：三种关系:读者之间没有关系，写着和写者之间护持关系  读者和写者之间需要互斥关系</p>
+</blockquote>
+<p>一个交易场所：有一块存储区域来保存数据(也可以是队列。。各种数据结构)</p>
 <p><strong>两种角色：读者、写着</strong></p>
 <blockquote>
 <p>读者：读数据</p>
 <p>写着：写数据</p>
 </blockquote>
 <h5 id="三种关系：读者与读者之间没有关系-谁都可以读"><a href="#三种关系：读者与读者之间没有关系-谁都可以读" class="headerlink" title="三种关系：读者与读者之间没有关系(谁都可以读)"></a>三种关系：读者与读者之间没有关系(谁都可以读)</h5><blockquote>
-<p><strong>写者和写着之间互斥关系</strong></p>
-<p><strong>读者与写者之间需要互斥关系</strong></p>
-<p><strong>写者与读者之间一般约定写着优先(同步的含义)</strong></p>
+<p><strong>写者和写着之间==互斥关系==</strong></p>
+<p><strong>读者与写者之间需要==互斥关系==</strong></p>
+<p><strong>写者与读者之间同步互斥关系,同步的含义指==写着优先==</strong></p>
 </blockquote>
 <p><strong>读者写者之间适用于—[一写多读]的情况</strong></p>
 <p>读者写着模型最大的意义在于读者写着之间没有互斥也就能大大的提高读的效率</p>
@@ -398,11 +407,11 @@
 </blockquote>
 <h4 id="常见面试题"><a href="#常见面试题" class="headerlink" title="常见面试题"></a>常见面试题</h4><blockquote>
 <p>1。stl是线程安全的？  –》不是</p>
-<p>stl诞生于1998年，而线程相关操作C++11加入的</p>
-<p>stl对性能追求到了极致，如果考虑到线程安全就会对我们的性能由影响</p>
+<p>1.stl诞生于1998年，而线程相关操作C++11加入的</p>
+<p>2.stl对性能追求到了极致，如果考虑到线程安全就会对我们的性能有影响</p>
 </blockquote>
-<h5 id="2-只能指针是否是线程安全的？"><a href="#2-只能指针是否是线程安全的？" class="headerlink" title="2.只能指针是否是线程安全的？"></a>2.只能指针是否是线程安全的？</h5><blockquote>
-<p>unique_ptr 不涉及线程安全问题(只有一个函数内部使用，并且作为函数的局部变量)</p>
+<h5 id="2-智能指针是否是线程安全的？"><a href="#2-智能指针是否是线程安全的？" class="headerlink" title="2.智能指针是否是线程安全的？"></a>2.智能指针是否是线程安全的？</h5><blockquote>
+<p>unique_ptr 不涉及线程安全问题(只在一个函数内部使用，并且作为函数的局部变量)</p>
 <p>shared_ptr: 是线程安全，本质上是利用原子操作来维护引用计数</p>
 </blockquote>
 <h5 id="3-实现单例模式"><a href="#3-实现单例模式" class="headerlink" title="3.实现单例模式"></a>3.实现单例模式</h5><blockquote>
@@ -411,6 +420,18 @@
 </blockquote>
 <blockquote>
 <p>线程安全问题(加锁，锁放到马里)</p>
+</blockquote>
+<p>1.线程安全问题(加锁，锁放到哪里)<br>2.加锁之后的效率问题(双重if)<br>3.volatile</p>
+<h4 id="协程-迁程-用户自己实现-—》轻量级线程"><a href="#协程-迁程-用户自己实现-—》轻量级线程" class="headerlink" title="协程/迁程(用户自己实现)—》轻量级线程"></a>协程/迁程(用户自己实现)—》轻量级线程</h4><blockquote>
+<p><strong>线程不再是抢占式执行了，用户主放弃执行权。需要用户代码手动维护上下文</strong></p>
+</blockquote>
+<blockquote>
+<p>写多线程的本质是为了解决<strong>“并发问题”</strong></p>
+</blockquote>
+<blockquote>
+<p>1.函数式编程(lisp)=&gt;摒弃“可变”(有些语言中没有变量)</p>
+<p>2.actor编程模型(erlang)</p>
+<p><strong>3.scp模型(go语言)</strong>    【推荐语言】【头条】</p>
 </blockquote>
 	  
 
