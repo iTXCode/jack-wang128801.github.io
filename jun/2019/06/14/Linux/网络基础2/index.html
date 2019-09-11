@@ -7,12 +7,19 @@
   <meta name="author" content="John Doe">
   
   <meta name="description" content="网络基础2自定制协议
-1.客户端给服务器发送的请求是啥样的?
-​        a.包含哪些信息(要参与运算的数字有哪些)
-​    b.这些信息咋组织(如何用一个字符串把要传输的信息表示出来)     
+[ ] 1.客户端给服务器发送的请求是啥样的?
+
+a.包含哪些信息(要参与运算的数字有哪些)
+
+b.这些信息咋组织(如何用一个字符串把要传输的信息表示出来)     
+
+
+
 ​    序列化:把一些信息组织成字符串
 ​    反序列:把字符串解析成一些信息
-2.服务器">
+
+
+[ ] 2.服务">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -64,26 +71,46 @@
 	  
 
 	  <!-- content -->
-	  <h3 id="网络基础2"><a href="#网络基础2" class="headerlink" title="网络基础2"></a>网络基础2</h3><h4 id="自定制协议"><a href="#自定制协议" class="headerlink" title="自定制协议"></a>自定制协议</h4><blockquote>
-<p>1.客户端给服务器发送的请求是啥样的?</p>
-<p>​        a.包含哪些信息(要参与运算的数字有哪些)</p>
-<p>​    b.这些信息咋组织(如何用一个字符串把要传输的信息表示出来)     </p>
+	  <h3 id="网络基础2"><a href="#网络基础2" class="headerlink" title="网络基础2"></a>网络基础2</h3><h4 id="自定制协议"><a href="#自定制协议" class="headerlink" title="自定制协议"></a>自定制协议</h4><ul>
+<li><p>[ ] 1.客户端给服务器发送的请求是啥样的?</p>
+</li>
+<li><p>a.包含哪些信息(要参与运算的数字有哪些)</p>
+</li>
+<li><p>b.这些信息咋组织(如何用一个字符串把要传输的信息表示出来)     </p>
+</li>
+</ul>
+<blockquote>
 <p>​    序列化:把一些信息组织成字符串</p>
 <p>​    反序列:把字符串解析成一些信息</p>
-<p>2.服务器给客户端的响应是啥样的?</p>
-<p>​    a.包含那些信息(运算结果)</p>
-<p>​    b.这些信息咋组织(也是一个字符串)</p>
 </blockquote>
+<ul>
+<li><p>[ ] 2.服务器给客户端的响应是啥样的?</p>
+</li>
+<li><p>a.包含那些信息(运算结果)</p>
+</li>
+<li><p>b.这些信息咋组织(也是一个字符串)</p>
+</li>
+</ul>
 <blockquote>
 <p>JSON-&gt;JavaScript—&gt;(升级)TypeScript(MS)    JS的超集</p>
 <p>​                                  Flutter(谷歌)移动端开发框架</p>
 </blockquote>
+<p>==Json== </p>
+<ul>
+<li>序列化优点：直观,方便调试</li>
+<li>缺点：效率低(相比于protobuf)</li>
+</ul>
+<p>==google protobuf==(二进制的方式序列化)</p>
+<ul>
+<li>优点：</li>
+<li>缺点：</li>
+</ul>
 <p><strong>键值对</strong></p>
-<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    name:<span class="string">"曹操"</span>,</span><br><span class="line">    skill1:<span class="string">"剑气"</span>,</span><br><span class="line">    skill2:<span class="string">"三连跳"</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>利用key查找对应的valve.(拿到学号找对应的学生)</p>
 <p><strong>使用Json的方式进行序列化和反序列化</strong></p>
 <blockquote>
 <p>yum list | grep jsoncpp</p>
-<p>root: yun install  jsoncpp-devel.x86_64  </p>
+<p>root: yum install  jsoncpp-devel.x86_64  </p>
 </blockquote>
 <blockquote>
 <p>如何使用json格式？ 涉及到编译原理中的一些概念</p>
@@ -108,19 +135,16 @@
 <p>6.从服务器读取返回的结果</p>
 <p>7.把服务器返回的结果再进行Json解析</p>
 </blockquote>
-<p>》 </p>
-<blockquote>
-<p>json  是非常重要的序列化/反序列化的方式</p>
-<p>Json 的缺点呢:效率低</p>
-<p>优点：直观,翻遍调试</p>
-</blockquote>
-<h4 id="HTTP协议"><a href="#HTTP协议" class="headerlink" title="HTTP协议"></a>HTTP协议</h4><h5 id="认识URL-我们俗称的”网址“"><a href="#认识URL-我们俗称的”网址“" class="headerlink" title="认识URL(我们俗称的”网址“)"></a>认识URL(我们俗称的”网址“)</h5><p><strong>域名</strong></p>
+<h4 id="HTTP协议"><a href="#HTTP协议" class="headerlink" title="HTTP协议"></a>HTTP协议</h4><h5 id="认识URL-我们俗称的”网址“"><a href="#认识URL-我们俗称的”网址“" class="headerlink" title="认识URL(我们俗称的”网址“)"></a>认识URL(我们俗称的”网址“)</h5><ul>
+<li>表示资源唯一的限定标记</li>
+</ul>
+<p><strong>域名</strong></p>
 <blockquote>
 <p>IP和域名是等价的</p>
 <p>工具：UrlEncode 编码</p>
 <p><strong>fiddler(代理)抓包工具</strong>:浏览器和服务器之间的中介(收费站)</p>
 </blockquote>
-<p><strong>大连暗泉</strong></p>
+<p>主机与服务器之间负责数据交换的工具</p>
 <p><strong>HTTP协议格式</strong></p>
 <p><strong>请求</strong></p>
 <blockquote>
@@ -135,20 +159,23 @@
 <p>表示header的结束</p>
 <p><strong>4:请求体(body)</strong></p>
 <p>空格后面的内容都是body</p>
+<p>body 是可选的，可以有也可以没有</p>
+<p>一般来说 GET 请求不带body  ,POST/PUT 请求带body </p>
 <hr>
 </blockquote>
 <p><strong>响应</strong></p>
 <blockquote>
 <p><strong>1.首行</strong></p>
 <p>a:版本号</p>
-<p>b:状态码(200)</p>
+<p>b:状态码(200)：表示http请求的成功失败</p>
 <p>c:状态码的描述信息(OK)</p>
 <p><strong>2.header</strong></p>
 <p>a:有若干行，每行有一个header(键值对)</p>
-<p>b:键和值之间以空格分隔</p>
+<p>b:键和值之间用 “:”分隔</p>
 <p><strong>3:空行</strong></p>
 <p>表示的是header的结束</p>
 <p><strong>4.请求体</strong></p>
+<p>空行之后的body </p>
 <hr>
 </blockquote>
 <p><strong>出现概率极高的 面试题</strong></p>
@@ -257,7 +284,7 @@
 <p><strong>确认应答数据中要指明的是哪个序号</strong></p>
 <p><strong>确认序号的含义是当前序号之前的数据已经收到，希望收到下一条数据就是从确认序列号开始的</strong></p>
 <h5 id="2-超时重传机制"><a href="#2-超时重传机制" class="headerlink" title="2.超时重传机制"></a>2.超时重传机制</h5><p><strong>1.超时时间会依次变长(悲观的态度去面对丢包的)</strong></p>
-<p><strong>2.</strong></p>
+<p><strong>2.自动去重:(通过序号进行去重)</strong></p>
 <p><strong>发送上一条消息后未收到回复，进行重发确保消息被收到</strong></p>
 <blockquote>
 <ul>
@@ -344,11 +371,12 @@
 </blockquote>
 <h4 id="重要的TCP状态"><a href="#重要的TCP状态" class="headerlink" title="重要的TCP状态"></a>重要的TCP状态</h4><h6 id="1-LISTEN服务器启动完成-手机开机，信号良好"><a href="#1-LISTEN服务器启动完成-手机开机，信号良好" class="headerlink" title="1.LISTEN服务器启动完成(手机开机，信号良好)"></a>1.LISTEN服务器启动完成(手机开机，信号良好)</h6><h6 id="2-ESTABLISHED-建立连接成功-可以进行通信了"><a href="#2-ESTABLISHED-建立连接成功-可以进行通信了" class="headerlink" title="2.ESTABLISHED 建立连接成功,可以进行通信了"></a>2.ESTABLISHED 建立连接成功,可以进行通信了</h6><h6 id="3-CLOSE-WAIT等待调用close函数，对端已经执行过close"><a href="#3-CLOSE-WAIT等待调用close函数，对端已经执行过close" class="headerlink" title="3.CLOSE_WAIT等待调用close函数，对端已经执行过close"></a>3.CLOSE_WAIT等待调用close函数，对端已经执行过close</h6><blockquote>
 <ul>
-<li><strong>如果服务器端出现大量的CLOSE_WAIT状态</strong> </li>
+<li><strong>如果服务器端出现大量的CLOSE_WAIT状态</strong> ,是什么原因?</li>
+<li>代码中忘记调试,代码有bug</li>
 <li><strong>谁主动调用close谁调TIME_WAIT</strong></li>
 </ul>
 </blockquote>
-<h6 id="4-TIME-WAIT保证-最后一个ACK如果丢包还有机会重传即使客户端的进程已经推虎，TIME-WAIT状态仍然可能存在。如果此时最后一个ACK丢了，对端重传的FIN可以有机会去进行处理-收到对方的FIN开始进入该状态"><a href="#4-TIME-WAIT保证-最后一个ACK如果丢包还有机会重传即使客户端的进程已经推虎，TIME-WAIT状态仍然可能存在。如果此时最后一个ACK丢了，对端重传的FIN可以有机会去进行处理-收到对方的FIN开始进入该状态" class="headerlink" title="4.TIME_WAIT保证 最后一个ACK如果丢包还有机会重传即使客户端的进程已经推虎，TIME_WAIT状态仍然可能存在。如果此时最后一个ACK丢了，对端重传的FIN可以有机会去进行处理(收到对方的FIN开始进入该状态)"></a>4.TIME_WAIT保证 最后一个ACK如果丢包还有机会重传即使客户端的进程已经推虎，TIME_WAIT状态仍然可能存在。如果此时最后一个ACK丢了，对端重传的FIN可以有机会去进行处理(收到对方的FIN开始进入该状态)</h6><blockquote>
+<h6 id="4-TIME-WAIT保证-最后一个ACK如果丢包还有机会重传即使客户端的进程已经退出了，TIME-WAIT状态仍然可能存在。如果此时最后一个ACK丢了，对端重传的FIN可以有机会去进行处理-收到对方的FIN开始进入该状态"><a href="#4-TIME-WAIT保证-最后一个ACK如果丢包还有机会重传即使客户端的进程已经退出了，TIME-WAIT状态仍然可能存在。如果此时最后一个ACK丢了，对端重传的FIN可以有机会去进行处理-收到对方的FIN开始进入该状态" class="headerlink" title="4.TIME_WAIT保证 最后一个ACK如果丢包还有机会重传即使客户端的进程已经退出了，TIME_WAIT状态仍然可能存在。如果此时最后一个ACK丢了，对端重传的FIN可以有机会去进行处理(收到对方的FIN开始进入该状态)"></a>4.TIME_WAIT保证 最后一个ACK如果丢包还有机会重传即使客户端的进程已经退出了，TIME_WAIT状态仍然可能存在。如果此时最后一个ACK丢了，对端重传的FIN可以有机会去进行处理(收到对方的FIN开始进入该状态)</h6><blockquote>
 <ul>
 <li><strong>TIME_WAIT  会保持2MSL这样的时间</strong></li>
 <li><strong>MSL表示网络中的两个节点之间，传输一个数据所经历的最大时间</strong></li>
@@ -357,13 +385,18 @@
 </blockquote>
 <h6 id="TODO-添加待办事项"><a href="#TODO-添加待办事项" class="headerlink" title="TODO(添加待办事项)"></a>TODO(添加待办事项)</h6><h5 id="4-滑动窗口-提高传输效率"><a href="#4-滑动窗口-提高传输效率" class="headerlink" title="4.滑动窗口(提高传输效率)"></a>4.滑动窗口(提高传输效率)</h5><ul>
 <li><strong>批量发送数据</strong>“”</li>
-<li><strong>批量口大小,</strong></li>
+<li><strong>批量发送的数据量称为窗口大小,</strong></li>
 <li><strong>窗口越大，网络吞吐率就越高</strong></li>
 <li><strong>窗口也不能无限大(要保证可靠性)</strong></li>
 </ul>
 <blockquote>
 <p><strong>1.发送方如果发的太快，接收方可能处理不过来。</strong></p>
+<ul>
+<li>发送方限制窗口大小的方法</li>
+</ul>
 <p><strong>解决办法：流量控制</strong></p>
+</blockquote>
+<blockquote>
 <p>发送方发送的数据先到达接收方的网卡，然后放到内核中的接收缓冲区中</p>
 <p>接收方的用户代码从接收缓冲区中取数据(recv/read)</p>
 <p><strong>2.如果当前网络比较拥堵，发送方如果发送的很快。仍然会丢包；</strong></p>
@@ -403,6 +436,22 @@
 <h5 id="面向字节流"><a href="#面向字节流" class="headerlink" title="面向字节流"></a>面向字节流</h5><blockquote>
 <p><strong>创建一个TCP的socket，同时在内核中创建一个发送缓冲区和一个接收缓冲区</strong></p>
 <p><strong>收到的数据先到达接收缓冲区，用户代码从接收缓冲区中读走数据之后才会把数据清掉(recv/read)，接收缓冲区也能帮助我们进行数据的去重</strong></p>
+</blockquote>
+<ul>
+<li>发送缓冲区的功能</li>
+</ul>
+<blockquote>
+<ul>
+<li>调用send本质上是把用户的数据拷贝到内盒的发送缓冲区中,再由内核按照滑动窗口的方式把数据批量发送到对端,如果丢包就会重传对应的数据</li>
+</ul>
+</blockquote>
+<ul>
+<li>接收缓冲区功能</li>
+</ul>
+<blockquote>
+<ul>
+<li>收到的数据先到达接收缓冲区，用户代码冲接收缓冲区中读走之后才能把数据清掉(recv/read),接受缓冲区也有可能帮助我们进行数据去重</li>
+</ul>
 </blockquote>
 <h5 id="9-粘包问题"><a href="#9-粘包问题" class="headerlink" title="9.粘包问题"></a>9.粘包问题</h5><ul>
 <li><strong>面向字节流相关，应用程序如何能依次取出一个完整的应用层数据报</strong></li>
