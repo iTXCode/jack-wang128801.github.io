@@ -143,8 +143,22 @@
 <p>总体思想：首先需要另外创建一个空的队列，在判断二叉树不为空树的情况下,先将二叉树的根节点入队，然后在根节点出队的时候将它的左右孩子放到队列中，下一次它的左右孩子又是它左右子树的根节点，依次放到队列中，然后出栈，直到队列为空。</p>
 </blockquote>
 <p><strong>总结</strong></p>
-<p><strong>前序|中序|后序      深度优先    栈</strong></p>
-<p><strong>层序     广度优先     队列</strong></p>
+<table>
+<thead>
+<tr>
+<th>深度优先(栈)</th>
+<th>广度优先(队列)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>前序\</td>
+<td>中序\</td>
+<td>后序</td>
+<td>层序</td>
+</tr>
+</tbody>
+</table>
 <h4 id="四-二叉树面试题"><a href="#四-二叉树面试题" class="headerlink" title="四:二叉树面试题"></a>四:二叉树面试题</h4><h5 id="1-判断两个二叉树是否相等"><a href="#1-判断两个二叉树是否相等" class="headerlink" title="1.判断两个二叉树是否相等"></a>1.判断两个二叉树是否相等</h5><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//接口</span></span><br><span class="line">bool isSameTree(struct TreeNode* p,struct TreeNode *q)；</span><br></pre></td></tr></table></figure>
 <p><strong>解题思路</strong></p>
 <blockquote>
@@ -216,6 +230,14 @@
 <p><strong>后序遍历</strong></p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">PostorderTraversalNor</span><span class="params">(TreeNode *root)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	TreeNode *cur = root;	<span class="comment">// 遍历结点的指针</span></span><br><span class="line">	TreeNode *top;	<span class="comment">// 返回栈顶数据的指针</span></span><br><span class="line">	TreeNode *last = <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// std:: 命名空间</span></span><br><span class="line">	<span class="comment">// &lt;&gt; 模板，表示栈里存的数据类型是 TreeNode *</span></span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">stack</span>&lt;TreeNode *&gt;	st;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span> (!st.empty() || cur != <span class="literal">NULL</span>) &#123;</span><br><span class="line">		<span class="keyword">while</span> (cur != <span class="literal">NULL</span>) &#123;</span><br><span class="line">			<span class="comment">// 第一次访问结点：cur</span></span><br><span class="line">			st.push(cur);</span><br><span class="line">			cur = cur-&gt;left;</span><br><span class="line">		&#125;</span><br><span class="line">		top = st.top();	<span class="comment">// 从栈里取出栈顶元素</span></span><br><span class="line">		<span class="keyword">if</span> (top-&gt;right == <span class="literal">NULL</span>) &#123;</span><br><span class="line">			<span class="comment">// 既是第二次访问，也是第三次访问</span></span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"%c "</span>, top-&gt;val);</span><br><span class="line">			cur = top-&gt;right;</span><br><span class="line">			st.pop();</span><br><span class="line">			last = top;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="keyword">if</span> (top-&gt;right != last) &#123;</span><br><span class="line">				<span class="comment">// 第二次访问</span></span><br><span class="line">				cur = top-&gt;right;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span> &#123;</span><br><span class="line">				<span class="comment">// 第三次访问</span></span><br><span class="line">				<span class="built_in">printf</span>(<span class="string">"%c "</span>, top-&gt;val);</span><br><span class="line">				st.pop();</span><br><span class="line">				last = top;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">递归的写法</span><br><span class="line">       根    左子树  右子树</span><br><span class="line">       左子树 根 右子树</span><br><span class="line">       左子树  右子树  根</span><br><span class="line">       </span><br><span class="line">非递归写法  ： 便利的同时，找到第一次，第二次，第三次 访问点</span><br></pre></td></tr></table></figure>
+<h4 id="根据下标"><a href="#根据下标" class="headerlink" title="根据下标"></a>根据下标</h4><ul>
+<li>已知[parent]</li>
+<li>[left]=2*[parent]+1</li>
+<li>[right]=2*[parent]+2</li>
+</ul>
+<h6 id="已知-child-可以是left-right"><a href="#已知-child-可以是left-right" class="headerlink" title="已知[child] (可以是left|right)"></a>已知[child] (可以是left|right)</h6><ul>
+<li>[parent]=([child]-1)/2</li>
+</ul>
 	  
 
 	  <div>
@@ -227,6 +249,12 @@
 	
 	
 	
+	
+		
+	
+		
+			
+		
 	
 		
 	
