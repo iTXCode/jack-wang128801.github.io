@@ -6,28 +6,16 @@
   <title>网络编程套接字 | Hexo</title>
   <meta name="author" content="John Doe">
   
-  <meta name="description" content="网络编程套接字
+  <meta name="description" content="[TOC]
+网络编程套接字
+在IP数据包头部中, 有两个IP地址, 分别叫做源IP地址, 和目的IP地址
+
 端口号:标识了一个具体的进程
 
-认识TCP协议
-
-传输层协议 (socket主要与传输层打交道)
-有连接 
-可靠传输 
-面向字节流(管道有提及)
-
-
-认识UDP协议
-
-传输层协议 
-无连接 
-不可靠传输 
-面向数据报
-
-
-
-是否有链接: 主要看是否需要双方都同意才能进行通讯
-(打电话">
+端口号(port)是传输层协议的内容.
+端口号是一个2字节16位的整数;
+端口号用来标识一个进程, 告诉操作系统, 当前的这个数据要交给哪一个进程来处理;
+IP">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -79,15 +67,41 @@
 	  
 
 	  <!-- content -->
-	  <h3 id="网络编程套接字"><a href="#网络编程套接字" class="headerlink" title="网络编程套接字"></a>网络编程套接字</h3><ul>
-<li>端口号:标识了一个具体的进程</li>
+	  <p>[TOC]</p>
+<h3 id="网络编程套接字"><a href="#网络编程套接字" class="headerlink" title="网络编程套接字"></a>网络编程套接字</h3><ul>
+<li>在IP数据包头部中, 有两个IP地址, 分别叫做源IP地址, 和目的IP地址</li>
 </ul>
+<h5 id="端口号-标识了一个具体的进程"><a href="#端口号-标识了一个具体的进程" class="headerlink" title="端口号:标识了一个具体的进程"></a>端口号:标识了一个具体的进程</h5><blockquote>
+<ul>
+<li>端口号(port)是传输层协议的内容.</li>
+<li>端口号是一个2字节16位的整数;</li>
+<li>端口号用来标识一个进程, 告诉操作系统, 当前的这个数据要交给哪一个进程来处理;</li>
+<li>IP地址 + 端口号能够标识网络上的某一台主机的某一个进程;</li>
+<li>一个端口号只能被一个进程占用 </li>
+<li>一个进程可以绑定多个端口号; 但是一个端口号不能被多个进程绑定;</li>
+</ul>
+</blockquote>
+<ul>
+<li style="list-style: none"><input type="checkbox"> 源端口号:数据从哪里来</li>
+<li style="list-style: none"><input type="checkbox"> 目的端口号:数据要发给谁</li>
+</ul>
+<h5 id="进程、线程与端口号之间的关系"><a href="#进程、线程与端口号之间的关系" class="headerlink" title="进程、线程与端口号之间的关系"></a>进程、线程与端口号之间的关系</h5><blockquote>
+<ul>
+<li>进程是指在系统中正在运行的一个应用程序；</li>
+<li><p>线程是系统分配处理器时间资源的基本单元，或者说进程之内独立执行的一个单元。对于操 作系统而言，其调度单元是线程。一个进程至少包括一个线程，通常将该线程称为主线程。一个进程从主线程的执行开始进而创建一个或多个附加线程，就是所谓基于多线程的多任务。</p>
+</li>
+<li><p>端口是计算机与外界通讯的出口，端口将接收到的数据包给到指定的应用程序来处理。</p>
+</li>
+<li><p>进程或是线程可同时监听多个端口。</p>
+</li>
+</ul>
+</blockquote>
 <h4 id="认识TCP协议"><a href="#认识TCP协议" class="headerlink" title="认识TCP协议"></a>认识TCP协议</h4><blockquote>
 <ul>
 <li>传输层协议 (socket主要与传输层打交道)</li>
 <li>有连接 </li>
 <li>可靠传输 </li>
-<li>面向字节流(管道有提及)</li>
+<li>面向字节流(管道中消息的进多少和出多少都很随意)</li>
 </ul>
 </blockquote>
 <h4 id="认识UDP协议"><a href="#认识UDP协议" class="headerlink" title="认识UDP协议"></a>认识UDP协议</h4><blockquote>
@@ -95,7 +109,7 @@
 <li>传输层协议 </li>
 <li>无连接 </li>
 <li>不可靠传输 </li>
-<li>面向数据报</li>
+<li>面向数据报(数据报必须完整传输和接收才能正确的交流)</li>
 </ul>
 </blockquote>
 <blockquote>
@@ -106,27 +120,48 @@
 <p>可靠传输并不是100%就能发送成功，如果断网了是不可能发送成功的</p>
 <p>可靠传输指的是发送成功，就会知道自己成功(本质上靠对方的反馈)</p>
 <p>发送失败了，也可能知道自己失败</p>
-<p>不可靠传输值得是发动成功还是失败，自己都不知道</p>
+<p>不可靠传输指的是发动成功还是失败,自己都不知道。</p>
 </blockquote>
 <ul>
 <li>可靠传输缺点: 效率比较低</li>
 </ul>
-<h4 id="网络字节序-大端序"><a href="#网络字节序-大端序" class="headerlink" title="网络字节序(大端序)"></a>网络字节序(大端序)</h4><p>大端:高位存放在低地址</p>
-<p>小端:低位存放在低地址</p>
+<h4 id="网络字节序-大端序"><a href="#网络字节序-大端序" class="headerlink" title="网络字节序(大端序)"></a>网络字节序(大端序)</h4><p>大端:高位存放 在低地址</p>
+<p>小端:低位存放在低地址(小小小)</p>
+<p><img src="https://i.loli.net/2019/11/07/vPEtVuskxRda5An.png" alt></p>
 <blockquote>
 <p>网络中的要求</p>
 </blockquote>
 <h4 id="主机字节序"><a href="#主机字节序" class="headerlink" title="主机字节序"></a>主机字节序</h4><blockquote>
 <p>(不确定和机器相关) <strong>cpu相关</strong></p>
 </blockquote>
+<blockquote>
+<ul>
+<li>发送主机通常将发送缓冲区中的数据按内存地址从低到高的顺序发出;</li>
+<li>接收主机把从网络上接到的字节依次保存在接收缓冲区中,也是按内存地址从低</li>
+<li>高的顺序保存;因此,网络数据流的地址应这样规定:先发出的数据是低地址,后发</li>
+<li>的数据是高地址.</li>
+<li>TCP/IP协议规定,网络数据流应采用大端字节序,即低地址高字节.</li>
+<li>不管这台主机是大端机还是小端机, 都会按照这个TCP/IP规定的网络字节序来发送</li>
+<li>接收数据;</li>
+<li>如果当前发送主机是小端, 就需要先将数据转成大端; 否则就忽略, 直接发送即可;</li>
+</ul>
+</blockquote>
 <p><strong>给你一个int，把这个数从小端字节序转换成大端</strong></p>
 <p>n&amp;0xff   (n&gt;&gt;8)&amp;0xff     (n&gt;&gt;16)&amp;0xff    (n&gt;&gt;24)&amp;0xff</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h3 id="socket编程接口"><a href="#socket编程接口" class="headerlink" title="socket编程接口"></a>socket编程接口</h3><figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建 socket 文件描述符 (TCP/UDP, 客户端 + 服务器)</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">socket</span><span class="params">(<span class="keyword">int</span> domain, <span class="keyword">int</span> type, <span class="keyword">int</span> protocol)</span></span>;</span><br><span class="line"><span class="comment">// 绑定端口号 (TCP/UDP, 服务器)      </span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">bind</span><span class="params">(<span class="keyword">int</span> socket, <span class="keyword">const</span> struct sockaddr *address,</span></span></span><br><span class="line"><span class="function"><span class="params">         <span class="keyword">socklen_t</span> address_len)</span></span>;</span><br><span class="line"><span class="comment">// 开始监听socket (TCP, 服务器)</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">listen</span><span class="params">(<span class="keyword">int</span> socket, <span class="keyword">int</span> backlog)</span></span>;</span><br><span class="line"><span class="comment">// 接收请求 (TCP, 服务器)</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">accept</span><span class="params">(<span class="keyword">int</span> socket, struct sockaddr* address,</span></span></span><br><span class="line"><span class="function"><span class="params">         <span class="keyword">socklen_t</span>* address_len)</span></span>;</span><br><span class="line"><span class="comment">// 建立连接 (TCP, 客户端)</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">connect</span><span class="params">(<span class="keyword">int</span> sockfd, <span class="keyword">const</span> struct sockaddr *addr,</span></span></span><br><span class="line"><span class="function"><span class="params">        <span class="keyword">socklen_t</span> addrlen)</span></span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Change</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> <span class="built_in">array</span>[<span class="number">10</span>];</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>系统提供的函数有</li>
+</ul>
+<p><img src="https://i.loli.net/2019/11/07/SwKbv98so1Ecyk5.png" alt></p>
+<h3 id="socket编程接口"><a href="#socket编程接口" class="headerlink" title="socket编程接口"></a>socket编程接口</h3><ul>
+<li>socket API是一层抽象的网络编程接口,适用于各种底层网络协议</li>
+</ul>
+<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建 socket (socket就是文件描述符) (TCP/UDP, 客户端 / 服务器)</span></span><br><span class="line"><span class="comment">//文件描述符就是描述符表的数组下标</span></span><br><span class="line"><span class="comment">//文件对应的不是磁盘中的文件,而是网卡中的数据</span></span><br><span class="line"><span class="comment">//读写文件就是对网卡进行的读写</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">socket</span><span class="params">(<span class="keyword">int</span> domain, <span class="keyword">int</span> type, <span class="keyword">int</span> protocol)</span></span>;</span><br><span class="line"><span class="comment">//socket是创建一个socket文件(TCP/UDP，客户端/服务器)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 绑定端口号 (TCP/UDP, 服务器)</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">bind</span><span class="params">(<span class="keyword">int</span> socket, <span class="keyword">const</span> struct sockaddr *address,</span></span></span><br><span class="line"><span class="function"><span class="params">         <span class="keyword">socklen_t</span> address_len)</span></span>;</span><br><span class="line"><span class="comment">//bind (TCP/UDP 一般由服务器bind，客户端也能bind但是几乎不用)把一个socket</span></span><br><span class="line"><span class="comment">//文件和一个端口号关联在一起。能用一个端口号关联一个进程,更准确的说是和一个</span></span><br><span class="line"><span class="comment">//socket关联到一起</span></span><br><span class="line"><span class="comment">//(一个进程可以关联到多个端口号,反之通过一个端口号只能找到一个进程)</span></span><br><span class="line"><span class="comment">//(TCP/UD一般有服务器bind ,客户端也能bind 但是几乎不会用)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 开始监听socket (TCP, 服务器)</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">listen</span><span class="params">(<span class="keyword">int</span> socket, <span class="keyword">int</span> backlog)</span></span>;</span><br><span class="line"><span class="comment">// 接收请求 (TCP, 服务器)</span></span><br><span class="line"><span class="comment">//（服务器来使用）(TCP)</span></span><br><span class="line"><span class="comment">//进入监听状态(手机开机,并且信号良好随时可以等待别人的联系)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//接收链接</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">accept</span><span class="params">(<span class="keyword">int</span> socket, struct sockaddr* address,</span></span></span><br><span class="line"><span class="function"><span class="params">         <span class="keyword">socklen_t</span>* address_len)</span></span>;</span><br><span class="line"><span class="comment">//(服务器来使用) (TCP)</span></span><br><span class="line"><span class="comment">//表示的是接收链接(别人打来的电话，按下接听键)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 建立连接 (TCP, 客户端)</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">connect</span><span class="params">(<span class="keyword">int</span> sockfd, <span class="keyword">const</span> struct sockaddr *addr,</span></span></span><br><span class="line"><span class="function"><span class="params">        <span class="keyword">socklen_t</span> addrlen)</span></span>;</span><br><span class="line"><span class="comment">//(客户端来使用) (争对TCP相关)</span></span><br><span class="line"><span class="comment">//发起链接请求(你给别人打电话)</span></span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>socket ==本质是一个文件描述符==</p>
 <p>所谓的创建socket本质上就是在打开一个文件(叫做socket类型的文件)(这个文件不是和磁盘上的文件对应，而是和网卡这样的设备对应)</p>
-<p>读文件就是==从网卡上读数据==，写数据就是往网卡中写数据(==管道也是这样搞的==)</p>
+<p>读文件就是==从网卡上读数据==，写数据就是往网卡中写数据(==管道也是如此==)</p>
+<p>文件描述符是一个文件描述符表的数组下标</p>
 </blockquote>
 <h6 id="文件"><a href="#文件" class="headerlink" title="文件"></a>文件</h6><blockquote>
 <p>“-” 普通文件</p>
@@ -135,24 +170,9 @@
 <p>l –&gt;链接文件</p>
 <p>s  –&gt; socket 文件</p>
 <p>文件描述符是一个数组下标，文件描述符表的数组下标</p>
-<p>socket文件使用完之后也要及时关闭close,否则也会造成文件泄露</p>
+<p>==socket文件使用完之后也要及时关闭close,否则也会造成文件泄露==</p>
 </blockquote>
-<p><strong>socket</strong>是创建一个socket文件<strong>(TCP/UDP客户端/服务器)</strong></p>
-<p><strong>bind</strong> (TCP/UDP 一般由服务器bind，客户端也能bind但是几乎不用)把一个socket 文件和一个端口号关联在一起。</p>
-<p>确实是能用端口号关联一个进程，更准确地 说是和一个socket关联到一起(一个进程可以关联到多个端口号，但是反之通过一个端口号只能找到一个进程)(TCP/UD一般有服务器bind ,客户端也能bind 但是几乎不会用)</p>
-<p><strong>listen</strong> （服务器来使用）(TCP)</p>
-<blockquote>
-<p>进入监听状态(手机开机，并且信号良好)</p>
-</blockquote>
-<p><strong>accept(服务器来使用) (TCP)</strong></p>
-<blockquote>
-<p>表示的是接收链接(别人打来的电话，按下接听键)</p>
-</blockquote>
-<p><strong>connect(客户端来使用) (和TCP相关)</strong></p>
-<blockquote>
-<p>发起链接请求(你给别人打电话)</p>
-</blockquote>
-<h5 id="啥叫客户端，啥叫服务端？"><a href="#啥叫客户端，啥叫服务端？" class="headerlink" title="啥叫客户端，啥叫服务端？"></a>啥叫客户端，啥叫服务端？</h5><blockquote>
+<h5 id="客户端，服务端如何区分？"><a href="#客户端，服务端如何区分？" class="headerlink" title="客户端，服务端如何区分？"></a>客户端，服务端如何区分？</h5><blockquote>
 <ul>
 <li><p>主动的一方叫做客户端</p>
 </li>
@@ -161,7 +181,7 @@
 </ul>
 </blockquote>
 <p>一个进程到底是客户端后还是服务端，具体情况可能发生角色互换</p>
-<h5 id="发送-接收"><a href="#发送-接收" class="headerlink" title="发送/接收"></a>发送/接收</h5><blockquote>
+<h5 id="发送-接收（交互信息）"><a href="#发送-接收（交互信息）" class="headerlink" title="发送/接收（交互信息）"></a>发送/接收（交互信息）</h5><blockquote>
 <p>1.read/write是面向字节流的(只能针对TCP,不能针对 UDP的socket)</p>
 <p>2.recv/send(针对TCP，用法和read/write 和相似，但是功能更丰富)</p>
 <p>3.recvfrom/sendto(针对UDP)</p>
@@ -208,6 +228,8 @@
 <blockquote>
 <p>查看当前运行的服务器</p>
 </blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">UDP版的服务器或者客户端的编写过程</span><br><span class="line">1.使用socket()创建一个socket文件</span><br><span class="line">2.给socket 绑定ip + 端口号</span><br><span class="line">3.将本地的主机字节序转成网络字节序</span><br><span class="line">4.链接端口</span><br><span class="line">5.</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">服务器的基本工作流程</span><br><span class="line">1.初始化(服务器启动)</span><br><span class="line">2.进入一个主循环(死循环)</span><br><span class="line">   a.读取客户端发来的&quot;请求&quot; (Request)</span><br><span class="line">   b.根据请求内容,计算生成&quot;响应&quot;(Response) 内容[最核心]</span><br><span class="line">   c.把响应数据返回给客户端</span><br><span class="line">  先实现一个&quot;回显服务器&quot;--&gt;客户端发送请求,服务器就返回啥响应</span><br></pre></td></tr></table></figure>
 	  
 
 	  <div>
