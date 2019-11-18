@@ -1,0 +1,316 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>Hexo</title>
+  <meta name="author" content="John Doe">
+  
+  <meta name="description" content="学习二叉树的建立时,利用先序遍历建立二叉树的过程中我遇到了一个一直没有理解清楚的问题,那就是结构体指针使用问题.结构体还是可以理解清楚的,但是自从它和typedef 还有指针 ==”勾搭”== 在一起后,就让我有了一丝的困惑.这到底是怎么回事呢？终于我忍不住了,想要彻底调查清楚它们之间的猫腻。
+
+
+">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="Hexo">
+
+  
+    <meta property="og:image" content>
+  
+
+  
+    <link rel="alternative" href="/jun/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link href="/jun/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/jun/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/responsive.css" media="screen" type="text/css">  
+  <link rel="stylesheet" href="/jun/css/sidenav.css" media="screen" type="text/css">  
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/jun/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+</head>
+</html>
+<body id="body" data-spy="scroll" data-target=".toc">
+  <div class="container" id="container">
+	<div class="content">
+	  <div class="page-header">		
+  <h1><a class="brand" href="/jun/">Hexo</a><span class="split"></span><span class="title"></span><span class="date" id="title-date"><i class="fa fa-clock-o"></i> 2019-11-18</span></h1>
+</div>		
+
+<div class="row page">
+  <!-- cols -->	
+  
+  
+
+  
+	<div class="col-md-12">
+	  
+
+	  <!-- content -->
+	  <a id="more"></a>
+<blockquote>
+<p>学习二叉树的建立时,利用先序遍历建立二叉树的过程中我遇到了一个一直没有理解清楚的问题,那就是结构体指针使用问题.结构体还是可以理解清楚的,但是自从它和typedef 还有指针 ==”勾搭”== 在一起后,就让我有了一丝的困惑.这到底是怎么回事呢？终于我忍不住了,想要彻底调查清楚它们之间的猫腻。</p>
+</blockquote>
+<ul>
+<li>一起来看下面这个程序（不是完整的测试用例）<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">TreeNode</span>&#123;</span></span><br><span class="line">	TNType  _value;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">TreeNode</span>* _<span class="title">left</span>;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">TreeNode</span>* _<span class="title">right</span>;</span></span><br><span class="line">&#125;TreeNode, * Bitree;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">CreateTree</span><span class="params">(Bitree* root)</span></span>&#123;</span><br><span class="line">	TNType node;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%c"</span>, &amp;node);</span><br><span class="line">	<span class="keyword">if</span> (node == <span class="string">'#'</span>)&#123;</span><br><span class="line">		*root = <span class="literal">NULL</span>;  <span class="comment">//叶子结点的产生</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span>&#123;</span><br><span class="line">		*root = (Bitree)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(TreeNode));</span><br><span class="line">		(*root)-&gt;_value = node;</span><br><span class="line">		CreateTree(&amp;(*root)-&gt;_left);</span><br><span class="line">		CreateTree(&amp;(*root)-&gt;_right);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">TestTree</span><span class="params">()</span></span>&#123;</span><br><span class="line">	Bitree tree;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"请输入建立二叉树的结点值:"</span>);</span><br><span class="line">	CreateTree(&amp;tree);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	TestTree();</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>在翻看别人的博客的时候,有人说这里的Bitree是指针变量.于是我就更加迷茫了,如果Bitree是指针变量的话,那它为什么还可以定义其他的变量(变量tree)呢？</p>
+</blockquote>
+<ul>
+<li>于是我按照那片博客所说做了如下测试</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">TreeNode</span>&#123;</span></span><br><span class="line">	TNType  _value;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">TreeNode</span>* _<span class="title">left</span>;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">TreeNode</span>* _<span class="title">right</span>;</span></span><br><span class="line">&#125;TreeNode, * Bitree;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">CreateTree</span><span class="params">(Bitree* root)</span></span>&#123;</span><br><span class="line">	TNType node;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%c"</span>, &amp;node);</span><br><span class="line">	<span class="keyword">if</span> (node == <span class="string">'#'</span>)&#123;</span><br><span class="line">		*root = <span class="literal">NULL</span>;  <span class="comment">//叶子结点的产生</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span>&#123;</span><br><span class="line">		*root = (Bitree)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(TreeNode));</span><br><span class="line">		(*root)-&gt;_value = node;</span><br><span class="line">		CreateTree(&amp;(*root)-&gt;_left);</span><br><span class="line">		CreateTree(&amp;(*root)-&gt;_right);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">TestTree</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    struct TreeNode *node;</span></span><br><span class="line"><span class="comment">    node ptr;</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="comment">//这是我加入其中的两行代码</span></span><br><span class="line">	Bitree tree;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"请输入建立二叉树的结点值:"</span>);</span><br><span class="line">	CreateTree(&amp;tree);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	TestTree();</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>在加入了上述的两行代码后,我发现编辑器给我报错了.于是我觉得那篇博客误导了我.</p>
+<ul>
+<li>于是我又做了如下的测试</li>
+</ul>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">TreeNode</span>&#123;</span></span><br><span class="line">	TNType  _value;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">TreeNode</span>* _<span class="title">left</span>;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">TreeNode</span>* _<span class="title">right</span>;</span></span><br><span class="line">&#125;TreeNode, * Bitree;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">CreateTree</span><span class="params">(Bitree* root)</span></span>&#123;</span><br><span class="line">	TNType node;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%c"</span>, &amp;node);</span><br><span class="line">	<span class="keyword">if</span> (node == <span class="string">'#'</span>)&#123;</span><br><span class="line">		*root = <span class="literal">NULL</span>;  <span class="comment">//叶子结点的产生</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span>&#123;</span><br><span class="line">		*root = (Bitree)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(TreeNode));</span><br><span class="line">		(*root)-&gt;_value = node;</span><br><span class="line">		CreateTree(&amp;(*root)-&gt;_left);</span><br><span class="line">		CreateTree(&amp;(*root)-&gt;_right);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">TestTree</span><span class="params">()</span></span>&#123;</span><br><span class="line">	TreeNode node;</span><br><span class="line">	<span class="keyword">typedef</span> TreeNode* p;</span><br><span class="line">	p n;</span><br><span class="line">	Bitree tree;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"请输入建立二叉树的结点值:"</span>);</span><br><span class="line">	CreateTree(&amp;tree);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	TestTree();</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>我在监控中发现我的理解是正确的</p>
+</blockquote>
+<p><img src="https://img-blog.csdnimg.cn/2019101213091865.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY2tfd2FuZzEyODgwMQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<ul>
+<li>此处的 ==Bitree== 并非是指针变量,而是typedef 给结构体指针起的别名而已 .</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">TreeNode</span>&#123;</span></span><br><span class="line">	TNType  _value;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">TreeNode</span>* _<span class="title">left</span>;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">TreeNode</span>* _<span class="title">right</span>;</span></span><br><span class="line">&#125;TreeNode, * Bitree;</span><br><span class="line"><span class="comment">//可以理解成这样</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">TreeNode</span>&#123;</span></span><br><span class="line">	TNType  _value;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">TreeNode</span>* _<span class="title">left</span>;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">TreeNode</span>* _<span class="title">right</span>;</span></span><br><span class="line">&#125;TreeNode;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">TreeNode</span>*  <span class="title">Bitree</span>;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>让人误解的点其实是 ==*== 到底是和谁在一起的.</li>
+<li>其实在定义结构体的时候它是跟 structural TreeNode 在一块的。</li>
+</ul>
+	  
+
+	  <div>
+  		<center>
+		  <div class="pagination">
+<ul class="pagination">
+	
+	
+	
+	
+	
+	
+		
+			
+			
+		
+	
+		
+			
+			
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+	
+	
+		<li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>prev</a></li>
+	
+	<li><a href="/jun/"><i class="fa fa-archive"></i>Home</a></li>
+	
+		<li class="next"><a href="/jun/2019/09/28/Date-structure/栈与队列的互相实现/" class="alignright next">next<i class="fa fa-arrow-circle-o-right"></i></a></li>
+	
+</ul>
+</div>
+
+		</center>
+	  </div>
+	  
+	</div> <!-- col-md-9/col-md-12 -->
+	
+  </div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+	<footer> <p>
+  &copy; 2019 John Doe
+  
+      with help from <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-wixo/">Wixo</a>.    
+</p> </footer>
+  </div> <!-- container-narrow -->
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/jun/js/jquery.imagesloaded.min.js"></script>
+<script src="/jun/js/gallery.js"></script>
+<script src="/jun/js/bootstrap.min.js"></script>
+<script src="/jun/js/jquery.tableofcontents.min.js"></script>
+<script src="/jun/js/tocgenerator.min.js"></script>
+<script src="/jun/js/main.js"></script>
+<script src="/jun/js/search.js"></script> 
+
+
+
+
+<link rel="stylesheet" href="/jun/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/jun/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+</body>
+</html>
