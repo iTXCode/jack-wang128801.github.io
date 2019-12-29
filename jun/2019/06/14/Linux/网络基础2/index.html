@@ -7,19 +7,16 @@
   <meta name="author" content="John Doe">
   
   <meta name="description" content="网络基础2自定制协议
-[ ] 1.客户端给服务器发送的请求是啥样的?
+[ ] 1.客户端给服务器发送的请求是什么样的?
 
 a.包含哪些信息(要参与运算的数字有哪些)
 
-b.这些信息咋组织(如何用一个字符串把要传输的信息表示出来)     
+b.这些信息怎么组织(如何用一个字符串把要传输的信息表示出来)     
 
 
 
-​    序列化:把一些信息组织成字符串
-​    反序列:把字符串解析成一些信息
-
-
-[ ] 2.服务">
+​    序列化:把一些信息组织成字符串(例如操作数和操作符)
+​    反序列:把字符串解析成一些">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -72,38 +69,47 @@ b.这些信息咋组织(如何用一个字符串把要传输的信息表示出�
 
 	  <!-- content -->
 	  <h3 id="网络基础2"><a href="#网络基础2" class="headerlink" title="网络基础2"></a>网络基础2</h3><h4 id="自定制协议"><a href="#自定制协议" class="headerlink" title="自定制协议"></a>自定制协议</h4><ul>
-<li><p>[ ] 1.客户端给服务器发送的请求是啥样的?</p>
+<li><p>[ ] 1.客户端给服务器发送的请求是什么样的?</p>
 </li>
 <li><p>a.包含哪些信息(要参与运算的数字有哪些)</p>
 </li>
-<li><p>b.这些信息咋组织(如何用一个字符串把要传输的信息表示出来)     </p>
+<li><p>b.这些信息怎么组织(如何用一个字符串把要传输的信息表示出来)     </p>
 </li>
 </ul>
 <blockquote>
-<p>​    序列化:把一些信息组织成字符串</p>
-<p>​    反序列:把字符串解析成一些信息</p>
+<p>​    序列化:把一些信息组织成字符串(例如操作数和操作符)</p>
+<p>​    反序列:把字符串解析成一些信息(将字符串转换成可以识别的操作数和操作符进行计算)</p>
 </blockquote>
 <ul>
-<li><p>[ ] 2.服务器给客户端的响应是啥样的?</p>
+<li><p>[ ] 2.服务器给客户端的响应是什么样的?</p>
 </li>
 <li><p>a.包含那些信息(运算结果)</p>
 </li>
-<li><p>b.这些信息咋组织(也是一个字符串)</p>
+<li><p>b.这些信息怎么组织(也是一个字符串)</p>
 </li>
 </ul>
 <blockquote>
 <p>JSON-&gt;JavaScript—&gt;(升级)TypeScript(MS)    JS的超集</p>
 <p>​                                  Flutter(谷歌)移动端开发框架</p>
+<p>JavaScript前端独霸(与Java没有任何关系)</p>
 </blockquote>
-<p>==Json== </p>
+<p>==Json==  </p>
+<h5 id="Json结构"><a href="#Json结构" class="headerlink" title="Json结构"></a>Json结构</h5><ul>
+<li>Json是一种非常重要的序列化/反序列化的方式</li>
+</ul>
+<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    键<span class="number">1</span>:<span class="string">"值1"</span>,</span><br><span class="line">    键<span class="number">2</span>:<span class="string">"值2"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ul>
-<li>序列化优点：直观,方便调试</li>
+<li style="list-style: none"><input type="checkbox"> 根据键找到值</li>
+<li><p>[ ] 说到优缺点就要有对比的对象</p>
+</li>
+<li><p>序列化优点：直观,方便调试(Json序列化的结果为文本格式的)</p>
+</li>
 <li>缺点：效率低(相比于protobuf)</li>
 </ul>
 <p>==google protobuf==(二进制的方式序列化)</p>
 <ul>
-<li>优点：</li>
-<li>缺点：</li>
+<li>优点：效率较高</li>
+<li>缺点：二进制的序列化结果直接查看不易看懂</li>
 </ul>
 <p><strong>键值对</strong></p>
 <p>利用key查找对应的valve.(拿到学号找对应的学生)</p>
@@ -143,15 +149,38 @@ b.这些信息咋组织(如何用一个字符串把要传输的信息表示出�
 <p>IP和域名是等价的</p>
 <p>工具：UrlEncode 编码</p>
 <p><strong>fiddler(代理)抓包工具</strong>:浏览器和服务器之间的中介(收费站)</p>
+<p>[装包工具(<code>可以监视用户与服务器之间交互的信息</code>)]</p>
 </blockquote>
 <p>主机与服务器之间负责数据交换的工具</p>
 <p><strong>HTTP协议格式</strong></p>
+<p><img src="https://i.loli.net/2019/12/29/FJIBcDwxdXTz76k.png" alt></p>
+<p><img src="https://i.loli.net/2019/12/29/zntP2yRHreJ8CQ5.png" alt></p>
+<ul>
+<li style="list-style: none"><input type="checkbox"> https协议默认的端口是443</li>
+<li style="list-style: none"><input type="checkbox"> 在域名后面加上/或不加访问的是百度的根目录</li>
+<li style="list-style: none"><input type="checkbox"> 在域名后面加上/index.html 或者/index.php (访问的是根目录中的某个目录)</li>
+</ul>
+<h4 id="认识URL"><a href="#认识URL" class="headerlink" title="认识URL"></a>认识URL</h4><ul>
+<li style="list-style: none"><input type="checkbox"> urlencode和urldecode</li>
+</ul>
+<blockquote>
+<ul>
+<li>像 / ? : 等这样的字符, 已经被url当做特殊意义理解了. 因此这些字符不能随意出现.<br>比如, 某个参数中需要带有这些特殊字符, 就必须先对特殊字符进行转义.</li>
+<li>转义的规则如下:<br>将需要转码的字符转为16进制，然后从右到左，取4位(不足4位直接处理)，每2位做一位，前面加上%，编码成%XY格式</li>
+</ul>
+</blockquote>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://www.baidu.com/s?ie=utf-8&amp;f=8&amp;rsv_bp=1&amp;tn=02003390_42_hao_pg&amp;wd=%E9%93%A0%E7%94%B2&amp;oq=www.baidu.com&amp;rsv_pq=debd6f4c002405ba&amp;rsv_t=86c72X%2BOHpTHNlSzJd6HzSzmKJyX8Qj5xCJaM8XpaccT2C9FpTcL8K8twliIE34dkz8SKz7BlqnQ&amp;rqlang=cn&amp;rsv_enter=1&amp;rsv_dl=tb&amp;rsv_sug3=19&amp;rsv_sug1=27&amp;rsv_sug7=100&amp;bs=www.baidu.com</span><br></pre></td></tr></table></figure>
+<ul>
+<li style="list-style: none"><input type="checkbox"> 搜索铠甲后在搜索栏中看到的结果</li>
+</ul>
+<p><img src="https://i.loli.net/2019/12/29/oQ8HMy7sziWAkaJ.png" alt></p>
 <p><strong>请求</strong></p>
+<p><img src="https://i.loli.net/2019/12/29/C5Tga2ALtqleBZM.png" alt></p>
 <blockquote>
 <p><strong>1.首行(使用空格区分)</strong></p>
 <p>a:方法(GET/POST/PUT/DELETE/HEAD)</p>
-<p>b:url</p>
-<p>c: http 版本号.HTTP/1.1(当前最常见的版本)</p>
+<p>b:url:我们俗称的网址.</p>
+<p>c: http 版本号:HTTP/1.1(当前最常见的版本)</p>
 <p><strong>2.头部信息(header)</strong></p>
 <p>包含了若干行</p>
 <p>每行是一个键值对，键和值之间用 ：分割</p>
@@ -164,6 +193,10 @@ b.这些信息咋组织(如何用一个字符串把要传输的信息表示出�
 <hr>
 </blockquote>
 <p><strong>响应</strong></p>
+<p><img src="https://i.loli.net/2019/12/29/FDZCfG6Ijvwnbgk.png" alt></p>
+<ul>
+<li style="list-style: none"><input type="checkbox"> 空行之后就是body(使用html书写的网页代码)</li>
+</ul>
 <blockquote>
 <p><strong>1.首行</strong></p>
 <p>a:版本号</p>
@@ -179,19 +212,57 @@ b.这些信息咋组织(如何用一个字符串把要传输的信息表示出�
 <hr>
 </blockquote>
 <p><strong>出现概率极高的 面试题</strong></p>
+<ul>
+<li style="list-style: none"><input type="checkbox"> 1.说说HTTP协议中常见的方法是那些？</li>
+</ul>
 <blockquote>
-<p>1.说说HTTP协议中常见的方法是那些？</p>
-<p>2.GET和POST的区别？</p>
-<p>GET往往把参数放到query_string中</p>
-<p>POST往往把参数放到body中</p>
-<p>3.说说常见的HTTP状态码有哪些，分别是啥含义?</p>
-<p>200 表示 OK</p>
-<p>302 Found 表示重定向 /303 See Other 重定向/Location 字段表示重定向</p>
-<p>403 表示用户没有权限访问</p>
-<p>404 Not Found 没有找到指定的资源</p>
-<p>502 Bad Gateway   服务器挂了</p>
-<p>504 Gateway Timeout 服务器访问超时</p>
-<p><strong>一般情况</strong></p>
+<ul>
+<li>GET/POST/PUT/DELETE/HEAD</li>
+</ul>
+</blockquote>
+<ul>
+<li style="list-style: none"><input type="checkbox"> 2.GET和POST的区别？</li>
+</ul>
+<blockquote>
+<ul>
+<li>(GET设计初衷,GET从服务器上那东西)</li>
+<li>(POST设计的初衷,从服务器上放东西)</li>
+</ul>
+</blockquote>
+<ul>
+<li style="list-style: none"><input type="checkbox"> 如今</li>
+</ul>
+<blockquote>
+<ul>
+<li><p>GET往往把参数放到query_string中</p>
+</li>
+<li><p>POST往往把参数放到body中</p>
+</li>
+</ul>
+</blockquote>
+<ul>
+<li style="list-style: none"><input type="checkbox"> 3.说说常见的==HTTP状态码==有哪些，分别是啥含义?</li>
+</ul>
+<blockquote>
+<ul>
+<li><p>200 表示 OK(访问成功)</p>
+</li>
+<li><p>302 Found 表示重定向 /303 See Other 重定向/Location 字段表示重定向到那个url目标</p>
+</li>
+<li><p>403 表示用户没有权限访问</p>
+</li>
+<li><p>404 Not Found 没有找到指定的资源</p>
+</li>
+<li><p>502 Bad Gateway   服务器挂了</p>
+</li>
+<li><p>504 Gateway Timeout 服务器响应超时</p>
+</li>
+</ul>
+</blockquote>
+<ul>
+<li style="list-style: none"><input type="checkbox"> 一般规律(*在下面表示开头的)</li>
+</ul>
+<blockquote>
 <p>2* 请求成功</p>
 <p>3*重定向</p>
 <p>4*客户端出现错误</p>
