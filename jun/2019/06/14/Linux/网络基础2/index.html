@@ -285,6 +285,8 @@ b.这些信息怎么组织(如何用一个字符串把要传输的信息表示�
 <p><strong>User-Agent:</strong> </p>
 <blockquote>
 <p> 描述操作系统和浏览器版本信息; </p>
+<p> 手机端看到的页面并不是根据User-Agent来吐出一个单独的比较窄的页面</p>
+<p> 而是完全靠前端的技术来实现(响应式编程)</p>
 </blockquote>
 <p><strong>referer:</strong> </p>
 <blockquote>
@@ -296,7 +298,7 @@ b.这些信息怎么组织(如何用一个字符串把要传输的信息表示�
 </blockquote>
 <p><strong>Cookie:</strong></p>
 <blockquote>
-<p> 是一个保存在浏览器端的字符串，字符串的含义是由程序员内部约定的,外部的用户一般看不懂含义</p>
+<p> 是一个保存在浏览器端的字符串，==字符串的含义是由程序员内部约定的,外部的用户一般看不懂含义==</p>
 <p>Cookie中最常见的内容是用户的身份信息</p>
 <p>当我们登录账号是的时候，服务器就会返回一个身份信息字符串，</p>
 <p>浏览器保存在cookie中</p>
@@ -305,12 +307,16 @@ b.这些信息怎么组织(如何用一个字符串把要传输的信息表示�
 <p>用于存储用户登陆网站的信息 (身份，密码，时间等)</p>
 </blockquote>
 <p><strong>localStorage:也可以起到与Cookie相同的作用但是功能更强大</strong></p>
-<p>如果使用虚拟机来搭建服务器要先关闭防火墙</p>
+<p>==如果使用虚拟机来搭建服务器要先关闭防火墙==</p>
 <p>进入root 用户</p>
 <p>server firewalld stop #centos 7 的关闭方式</p>
 <p>爬虫jish</p>
 <p><strong>一个进程能否绑定多个端口：可以</strong></p>
-<p>​               </p>
+<p><strong>一个端口号能否被多个不同的进程绑定:一个端口不能被多个进程同时绑定</strong>==提示错误:端口被占用==</p>
+<ul>
+<li>通常情况下不可以</li>
+<li>创建子进程后父进程和子进程共同使用一个端口</li>
+</ul>
 <table>
 <thead>
 <tr>
@@ -345,15 +351,15 @@ b.这些信息怎么组织(如何用一个字符串把要传输的信息表示�
 </blockquote>
 <p>有没有很可能出现不同的原串，md5值碰巧相同？理论上存在，但是在工程上，不考虑这件事情。</p>
 <h3 id="TCP协议"><a href="#TCP协议" class="headerlink" title="TCP协议"></a>TCP协议</h3><h5 id="TCP的协议报头和TCP的数据部分-完整的应用层数据报"><a href="#TCP的协议报头和TCP的数据部分-完整的应用层数据报" class="headerlink" title="TCP的协议报头和TCP的数据部分(完整的应用层数据报)"></a>TCP的协议报头和TCP的数据部分(完整的应用层数据报)</h5><h4 id="TCP协议报头内容"><a href="#TCP协议报头内容" class="headerlink" title="TCP协议报头内容"></a>TCP协议报头内容</h4><h5 id="TCP的作用"><a href="#TCP的作用" class="headerlink" title="TCP的作用"></a>TCP的作用</h5><blockquote>
-<p>保证有效传输</p>
+<p>1.保证有效传输</p>
 <p>:能够及时的发现自己发送的数据是成功还是失败</p>
 </blockquote>
 <blockquote>
-<p>尽可能的提高传输效率</p>
+<p>2.尽可能的提高传输效率</p>
 </blockquote>
 <h3 id="TCP的可靠性"><a href="#TCP的可靠性" class="headerlink" title="TCP的可靠性"></a>TCP的可靠性</h3><h5 id="1-确认应答"><a href="#1-确认应答" class="headerlink" title="1.确认应答"></a>1.确认应答</h5><p><strong>需要对数据进行编号</strong></p>
 <p><strong>确认应答数据中要指明的是哪个序号</strong></p>
-<p><strong>确认序号的含义是当前序号之前的数据已经收到，希望收到下一条数据就是从确认序列号开始的</strong></p>
+<p><strong>确认序号的含义是当前序号之前的数据已经收到，希望收到下一条数据就是从确认序列号开始</strong></p>
 <h5 id="2-超时重传机制"><a href="#2-超时重传机制" class="headerlink" title="2.超时重传机制"></a>2.超时重传机制</h5><p><strong>1.超时时间会依次变长(悲观的态度去面对丢包的)</strong></p>
 <p><strong>2.自动去重:(通过序号进行去重)</strong></p>
 <p><strong>发送上一条消息后未收到回复，进行重发确保消息被收到</strong></p>
@@ -384,12 +390,12 @@ b.这些信息怎么组织(如何用一个字符串把要传输的信息表示�
 </tr>
 <tr>
 <td>客户端</td>
-<td>2.SYN+ACK确认报文段  &lt;—</td>
+<td>2.SYN+ACK确认报文段(都是服务器同时发给客户端的内容)  &lt;—</td>
 <td>服务器端</td>
 </tr>
 <tr>
 <td>客户端</td>
-<td>—-&gt;     3.ACK</td>
+<td>—-&gt;     3.ACK(回应的ACK涵盖了应答信息,同时包含了协商的结果 )</td>
 <td>服务器端</td>
 </tr>
 </tbody>
@@ -397,7 +403,8 @@ b.这些信息怎么组织(如何用一个字符串把要传输的信息表示�
 <blockquote>
 <ul>
 <li>【备注 】 :—-&gt;表示传送方向</li>
-<li>【注意】:SYN和ACK都是内核控制发送的</li>
+<li>【注意】:SYN和ACK都是内核控制发送的，所以两者可以进行合并</li>
+<li>SYN与ACK都是TCP协议格式中的一段内容</li>
 </ul>
 </blockquote>
 <p><strong>2.断开连接(四次挥手)</strong></p>
@@ -436,7 +443,7 @@ b.这些信息怎么组织(如何用一个字符串把要传输的信息表示�
 </table>
 <blockquote>
 <ul>
-<li>【触发条件】:调用close函数触发断开连接close发送FIN</li>
+<li>【FIN 触发条件】:调用close函数触发断开连接close发送FIN</li>
 <li>【注意】：内核回复ACK,进入CLOSE_WAIT状态</li>
 </ul>
 </blockquote>
@@ -806,7 +813,7 @@ b.这些信息怎么组织(如何用一个字符串把要传输的信息表示�
   </div>
   <div class="container-narrow">
 	<footer> <p>
-  &copy; 2019 John Doe
+  &copy; 2020 John Doe
   
       with help from <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-wixo/">Wixo</a>.    
 </p> </footer>
