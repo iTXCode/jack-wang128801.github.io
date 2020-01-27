@@ -454,11 +454,16 @@ b.这些信息怎么组织(如何用一个字符串把要传输的信息表示�
 <li><strong>谁主动调用close谁调TIME_WAIT</strong></li>
 </ul>
 </blockquote>
-<h6 id="4-TIME-WAIT保证-最后一个ACK如果丢包还有机会重传即使客户端的进程已经退出了，TIME-WAIT状态仍然可能存在。如果此时最后一个ACK丢了，对端重传的FIN可以有机会去进行处理-收到对方的FIN开始进入该状态"><a href="#4-TIME-WAIT保证-最后一个ACK如果丢包还有机会重传即使客户端的进程已经退出了，TIME-WAIT状态仍然可能存在。如果此时最后一个ACK丢了，对端重传的FIN可以有机会去进行处理-收到对方的FIN开始进入该状态" class="headerlink" title="4.TIME_WAIT保证 最后一个ACK如果丢包还有机会重传即使客户端的进程已经退出了，TIME_WAIT状态仍然可能存在。如果此时最后一个ACK丢了，对端重传的FIN可以有机会去进行处理(收到对方的FIN开始进入该状态)"></a>4.TIME_WAIT保证 最后一个ACK如果丢包还有机会重传即使客户端的进程已经退出了，TIME_WAIT状态仍然可能存在。如果此时最后一个ACK丢了，对端重传的FIN可以有机会去进行处理(收到对方的FIN开始进入该状态)</h6><blockquote>
+<h6 id="4-TIME-WAIT保证-最后一个ACK如果丢包还有机会重传，即使客户端的进程已经退出了，TIME-WAIT状态仍然可能存在。如果此时最后一个ACK丢了，对端重传的FIN可以有机会去进行处理-收到对方的FIN开始进入该状态"><a href="#4-TIME-WAIT保证-最后一个ACK如果丢包还有机会重传，即使客户端的进程已经退出了，TIME-WAIT状态仍然可能存在。如果此时最后一个ACK丢了，对端重传的FIN可以有机会去进行处理-收到对方的FIN开始进入该状态" class="headerlink" title="4.TIME_WAIT保证 最后一个ACK如果丢包还有机会重传，即使客户端的进程已经退出了，TIME_WAIT状态仍然可能存在。如果此时最后一个ACK丢了，对端重传的FIN可以有机会去进行处理(收到对方的FIN开始进入该状态)"></a>4.TIME_WAIT保证 最后一个ACK如果丢包还有机会重传，即使客户端的进程已经退出了，TIME_WAIT状态仍然可能存在。如果此时最后一个ACK丢了，对端重传的FIN可以有机会去进行处理(收到对方的FIN开始进入该状态)</h6><ul>
+<li style="list-style: none"><input type="checkbox"> 先关闭服务器端再关闭 客户端后立刻再次启动服务器端会提示端口已被占用</li>
+<li style="list-style: none"><input type="checkbox"> 采用netstat -anp | grep （端口号) 看到该端口处于TIME_WAIT状态</li>
+</ul>
+<blockquote>
 <ul>
 <li><strong>TIME_WAIT  会保持2MSL这样的时间</strong></li>
 <li><strong>MSL表示网络中的两个节点之间，传输一个数据所经历的最大时间</strong></li>
 <li><strong>centos7 MSL默认为 60s</strong></li>
+<li>谁主动断开连接,谁主动调用time_wait 函数</li>
 </ul>
 </blockquote>
 <h6 id="TODO-添加待办事项"><a href="#TODO-添加待办事项" class="headerlink" title="TODO(添加待办事项)"></a>TODO(添加待办事项)</h6><h5 id="4-滑动窗口-提高传输效率"><a href="#4-滑动窗口-提高传输效率" class="headerlink" title="4.滑动窗口(提高传输效率)"></a>4.滑动窗口(提高传输效率)</h5><ul>
@@ -481,7 +486,7 @@ b.这些信息怎么组织(如何用一个字符串把要传输的信息表示�
 <p><strong>解决办法:拥塞控制(真实的发送方的窗口大小是流量控制和拥塞控制两者的窗口大小的较小值)</strong></p>
 </blockquote>
 <ul>
-<li><strong>需要有一个发送缓冲区来保存那些数据需要等待ACK，没有收到ACK的数据随时可能触发超市重传</strong></li>
+<li><strong>需要有一个发送缓冲区来保存那些数据需要等待ACK，没有收到ACK的数据随时可能触发超时重传</strong></li>
 <li><strong>快速重传 和超时重传本质是一样的,</strong></li>
 </ul>
 <p><strong>ACK丢了没事，只要不是全丢那就没事</strong></p>
