@@ -499,9 +499,16 @@ b.这些信息怎么组织(如何用一个字符串把要传输的信息表示�
 <h5 id="6-拥塞控制-网络方面的拥堵情况"><a href="#6-拥塞控制-网络方面的拥堵情况" class="headerlink" title="6.拥塞控制(网络方面的拥堵情况)"></a>6.拥塞控制(网络方面的拥堵情况)</h5><blockquote>
 <p><strong>根据丢包情况作为判定依据</strong></p>
 <p><strong>如果出现丢包,认为网络比较拥堵。如果没丢包，认为网络比较畅通</strong></p>
-<p><strong>慢开始：刚开始的时候按照一个比较小的窗口来发送数据，如果没丢包，就按照指数的形式提升窗口大小。如果窗口大小达到指定的阀值之后，变成线性增长</strong></p>
+<p><strong>慢开始：刚开始的时候按照一个比较小的窗口来发送数据，如果没丢包，就按照指数的形式提升窗口大小。如果窗口大小达到指定的阈值之后，变成线性增长</strong></p>
 <p><strong>当窗口达到一定的大小之后，就会发生丢包，一旦丢包，认为网络拥堵了，就把窗口大小一下就设回一个非常小的值，重复慢开始的过程</strong></p>
 </blockquote>
+<ul>
+<li style="list-style: none"><input type="checkbox"> 新的阈值大小为之前阈值大小的一半</li>
+</ul>
+<ul>
+<li style="list-style: none"><input type="checkbox"> 1.发送方如果发的太快,接收方可能处理不过来(进行流量控制)</li>
+<li style="list-style: none"><input type="checkbox"> 2.如果当前网络比较拥堵,发送方如果发送的很快,仍然会丢包(拥塞控制)</li>
+</ul>
 <h5 id="7-延时应答-提高传输效率"><a href="#7-延时应答-提高传输效率" class="headerlink" title="7.延时应答(提高传输效率)"></a>7.延时应答(提高传输效率)</h5><blockquote>
 <p><strong>和滑动窗口密切相关。想办法在可靠性的前提下尽量让窗口大</strong></p>
 </blockquote>
@@ -511,6 +518,9 @@ b.这些信息怎么组织(如何用一个字符串把要传输的信息表示�
 <li>时间限制：超过最大延迟时间就应答一次；</li>
 </ul>
 </blockquote>
+<ul>
+<li style="list-style: none"><input type="checkbox"> 在消息传送的时候不会立刻将ACK信息(包含空余缓冲区空间大小信息)立即返回,稍微等待一会再将反馈信息ACK发送给对方,则在这个等待的过程中缓冲区中的数据已经被处理过了 ,从而使实际的缓冲区空余空间大于反馈信息中的保证了数据传输的可靠性</li>
+</ul>
 <h5 id="8-捎带应答-提高传输效率"><a href="#8-捎带应答-提高传输效率" class="headerlink" title="8.捎带应答(提高传输效率)"></a>8.捎带应答(提高传输效率)</h5><blockquote>
 <p><strong>延时应答的基础上，引入的一个机制</strong></p>
 <p><strong>TCP挥手有没有可能是三次呢？</strong></p>
@@ -533,7 +543,7 @@ b.这些信息怎么组织(如何用一个字符串把要传输的信息表示�
 </ul>
 <blockquote>
 <ul>
-<li>收到的数据先到达接收缓冲区，用户代码冲接收缓冲区中读走之后才能把数据清掉(recv/read),接受缓冲区也有可能帮助我们进行数据去重</li>
+<li>收到的数据先到达接收缓冲区，用户代码从接收缓冲区中读走之后才能把数据清掉(recv/read),接受缓冲区也有可能帮助我们进行数据去重</li>
 </ul>
 </blockquote>
 <h5 id="9-粘包问题"><a href="#9-粘包问题" class="headerlink" title="9.粘包问题"></a>9.粘包问题</h5><ul>
@@ -552,7 +562,7 @@ b.这些信息怎么组织(如何用一个字符串把要传输的信息表示�
 </li>
 </ul>
 <h3 id="抓包工具：wrieshark，tcpdump-命令行版本的抓包工具"><a href="#抓包工具：wrieshark，tcpdump-命令行版本的抓包工具" class="headerlink" title="抓包工具：wrieshark，tcpdump(命令行版本的抓包工具)"></a>抓包工具：wrieshark，tcpdump(命令行版本的抓包工具)</h3><h5 id="10-TCP的异常情况"><a href="#10-TCP的异常情况" class="headerlink" title="10.TCP的异常情况"></a>10.TCP的异常情况</h5><blockquote>
-<p>1.进程终止</p>
+<p>1.进程终止:(和正常关闭没有区别)</p>
 <p>2.机器重启</p>
 <p>3.机器掉线/网线断开:</p>
 </blockquote>
@@ -569,7 +579,7 @@ b.这些信息怎么组织(如何用一个字符串把要传输的信息表示�
 </ul>
 <blockquote>
 <p>一定时间断发送方向接收方发送一个状态报告信号</p>
-<p>拥有一个包活计时器(用来主动向发送端发送数据来确定发送端的状态)</p>
+<p>拥有一个保活定时器(用来主动向发送端发送数据来确定发送端的状态)</p>
 </blockquote>
 <h5 id="TCP小结"><a href="#TCP小结" class="headerlink" title="TCP小结"></a>TCP小结</h5><table>
 <thead>
