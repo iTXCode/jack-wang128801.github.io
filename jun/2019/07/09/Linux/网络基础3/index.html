@@ -110,15 +110,18 @@
 <p>系统盘中有一个hosts文件中存在域名和IP(历史产物)</p>
 </blockquote>
 <ul>
-<li>DNS域名解析服务器，有这个服务器来统一维护域名和ip的映射关系</li>
-<li>分布式：一台机器 不够，就多搞几台</li>
+<li>DNS域名解析服务器，由这个服务器来统一维护域名和ip的映射关系</li>
+<li>分布式：一台机器 不够，就多搞几台(防止因为一台服务器挂了，导致所有的主机都无法访问其他网站的事件发生)</li>
 <li>DNS服务器挂了，会导致网站打不开　<strong>解决办法：</strong>　手动修改DNS服务器</li>
-<li><strong>８.８.８.８</strong>　　谷歌维护的全球的根域名解析服务器</li>
-<li><strong>１１４．１１４．１１４．１１４</strong>　</li>
+<li><strong>ＤＮＳ服务器域名:８.８.８.８</strong>　　谷歌维护的全球的根域名解析服务器</li>
+<li><strong>１１４．１１４．１１４．１１４</strong> 　 </li>
 <li>DNS解析的具体过程，<strong>图解TCP＿IP（书名）</strong></li>
 </ul>
 <h3 id="NAT技术"><a href="#NAT技术" class="headerlink" title="NAT技术"></a>NAT技术</h3><ul>
-<li><strong>NAT技术当前解决IP地址不够用的主要手段, 是路由器的一个重要功能</strong> </li>
+<li><p><strong>NAT技术当前解决IP地址不够用的主要手段, 是路由器的一个重要功能</strong> </p>
+</li>
+<li><p>[ ] 在浏览器中输入一个url并敲回车键,会 发生什么事情?</p>
+</li>
 </ul>
 <h5 id="一：从操作系统管理键盘硬件设备角度看"><a href="#一：从操作系统管理键盘硬件设备角度看" class="headerlink" title="一：从操作系统管理键盘硬件设备角度看"></a>一：从操作系统管理键盘硬件设备角度看</h5><h5 id="二：从网络通信的角度看"><a href="#二：从网络通信的角度看" class="headerlink" title="二：从网络通信的角度看"></a>二：从网络通信的角度看</h5><ul>
 <li>1.应用层角度来看</li>
@@ -132,13 +135,26 @@
 <li>2.传输层角度来看</li>
 </ul>
 <blockquote>
-<p>a.TCP建立连接的角度</p>
+<p>a.TCP建立连接及相关特性 </p>
+<p>b.长短连接的角度</p>
+<ul>
+<li>长连接:一个TCP连接就涵盖好几个HTTP交互过程</li>
+<li>短连接:  是指通信双方有数据交互时，就建立一个TCP连接，数据发送完成后，则断开此TCP连接（管理起来比较简单，存在的连接都是有用的连接，不需要额外的控制手段）；</li>
+</ul>
+</blockquote>
+<ul>
+<li>网络层和数据链路程的角度</li>
+</ul>
+<blockquote>
+<p>a.ip地址的相关规则</p>
+<p>b.路由选择的过程</p>
+<p>c.数据链路层的相关规则(MTU,ARP,以太网数据帧,MAC地址)</p>
 </blockquote>
 <h5 id="三-通信原理的角度"><a href="#三-通信原理的角度" class="headerlink" title="三:通信原理的角度"></a>三:通信原理的角度</h5><h5 id="四：从工程角度来看"><a href="#四：从工程角度来看" class="headerlink" title="四：从工程角度来看"></a>四：从工程角度来看</h5><h6 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h6><blockquote>
 <ul>
 <li>1.提高效率，降低但台机器的压力</li>
-<li>2.提高可靠性，一旦某个机器挂了</li>
-<li>3.可伸缩性</li>
+<li>2.提高可靠性，一旦某个机器挂了另外几台还可以使用</li>
+<li>3.可伸缩性,</li>
 </ul>
 <hr>
 </blockquote>
