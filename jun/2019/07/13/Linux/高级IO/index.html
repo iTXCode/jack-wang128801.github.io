@@ -6,7 +6,7 @@
   <title>高级IO | Hexo</title>
   <meta name="author" content="John Doe">
   
-  <meta name="description" content="高级IO">
+  <meta name="description" content="高级IO(input,output)">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -58,7 +58,7 @@
 	  
 
 	  <!-- content -->
-	  <h3 id="高级IO"><a href="#高级IO" class="headerlink" title="高级IO"></a>高级IO</h3><a id="more"></a>
+	  <h3 id="高级IO-input-output"><a href="#高级IO-input-output" class="headerlink" title="高级IO(input,output)"></a>高级IO(input,output)</h3><a id="more"></a>
 <h3 id="一：五种基本的IO模型"><a href="#一：五种基本的IO模型" class="headerlink" title="一：五种基本的IO模型"></a>一：五种基本的IO模型</h3><h4 id="1-网络上的IO"><a href="#1-网络上的IO" class="headerlink" title="1.网络上的IO"></a>1.网络上的IO</h4><p><strong>IO过程中，主要分为两个阶段</strong></p>
 <p>1.等待：五种模型主要是在等这件事请上有差异</p>
 <p>2.拷贝：</p>
@@ -72,7 +72,10 @@
 <li>一个线程处理多个客户端的连接</li>
 </ul>
 <p><strong>IO多路复用IO，在Linux下实现方式有三种</strong></p>
-<p>1.selects</p>
+<ul>
+<li style="list-style: none"><input type="checkbox"> 1.selects</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">select</span><span class="params">(<span class="keyword">int</span> nfds,fd_set *readfds,fd_set* writefds,</span></span></span><br><span class="line"><span class="function"><span class="params">          fd_set *exceptfds,struct timeval* timeout)</span></span>;</span><br></pre></td></tr></table></figure>
 <ul>
 <li>参数的三个位图分别表示</li>
 <li>读就绪</li>
@@ -81,13 +84,17 @@
 <li>既是输入参数，也是输出参数</li>
 <li>函数调用的时候通过这几个参数指定，select要去管理那些文件描述符</li>
 <li>函数返回的时候通过这几个参数告诉调用者是那些文件描述符准备就绪了</li>
-<li>nfds表示后三个参数中包含的最大文件描述符+1的值</li>
+<li>nfds表示后三个参数中包含的最大文件描述符+1的值,为了方便后续进行遍历 文件描述符集</li>
 <li><strong>IO过程分成等待和拷贝，等待完毕可以拷贝的时候，这个状态叫做就绪</strong></li>
 </ul>
-<p><strong>select默认行为也是阻塞的，只是说明有文件描述符准备就绪了，才能返回修改这样的行为</strong></p>
-<p>2.poll</p>
+<p><strong>select默认行为也是阻塞的，只是说明有文件描述符准备就绪了，才能返回修改这样的行为,通过制定超时时间</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">例如：指定超时时间为100s</span><br><span class="line">如果100ms之内就有文件描述符就绪了,select直接返回 </span><br><span class="line">如果100ms到了，也没有文件描述符就绪,select 还是返回</span><br><span class="line"></span><br><span class="line">select 的返回值也有特殊含义</span><br><span class="line">例如：设置的参数为readfds3 4 5 writefds 5 6 7 </span><br><span class="line">函数返回的时候,367就绪，返回值就是3，表示三个文件描述符就绪了</span><br></pre></td></tr></table></figure>
 <ul>
-<li><p>3.epoll(重点)</p>
+<li style="list-style: none"><input type="checkbox"> 2.poll</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Studnet</span>&#123;</span></span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>[ ] 3.epoll(重点)</p>
 </li>
 <li></li>
 </ul>
