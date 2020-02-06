@@ -100,14 +100,15 @@
 </ul>
 <figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//select 这个函数本身用起来比较方便，封装一个类</span></span><br><span class="line"><span class="comment">//文件描述符的管理器，</span></span><br><span class="line"><span class="comment">//增加一个文件描述符</span></span><br><span class="line"><span class="comment">//删除一个文件描述符</span></span><br><span class="line"><span class="comment">//等待操作  等待管理的文件描述符就绪(只考虑就绪的情况)</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Selector</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Add</span><span class="params">(<span class="keyword">const</span> TcpSocket&amp;sock)</span></span>&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Del</span><span class="params">(<span class="keyword">const</span> TcpSocket&amp;sock)</span></span>&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">wait</span><span class="params">(<span class="built_in">std</span>::<span class="built_in">vector</span>&lt;TcpSocket&gt;* output)</span></span>&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="comment">//得用一个数据结构把需要的 socket 存起来</span></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">set</span>&lt;TcpSocket&gt; socket_set_;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <ul>
-<li>创建socket</li>
-<li>绑定socket</li>
-<li>监听socket</li>
-<li>创建selector同时把listen_sock加入selector</li>
-<li>在主循环中进行等待</li>
+<li>1.创建socket</li>
+<li>2.绑定socket</li>
+<li>3.监听socket</li>
+<li>4.创建selector同时把listen_sock加入selector</li>
+<li>5.在主循环中进行等待</li>
 </ul>
 <h3 id="poll"><a href="#poll" class="headerlink" title="poll"></a>poll</h3><h3 id="IO多路转接之epoll"><a href="#IO多路转接之epoll" class="headerlink" title="IO多路转接之epoll"></a>IO多路转接之epoll</h3><ul>
 <li>通过epoll更高性能处理服务器收到的请求</li>
+<li>谈到epoll就能想到高性能,但是高性能处理方式有很多,epoll只是其中之一</li>
 </ul>
 <h6 id="高性能"><a href="#高性能" class="headerlink" title="高性能"></a>高性能</h6><ul>
 <li><strong>最大的前提条件:谈到性能优化，必须的两个条件</strong></li>
@@ -119,7 +120,7 @@
 <p>1.先通过性能测试找到性能”瓶颈”</p>
 <p>2.找到性能瓶颈之后对症下药</p>
 </blockquote>
-<h5 id="性能优化的几个点"><a href="#性能优化的几个点" class="headerlink" title="性能优化的几个点"></a>性能优化的几个点</h5><p>a.<strong>某个计算量太大，占用很多的CPU资源</strong></p>
+<h5 id="性能优化的几个点"><a href="#性能优化的几个点" class="headerlink" title="性能优化的几个点"></a>性能优化的几个点</h5><p>a.<strong>某个计算量太大，占用很多的CPU资源 </strong></p>
 <blockquote>
 <ul>
 <li>可以使用多线程操作，也可以使用缓存的方式(二八原则)</li>
@@ -129,25 +130,42 @@
 <p>b.<strong>某个操作IO成为瓶颈了</strong></p>
 <blockquote>
 <ul>
-<li><p>可以使用多线程的方式，也可以考虑使用缓存的方式，也可以使用IO多路复用的方式</p>
-</li>
-<li><p>可以使用缓冲区的方式</p>
-</li>
+<li>可以使用多线程的方式，也可以考虑使用缓存的方式，也可以使用IO多路复用的方式</li>
+<li>可以使用缓冲区的方式</li>
 </ul>
 </blockquote>
 <p>c.<strong>如果CPU和IO都成为瓶颈了</strong></p>
 <blockquote>
 <p>拆分服务器</p>
 </blockquote>
+<ul>
+<li style="list-style: none"><input type="checkbox"> 性能测试一定是见招拆招,对症下药.</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">在工作过程中遇到测试的情况,可以先按一个代码块一个代码块的测试性能,这样逐渐缩小性能消耗比较大的地方,最后锁定到某一行代码,通过修改提高性能。</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
 <h4 id="epoll的使用场景"><a href="#epoll的使用场景" class="headerlink" title="epoll的使用场景"></a>epoll的使用场景</h4><p><strong>服务器需要同时处理大量客户端，但是同一时刻，只有少量客户端是活跃的场景</strong></p>
-<h5 id="epoll-create"><a href="#epoll-create" class="headerlink" title="epoll_create"></a>epoll_create</h5><blockquote>
-<p>参数为非0正数</p>
+<h5 id="epoll-create"><a href="#epoll-create" class="headerlink" title="epoll_create"></a>epoll_create</h5><p><code>int epoll_create(int size)</code></p>
+<blockquote>
+<ul>
+<li>用途:创建一个epoll对象</li>
+<li>参数size:参数被忽略,(还存在的原因:历史遗留的问题(填一个正数))</li>
+</ul>
 </blockquote>
-<h5 id="epoll-ctl"><a href="#epoll-ctl" class="headerlink" title="epoll_ctl"></a>epoll_ctl</h5><blockquote>
+<h5 id="epoll-ctl"><a href="#epoll-ctl" class="headerlink" title="epoll_ctl"></a>epoll_ctl</h5><p><code>int epoll_ctl(int epfd,int op,int fd,struct eopll_event* event);</code></p>
+<blockquote>
+<ul>
+<li>用途:增添一个新的或者删除一个旧的文件描述符</li>
+<li>参数1:epoll_create()的返回值(epoll的句柄)</li>
+<li>参数2:表述动作，用三个宏来表示</li>
+<li>参数3:需要监听的fd</li>
+<li>参数4:告诉内核需要监听的内容</li>
+</ul>
 </blockquote>
-<h5 id="epoll-wait"><a href="#epoll-wait" class="headerlink" title="epoll_wait"></a>epoll_wait</h5><p>epoll理解为 一个文件描述符的容器</p>
+<h5 id="epoll-wait"><a href="#epoll-wait" class="headerlink" title="epoll_wait"></a>epoll_wait</h5><p><code>int epoll_wait(int epfd,struct epoll_event *events,int maxevents,int timeout);</code></p>
+<p>收集在epoll监控的事件中已经发送的事件</p>
+<p>epoll理解为 一个文件描述符的容器</p>
 <p>非常类似于std::map</p>
-<p>1.底层实现也是红黑树</p>
+<p>1.epoll底层实现也是红黑树</p>
+<p>2.epoll 存储的数据也是键值对结构key就是fd,value就是用户自定义数据epoll_data_t</p>
 <h5 id="回调机制"><a href="#回调机制" class="headerlink" title="回调机制"></a>回调机制</h5><p>epoll和select之间最本质的区别也是两者之间高效的最核心的秘密</p>
 <p>epoll采用回调的发方式通知就绪，当某个文件描述符就绪，就立即加入到就绪队列中</p>
 <p>select采用遍历方式通知就绪</p>
@@ -155,6 +173,9 @@
 <hr>
 <blockquote>
 <p><strong>epoll 优点要背下来</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="comment">/*</span></span><br><span class="line"><span class="comment">&gt; 1.接口使用方便:虽然拆分成了三个函数,但是反而使用起来更方便高效,不需要每次循环设置关注的文件描述符,也做到了输入输出参数分离开</span></span><br><span class="line"><span class="comment">&gt; 2.数据拷贝轻量</span></span><br><span class="line"><span class="comment">&gt; 3.事件回调机制</span></span><br><span class="line"><span class="comment">&gt; 4.没有数量限制:文件描述符数目无上限 </span></span><br><span class="line"><span class="comment">&gt; */</span></span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
 <p><strong>epoll是Linux上特有的东西</strong></p>
 </blockquote>
 <hr>
