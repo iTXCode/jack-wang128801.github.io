@@ -1,0 +1,373 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>Go||入门 | Hexo</title>
+  <meta name="author" content="John Doe">
+  
+  <meta name="description" content="Go语言创始人
+ Rob Pike(罗勃.派克):曾是贝尔实验室的Unix团队,和Plan9操作系统计划的成员.他与Thompson共事多年,并共同创建出广泛使用的UTF-8字元编码
+ Robert Griesemer(罗伯特.格里茨默) :Go语言最初设计者之一
+ Ken Thompson:B语言">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Go||入门">
+  <meta property="og:site_name" content="Hexo">
+
+  
+    <meta property="og:image" content>
+  
+
+  
+    <link rel="alternative" href="/jun/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link href="/jun/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/jun/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/jun/css/responsive.css" media="screen" type="text/css">  
+  <link rel="stylesheet" href="/jun/css/sidenav.css" media="screen" type="text/css">  
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/jun/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+</head>
+</html>
+<body id="body" data-spy="scroll" data-target=".toc">
+  <div class="container" id="container">
+	<div class="content">
+	  <div class="page-header">		
+  <h1><a class="brand" href="/jun/">Hexo</a><span class="split"></span><span class="title">Go||入门</span><span class="date" id="title-date"><i class="fa fa-clock-o"></i> 2020-02-12</span></h1>
+</div>		
+
+<div class="row page">
+  <!-- cols -->	
+  
+  
+
+  
+	<div class="col-md-12">
+	  
+
+	  <!-- content -->
+	  <h3 id="Go语言创始人"><a href="#Go语言创始人" class="headerlink" title="Go语言创始人"></a>Go语言创始人</h3><ul>
+<li style="list-style: none"><input type="checkbox"> Rob Pike(罗勃.派克):曾是贝尔实验室的Unix团队,和Plan9操作系统计划的成员.他与Thompson共事多年,并共同创建出广泛使用的UTF-8字元编码</li>
+<li style="list-style: none"><input type="checkbox"> Robert Griesemer(罗伯特.格里茨默) :Go语言最初设计者之一</li>
+<li style="list-style: none"><input type="checkbox"> Ken Thompson:B语言、C语言作者、Unix之父。</li>
+</ul>
+<h3 id="Go简介"><a href="#Go简介" class="headerlink" title="Go简介"></a>Go简介</h3><h4 id="Go命名和特点"><a href="#Go命名和特点" class="headerlink" title="Go命名和特点"></a>Go命名和特点</h4><ul>
+<li style="list-style: none"><input type="checkbox"> Go命名原因:这门语言的运行速度、开发速度、学习速度都像gopher一样快</li>
+</ul>
+<h5 id="Go语言的最大优势"><a href="#Go语言的最大优势" class="headerlink" title="Go语言的最大优势"></a>Go语言的最大优势</h5><ul>
+<li style="list-style: none"><input type="checkbox"> 执行速度快(编译型的静态语言执行速度比解释型语言具有先天优势)</li>
+<li style="list-style: none"><input type="checkbox"> 生产效率高(基于Go的语法和结构简明,易学易用)</li>
+</ul>
+<h3 id="Golang语言基础"><a href="#Golang语言基础" class="headerlink" title="Golang语言基础"></a>Golang语言基础</h3><h4 id="Go语言的核心特性"><a href="#Go语言的核心特性" class="headerlink" title="Go语言的核心特性"></a>Go语言的核心特性</h4><h5 id="1-并发编程"><a href="#1-并发编程" class="headerlink" title="1.并发编程"></a>1.并发编程</h5><ul>
+<li style="list-style: none"><input type="checkbox"> Go语言在并发编程方面比绝大多数语言简介.</li>
+<li style="list-style: none"><input type="checkbox"> golang的并发执行单元是一种称为goroutine的协程</li>
+</ul>
+<p>==携程:又称微线程,比线程更加轻量、开销更小、性能更高==</p>
+<h5 id="2-内存回收-GC"><a href="#2-内存回收-GC" class="headerlink" title="2.内存回收(GC)"></a>2.内存回收(GC)</h5><ul>
+<li style="list-style: none"><input type="checkbox"> 内存自动回收。再也不需要开发人员管理内存</li>
+<li style="list-style: none"><input type="checkbox"> 开发人员专注业务实现、降低了心智负担</li>
+<li><p>[ ] 只需要new分配内存，不需要释放</p>
+</li>
+<li><p>GC瓶颈:在于每次都需要扫描所有对象来判活</p>
+</li>
+</ul>
+<h5 id="3-内存分配"><a href="#3-内存分配" class="headerlink" title="3.内存分配"></a>3.内存分配</h5><ul>
+<li style="list-style: none"><input type="checkbox"> 先分配一块大内寸区域</li>
+<li style="list-style: none"><input type="checkbox"> 大内存被切割分成各个大小等级的块,放入不同的空闲list中</li>
+<li style="list-style: none"><input type="checkbox"> 对象分配空间时从空闲list中取出大小合适的内存块</li>
+<li style="list-style: none"><input type="checkbox"> 内存回收时,会把不用的内存重新放回空闲list</li>
+<li style="list-style: none"><input type="checkbox"> 空闲内存会按照一定策略合并,以减少碎片</li>
+</ul>
+<h5 id="4-编译"><a href="#4-编译" class="headerlink" title="4.编译"></a>4.编译</h5><p>==两种编辑器==</p>
+<ul>
+<li style="list-style: none"><input type="checkbox"> 一种是建立在GCC基础上的Gccgo</li>
+<li style="list-style: none"><input type="checkbox"> 一种是分别针对64位X64和32位x86计算机的一套编译器(6g和8g)</li>
+</ul>
+<h5 id="5-网络编程"><a href="#5-网络编程" class="headerlink" title="5.网络编程"></a>5.网络编程</h5><ul>
+<li style="list-style: none"><input type="checkbox"> socket用net.Dial(基于tcp/udp，封装了传统的connect、listen、accept等接口)</li>
+<li style="list-style: none"><input type="checkbox"> http用http.Get/Post()</li>
+<li style="list-style: none"><input type="checkbox"> rpc用client.Call(‘class_name.method_name’,args,&amp;reply)</li>
+</ul>
+<h5 id="6-函数多返回值"><a href="#6-函数多返回值" class="headerlink" title="6.函数多返回值"></a>6.函数多返回值</h5><ul>
+<li style="list-style: none"><input type="checkbox"> 允许函数返回多个值,在某些场景下,可以有效的简化编程</li>
+<li style="list-style: none"><input type="checkbox"> Go语言推荐的编程风格,是函数返回的最后一个参数为error类型(只要逻辑体中可能出现异常),这样，在语言级别支持多返回值,就很有必要了’</li>
+</ul>
+<h5 id="7-语言交互性"><a href="#7-语言交互性" class="headerlink" title="7.语言交互性"></a>7.语言交互性</h5><ul>
+<li style="list-style: none"><input type="checkbox"> 语言交互性指的是本语言是否能和其他语言交互 ,比如可以调用其他语言编译的库</li>
+<li style="list-style: none"><input type="checkbox"> Go可以和C程序交互</li>
+</ul>
+<h5 id="8-异常处理"><a href="#8-异常处理" class="headerlink" title="8.异常处理"></a>8.异常处理</h5><p>==普通异常-&gt;查看被调用方返回error对象==</p>
+<p>==严重异常(中断性pani(比如除0))使用defer…recover…panic机制来捕获处理==</p>
+<p>==严重异常一般由Go语言内部自动抛出,不需要用户自己抛出,避免传统try…catch写得到处都是的情况==</p>
+<ul>
+<li style="list-style: none"><input type="checkbox"> defer是函数结束后执行,呈先进后出</li>
+<li style="list-style: none"><input type="checkbox"> panic是程序出现无法修复的错误时使用,但会让defer执行完</li>
+<li style="list-style: none"><input type="checkbox"> recover会修复错误,不至于程序终止。当不确定函数不会出错时使用defer+recover</li>
+</ul>
+<h5 id="其他一些有趣的特性"><a href="#其他一些有趣的特性" class="headerlink" title="其他一些有趣的特性"></a>其他一些有趣的特性</h5><ul>
+<li style="list-style: none"><input type="checkbox"> 类型推导</li>
+<li style="list-style: none"><input type="checkbox"> 接口interface</li>
+<li style="list-style: none"><input type="checkbox"> defer机制</li>
+<li style="list-style: none"><input type="checkbox"> “包”的概念</li>
+<li style="list-style: none"><input type="checkbox"> 交叉编译</li>
+</ul>
+<h4 id="Go语言的特色"><a href="#Go语言的特色" class="headerlink" title="Go语言的特色"></a>Go语言的特色</h4><ul>
+<li style="list-style: none"><input type="checkbox"> 高效的并发编程</li>
+<li style="list-style: none"><input type="checkbox"> 内存回收(GC)</li>
+<li style="list-style: none"><input type="checkbox"> 编译速度快</li>
+<li style="list-style: none"><input type="checkbox"> 函数返回值</li>
+<li style="list-style: none"><input type="checkbox"> 函数多返回值</li>
+<li style="list-style: none"><input type="checkbox"> 语言交互性</li>
+<li style="list-style: none"><input type="checkbox"> 没有异常处理(Error is value)</li>
+</ul>
+<h3 id="Go语言的优势"><a href="#Go语言的优势" class="headerlink" title="Go语言的优势"></a>Go语言的优势</h3><ul>
+<li style="list-style: none"><input type="checkbox"> 开发快速</li>
+<li style="list-style: none"><input type="checkbox"> 效率:快速的编译时间,开发效率和运行效率高</li>
+<li style="list-style: none"><input type="checkbox"> 出身Google</li>
+<li style="list-style: none"><input type="checkbox"> 并行和异步编程几乎无痛点</li>
+<li style="list-style: none"><input type="checkbox"> 自由高效:组合的思想、无侵入式的接口</li>
+<li style="list-style: none"><input type="checkbox"> 强大的标准库</li>
+<li style="list-style: none"><input type="checkbox"> 部署方便:二进制文件,Copy部署</li>
+<li style="list-style: none"><input type="checkbox"> 稳定性</li>
+</ul>
+<h4 id="Go语言的杀手级应用Docker"><a href="#Go语言的杀手级应用Docker" class="headerlink" title="Go语言的杀手级应用Docker"></a>Go语言的杀手级应用Docker</h4><ul>
+<li style="list-style: none"><input type="checkbox"> Docker 上手容易</li>
+<li style="list-style: none"><input type="checkbox"> Docker解决了运维中的环境问题以及服务调度的痛点</li>
+<li style="list-style: none"><input type="checkbox"> Docker的生态圈中有大公司在后面助力,比如Google</li>
+<li style="list-style: none"><input type="checkbox"> Docker产生了工业界标准OCI</li>
+<li style="list-style: none"><input type="checkbox"> Docker的社区和生态圈 已经出现像Java和Linux那样的态势</li>
+</ul>
+	  
+
+	  <div>
+  		<center>
+		  <div class="pagination">
+<ul class="pagination">
+	
+	
+	
+	
+	
+	
+		
+			
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+	
+	
+		<li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>prev</a></li>
+	
+	<li><a href="/jun/"><i class="fa fa-archive"></i>Home</a></li>
+	
+		<li class="next disabled"><a>next<i class="fa fa-arrow-circle-o-right"></i></a></li>
+	
+</ul>
+</div>
+
+		</center>
+	  </div>
+	  
+	</div> <!-- col-md-9/col-md-12 -->
+	
+  </div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+	<footer> <p>
+  &copy; 2020 John Doe
+  
+      with help from <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-wixo/">Wixo</a>.    
+</p> </footer>
+  </div> <!-- container-narrow -->
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/jun/js/jquery.imagesloaded.min.js"></script>
+<script src="/jun/js/gallery.js"></script>
+<script src="/jun/js/bootstrap.min.js"></script>
+<script src="/jun/js/jquery.tableofcontents.min.js"></script>
+<script src="/jun/js/tocgenerator.min.js"></script>
+<script src="/jun/js/main.js"></script>
+<script src="/jun/js/search.js"></script> 
+
+
+
+
+<link rel="stylesheet" href="/jun/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/jun/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+</body>
+</html>
